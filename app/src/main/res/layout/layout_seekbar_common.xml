@@ -7,7 +7,7 @@
     android:id="@+id/consRootSeekBar"
     android:background="@android:color/transparent">
 
-    <com.app.func.view.ToolTipSeekBar
+    <com.app.func.view.seekbarcustom.ToolTipSeekBar
         android:id="@+id/bubbleView"
         android:layout_width="@dimen/_40dp"
         android:layout_height="@dimen/_36dp"

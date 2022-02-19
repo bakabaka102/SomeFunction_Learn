@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.app.func.databinding.ActivityMainBinding
-import com.app.func.view.EmotionalFaceView
+import com.app.func.view.all_demo.EmotionalFaceView
 
 class MainActivity : AppCompatActivity() {
 

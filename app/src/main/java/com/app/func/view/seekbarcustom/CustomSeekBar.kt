@@ -1,4 +1,4 @@
-package com.app.func.view
+package com.app.func.view.seekbarcustom
 
 import android.content.Context
 import android.util.AttributeSet

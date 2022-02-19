@@ -1,4 +1,4 @@
-package com.app.func.view
+package com.app.func.view.all_demo
 
 import android.content.Context
 import android.content.res.TypedArray

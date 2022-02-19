@@ -1,4 +1,4 @@
-package com.app.func.view
+package com.app.func.view.clock
 
 import android.content.Context
 import android.graphics.*
