@@ -1,4 +1,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+ext {
+    rxjava3Version = "3.0.7"
+    rxjava3AndroidVersion = "3.0.0"
+}
+
 buildscript {
     repositories {
         google()

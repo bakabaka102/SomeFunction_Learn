@@ -1,90 +1,52 @@
 package com.app.func
 
-import android.content.res.Resources
-import android.graphics.Point
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
-import android.util.DisplayMetrics
-import android.view.View
-import android.widget.SeekBar
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import com.app.func.databinding.ActivityNext3Binding
-import kotlin.math.roundToInt
-
+import java.util.*
 
 class Next3Activity : AppCompatActivity() {
 
     private lateinit var binding: ActivityNext3Binding
-
+    private var mNavController: NavController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setLocale("en")
         binding = ActivityNext3Binding.inflate(layoutInflater)
         setContentView(binding.root)
+//        val navHostFragment =
+//            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+//        mNavController = navHostFragment.navController
 
-        binding.sb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                updateMarker(binding.sb, binding.marker.rlMarker, progress.toString())
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                binding.marker.rlMarker.visibility = View.VISIBLE
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                binding.marker.rlMarker.visibility = View.GONE
-            }
-        })
+//        TimeUnit.SECONDS.sleep(1)
+//        Thread.sleep(1000L)
+//        Handler(Looper.getMainLooper()).postDelayed({
+//            val findNavController = findNavController(R.id.fragmentContainerView)
+//            findNavController.navigate(R.id.signUpFragment)
+//        }, 1000L)
     }
 
-    private fun updateMarker(
-        sb: SeekBar,
-        rlMarker: View,
-        message: String
-    ) {
-        val tvProgress = rlMarker.findViewById(R.id.tvProgress) as TextView
-        val vArrow: View = rlMarker.findViewById(R.id.vArrow) as View
-
-        /**
-         * According to this question:
-         * https://stackoverflow.com/questions/20493577/android-seekbar-thumb-position-in-pixel
-         * one can find the SeekBar thumb location in pixels using:
-         */
-        val width = (sb.width - sb.paddingLeft - sb.paddingRight)
-        val thumbPos = (sb.paddingLeft + (width * sb.progress / sb.max) +
-            //take into consideration the margin added (in this case it is 10dp)
-            convertDpToPixel(10f).roundToInt())
-        tvProgress.text = " $message "
-        tvProgress.post {
-//            val display: Display =
-//                (this.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
-            val deviceDisplay = Point()
-//            display.getSize(deviceDisplay)
-
-            //vArrow always follow seekBar thumb location
-            vArrow.x = (thumbPos - sb.thumbOffset).toFloat()
-
-            //unlike vArrow, tvProgress will not always follow seekBar thumb location
-            when {
-                thumbPos - tvProgress.width / 2 - sb.paddingLeft < 0 -> {
-                    //part of the tvProgress is to the left of 0 bound
-                    tvProgress.x = vArrow.x - 20
-                }
-                thumbPos + tvProgress.width / 2 + sb.paddingRight > deviceDisplay.x -> {
-                    //part of the tvProgress is to the right of screen width bound
-                    tvProgress.x = vArrow.x - tvProgress.width + 20 + vArrow.width
-                }
-                else -> {
-                    //tvProgress is between 0 and screen width bounds
-                    tvProgress.x = thumbPos - tvProgress.width / 2f
-                }
-            }
+    // Pass "en","hi", etc.
+    private fun setLocale(locale: String) {
+        val myLocale = Locale(locale)
+        // Saving selected locale to session - SharedPreferences.
+        //saveLocale(locale)
+        // Changing locale.
+        Locale.setDefault(myLocale)
+        val config = Configuration()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            config.setLocale(myLocale)
+        } else {
+            config.locale = myLocale
         }
-    }
-
-    private fun convertDpToPixel(dp: Float): Float {
-        val resources: Resources = resources
-        val metrics: DisplayMetrics = resources.displayMetrics
-        return dp * (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            baseContext.createConfigurationContext(config)
+        } else {
+            baseContext.resources.updateConfiguration(config, baseContext.resources.displayMetrics)
+        }
     }
 }

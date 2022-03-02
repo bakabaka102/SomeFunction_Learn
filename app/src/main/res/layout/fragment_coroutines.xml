@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".coroutine_demo.CoroutinesFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/v"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="40sp" />
+
+    <include
+        android:id="@+id/marker"
+        layout="@layout/marker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/v"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/v"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_above="@id/sb" />
+
+    <SeekBar
+        android:id="@+id/sb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/_10dp"
+        android:max="100" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sb"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="40sp" />
+</RelativeLayout>

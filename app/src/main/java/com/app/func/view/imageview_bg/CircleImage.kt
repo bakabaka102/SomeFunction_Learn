@@ -3,7 +3,6 @@ package com.app.func.view.imageview_bg
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
-import android.graphics.Color.BLACK
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.AttributeSet
@@ -12,7 +11,6 @@ import androidx.core.content.ContextCompat
 import com.app.func.R
 import com.bumptech.glide.Glide
 import kotlin.math.roundToInt
-
 
 class CircleImage @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     AppCompatImageView(context, attrs) {
@@ -31,15 +29,13 @@ class CircleImage @JvmOverloads constructor(context: Context, attrs: AttributeSe
     private var mImageResource = 0
 
     init {
-
         getDefaultAttributes(attrs)
-
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH
             && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB
         ) {
             setLayerType(LAYER_TYPE_SOFTWARE, null)
         }
-        mImageSize = context.resources.getDimensionPixelSize(R.dimen.dp_300)
+        mImageSize = context.resources.getDimensionPixelSize(R.dimen._300dp)
         setBorderColor(mBorderColor)
     }
 
