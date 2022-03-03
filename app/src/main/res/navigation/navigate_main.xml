@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_snowyMainFragment"
+            app:destination="@id/snowyMainFragment" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
@@ -39,11 +42,16 @@
         tools:layout="@layout/profile_fragment" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.app.func.login_demo.LoginFragment"
+        android:name="com.app.func.login_demo.CustomSeekBarFragment"
         android:label="login_fragment"
-        tools:layout="@layout/login_fragment">
+        tools:layout="@layout/custom_seekbar_fragment">
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/snowyMainFragment"
+        android:name="com.app.func.thread_demo.snowy.SnowyMainFragment"
+        android:label="fragment_snowy_main"
+        tools:layout="@layout/fragment_snowy_main" />
 </navigation>

@@ -3,8 +3,6 @@ package com.app.func.login_demo
 import android.content.res.Resources
 import android.graphics.Point
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
@@ -15,12 +13,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.app.func.R
-import com.app.func.databinding.LoginFragmentBinding
+import com.app.func.databinding.CustomSeekbarFragmentBinding
 import kotlin.math.roundToInt
 
-class LoginFragment : Fragment() {
+class CustomSeekBarFragment : Fragment() {
 
-    private lateinit var binding: LoginFragmentBinding
+    private lateinit var binding: CustomSeekbarFragmentBinding
     private lateinit var viewModel: LoginViewModel
 
     private fun updateMarker(sb: SeekBar, rlMarker: View, message: String) {
@@ -34,8 +32,8 @@ class LoginFragment : Fragment() {
          */
         val width = (sb.width - sb.paddingLeft - sb.paddingRight)
         val thumbPos = (sb.paddingLeft + (width * sb.progress / sb.max) +
-            //take into consideration the margin added (in this case it is 10dp)
-            convertDpToPixel(10f).roundToInt())
+                //take into consideration the margin added (in this case it is 10dp)
+                convertDpToPixel(10f).roundToInt())
         tvProgress.text = message
         tvProgress.post {
 //            val display: Display =
@@ -73,7 +71,7 @@ class LoginFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = LoginFragmentBinding.inflate(inflater)
+        binding = CustomSeekbarFragmentBinding.inflate(inflater, container, false)
 
         binding.sb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -89,7 +87,7 @@ class LoginFragment : Fragment() {
             }
         })
 
-        binding.btnGo.setOnClickListener {
+        binding.btnHome.setOnClickListener {
             val navHostFragment: NavHostFragment =
                 activity?.supportFragmentManager?.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
             val mNavController = navHostFragment.navController
@@ -100,6 +98,18 @@ class LoginFragment : Fragment() {
 //                val findNavController = findNavController(R.id.fragmentContainerView)
 //                findNavController.navigate(R.id.signUpFragment)
 //            }, 1000L)
+            mNavController.navigate(R.id.homeFragment)
+        }
+        binding.btnSignIn.setOnClickListener {
+            val navHostFragment: NavHostFragment =
+                activity?.supportFragmentManager?.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+            val mNavController = navHostFragment.navController
+            mNavController.navigate(R.id.signInFragment)
+        }
+        binding.btnSignUp.setOnClickListener {
+            val navHostFragment: NavHostFragment =
+                activity?.supportFragmentManager?.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+            val mNavController = navHostFragment.navController
             mNavController.navigate(R.id.signUpFragment)
         }
         return binding.root
@@ -117,7 +127,7 @@ class LoginFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance() = LoginFragment()
+        fun newInstance() = CustomSeekBarFragment()
     }
 
 

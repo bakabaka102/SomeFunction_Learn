@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.navigation.fragment.NavHostFragment
 import com.app.func.R
 
 class HomeFragment : Fragment() {
@@ -12,7 +14,13 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+       val rootViewFragment = inflater.inflate(R.layout.fragment_home, container, false)
+        rootViewFragment.findViewById<Button>(R.id.btnViewProfile).setOnClickListener {
+            val navHostFragment: NavHostFragment =
+                activity?.supportFragmentManager?.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+            val mNavController = navHostFragment.navController
+            mNavController.navigate(R.id.snowyMainFragment)
+        }
+        return rootViewFragment
     }
 }
