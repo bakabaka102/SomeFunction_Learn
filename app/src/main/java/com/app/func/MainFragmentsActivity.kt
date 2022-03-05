@@ -3,21 +3,26 @@ package com.app.func
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import com.app.func.databinding.ActivityNext3Binding
+import com.app.func.databinding.ActivityMainFragmentsBinding
 import java.util.*
 
-class Next3Activity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityNext3Binding
+class MainFragmentsActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainFragmentsBinding
     private var mNavController: NavController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setLocale("en")
-        binding = ActivityNext3Binding.inflate(layoutInflater)
+        binding = ActivityMainFragmentsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val f = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
+        Log.d("ffff", f?.javaClass?.simpleName.toString())
+//        this.supportActionBar?.title = ""
 //        val navHostFragment =
 //            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
 //        mNavController = navHostFragment.navController

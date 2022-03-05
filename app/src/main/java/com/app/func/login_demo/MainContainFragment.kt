@@ -9,16 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.app.func.R
-import com.app.func.databinding.CustomSeekbarFragmentBinding
+import com.app.func.base_content.BaseFragment
+import com.app.func.databinding.MainContainFragmentBinding
 import kotlin.math.roundToInt
 
-class CustomSeekBarFragment : Fragment() {
+class MainContainFragment : BaseFragment() {
 
-    private lateinit var binding: CustomSeekbarFragmentBinding
+    private lateinit var binding: MainContainFragmentBinding
     private lateinit var viewModel: LoginViewModel
 
     private fun updateMarker(sb: SeekBar, rlMarker: View, message: String) {
@@ -71,7 +73,9 @@ class CustomSeekBarFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = CustomSeekbarFragmentBinding.inflate(inflater, container, false)
+//        (activity as AppCompatActivity).supportActionBar?.title =
+//            MainContainFragment::class.java.simpleName
+        binding = MainContainFragmentBinding.inflate(inflater, container, false)
 
         binding.sb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -127,7 +131,7 @@ class CustomSeekBarFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance() = CustomSeekBarFragment()
+        fun newInstance() = MainContainFragment()
     }
 
 

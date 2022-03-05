@@ -16,7 +16,7 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="s">
         <activity
-            android:name=".Next3Activity"
+            android:name=".MainFragmentsActivity"
             android:exported="false" />
         <activity
             android:name=".ScrollActivity"

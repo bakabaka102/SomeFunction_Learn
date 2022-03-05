@@ -36,5 +36,9 @@
     </string>
     <string name="error_message">Error while loading image.</string>
     <string name="home">Home</string>
+    <string name="image_failed_loading">Image failed loading</string>
+    <string name="demo_string_pinch_zoom">This is my sample text for pinch zoom demo, you can zoom in and out using pinch zoom, thanks</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

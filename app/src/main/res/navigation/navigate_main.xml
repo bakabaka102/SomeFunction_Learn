@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigate_main"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/mainContainFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -41,12 +41,12 @@
         android:label="profile_fragment"
         tools:layout="@layout/profile_fragment" />
     <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.app.func.login_demo.CustomSeekBarFragment"
-        android:label="login_fragment"
-        tools:layout="@layout/custom_seekbar_fragment">
+        android:id="@+id/mainContainFragment"
+        android:name="com.app.func.login_demo.MainContainFragment"
+        android:label="main_contain_fragment"
+        tools:layout="@layout/main_contain_fragment">
         <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
+            android:id="@+id/action_mainContainFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
     <fragment

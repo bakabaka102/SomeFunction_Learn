@@ -73,7 +73,7 @@ class SnowyMainFragment : Fragment() {
 //        binding?.viewPager?.addOnPageChangeListener(
 //            TabLayout.TabLayoutOnPageChangeListener(binding?.tabLayout)
 //        )
-//
+
         binding?.tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 binding?.viewPager?.currentItem = tab.position

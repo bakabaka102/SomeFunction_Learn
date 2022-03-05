@@ -4,12 +4,12 @@ import android.content.res.Resources
 import android.graphics.Point
 import android.os.Bundle
 import android.util.DisplayMetrics
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.app.func.R
 import com.app.func.databinding.FragmentCoroutinesBinding
 import kotlin.math.roundToInt
@@ -19,9 +19,8 @@ class CoroutinesFragment : Fragment() {
     private lateinit var binding: FragmentCoroutinesBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
         binding = FragmentCoroutinesBinding.inflate(inflater)
         binding.sb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -40,11 +39,7 @@ class CoroutinesFragment : Fragment() {
         return binding.root
     }
 
-    private fun updateMarker(
-        sb: SeekBar,
-        rlMarker: View,
-        message: String
-    ) {
+    private fun updateMarker(sb: SeekBar, rlMarker: View, message: String) {
         val tvProgress = rlMarker.findViewById(R.id.tvProgress) as TextView
         val vArrow: View = rlMarker.findViewById(R.id.vArrow) as View
 
@@ -55,8 +50,8 @@ class CoroutinesFragment : Fragment() {
          */
         val width = (sb.width - sb.paddingLeft - sb.paddingRight)
         val thumbPos = (sb.paddingLeft + (width * sb.progress / sb.max) +
-                //take into consideration the margin added (in this case it is 10dp)
-                convertDpToPixel(10f).roundToInt())
+            //take into consideration the margin added (in this case it is 10dp)
+            convertDpToPixel(10f).roundToInt())
         tvProgress.text = " $message "
         tvProgress.post {
 //            val display: Display =

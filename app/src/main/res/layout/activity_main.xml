@@ -75,7 +75,29 @@
                     app:layout_constraintTop_toBottomOf="@+id/emotionalFaceView" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
+            <TextView
+                android:id="@+id/textDemo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_16dp"
+                android:textColor="@color/color_01BCD4"
+                android:textSize="@dimen/_20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Sample text" />
+
+            <TextView
+                android:id="@+id/textPinchZoom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_32dp"
+                android:layout_marginTop="@dimen/_16dp"
+                android:text="@string/demo_string_pinch_zoom"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/btnNext2" />
+
+            <Button
                 android:id="@+id/btnNext1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -83,29 +105,34 @@
                 android:text="Next1"
                 android:textAllCaps="false"
                 android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cons1" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <Button
+                android:id="@+id/btnNext2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16dp"
+                android:layout_marginTop="24dp"
+                android:text="Next2"
+                android:textAllCaps="false"
+                app:layout_constraintStart_toEndOf="@+id/btnNext1"
+                app:layout_constraintTop_toBottomOf="@+id/cons1" />
+
+            <Button
                 android:id="@+id/btnNext3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16dp"
                 android:layout_marginTop="24dp"
                 android:text="Next3"
                 android:textAllCaps="false"
                 android:visibility="visible"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnNext1" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnNext2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Next2"
-                android:textAllCaps="false"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnNext2"
                 app:layout_constraintTop_toBottomOf="@+id/cons1" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>

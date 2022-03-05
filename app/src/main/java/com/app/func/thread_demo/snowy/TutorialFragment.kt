@@ -12,25 +12,12 @@ import com.app.func.databinding.FragmentTutorialBinding
 import com.app.func.thread_demo.snowy.model.Tutorial
 import com.app.func.thread_demo.snowy.utils.SnowFilter
 import kotlinx.coroutines.*
+import java.io.InputStream
 import java.net.URL
 
 class TutorialFragment : Fragment() {
 
-    companion object {
-
-        const val TUTORIAL_KEY = "TUTORIAL"
-        private var binding: FragmentTutorialBinding? = null
-
-        fun newInstance(tutorial: Tutorial): TutorialFragment {
-            val fragmentHome = TutorialFragment()
-            val args = Bundle()
-            args.putParcelable(TUTORIAL_KEY, tutorial)
-            fragmentHome.arguments = args
-            return fragmentHome
-        }
-    }
-
-    //
+    private var binding: FragmentTutorialBinding? = null
     private val parentJob = Job()
 
     // 1
@@ -46,15 +33,13 @@ class TutorialFragment : Fragment() {
             GlobalScope.launch { println("Caught $throwable") }
         }
 
-    private val coroutineScope = CoroutineScope(
-        Dispatchers.Main + parentJob +
-                coroutineExceptionHandler
-    )
+    private val coroutineScope =
+        CoroutineScope(Dispatchers.Main + parentJob + coroutineExceptionHandler)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        val tutorial = arguments?.getParcelable(TUTORIAL_KEY) as? Tutorial
+        val tutorial: Tutorial? = arguments?.getParcelable(TUTORIAL_KEY) as? Tutorial
 //        val view = inflater.inflate(R.layout.fragment_tutorial, container, false)
         binding = FragmentTutorialBinding.inflate(inflater, container, false)
         binding?.tutorialName?.text = tutorial?.name
@@ -62,17 +47,16 @@ class TutorialFragment : Fragment() {
         return binding?.root
     }
 
-    //
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val tutorial = arguments?.getParcelable(TUTORIAL_KEY) as? Tutorial
-
         coroutineScope.launch(Dispatchers.Main) {
             val originalBitmap: Bitmap? = tutorial?.let { getOriginalBitmapAsync(it) }
             //1
-            val snowFilterBitmap: Bitmap? = originalBitmap?.let { loadSnowFilterAsync(it) }
+            //val snowFilterBitmap: Bitmap? = originalBitmap?.let { loadSnowFilterAsync(it) }
             //2
-            snowFilterBitmap?.let { loadImage(it) }
+            //snowFilterBitmap?.let { loadImage(it) }
+            originalBitmap?.let { loadImage(it) }
         }
     }
 
@@ -83,6 +67,11 @@ class TutorialFragment : Fragment() {
                 return@withContext BitmapFactory.decodeStream(it)
             }
         }
+
+    fun getBitmapFromInternet(imageURL: String): Bitmap? {
+        val `in`: InputStream = URL(imageURL).openStream()
+        return BitmapFactory.decodeStream(`in`)
+    }
 
     private suspend fun loadSnowFilterAsync(originalBitmap: Bitmap): Bitmap =
         withContext(Dispatchers.Default) {
@@ -103,5 +92,17 @@ class TutorialFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    companion object {
+        const val TUTORIAL_KEY = "TUTORIAL"
+
+        fun newInstance(tutorial: Tutorial): TutorialFragment {
+            val fragmentHome = TutorialFragment()
+            val args = Bundle()
+            args.putParcelable(TUTORIAL_KEY, tutorial)
+            fragmentHome.arguments = args
+            return fragmentHome
+        }
     }
 }

@@ -1,16 +1,17 @@
 package com.app.func
 
 import android.graphics.drawable.Drawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.func.databinding.ActivitySecondBinding
+import com.app.func.utils.MyToast
 import com.google.android.flexbox.FlexboxLayout
 import org.json.JSONArray
 import org.json.JSONException
@@ -62,11 +63,16 @@ class SecondActivity : AppCompatActivity() {
 
         loadData()
 
-        locationAdapter = LocationAdapter(this, locations, object : LocationAdapter.OnItemClickListener {
+        locationAdapter = LocationAdapter(locations, object : LocationAdapter.OnItemClickListener {
             override fun onItemClick(location: Location) {
-                loadForecast(location.forecast)
+//                loadForecast(location.forecast)
             }
         })
+
+        locationAdapter.currentItemClicked = {
+            MyToast.showToast(this, "Vi tri click: $it")
+            loadForecast(locations[it].forecast)
+        }
         recyclerView.adapter = locationAdapter
     }
 
@@ -107,7 +113,9 @@ class SecondActivity : AppCompatActivity() {
                 try {
                     val jsonObject = array[i] as JSONObject
                     val stringArray = jsonObject["forecast"] as JSONArray
-                    val forecast = (0 until stringArray.length()).mapTo(ArrayList<String>()) { stringArray.getString(it) }
+                    val forecast = (0 until stringArray.length()).mapTo(ArrayList<String>()) {
+                        stringArray.getString(it)
+                    }
                     val location = Location(jsonObject["name"] as String, forecast)
                     locations.add(location)
                 } catch (e: JSONException) {
