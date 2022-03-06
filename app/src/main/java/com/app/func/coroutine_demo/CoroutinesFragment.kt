@@ -8,41 +8,45 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import android.widget.TextView
 import com.app.func.R
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentCoroutinesBinding
 import kotlin.math.roundToInt
 
-class CoroutinesFragment : BaseFragment() {
+class CoroutinesFragment : BaseFragment(), View.OnClickListener {
 
-    private lateinit var binding: FragmentCoroutinesBinding
+    private var binding: FragmentCoroutinesBinding? = null
+
+    private val mBinding get() = binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = FragmentCoroutinesBinding.inflate(inflater)
-        binding.sb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+        binding?.sb?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                updateMarker(binding.sb, binding.marker.rlMarker, progress.toString())
+                updateMarker(mBinding.sb, progress.toString())
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                binding.marker.rlMarker.visibility = View.VISIBLE
+                binding?.marker?.rlMarker?.visibility = View.VISIBLE
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                binding.marker.rlMarker.visibility = View.GONE
+                binding?.marker?.rlMarker?.visibility = View.GONE
             }
         })
 //        return inflater.inflate(R.layout.fragment_coroutines, container, false)
-        return binding.root
+        initActions()
+        return binding?.root
     }
 
-    private fun updateMarker(sb: SeekBar, rlMarker: View, message: String) {
-        val tvProgress = rlMarker.findViewById(R.id.tvProgress) as TextView
-        val vArrow: View = rlMarker.findViewById(R.id.vArrow) as View
+    private fun initActions() {
+        binding?.btnForecast?.setOnClickListener(this)
+    }
 
+    private fun updateMarker(sb: SeekBar, message: String) {
         /**
          * According to this question:
          * https://stackoverflow.com/questions/20493577/android-seekbar-thumb-position-in-pixel
@@ -50,39 +54,54 @@ class CoroutinesFragment : BaseFragment() {
          */
         val width = (sb.width - sb.paddingLeft - sb.paddingRight)
         val thumbPos = (sb.paddingLeft + (width * sb.progress / sb.max) +
-            //take into consideration the margin added (in this case it is 10dp)
-            convertDpToPixel(10f).roundToInt())
-        tvProgress.text = " $message "
-        tvProgress.post {
+                //take into consideration the margin added (in this case it is 10dp)
+                convertDpToPixel(10f).roundToInt())
+        mBinding.marker.tvProgress.text = " $message "
+        mBinding.marker.tvProgress.post {
 //            val display: Display =
 //                (this.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
             val deviceDisplay = Point()
 //            display.getSize(deviceDisplay)
 
             //vArrow always follow seekBar thumb location
-            vArrow.x = (thumbPos - sb.thumbOffset).toFloat()
+            mBinding.marker.vArrow.x = (thumbPos - sb.thumbOffset).toFloat()
 
             //unlike vArrow, tvProgress will not always follow seekBar thumb location
             when {
-                thumbPos - tvProgress.width / 2 - sb.paddingLeft < 0 -> {
+                thumbPos - mBinding.marker.tvProgress.width / 2 - sb.paddingLeft < 0 -> {
                     //part of the tvProgress is to the left of 0 bound
-                    tvProgress.x = vArrow.x - 20
+                    mBinding.marker.tvProgress.x = mBinding.marker.vArrow.x - 20
                 }
-                thumbPos + tvProgress.width / 2 + sb.paddingRight > deviceDisplay.x -> {
+                thumbPos + mBinding.marker.tvProgress.width / 2 + sb.paddingRight > deviceDisplay.x -> {
                     //part of the tvProgress is to the right of screen width bound
-                    tvProgress.x = vArrow.x - tvProgress.width + 20 + vArrow.width
+                    mBinding.marker.tvProgress.x =
+                        mBinding.marker.vArrow.x - mBinding.marker.tvProgress.width + 20 + mBinding.marker.vArrow.width
                 }
                 else -> {
                     //tvProgress is between 0 and screen width bounds
-                    tvProgress.x = thumbPos - tvProgress.width / 2f
+                    mBinding.marker.tvProgress.x = thumbPos - mBinding.marker.tvProgress.width / 2f
                 }
             }
         }
     }
 
+
     private fun convertDpToPixel(dp: Float): Float {
         val resources: Resources = resources
         val metrics: DisplayMetrics = resources.displayMetrics
         return dp * (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+    }
+
+    override fun onClick(view: View?) {
+        when (view) {
+            binding?.btnForecast -> {
+                getNavController()?.navigate(R.id.weatherDemoFragment)
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

@@ -7,8 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import com.app.func.R
-import com.app.func.rx_function.utils.Logger
+import com.app.func.utils.Logger
 
 open class BaseFragment : Fragment() {
 
@@ -16,9 +17,14 @@ open class BaseFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.title = this::class.java.simpleName
     }
 
+    fun getNavController(): NavController? {
+        return (activity as? BaseActivity)?.getNavController()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+        Logger.logD(this::class.java.simpleName, "onCreateView is called...")
         return inflater.inflate(R.layout.fragment_base, container, false)
     }
 

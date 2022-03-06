@@ -7,7 +7,7 @@ object MyToast {
 
     private var mToast: Toast? = null
 
-    fun showToast(context: Context, value: String, duration: Int = Toast.LENGTH_SHORT) {
+    fun showToast(context: Context?, value: String, duration: Int = Toast.LENGTH_SHORT) {
         if (mToast != null) {
             mToast?.cancel()
         }

@@ -4,23 +4,35 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.navigation.fragment.NavHostFragment
 import com.app.func.R
 import com.app.func.base_content.BaseFragment
+import com.app.func.databinding.FragmentSignUpBinding
 
-class SignUpFragment : BaseFragment() {
+class SignUpFragment : BaseFragment(), View.OnClickListener {
+
+    private var binding: FragmentSignUpBinding? = null
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_sign_up, container, false)
-        root.findViewById<Button>(R.id.btnCreateAccount).setOnClickListener {
-            val navHostFragment: NavHostFragment =
-                activity?.supportFragmentManager?.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-            val mNavController = navHostFragment.navController
-            mNavController.navigate(R.id.homeFragment)
+        binding = FragmentSignUpBinding.inflate(inflater, container, false)
+        binding?.btnCreateAccount?.setOnClickListener(this)
+        return binding?.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
+    override fun onClick(view: View?) {
+        when (view) {
+            binding?.btnCreateAccount -> {
+//                val navHostFragment: NavHostFragment =
+//                    activity?.supportFragmentManager?.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+//                val mNavController = navHostFragment.navController
+                getNavController()?.navigate(R.id.profileFragment)
+            }
         }
-        return root
     }
 }

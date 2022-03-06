@@ -6,33 +6,27 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import com.app.func.base_content.BaseActivity
 import com.app.func.databinding.ActivityMainFragmentsBinding
 import java.util.*
 
 
-class MainFragmentsActivity : AppCompatActivity() {
+class MainFragmentsActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainFragmentsBinding
-    private var mNavController: NavController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setLocale("en")
         binding = ActivityMainFragmentsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val f = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
-        Log.d("ffff", f?.javaClass?.simpleName.toString())
-//        this.supportActionBar?.title = ""
-//        val navHostFragment =
-//            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-//        mNavController = navHostFragment.navController
+    }
 
-//        TimeUnit.SECONDS.sleep(1)
-//        Thread.sleep(1000L)
-//        Handler(Looper.getMainLooper()).postDelayed({
-//            val findNavController = findNavController(R.id.fragmentContainerView)
-//            findNavController.navigate(R.id.signUpFragment)
-//        }, 1000L)
+    override fun getNavController(): NavController {
+        val navHostFragment: NavHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        return navHostFragment.navController
     }
 
     // Pass "en","hi", etc.

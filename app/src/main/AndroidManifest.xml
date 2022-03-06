@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="s">
         <activity
+            android:name=".base_content.BaseActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainFragmentsActivity"
             android:exported="false" />
         <activity

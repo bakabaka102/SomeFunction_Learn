@@ -1,4 +1,4 @@
-package com.app.func.rx_function.utils
+package com.app.func.utils
 
 import android.util.Log
 import com.app.func.BuildConfig

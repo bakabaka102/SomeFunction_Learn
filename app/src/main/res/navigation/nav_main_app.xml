@@ -10,4 +10,10 @@
         android:name="com.app.func.coroutine_demo.CoroutinesFragment"
         tools:layout="@layout/fragment_coroutines" />
 
+    <fragment
+        android:id="@+id/weatherDemoFragment"
+        android:name="com.app.func.login_demo.WeatherDemoFragment"
+        android:label="WeatherDemoFragment"
+        tools:layout="@layout/fragment_weather_demo" />
+
 </navigation>

@@ -6,32 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".login_demo.MainContainFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_16dp"
-        android:layout_marginTop="@dimen/_64dp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp">
-
-        <include
-            android:id="@+id/marker"
-            layout="@layout/marker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="visible" />
-
-        <SeekBar
-            android:id="@+id/sb"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10dp"
-            android:max="100"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <com.app.func.textview_view.NoneSpaceTextView
         android:id="@+id/id_value"
         android:layout_width="wrap_content"

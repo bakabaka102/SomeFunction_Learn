@@ -53,7 +53,7 @@ class CustomSeekBar @JvmOverloads constructor(
                         return true
                     }
 //                    binding.bubbleView.isVisible = true
-                    updateProgress(event.x, event.y)
+                    updateProgress(event.x)
                     onValueSelected?.invoke(
                         formatFloatValue(currentValue)
                     )
@@ -83,7 +83,7 @@ class CustomSeekBar @JvmOverloads constructor(
         }
     }
 
-    private fun updateProgress(x: Float, y: Float) {
+    private fun updateProgress(x: Float) {
         Log.d("CustomSeekBar ", "Current x  ---- width  -----   x / width->  $x    ----  $width   ----  ${x/width}")
         when {
             x <= marginLeftProgress + binding.tvMinValue.width + paddingHorizontal + thumbWidth / 2 -> {

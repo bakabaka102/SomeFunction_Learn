@@ -27,7 +27,7 @@ class ImageBackgroundDraw @JvmOverloads constructor(
         }
     }
 
-    private fun drawPath(canvas: Canvas?) {
+    private fun drawPath() {
         val halfWidthWithoutCorners =
             width / 2 - mCenterCircleRadius - mMiddleCornerRadius - mTopCornerRadius
         val heightWithoutCorners = height - mTopCornerRadius - mBottomCornerRadius
@@ -82,7 +82,7 @@ class ImageBackgroundDraw @JvmOverloads constructor(
         if (mCenterCircleRectF == null) {
             mCenterCircleRectF = calculateCenterCircleRectF()
         }
-        drawPath(canvas)
+        drawPath()
         canvas?.drawPath(mPath, mPaint)
     }
 }
