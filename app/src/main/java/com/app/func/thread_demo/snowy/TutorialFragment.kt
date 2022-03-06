@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.app.func.R
+import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentTutorialBinding
 import com.app.func.thread_demo.snowy.model.Tutorial
 import com.app.func.thread_demo.snowy.utils.SnowFilter
@@ -15,7 +15,7 @@ import kotlinx.coroutines.*
 import java.io.InputStream
 import java.net.URL
 
-class TutorialFragment : Fragment() {
+class TutorialFragment : BaseFragment() {
 
     private var binding: FragmentTutorialBinding? = null
     private val parentJob = Job()

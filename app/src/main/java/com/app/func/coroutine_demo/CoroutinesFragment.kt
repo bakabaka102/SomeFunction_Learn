@@ -9,12 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import com.app.func.R
+import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentCoroutinesBinding
 import kotlin.math.roundToInt
 
-class CoroutinesFragment : Fragment() {
+class CoroutinesFragment : BaseFragment() {
 
     private lateinit var binding: FragmentCoroutinesBinding
 

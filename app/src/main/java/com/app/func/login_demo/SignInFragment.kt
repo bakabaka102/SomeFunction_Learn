@@ -1,13 +1,13 @@
 package com.app.func.login_demo
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.app.func.R
+import com.app.func.base_content.BaseFragment
 
-class SignInFragment : Fragment() {
+class SignInFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

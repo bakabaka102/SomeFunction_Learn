@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.app.func.R
+import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentSnowyMainBinding
 import com.app.func.thread_demo.snowy.model.Tutorial
 import com.google.android.material.tabs.TabLayout
@@ -17,7 +18,7 @@ import com.google.android.material.tabs.TabLayout
  * create an instance of this fragment.
  */
 
-class SnowyMainFragment : Fragment() {
+class SnowyMainFragment : BaseFragment() {
 
     private var tutorialPagerAdapter: TutorialPagerAdapter? = null
     private var binding: FragmentSnowyMainBinding? = null

@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.app.func.R
+import com.app.func.base_content.BaseFragment
 
-class RxFunctionFragment : Fragment() {
+class RxFunctionFragment : BaseFragment() {
 
 
 
