@@ -8,12 +8,24 @@
     <fragment
         android:id="@+id/coroutinesFragment"
         android:name="com.app.func.coroutine_demo.CoroutinesFragment"
-        tools:layout="@layout/fragment_coroutines" />
+        tools:layout="@layout/fragment_coroutines">
+        <action
+            android:id="@+id/action_coroutinesFragment_to_weatherDemoFragment"
+            app:destination="@id/weatherDemoFragment" />
+        <action
+            android:id="@+id/action_coroutinesFragment_to_simpleRXFragment"
+            app:destination="@id/simpleRXFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/weatherDemoFragment"
         android:name="com.app.func.login_demo.WeatherDemoFragment"
         android:label="WeatherDemoFragment"
         tools:layout="@layout/fragment_weather_demo" />
+    <fragment
+        android:id="@+id/simpleRXFragment"
+        android:name="com.app.func.coroutine_demo.SimpleRXFragment"
+        android:label="fragment_simple_rx"
+        tools:layout="@layout/fragment_simple_rx" />
 
 </navigation>

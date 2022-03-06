@@ -1,60 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
     tools:context=".coroutine_demo.CoroutinesFragment">
-
-    <RelativeLayout
-        android:id="@+id/relativeSeekbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_120dp"
-        android:layout_marginTop="@dimen/_32dp"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <include
-            android:id="@+id/marker"
-            layout="@layout/marker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/v"
-            android:visibility="gone"
-            tools:visibility="visible" />
-
-        <View
-            android:id="@+id/v"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_above="@id/sb" />
-
-        <SeekBar
-            android:id="@+id/sb"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="@dimen/_10dp"
-            android:max="100" />
-    </RelativeLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#D2E1CD"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95">
+        android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/btnForecast"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/relativeSeekbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_120dp"
+            android:layout_marginTop="@dimen/_32dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/marker"
+                layout="@layout/marker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/v"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <View
+                android:id="@+id/v"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_above="@id/sb" />
+
+            <SeekBar
+                android:id="@+id/sb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/_10dp"
+                android:max="100" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/linearListButtons1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Weather"
-            android:textAllCaps="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="@dimen/_32dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/relativeSeekbar">
+
+            <Button
+                android:id="@+id/btnSimpleRx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/simple"
+                android:textColor="@android:color/black" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/map"
+                android:textColor="@android:color/black" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/zip"
+                android:textColor="@android:color/black" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/timer"
+                android:textColor="@android:color/black" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filter"
+                android:textColor="@android:color/black" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/concat"
+                android:textColor="@android:color/black" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/merge"
+                android:textColor="@android:color/black" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delay"
+                android:textColor="@android:color/black" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/consLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16dp"
+            android:layout_marginBottom="@dimen/_16dp"
+            android:background="#D2E1CD"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearListButtons1">
+
+            <Button
+                android:id="@+id/btnForecast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weather"
+                android:textAllCaps="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

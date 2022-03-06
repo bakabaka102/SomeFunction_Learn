@@ -44,6 +44,7 @@ class CoroutinesFragment : BaseFragment(), View.OnClickListener {
 
     private fun initActions() {
         binding?.btnForecast?.setOnClickListener(this)
+        binding?.btnSimpleRx?.setOnClickListener(this)
     }
 
     private fun updateMarker(sb: SeekBar, message: String) {
@@ -96,6 +97,9 @@ class CoroutinesFragment : BaseFragment(), View.OnClickListener {
         when (view) {
             binding?.btnForecast -> {
                 getNavController()?.navigate(R.id.weatherDemoFragment)
+            }
+            binding?.btnSimpleRx -> {
+                getNavController()?.navigate(R.id.simpleRXFragment)
             }
         }
     }

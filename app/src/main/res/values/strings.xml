@@ -40,5 +40,14 @@
     <string name="demo_string_pinch_zoom">This is my sample text for pinch zoom demo, you can zoom in and out using pinch zoom, thanks</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="simple">Simple</string>
+    <string name="map">Map</string>
+    <string name="zip">Zip</string>
+    <string name="timer">Time</string>
+    <string name="filter">Filter</string>
+    <string name="concat">Concat</string>
+    <string name="merge">Merge</string>
+    <string name="delay">Delay</string>
+    <string name="doSomeWork">doSomeWork</string>
 
 </resources>
