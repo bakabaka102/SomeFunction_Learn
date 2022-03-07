@@ -26,6 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@id/v"
+                android:layout_marginHorizontal="@dimen/_16dp"
                 android:visibility="gone"
                 tools:visibility="visible" />
 
@@ -40,14 +41,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_margin="@dimen/_10dp"
+                android:layout_marginHorizontal="@dimen/_10dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginBottom="@dimen/_10dp"
                 android:max="100" />
         </RelativeLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearListButtons1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16dp"
             android:layout_marginTop="@dimen/_32dp"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/relativeSeekbar">
@@ -57,51 +61,98 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/simple"
-                android:textColor="@android:color/black" />
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
+                android:id="@+id/btnMapRx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16dp"
                 android:text="@string/map"
-                android:textColor="@android:color/black" />
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@id/btnSimpleRx"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
+                android:id="@+id/btnZipRx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16dp"
                 android:text="@string/zip"
-                android:textColor="@android:color/black" />
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@id/btnMapRx"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
+                android:id="@+id/btnTimeRx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/timer"
-                android:textColor="@android:color/black" />
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnSimpleRx" />
 
             <Button
+                android:id="@+id/btnFilterRx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16dp"
                 android:text="@string/filter"
-                android:textColor="@android:color/black" />
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@id/btnTimeRx"
+                app:layout_constraintTop_toBottomOf="@id/btnMapRx" />
 
             <Button
+                android:id="@+id/btnConcatRx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16dp"
                 android:text="@string/concat"
-                android:textColor="@android:color/black" />
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@id/btnFilterRx"
+                app:layout_constraintTop_toBottomOf="@id/btnMapRx" />
 
             <Button
+                android:id="@+id/btnMergeRx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/merge"
-                android:textColor="@android:color/black" />
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnTimeRx" />
 
             <Button
+                android:id="@+id/btnDelayRx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16dp"
                 android:text="@string/delay"
-                android:textColor="@android:color/black" />
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@id/btnMergeRx"
+                app:layout_constraintTop_toBottomOf="@id/btnFilterRx" />
 
-        </LinearLayout>
+            <Button
+                android:id="@+id/btnSearchRx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16dp"
+                android:text="@string/search"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@id/btnDelayRx"
+                app:layout_constraintTop_toBottomOf="@id/btnConcatRx" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/consLayout2"
@@ -109,7 +160,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16dp"
             android:layout_marginBottom="@dimen/_16dp"
-            android:background="#D2E1CD"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearListButtons1">
 
@@ -117,10 +167,9 @@
                 android:id="@+id/btnForecast"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Weather"
+                android:layout_marginStart="@dimen/_16dp"
+                android:text="@string/weather"
                 android:textAllCaps="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

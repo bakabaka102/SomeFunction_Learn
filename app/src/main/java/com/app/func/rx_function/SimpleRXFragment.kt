@@ -1,4 +1,4 @@
-package com.app.func.coroutine_demo
+package com.app.func.rx_function
 
 import android.os.Bundle
 import android.os.Handler
@@ -16,11 +16,6 @@ import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SimpleRXFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SimpleRXFragment : BaseFragment(), View.OnClickListener {
 
     private var binding: FragmentSimpleRxBinding? = null
@@ -34,6 +29,11 @@ class SimpleRXFragment : BaseFragment(), View.OnClickListener {
         initActions()
         initObservers()
         return binding?.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     private fun initObservers() {

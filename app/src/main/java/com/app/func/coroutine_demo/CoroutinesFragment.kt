@@ -16,6 +16,7 @@ import kotlin.math.roundToInt
 class CoroutinesFragment : BaseFragment(), View.OnClickListener {
 
     private var binding: FragmentCoroutinesBinding? = null
+    private var dp16Pixel = 0
 
     private val mBinding get() = binding!!
 
@@ -23,7 +24,7 @@ class CoroutinesFragment : BaseFragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCoroutinesBinding.inflate(inflater)
-
+        dp16Pixel = resources.getDimensionPixelOffset(R.dimen._16dp)
         binding?.sb?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 updateMarker(mBinding.sb, progress.toString())
@@ -45,6 +46,14 @@ class CoroutinesFragment : BaseFragment(), View.OnClickListener {
     private fun initActions() {
         binding?.btnForecast?.setOnClickListener(this)
         binding?.btnSimpleRx?.setOnClickListener(this)
+        binding?.btnMapRx?.setOnClickListener(this)
+        binding?.btnZipRx?.setOnClickListener(this)
+        binding?.btnTimeRx?.setOnClickListener(this)
+        binding?.btnFilterRx?.setOnClickListener(this)
+        binding?.btnConcatRx?.setOnClickListener(this)
+        binding?.btnMergeRx?.setOnClickListener(this)
+        binding?.btnDelayRx?.setOnClickListener(this)
+        binding?.btnSearchRx?.setOnClickListener(this)
     }
 
     private fun updateMarker(sb: SeekBar, message: String) {
@@ -71,12 +80,12 @@ class CoroutinesFragment : BaseFragment(), View.OnClickListener {
             when {
                 thumbPos - mBinding.marker.tvProgress.width / 2 - sb.paddingLeft < 0 -> {
                     //part of the tvProgress is to the left of 0 bound
-                    mBinding.marker.tvProgress.x = mBinding.marker.vArrow.x - 20
+                    mBinding.marker.tvProgress.x = mBinding.marker.vArrow.x - /*20*/ dp16Pixel
                 }
                 thumbPos + mBinding.marker.tvProgress.width / 2 + sb.paddingRight > deviceDisplay.x -> {
                     //part of the tvProgress is to the right of screen width bound
                     mBinding.marker.tvProgress.x =
-                        mBinding.marker.vArrow.x - mBinding.marker.tvProgress.width + 20 + mBinding.marker.vArrow.width
+                        mBinding.marker.vArrow.x - mBinding.marker.tvProgress.width + /*20*/ dp16Pixel + mBinding.marker.vArrow.width
                 }
                 else -> {
                     //tvProgress is between 0 and screen width bounds
@@ -100,6 +109,30 @@ class CoroutinesFragment : BaseFragment(), View.OnClickListener {
             }
             binding?.btnSimpleRx -> {
                 getNavController()?.navigate(R.id.simpleRXFragment)
+            }
+            binding?.btnMapRx -> {
+                getNavController()?.navigate(R.id.mapRXFragment)
+            }
+            binding?.btnZipRx -> {
+                getNavController()?.navigate(R.id.zipRXFragment)
+            }
+            binding?.btnTimeRx -> {
+                getNavController()?.navigate(R.id.timerRXFragment)
+            }
+            binding?.btnFilterRx -> {
+                getNavController()?.navigate(R.id.filterRXFragment)
+            }
+            binding?.btnConcatRx -> {
+                getNavController()?.navigate(R.id.concatRXFragment)
+            }
+            binding?.btnMergeRx -> {
+                getNavController()?.navigate(R.id.mergeRXFragment)
+            }
+            binding?.btnDelayRx -> {
+                getNavController()?.navigate(R.id.delayRXFragment)
+            }
+            binding?.btnSearchRx -> {
+                getNavController()?.navigate(R.id.searchByRXFragment)
             }
         }
     }

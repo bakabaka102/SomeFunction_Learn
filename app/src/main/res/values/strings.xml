@@ -49,5 +49,10 @@
     <string name="merge">Merge</string>
     <string name="delay">Delay</string>
     <string name="doSomeWork">doSomeWork</string>
+    <string name="result">Result</string>
+    <string name="weather">Weather</string>
+    <string name="search">Search</string>
+    <string name="rx">Rx</string>
+    <string name="coroutines">Coroutines</string>
 
 </resources>
