@@ -70,7 +70,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.1'
 
     //Jetpack Compose
-    def composeVersion = '1.1.1'
+    //def composeVersion = '1.1.1'
     implementation 'androidx.compose.ui:ui:1.1.1'
     // Tooling support (Previews, etc.)
     implementation 'androidx.compose.ui:ui-tooling:1.1.1'
@@ -105,5 +105,12 @@ dependencies {
     //
     implementation 'com.squareup.retrofit:retrofit:2.0.0-beta2'
     implementation 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
+
+    // define a BOM and its version
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.3"))
+
+    // define any required OkHttp artifacts without version
+    implementation 'com.squareup.okhttp3:okhttp'
+    implementation 'com.squareup.okhttp3:logging-interceptor'
 
 }

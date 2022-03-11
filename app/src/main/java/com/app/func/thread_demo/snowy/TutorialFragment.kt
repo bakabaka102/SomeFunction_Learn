@@ -30,7 +30,8 @@ class TutorialFragment : BaseFragment() {
                 binding?.errorMessage?.text = getString(R.string.error_message)
             }
 
-            GlobalScope.launch { println("Caught $throwable") }
+            coroutineScope.launch { println("Caught $throwable") }
+//            GlobalScope.launch { println("Caught $throwable") }
         }
 
     private val coroutineScope =

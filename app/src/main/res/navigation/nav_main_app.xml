@@ -6,36 +6,63 @@
     app:startDestination="@id/multiSynsFragment">
 
     <fragment
+        android:id="@+id/multiSynsFragment"
+        android:name="com.app.func.common_fragment.MultiSynsFragment"
+        android:label="fragment_multi_syns"
+        tools:layout="@layout/fragment_multi_syns">
+        <action
+            android:id="@+id/action_multiSynsFragment_to_coroutinesFragment"
+            app:destination="@id/coroutinesFragment" />
+        <action
+            android:id="@+id/action_multiSynsFragment_to_rxFunctionFragment"
+            app:destination="@id/rxFunctionFragment" />
+    </fragment>
+
+    <fragment
         android:id="@+id/coroutinesFragment"
         android:name="com.app.func.coroutine_demo.CoroutinesFragment"
         tools:layout="@layout/fragment_coroutines">
         <action
-            android:id="@+id/action_coroutinesFragment_to_weatherDemoFragment"
+            android:id="@+id/action_coroutinesFragment_to_singleCallNetworkFragment"
+            app:destination="@id/singleCallNetworkFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/rxFunctionFragment"
+        android:name="com.app.func.rx_function.RxFunctionFragment"
+        android:label="fragment_rx_function"
+        tools:layout="@layout/fragment_rx_function">
+        <action
+            android:id="@+id/action_rxFunctionFragment_to_weatherDemoFragment"
             app:destination="@id/weatherDemoFragment" />
         <action
-            android:id="@+id/action_coroutinesFragment_to_simpleRXFragment"
+            android:id="@+id/action_rxFunctionFragment_to_simpleRXFragment"
             app:destination="@id/simpleRXFragment" />
         <action
-            android:id="@+id/action_coroutinesFragment_to_mapRXFragment"
+            android:id="@+id/action_rxFunctionFragment_to_mapRXFragment"
             app:destination="@id/mapRXFragment" />
         <action
-            android:id="@+id/action_coroutinesFragment_to_zipRXFragment"
+            android:id="@+id/action_rxFunctionFragment_to_zipRXFragment"
             app:destination="@id/zipRXFragment" />
         <action
-            android:id="@+id/action_coroutinesFragment_to_timerRXFragment"
+            android:id="@+id/action_rxFunctionFragment_to_timerRXFragment"
             app:destination="@id/timerRXFragment" />
         <action
-            android:id="@+id/action_coroutinesFragment_to_filterRXFragment"
+            android:id="@+id/action_rxFunctionFragment_to_searchByRXFragment"
+            app:destination="@id/searchByRXFragment" />
+        <action
+            android:id="@+id/action_rxFunctionFragment_to_filterRXFragment"
             app:destination="@id/filterRXFragment" />
         <action
-            android:id="@+id/action_coroutinesFragment_to_concatRXFragment"
+            android:id="@+id/action_rxFunctionFragment_to_delayRXFragment"
+            app:destination="@id/delayRXFragment" />
+        <action
+            android:id="@+id/action_rxFunctionFragment_to_concatRXFragment"
             app:destination="@id/concatRXFragment" />
         <action
-            android:id="@+id/action_coroutinesFragment_to_mergeRXFragment"
+            android:id="@+id/action_rxFunctionFragment_to_mergeRXFragment"
             app:destination="@id/mergeRXFragment" />
-        <action
-            android:id="@+id/action_coroutinesFragment_to_delayRXFragment"
-            app:destination="@id/delayRXFragment" />
     </fragment>
 
     <fragment
@@ -90,21 +117,9 @@
         tools:layout="@layout/fragment_search_by_rx" />
 
     <fragment
-        android:id="@+id/multiSynsFragment"
-        android:name="com.app.func.common_fragment.MultiSynsFragment"
-        android:label="fragment_multi_syns"
-        tools:layout="@layout/fragment_multi_syns">
-        <action
-            android:id="@+id/action_multiSynsFragment_to_coroutinesFragment"
-            app:destination="@id/coroutinesFragment" />
-        <action
-            android:id="@+id/action_multiSynsFragment_to_rxFunctionFragment"
-            app:destination="@id/rxFunctionFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/rxFunctionFragment"
-        android:name="com.app.func.rx_function.RxFunctionFragment"
-        android:label="fragment_rx_function"
-        tools:layout="@layout/fragment_rx_function" />
+        android:id="@+id/singleCallNetworkFragment"
+        android:name="com.app.func.coroutine_demo.retrofit.single.SingleCallNetworkFragment"
+        android:label="fragment_single_call_network"
+        tools:layout="@layout/fragment_single_call_network" />
 
 </navigation>
