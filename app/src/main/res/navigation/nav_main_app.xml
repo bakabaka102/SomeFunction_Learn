@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_coroutinesFragment_to_singleCallNetworkFragment"
             app:destination="@id/singleCallNetworkFragment" />
+        <action
+            android:id="@+id/action_coroutinesFragment_to_listMoviesFragment"
+            app:destination="@id/listMoviesFragment" />
     </fragment>
 
 
@@ -120,6 +123,11 @@
         android:id="@+id/singleCallNetworkFragment"
         android:name="com.app.func.coroutine_demo.retrofit.single.SingleCallNetworkFragment"
         android:label="fragment_single_call_network"
+        tools:layout="@layout/fragment_single_call_network" />
+    <fragment
+        android:id="@+id/listMoviesFragment"
+        android:name="com.app.func.coroutine_demo.retrofit.aaa.ListMoviesFragment"
+        android:label="ListMoviesFragment"
         tools:layout="@layout/fragment_single_call_network" />
 
 </navigation>

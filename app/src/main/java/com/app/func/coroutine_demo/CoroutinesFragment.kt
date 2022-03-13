@@ -43,7 +43,7 @@ class CoroutinesFragment : BaseFragment(), View.OnClickListener {
                 getNavController()?.navigate(R.id.singleCallNetworkFragment)
             }
             binding?.btnSeriesCallNetwork -> {
-
+                getNavController()?.navigate(R.id.listMoviesFragment)
             }
             binding?.btnParallelCallNetwork -> {
 

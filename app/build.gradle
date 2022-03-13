@@ -103,8 +103,8 @@ dependencies {
     kapt "androidx.room:room-compiler:2.4.2"
     implementation "androidx.room:room-rxjava3:2.4.2"
     //
-    implementation 'com.squareup.retrofit:retrofit:2.0.0-beta2'
-    implementation 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     // define a BOM and its version
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.3"))
@@ -112,5 +112,8 @@ dependencies {
     // define any required OkHttp artifacts without version
     implementation 'com.squareup.okhttp3:okhttp'
     implementation 'com.squareup.okhttp3:logging-interceptor'
+
+    //
+    compileOnly 'org.glassfish:javax.annotation:10.0-b28'
 
 }

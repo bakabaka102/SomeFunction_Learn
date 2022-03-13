@@ -4,17 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.func.base_content.BaseFragment
-import com.app.func.coroutine_demo.data.model.ApiUser
+import com.app.func.coroutine_demo.data.model.Result
 import com.app.func.databinding.FragmentSingleCallNetworkBinding
 import com.app.func.utils.Logger
 
 class SingleCallNetworkFragment : BaseFragment() {
 
     private var mBinding: FragmentSingleCallNetworkBinding? = null
+    private var quoteAdapter: QuotesAdapter = QuotesAdapter()
+    private var data: List<Result>? = null
     private val mViewModel: SingleCallNetworkViewModel by viewModels()
 
     override fun onCreateView(
@@ -23,23 +26,37 @@ class SingleCallNetworkFragment : BaseFragment() {
         mBinding = FragmentSingleCallNetworkBinding.inflate(inflater, container, false)
 
         initViewModel()
-        initRecyclerView()
         initObserver()
+        initRecyclerView()
         return mBinding?.root
     }
 
     private fun initObserver() {
+        mViewModel.quoteList.observe(viewLifecycleOwner) {
+            Logger.logD("aaaa", "aaaaa ${it.body()}")
+            data = it.body()?.results
+            data?.let { it1 ->
+                quoteAdapter.setData(it1)
+            }
+        }
 
+        mViewModel.errorMessage.observe(viewLifecycleOwner) {
+            Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+        }
+
+        mViewModel.loading.observe(viewLifecycleOwner) {
+            if (it) {
+                mBinding?.progressBar?.visibility = View.VISIBLE
+            } else {
+                mBinding?.progressBar?.visibility = View.GONE
+            }
+        }
+
+        mViewModel.getQuotes()
     }
 
     private fun initViewModel() {
-
-        mViewModel.getUsers().observe(viewLifecycleOwner) {
-
-        }
-    }
-
-    private fun renderList(users: List<ApiUser>) {
+        mViewModel.getQuotes()
     }
 
     private fun initRecyclerView() {
@@ -51,6 +68,9 @@ class SingleCallNetworkFragment : BaseFragment() {
                 (mBinding?.recyclerView?.layoutManager as LinearLayoutManager).orientation
             )
         )
+        mBinding?.recyclerView?.adapter = quoteAdapter
+        mViewModel.getQuotes()
+
     }
 
     override fun onDestroyView() {
