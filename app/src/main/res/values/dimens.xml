@@ -28,4 +28,5 @@
     <dimen name="_20sp">20sp</dimen>
     <dimen name="_12dp">12dp</dimen>
     <dimen name="_64dp">64dp</dimen>
+    <dimen name="_200dp">200dp</dimen>
 </resources>

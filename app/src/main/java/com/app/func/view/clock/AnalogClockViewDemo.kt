@@ -1,4 +1,4 @@
-package vn.kangaroo.mb.android.presentation.smart_fan
+package com.app.func.view.clock
 
 import android.content.Context
 import android.graphics.*
@@ -10,7 +10,7 @@ import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
 
-class AnalogClockView @JvmOverloads constructor(
+class AnalogClockViewDemo @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 

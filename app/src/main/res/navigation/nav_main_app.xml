@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_coroutinesFragment_to_listMoviesFragment"
             app:destination="@id/listMoviesFragment" />
+        <action
+            android:id="@+id/action_coroutinesFragment_to_seriesCallFragment"
+            app:destination="@id/seriesCallFragment" />
     </fragment>
 
 
@@ -129,5 +132,9 @@
         android:name="com.app.func.coroutine_demo.retrofit.aaa.ListMoviesFragment"
         android:label="ListMoviesFragment"
         tools:layout="@layout/fragment_single_call_network" />
+    <fragment
+        android:id="@+id/seriesCallFragment"
+        android:name="com.app.func.coroutine_demo.retrofit.series.SeriesCallFragment"
+        android:label="SeriesCallFragment" />
 
 </navigation>
