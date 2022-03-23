@@ -24,4 +24,8 @@
     <color name="color_0097A7">#0097A7</color>
     <color name="color_00BCD4">#00BCD4</color>
     <color name="color_01BCD4">#01BCD4</color>
+
+    <color name="color_arc">@android:color/white</color>
+    <color name="color_text">@android:color/white</color>
+    <color name="color_progress">#58D4DE</color>
 </resources>

@@ -26,28 +26,44 @@ class ClockView(context: Context?, attrs: AttributeSet? = null, defStyleAttr: In
         private const val DEFAULT_WIDTH = 200 // default width
     }
 
-    lateinit var mBlackPaint: Paint
-    lateinit var mRedPaint: Paint
-    lateinit var mBlackPaint2: Paint
-    private lateinit var mTextPaint: Paint
+    private var mBlackPaint: Paint = Paint().apply {
+        color = Color.BLACK
+        strokeWidth = 5f
+        isAntiAlias = true
+        style = Paint.Style.STROKE
+    }
+    private var mRedPaint: Paint = Paint().apply {
+        color = Color.RED
+        strokeWidth = 5f
+        isAntiAlias = true
+    }
+    private var mBlackPaint2: Paint = Paint().apply {
+        color = Color.BLACK
+        isAntiAlias = true
+        style = Paint.Style.FILL
+    }
+    private var mTextPaint: Paint = Paint().apply {
+        color = Color.BLACK
+        textSize = 30f
+        isAntiAlias = true
+    }
     private var hour: Int? = null
     private var minute: Int? = null
     private var second: Int? = null
     private val textArray = arrayOf("12", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11")
     private var refreshThread: Thread? = null
-    private var mHandler = @SuppressLint("HandlerLeak")
-
-    object : Handler(Looper.getMainLooper()) {
-        override fun handleMessage(msg: Message) {
-            super.handleMessage(msg)
-            when (msg.what) {
-                0 -> {
-                    invalidate()
-                }
-            }
-
-        }
-    }
+//    private var mHandler = @SuppressLint("HandlerLeak")
+//    object : Handler(Looper.getMainLooper()) {
+//        override fun handleMessage(msg: Message) {
+//            super.handleMessage(msg)
+//            when (msg.what) {
+//                0 -> {
+//                    invalidate()
+//                }
+//            }
+//
+//        }
+//    }
 
     init {
         initPaints()
@@ -57,33 +73,33 @@ class ClockView(context: Context?, attrs: AttributeSet? = null, defStyleAttr: In
      *Initialize brush
      */
     private fun initPaints() {
-        mBlackPaint = Paint()
-        with(mBlackPaint) {
-            color = Color.BLACK
-            strokeWidth = 5f
-            isAntiAlias = true
-            style = Paint.Style.STROKE
-        }
+//        mBlackPaint = Paint()
+//        with(mBlackPaint) {
+//            color = Color.BLACK
+//            strokeWidth = 5f
+//            isAntiAlias = true
+//            style = Paint.Style.STROKE
+//        }
         //Used for drawing surface center
-        mBlackPaint2 = Paint()
-        with(mBlackPaint2) {
-            color = Color.BLACK
-            isAntiAlias = true
-            style = Paint.Style.FILL
-        }
-        mRedPaint = Paint()
-        with(mRedPaint) {
-            color = Color.RED
-            strokeWidth = 5f
-            isAntiAlias = true
-        }
-
-        mTextPaint = Paint()
-        with(mTextPaint) {
-            color = Color.BLACK
-            textSize = 30f
-            isAntiAlias = true
-        }
+//        mBlackPaint2 = Paint()
+//        with(mBlackPaint2) {
+//            color = Color.BLACK
+//            isAntiAlias = true
+//            style = Paint.Style.FILL
+//        }
+//        mRedPaint = Paint()
+//        with(mRedPaint) {
+//            color = Color.RED
+//            strokeWidth = 5f
+//            isAntiAlias = true
+//        }
+//
+//        mTextPaint = Paint()
+//        with(mTextPaint) {
+//            color = Color.BLACK
+//            textSize = 30f
+//            isAntiAlias = true
+//        }
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -180,7 +196,7 @@ class ClockView(context: Context?, attrs: AttributeSet? = null, defStyleAttr: In
                 mBlackPaint
             )
             canvas?.rotate(
-                360 / 60.toFloat(),
+                360f / 60,
                 measuredWidth / 2.toFloat(),
                 measuredHeight / 2.toFloat()
             )
@@ -262,8 +278,8 @@ class ClockView(context: Context?, attrs: AttributeSet? = null, defStyleAttr: In
         refreshThread = Thread {
             while (true) {
                 try {
-                    Thread.sleep(1000)
-                    mHandler.sendEmptyMessage(0)
+//                    Thread.sleep(1000)
+//                    mHandler.sendEmptyMessage(0)
                 } catch (e: InterruptedException) {
                     break
                 }
@@ -274,8 +290,8 @@ class ClockView(context: Context?, attrs: AttributeSet? = null, defStyleAttr: In
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        mHandler.removeCallbacksAndMessages(null)
+//        mHandler.removeCallbacksAndMessages(null)
         //Interrupt thread
-        refreshThread?.interrupt()
+//        refreshThread?.interrupt()
     }
 }
