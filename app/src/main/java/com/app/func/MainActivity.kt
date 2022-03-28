@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(), View.OnTouchListener {
             startActivity(Intent(this, SecondActivity::class.java))
         }
         binding.btnNext2.setOnClickListener {
-            startActivity(Intent(this, ScrollActivity::class.java))
+            startActivity(Intent(this, ViewCustomActivity::class.java))
         }
         binding.btnNext3.setOnClickListener {
             startActivity(Intent(this, MainFragmentsActivity::class.java))

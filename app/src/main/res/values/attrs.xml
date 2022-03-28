@@ -46,4 +46,11 @@
         <attr name="clockwise" format="boolean" />
         <attr name="enabled" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="RallyLineGraphChart">
+        <attr name="barColor" format="color"/>
+        <attr name="curveBorderColor" format="color"/>
+        <attr name="curveFillColor" format="color"/>
+        <attr name="curveTopMargin" format="dimension"/>
+    </declare-styleable>
 </resources>

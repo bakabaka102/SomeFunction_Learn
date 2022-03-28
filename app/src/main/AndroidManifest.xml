@@ -22,7 +22,7 @@
             android:name=".MainFragmentsActivity"
             android:exported="false" />
         <activity
-            android:name=".ScrollActivity"
+            android:name=".ViewCustomActivity"
             android:exported="false" />
         <activity
             android:name=".SecondActivity"

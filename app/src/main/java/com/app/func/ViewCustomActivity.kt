@@ -3,15 +3,15 @@ package com.app.func
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.app.func.databinding.ActivityScrollBinding
+import com.app.func.databinding.ActivityViewCustomBinding
 
-class ScrollActivity : AppCompatActivity() {
+class ViewCustomActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityScrollBinding
+    private lateinit var binding: ActivityViewCustomBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityScrollBinding.inflate(layoutInflater)
+        binding = ActivityViewCustomBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.customSeekBar.setValueRange(1f, 18f)
@@ -33,6 +33,12 @@ class ScrollActivity : AppCompatActivity() {
                 binding.consToolTip.visibility = View.GONE
             }
         }
+
+        binding.viewTempProgress.setMinMaxProgress(40, 75)
+        binding.viewTempProgress.setTemp(60)
+        binding.viewTempProgress.setTemperatureTitle(60.toString())
+        binding.viewTempProgress.settingTemp(50)
+
 
 
     }

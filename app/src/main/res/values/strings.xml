@@ -66,4 +66,17 @@
     <string name="long_running_task">Long Running Task</string>
     <string name="two_long_running_tasks">Two Long Running Tasks</string>
 
+
+    <string name="current_temperature">Nhiệt độ hiện tại</string>
+    <string name="temp_format">%s°C</string>
+
+
+    <string name="name_contain_special_character">"Chỉ hỗ trợ kí tự a-z, A-Z, 0-9, -, _ và dấu cách"</string>
+    <string name="name_is_blank_error">"Thông tin Họ và tên đang chỉ chứa kí tự trắng. Vui lòng nhập lại"</string>
+    <string name="input_phone_number">Số điện thoại có độ dài từ 9 đến 15 kí tự</string>
+    <string name="fill_number_phone_please">Vui lòng điền số điện thoại</string>
+    <string name="error_validation_room_name">Tên phòng có độ dài 30 ký tự</string>
+    <string name="error_validation_room_name_empty">Bạn không được để trống Tên phòng</string>
+
+
 </resources>
