@@ -1,110 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E5E5E5"
+    android:fillViewport="true"
+    android:paddingBottom="60dp"
     tools:context=".ViewCustomActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cons1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_40dp"
-        android:background="#E5E5E5"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
+        android:layout_height="match_parent"
+        android:background="#E5E5E5">
 
-        <TextView
-            android:id="@+id/textValueCurrent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="06" />
-
-        <TextView
-            android:id="@+id/tvMinValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20dp"
-            android:text="0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textValueCurrent" />
-
-        <androidx.appcompat.widget.AppCompatSeekBar
-            android:id="@+id/appCompatSeekBar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
-            android:layout_marginTop="@dimen/_20dp"
-            android:max="18"
-            app:layout_constraintEnd_toStartOf="@id/tvMaxValue"
-            app:layout_constraintStart_toStartOf="@id/tvMinValue"
-            app:layout_constraintTop_toBottomOf="@+id/textValueCurrent"
-            tools:layout_editor_absoluteY="49dp" />
-
-        <TextView
-            android:id="@+id/tvMaxValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20dp"
-            android:text="18"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textValueCurrent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_16dp"
-        android:layout_marginTop="@dimen/_40dp"
-        android:paddingBottom="@dimen/_16dp"
-        android:stateListAnimator="@null"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/_8dp"
-        app:layout_constraintTop_toBottomOf="@id/cons1">
-
-        <com.app.func.view.seekbarcustom.CustomSeekBar
-            android:id="@+id/customSeekBar"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginVertical="@dimen/_10dp" />
-    </androidx.cardview.widget.CardView>
+            android:layout_marginHorizontal="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_40dp"
+            android:paddingBottom="@dimen/_16dp"
+            android:stateListAnimator="@null"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/_8dp"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/consToolTip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="-8dp"
-        android:background="@android:color/transparent"
-        android:elevation="@dimen/_10dp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
-        app:layout_constraintStart_toStartOf="parent">
+            <com.app.func.view.seekbarcustom.CustomSeekBar
+                android:id="@+id/customSeekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginVertical="@dimen/_10dp" />
+        </androidx.cardview.widget.CardView>
 
-        <com.app.func.view.seekbarcustom.ToolTipSeekBar
-            android:id="@+id/toolTipSeekBar"
-            android:layout_width="@dimen/_34dp"
-            android:layout_height="@dimen/_34dp"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/consToolTip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-8dp"
+            android:background="@android:color/transparent"
+            android:elevation="@dimen/_10dp"
+            app:layout_constraintBottom_toTopOf="@+id/cardView"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.app.func.view.seekbarcustom.ToolTipSeekBar
+                android:id="@+id/toolTipSeekBar"
+                android:layout_width="@dimen/_34dp"
+                android:layout_height="@dimen/_34dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.app.func.view.chart.stock.TemperatureView
+            android:id="@+id/viewTempProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            app:layout_constraintTop_toBottomOf="@id/cardView" />
+
+        <com.app.func.view.chart.stock.WaterTankTemperatureView
+            android:id="@+id/waterViewTempProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            app:layout_constraintTop_toBottomOf="@+id/viewTempProgress" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.app.func.view.chart.TemperatureView
-        android:id="@+id/viewTempProgress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

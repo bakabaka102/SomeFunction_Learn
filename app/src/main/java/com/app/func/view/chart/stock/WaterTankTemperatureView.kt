@@ -1,24 +1,39 @@
-package com.app.func.view.chart
+package com.app.func.view.chart.stock
 
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.LinearGradient
+import android.graphics.Matrix
+import android.graphics.Paint
+import android.graphics.RadialGradient
+import android.graphics.Rect
+import android.graphics.RectF
+import android.graphics.Shader
+import android.graphics.SweepGradient
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.app.func.R
 import com.app.func.utils.Utils.formatTemperature
+import kotlin.math.abs
 import kotlin.math.cos
+import kotlin.math.roundToInt
 import kotlin.math.sin
 
-class TemperatureView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+class WaterTankTemperatureView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 
     private lateinit var textViewTemperature: TextView
@@ -26,20 +41,21 @@ class TemperatureView @JvmOverloads constructor(
     private val rect: Rect = Rect()
     private val paintBorderBackground = Paint()
     private val paintBorder = Paint()
-    private val paintLine = Paint()
     private val paintText = Paint()
     private val paintCircle = Paint()
     private val paintCircleOutline = Paint()
     private val paintPointCurrent = Paint()
-    private var colorFrom = Color.parseColor("#FF7373")
-    private var colorMid = Color.parseColor("#FF7373")
-    private var colorTo = Color.parseColor("#D62020")
+    private var colorFrom = Color.parseColor("#FEFEFE")
+
+    //    private var colorMid = Color.parseColor("#FF7373")
+//    private var colorTo = Color.parseColor("#D62020")
     private val colorCircleOutline = Color.parseColor("#33FFFFFF")
-    private val colorCircleProgress = Color.parseColor("#CAE2CA")
-    private val colortext = Color.BLACK
-    private var colorBackgroundBorder = Color.parseColor("#CAE2CA")
-    private var gradientColors = intArrayOf(colorFrom, colorTo)
-    private var gradientPositions = floatArrayOf(0 / 360f, 360f / 360f)
+    private val colorCircleProgress = Color.parseColor("#F26522")
+    private var colortext = Color.BLACK
+
+    //    private var colorBackgroundBorder = Color.parseColor("#F26522")
+//    private var gradientColors = intArrayOf(colorFrom, colorTo)
+//    private var gradientPositions = floatArrayOf(0 / 360f, 360f / 360f)
     private var start = 0f
     private var angle = 0f
     private var oval: RectF = RectF()
@@ -47,7 +63,7 @@ class TemperatureView @JvmOverloads constructor(
     private var centerY: Float = 0f
     private var radius: Float = 0f
     private val progress = 66f
-    private var textSizeTempOnProgressCurve = 0
+    private var textSizeTempOnProgressCurve = 0f
     private var mListValue = arrayListOf<String>()
 
     private var _currentAngle = 0f
@@ -57,31 +73,30 @@ class TemperatureView @JvmOverloads constructor(
     private var minValue = 0
     private var maxValue = 0
 
-    private var _state: STATE = STATE.STABLE
+    private var _state: State = State.STOP_WORKING
     private var _currentTemp: Int? = null
     private var _targetTemp: Int? = _currentTemp
     private var _inProgressSetting = false
     private var _animator: ValueAnimator? = null
-    private var _runningState: RUNNING_MODE = RUNNING_MODE.IDLE
+    private var _runningState: RunningMode = RunningMode.IDLE
     private var strokeWidthBorder = 0f
-    private var _padding32dp = 0f
-    private var _paddingBottom40dp = 0f
+    private var paddingTop = 0f
+    private var paddingBottom = 0f
+    private var paddingLeft = 0f
+    private var paddingRight = 0f
     private var _radiusDotWhite = 0f
     private var _radiusShaderDotWhite = 0f
     private var widthScreen = 0
     private var _progressGradientColors = intArrayOf(
-        Color.parseColor("#84CCF5"),
-        Color.parseColor("#6AB8C6"), Color.parseColor("#64B22A")
+        Color.parseColor("#C7C7C7"),
+        Color.parseColor("#B7B7B7"),
+        Color.parseColor("#C7C7C7")
     )
     private var _progressGradientPositions = floatArrayOf(0f / 360f, 180f / 360f, 360f / 360f)
 
     init {
         widthScreen = Resources.getSystem().displayMetrics.widthPixels
-        strokeWidthBorder = context.resources.getDimension(R.dimen._14sp)
-        _radiusDotWhite = context.resources.getDimension(R.dimen._14dp)
         _radiusShaderDotWhite = context.resources.getDimension(R.dimen._10dp)
-        _padding32dp = RATIO_PADDING_TOP * widthScreen
-        _paddingBottom40dp = RATIO_PADDING_BOTTOM * widthScreen
         initColorByState()
         initPaint()
         initText()
@@ -90,50 +105,86 @@ class TemperatureView @JvmOverloads constructor(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val widthScreen = Resources.getSystem().displayMetrics.widthPixels
-        radius = (RATIO_CIRCLE_PROGRESS * widthScreen) / 2
-        val height = radius * 2 + _paddingBottom40dp
-        super.setMeasuredDimension(width, height.toInt())
+        val viewWidth = MeasureSpec.getSize(widthMeasureSpec)
+        paddingLeft = viewWidth * RATIO_PADDING_LEFT
+        paddingRight = viewWidth * RATIO_PADDING_RIGHT
+        val viewHeight = viewWidth * RATIO_HEIGHT_WIDTH
+        paddingTop = viewHeight * RATIO_PADDING_TOP
+        paddingBottom = viewHeight * RATIO_PADDING_BOTTOM
+        radius = (viewHeight - paddingTop - paddingBottom) / 2f
+        strokeWidthBorder = viewHeight * RATIO_STROKE_WIDTH_HEIGHT
+        _radiusDotWhite = viewHeight * RATIO_DOT_RADIUS_HEIGHT
+        super.setMeasuredDimension(viewWidth, viewHeight.roundToInt())
+    }
 
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+        super.onLayout(changed, l, t, r, b)
+        initPaint()
+        initShader()
+        textViewTemperature.setTextSize(
+            TypedValue.COMPLEX_UNIT_PX,
+            height * RATIO_TEXT_SIZE_TEMP_CENTER_HEIGHT
+        )
+        textViewHint.setTextSize(
+            TypedValue.COMPLEX_UNIT_PX,
+            height * RATIO_TEXT_SIZE_HEIGHT
+        )
+        repositionTextViewsXCoordinates()
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        radius = (RATIO_CIRCLE_PROGRESS * widthScreen) / 2
         val width = width.toFloat()
         val height = height.toFloat()
         paintBorder.style = Paint.Style.STROKE
         paintBorder.isAntiAlias = true
         centerX = width / 2
-        centerY = (height - _paddingBottom40dp) / 2 + _padding32dp
+        centerY = (height - paddingBottom) / 2 + paddingTop
 
         oval.set(centerX - radius, centerY - radius, centerX + radius, centerY + radius)
 
         val heightOfTextViews = textViewTemperature.height + textViewHint.height
         if (textViewHint.visibility == View.GONE) {
             textViewTemperature.y = (centerY - radius * RATIO_CIRCLE_IN) +
-                (radius * RATIO_CIRCLE_IN * 2 - textViewTemperature.height) / 2
+                    (radius * RATIO_CIRCLE_IN * 2 - textViewTemperature.height) / 2
         } else {
             textViewTemperature.y = (centerY - radius * RATIO_CIRCLE_IN) +
-                (radius * RATIO_CIRCLE_IN * 2 - heightOfTextViews) / 2
+                    (radius * RATIO_CIRCLE_IN * 2 - heightOfTextViews) / 2
 
             textViewHint.y = textViewTemperature.y + textViewTemperature.height
         }
         canvas?.let {
+            paintCircle.shader = null
+            paintCircle.setShadowLayer(
+                radius * 0.1f,
+                radius * 0.05f,
+                radius * 0.05f,
+                ContextCompat.getColor(context, R.color.color_cac9c9)
+            )
+            setLayerType(LAYER_TYPE_NONE, paintCircle)
             drawCircleCenterOut(it)
-            drawCircleCenterIn(it)
+            paintCircle.clearShadowLayer()
+            initShader()
+            drawCircleCenterOut(it)
             drawBorderBackground(it)
             drawNumeral(it)
-            if (_runningState == RUNNING_MODE.REDUCE) {
+
+            if (_runningState == RunningMode.REDUCE) {
+                drawTextSettingTemp(it)
+                drawDotCircle(formatStringTemp(_targetTemp!!), canvas)
+            }
+            if (_runningState == RunningMode.INCREASE) {
                 drawBorder(it)
                 drawTextSettingTemp(it)
                 drawDotCircle(formatStringTemp(_targetTemp!!), canvas)
             }
-            if (_runningState == RUNNING_MODE.INCREASE) {
-                drawTextSettingTemp(it)
-                drawDotCircle(formatStringTemp(_targetTemp!!), canvas)
-            }
         }
+    }
+
+    private fun repositionTextViewsXCoordinates() {
+        if (width == 0) return
+        textViewTemperature.x = width.toFloat() / 2 - textViewTemperature.width / 2
+        textViewHint.x = width.toFloat() / 2 - textViewHint.width / 2
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -142,7 +193,7 @@ class TemperatureView @JvmOverloads constructor(
         initValues()
     }
 
-    fun getRunningState(): RUNNING_MODE {
+    fun getRunningState(): RunningMode {
         return _runningState
     }
 
@@ -166,26 +217,27 @@ class TemperatureView @JvmOverloads constructor(
         paintBorder.isAntiAlias = true
 
         paintBorderBackground.strokeWidth = strokeWidthBorder
-        paintBorderBackground.color = colorBackgroundBorder// Color.GRAY // default
+        paintBorderBackground.shader = SweepGradient(
+            500 / 2f, 500 / 2f, _progressGradientColors,
+            _progressGradientPositions
+        ).apply {
+            val rotate = 90f
+            val gradientMatrix = Matrix()
+            gradientMatrix.preRotate(rotate, width / 2F, height / 2F)
+            setLocalMatrix(gradientMatrix)
+        }
         paintBorderBackground.style = Paint.Style.STROKE
         paintBorderBackground.strokeCap = Paint.Cap.ROUND
         paintBorderBackground.isAntiAlias = true
 
-
-        paintLine.strokeWidth = strokeWidthLine
-        paintLine.color = colorFrom // default
-        paintLine.style = Paint.Style.STROKE
-        paintLine.strokeCap = Paint.Cap.ROUND
-        paintLine.isAntiAlias = true
-
-        textSizeTempOnProgressCurve = resources.getDimensionPixelSize(R.dimen._14sp)
+        textSizeTempOnProgressCurve = height * RATIO_TEXT_SIZE_HEIGHT
         val paintTypeFace = ResourcesCompat.getFont(context, R.font.roboto_medium)
         paintText.typeface = paintTypeFace
         paintText.strokeWidth = strokeWidthText
-        paintText.color = colortext// default
+        paintText.color = colortext // default
         paintText.style = Paint.Style.FILL
         paintText.isAntiAlias = true
-        paintText.textSize = textSizeTempOnProgressCurve.toFloat()
+        paintText.textSize = textSizeTempOnProgressCurve
 
         paintPointCurrent.color = Color.WHITE
         paintPointCurrent.style = Paint.Style.FILL_AND_STROKE
@@ -194,41 +246,15 @@ class TemperatureView @JvmOverloads constructor(
         val _shadowColor = Color.parseColor("#664F5979")
         paintPointCurrent.setShadowLayer(_radiusShaderDotWhite, 0f, 0f, _shadowColor)
         setLayerType(LAYER_TYPE_NONE, paintPointCurrent)
-
     }
 
     private fun initColorByState() {
-        when (_state) {
-            STATE.STABLE, STATE.UNSTABLE -> {
-                colorFrom = Color.parseColor("#84CCF5")
-                colorMid = Color.parseColor("#6AB8C6")
-                colorTo = Color.parseColor("#64B22A")
-                colorBackgroundBorder = Color.parseColor("#CAE2CA")
-                gradientColors = intArrayOf(colorFrom, colorMid, colorTo)
-                gradientPositions = floatArrayOf(0f / 360f, 180f / 360f, 360f / 360f)
+        colortext = when (_state) {
+            State.STOP_WORKING -> {
+                ContextCompat.getColor(context, R.color.color_7A868D)
             }
-            STATE.WARNING_RED, STATE.STOP_WORKING -> {
-                colorFrom = Color.parseColor("#FF7373")
-                colorMid = Color.parseColor("#F24648")
-                colorTo = Color.parseColor("#D62020")
-                colorBackgroundBorder = Color.parseColor("#F9D7D7")
-                gradientColors = intArrayOf(colorFrom, colorMid, colorTo)
-                gradientPositions = floatArrayOf(0f / 360f, 180f / 360f, 360f / 360f)
-            }
-            STATE.NO_SIGNAL -> {
-                colorFrom = Color.parseColor("#E6EBED")
-                colorTo = Color.parseColor("#ACBAC2")
-                colorBackgroundBorder = Color.parseColor("#DEE5EA")
-                gradientColors = intArrayOf(colorFrom, colorTo)
-                gradientPositions = floatArrayOf(0f / 360f, 360f / 360f)
-            }
-            STATE.WARNING_YELLOW -> {
-                colorFrom = Color.parseColor("#FFD585")
-                colorMid = Color.parseColor("#FFBA34")
-                colorTo = Color.parseColor("#FCA600")
-                colorBackgroundBorder = Color.parseColor("#F8E8C9")
-                gradientColors = intArrayOf(colorFrom, colorMid, colorTo)
-                gradientPositions = floatArrayOf(0f / 360f, 180f / 360f, 360f / 360f)
+            State.WORKING -> {
+                Color.BLACK
             }
         }
     }
@@ -237,15 +263,21 @@ class TemperatureView @JvmOverloads constructor(
         canvas.drawCircle(centerX, centerY, radius * 0.75f, paintCircle)
     }
 
-    private fun drawCircleCenterIn(canvas: Canvas) {
-        canvas.drawCircle(centerX, centerY, radius * RATIO_CIRCLE_IN, paintCircleOutline)
-    }
-
     private fun drawBorder(canvas: Canvas) {
         canvas.drawArc(oval, _currentAngle, _newSweepAngle, false, paintBorder)
     }
 
     private fun drawBorderBackground(canvas: Canvas) {
+        val gradient: Shader = LinearGradient(
+            width / 2f,
+            0f,
+            width / 2f,
+            height.toFloat(),
+            Color.parseColor("#20B7B7B7"),
+            Color.parseColor("#C7C7C7"),
+            Shader.TileMode.MIRROR
+        )
+        paintBorderBackground.shader = gradient
         canvas.drawArc(oval, start, angle, false, paintBorderBackground)
     }
 
@@ -263,39 +295,44 @@ class TemperatureView @JvmOverloads constructor(
         drawTextTempSelected(
             temp = _targetTemp!!,
             canvas = canvas,
+            Color.RED
         )
     }
 
     private fun drawMaxMinValue(canvas: Canvas) {
-        drawTextTempSelected(maxValue, canvas)
-        drawTextTempSelected(minValue, canvas)
+        drawTextTempSelected(maxValue, canvas, Color.BLACK)
+        drawTextTempSelected(minValue, canvas, Color.BLACK)
     }
 
     private fun drawTextTempSelected(
         temp: Int,
-        canvas: Canvas
+        canvas: Canvas,
+        color: Int
     ) {
         val item = formatStringTemp(temp)
-        val position = mListValue.indexOf(item) //getPosition item
-        val total = 240f// 2/3 circle
-        val edge = ((total / (mListValue.size - 1))) * (position) //edge pos
-        val angle = edge + 150f //angle now
+        val position = mListValue.indexOf(item) // getPosition item
+        val total = 240f // 2/3 circle
+        val edge = ((total / (mListValue.size - 1))) * (position) // edge pos
+        val angle = edge + 150f // angle now
         val radians = angle * (Math.PI / 180) // calc radians
         val radiusX = radius * 1.3
-        val radiusY = radius * 1.10
+        val radiusY = radius * 1.15
         paintText.getTextBounds(item, 0, item.length, rect)
         val xText = width.toFloat() / 2 + cos(radians) * radiusX - rect.width().toFloat() / 2
         val yTEXT = if (angle in 210f..330f) {
             centerY + sin(radians) * radiusY - rect.height().toFloat() / 2
-        } else centerY + sin(radians) * radius + rect.height().toFloat() / 2
+        } else {
+            centerY + sin(radians) * radius + rect.height().toFloat() / 2
+        }
+        paintText.color = color
         canvas.drawText(item, xText.toFloat(), yTEXT.toFloat(), paintText)
     }
 
     private fun drawDotCircle(item: String, canvas: Canvas) {
-        val position = mListValue.indexOf(item) //getPosition item
+        val position = mListValue.indexOf(item) // getPosition item
         val total = progress * 360 / 100 // 66f == 2/3 circle
-        val edge = ((total / (mListValue.size)) * 1.05) * position //edge pos
-        val angle = edge + 150f //angle now
+        val edge = ((total / (mListValue.size)) * 1.05) * position // edge pos
+        val angle = edge + 150f // angle now
         val radians = angle * (Math.PI / 180) // calc radians
 
         val xCircle = (width / 2 + cos(radians) * radius).toInt()
@@ -306,10 +343,10 @@ class TemperatureView @JvmOverloads constructor(
 
     private fun calculateAngle(temp: Int): Float {
         val values = formatStringTemp(temp)
-        val position = mListValue.indexOf(values) //getPosition item
+        val position = mListValue.indexOf(values) // getPosition item
         val total = progress * 360 / 100 // 66f == 2/3 circle
-        val edge = ((total / (mListValue.size)) * 1.05) * position //edge pos
-        val angle = edge + 150f //angle now
+        val edge = ((total / (mListValue.size)) * 1.05) * position // edge pos
+        val angle = edge + 150f // angle now
         return angle.toFloat()
     }
 
@@ -325,29 +362,25 @@ class TemperatureView @JvmOverloads constructor(
 
     private fun initValues() {
         angle = progress * 360 / 100 // total
-        var remain = 360 - angle
+        val remain = 360 - angle
         val startAngle = remain / 2
         start = 90f + startAngle
     }
 
     private fun initShader() {
         if (width <= 0 || height <= 0) return
-        val shader =
-            SweepGradient(
-                width / 2f, height / 2f, _progressGradientColors,
-                _progressGradientPositions
-            ).apply {
-                val rotate = 90f
-                val gradientMatrix = Matrix()
-                gradientMatrix.preRotate(rotate, width / 2F, height / 2F)
-                setLocalMatrix(gradientMatrix)
-            }
-        paintBorder.shader = shader
-        paintLine.shader = shader
-
         val shaderCircle = RadialGradient(
-            (width / 2).toFloat(), 1f,
-            (height / 3).toFloat(), colorTo, colorFrom, Shader.TileMode.MIRROR
+            (width * 0.56).toFloat(), (height * 0.64).toFloat(), (height * 0.55).toFloat(),
+            intArrayOf(
+                ContextCompat.getColor(context, R.color.white),
+                ContextCompat.getColor(context, R.color.white),
+                ContextCompat.getColor(context, R.color.white),
+                ContextCompat.getColor(context, R.color.white90),
+                ContextCompat.getColor(context, R.color.white80),
+                ContextCompat.getColor(context, R.color.color_cac9c9),
+            ),
+            floatArrayOf(0.0f, 0.2f, 0.4f, 0.5f, 0.55f, 1f),
+            Shader.TileMode.CLAMP
         )
         paintCircle.shader = shaderCircle
     }
@@ -363,12 +396,12 @@ class TemperatureView @JvmOverloads constructor(
         val typeface = ResourcesCompat.getFont(context, R.font.roboto_bold)
         textViewTemperature.typeface = typeface
         textViewTemperature.id = 1
-        textViewTemperature.textSize = 52f
+        textViewTemperature.textSize = height * RATIO_TEXT_SIZE_TEMP_CENTER_HEIGHT
         textViewTemperature.includeFontPadding = false
-        textViewTemperature.setTextColor(Color.WHITE)
+        textViewTemperature.setTextColor(ContextCompat.getColor(context, R.color.color_7A868D))
         textViewTemperature.gravity = Gravity.CENTER
         val tempString = if (_currentTemp == null) {
-            "--"
+            "--°C"
         } else formatStringTemp(_currentTemp!!)
         textViewTemperature.text = tempString
 
@@ -380,23 +413,19 @@ class TemperatureView @JvmOverloads constructor(
         textViewHint.typeface = typefaceTextViewHint
         textViewHint.includeFontPadding = false
         removeAllViews()
-        textViewHint.textSize = 14f
-        textViewHint.setTextColor(Color.WHITE)
+        textViewHint.textSize = height * RATIO_TEXT_SIZE_HEIGHT
+        textViewHint.setTextColor(ContextCompat.getColor(context, R.color.color_7A868D))
         textViewHint.gravity = Gravity.CENTER
         textViewHint.text = context.resources.getString(R.string.current_temperature)
         addView(textViewTemperature)
         addView(textViewHint)
     }
 
-    fun updateState(state: STATE) {
+    fun updateState(state: State) {
         if (_state == state) return
-        invalidate()
         _state = state
-        if (_state == STATE.NO_SIGNAL || _state == STATE.STOP_WORKING) {
-            if (_state == STATE.NO_SIGNAL) {
-                textViewHint.visibility = View.GONE
-            }
-            textViewTemperature.text = "--"
+        if (_state == State.STOP_WORKING) {
+            textViewTemperature.text = "--°C"
         } else {
             textViewHint.visibility = View.VISIBLE
         }
@@ -404,6 +433,7 @@ class TemperatureView @JvmOverloads constructor(
         initPaint()
         initShader()
         initValues()
+        invalidate()
     }
 
     fun settingTemp(temp: Int) {
@@ -411,10 +441,10 @@ class TemperatureView @JvmOverloads constructor(
         _targetTemp = temp
         _inProgressSetting = true
         _runningState = when {
-            _targetTemp == _currentTemp -> RUNNING_MODE.IDLE
-            _targetTemp!! > _currentTemp!! -> RUNNING_MODE.INCREASE
-            _targetTemp!! < _currentTemp!! -> RUNNING_MODE.REDUCE
-            else -> RUNNING_MODE.IDLE
+            _targetTemp == _currentTemp -> RunningMode.IDLE
+            _targetTemp!! > _currentTemp!! -> RunningMode.INCREASE
+            _targetTemp!! < _currentTemp!! -> RunningMode.REDUCE
+            else -> RunningMode.IDLE
         }
         _currentAngle = if (_currentTemp!! > maxValue) {
             calculateAngle(maxValue)
@@ -422,12 +452,12 @@ class TemperatureView @JvmOverloads constructor(
             calculateAngle(_currentTemp!!)
         }
         _targetSettingAngle = calculateAngle(_targetTemp!!)
-        _newSweepAngle = -Math.abs(_targetSettingAngle - _currentAngle)
-        if (_runningState == RUNNING_MODE.INCREASE) {
+        _newSweepAngle = abs(_targetSettingAngle - _currentAngle)
+        if (_runningState == RunningMode.REDUCE) {
             invalidate()
             return
         }
-        if (_runningState == RUNNING_MODE.REDUCE) {
+        if (_runningState == RunningMode.INCREASE) {
             val updateListener: (Float) -> Unit = { animatedValue ->
                 _newSweepAngle = animatedValue
                 invalidate()
@@ -477,7 +507,7 @@ class TemperatureView @JvmOverloads constructor(
     }
 
     fun cancelSettingTemp() {
-        _runningState = RUNNING_MODE.IDLE
+        _runningState = RunningMode.IDLE
         _inProgressSetting = false
         _animator?.cancel()
         _animator = null
@@ -493,25 +523,21 @@ class TemperatureView @JvmOverloads constructor(
         textViewTemperature.text = title
     }
 
-    fun formatStringTemp(temp: Int): String {
+    private fun formatStringTemp(temp: Int): String {
         return String.format(
             context.resources.getString(R.string.temp_format), temp.formatTemperature()
         )
     }
 
-    enum class RUNNING_MODE {
+    enum class RunningMode {
         REDUCE,
         INCREASE,
         IDLE
     }
 
-    enum class STATE {
-        STABLE,
-        UNSTABLE,
-        WARNING_RED,
-        WARNING_YELLOW,
-        NO_SIGNAL,
-        STOP_WORKING
+    enum class State {
+        STOP_WORKING,
+        WORKING
     }
 
     companion object {
@@ -519,7 +545,14 @@ class TemperatureView @JvmOverloads constructor(
         private const val strokeWidthText = 3f
         private const val RATIO_CIRCLE_IN = 180f / 237f
         private const val RATIO_CIRCLE_PROGRESS = 237f / 375f
-        private const val RATIO_PADDING_TOP = 32f / 375f
-        private const val RATIO_PADDING_BOTTOM = 32f / 375f
+        private const val RATIO_PADDING_TOP = 24f / 210f
+        private const val RATIO_PADDING_BOTTOM = 12f / 210f
+        private const val RATIO_PADDING_LEFT = 12f / 300f
+        private const val RATIO_PADDING_RIGHT = 12f / 300f
+        private const val RATIO_HEIGHT_WIDTH = 0.8f
+        private const val RATIO_STROKE_WIDTH_HEIGHT = 14f / 266f
+        private const val RATIO_TEXT_SIZE_HEIGHT = 14f / 266f
+        private const val RATIO_DOT_RADIUS_HEIGHT = 12f / 266f
+        private const val RATIO_TEXT_SIZE_TEMP_CENTER_HEIGHT = 52f / 266f
     }
 }

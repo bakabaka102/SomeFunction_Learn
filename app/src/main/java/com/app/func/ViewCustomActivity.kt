@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.app.func.databinding.ActivityViewCustomBinding
+import com.app.func.view.chart.stock.WaterTankTemperatureView
 
 class ViewCustomActivity : AppCompatActivity() {
 
@@ -35,10 +36,15 @@ class ViewCustomActivity : AppCompatActivity() {
         }
 
         binding.viewTempProgress.setMinMaxProgress(40, 75)
-        binding.viewTempProgress.setTemp(60)
-        binding.viewTempProgress.setTemperatureTitle(60.toString())
+        binding.viewTempProgress.setTemp(20)
+        binding.viewTempProgress.setTemperatureTitle(20.toString())
         binding.viewTempProgress.settingTemp(50)
 
+        binding.waterViewTempProgress.setMinMaxProgress(40, 75)
+        binding.waterViewTempProgress.setTemp(20)
+        binding.waterViewTempProgress.setTemperatureTitle(20.toString())
+        binding.waterViewTempProgress.settingTemp(50)
+        binding.waterViewTempProgress.updateState(WaterTankTemperatureView.State.WORKING)
 
 
     }
