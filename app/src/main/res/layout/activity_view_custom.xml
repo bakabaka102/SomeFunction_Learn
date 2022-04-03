@@ -70,14 +70,14 @@
 
         <com.app.func.view.seekbarcustom.crollerTest.Croller
             android:id="@+id/crollerSeekbar"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_48dp"
-            android:layout_marginTop="@dimen/_48dp"
+            android:layout_marginTop="@dimen/_32dp"
             app:back_circle_color="#EDEDED"
             app:indicator_color="#0B3C49"
             app:indicator_width="10"
-            app:is_continuous="false"
+            app:is_continuous="true"
             app:label="aaaaa"
             app:label_color="#000000"
             app:layout_constraintEnd_toEndOf="parent"

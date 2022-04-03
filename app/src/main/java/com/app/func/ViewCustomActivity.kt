@@ -8,8 +8,8 @@ import com.app.func.databinding.ActivityViewCustomBinding
 import com.app.func.utils.MyToast
 import com.app.func.view.chart.stock.WaterTankTemperatureView
 import com.app.func.view.seekbarcustom.crollerTest.Croller
-import com.app.func.view.seekbarcustom.crollerTest.Croller.onProgressChangedListener
 import com.app.func.view.seekbarcustom.crollerTest.OnCrollerChangeListener
+import com.app.func.view.seekbarcustom.crollerTest.OnProgressChangedListener
 
 class ViewCustomActivity : AppCompatActivity() {
 
@@ -81,7 +81,7 @@ class ViewCustomActivity : AppCompatActivity() {
             }
         })
 
-        binding.crollerSeekbar.setOnProgressChangedListener(object : onProgressChangedListener {
+        binding.crollerSeekbar.setOnProgressChangedListener(object : OnProgressChangedListener {
             override fun onProgressChanged(progress: Int) {
                 // use the progress
                 //MyToast.showToast(this@ViewCustomActivity, "Value: $progress")

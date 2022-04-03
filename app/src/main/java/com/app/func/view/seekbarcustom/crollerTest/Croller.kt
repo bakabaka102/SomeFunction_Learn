@@ -10,10 +10,7 @@ import android.view.View
 import com.app.func.R
 import com.app.func.view.seekbarcustom.crollerTest.utilities.Utils.convertDpToPixel
 import com.app.func.view.seekbarcustom.crollerTest.utilities.Utils.getDistance
-import kotlin.math.atan2
-import kotlin.math.cos
-import kotlin.math.floor
-import kotlin.math.sin
+import kotlin.math.*
 
 class Croller @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -33,7 +30,6 @@ class Croller @JvmOverloads constructor(
         strokeWidth = progressSecondaryStrokeWidth
         style = Paint.Style.FILL
     }
-
 
     private var circlePaint2: Paint = Paint().apply {
         isAntiAlias = true
@@ -70,13 +66,13 @@ class Croller @JvmOverloads constructor(
     private var min = 1
     private var indicatorWidth = 7f
     private var label: String? = "Label"
-    var labelFont: String? = null
+    private var labelFont: String? = null
         set(labelFont) {
             field = labelFont
             generateTypeface()
             invalidate()
         }
-    var labelStyle = 0
+    private var labelStyle = 0
         set(labelStyle) {
             field = labelStyle
             invalidate()
@@ -91,14 +87,10 @@ class Croller @JvmOverloads constructor(
     private var isAntiClockwise = false
     private var startEventSent = false
     private var oval: RectF = RectF()
-    private var mProgressChangeListener: onProgressChangedListener? = null
+    private var mProgressChangeListener: OnProgressChangedListener? = null
     private var mCrollerChangeListener: OnCrollerChangeListener? = null
 
-    interface onProgressChangedListener {
-        fun onProgressChanged(progress: Int)
-    }
-
-    fun setOnProgressChangedListener(mProgressChangeListener: onProgressChangedListener?) {
+    fun setOnProgressChangedListener(mProgressChangeListener: OnProgressChangedListener?) {
         this.mProgressChangeListener = mProgressChangeListener
     }
 
@@ -124,7 +116,7 @@ class Croller @JvmOverloads constructor(
 
     private fun generateTypeface() {
         var plainLabel = Typeface.DEFAULT
-        if (labelFont != null && labelFont!!.isNotEmpty()) {
+        if (labelFont != null && labelFont?.isNotEmpty() == true) {
             val assetMgr = context.assets
             plainLabel = Typeface.createFromAsset(assetMgr, labelFont)
         }
@@ -132,8 +124,7 @@ class Croller @JvmOverloads constructor(
             0 -> textPaint.typeface = plainLabel
             1 -> textPaint.typeface = Typeface.create(plainLabel, Typeface.BOLD)
             2 -> textPaint.typeface = Typeface.create(plainLabel, Typeface.ITALIC)
-            3 -> textPaint.typeface =
-                Typeface.create(plainLabel, Typeface.BOLD_ITALIC)
+            3 -> textPaint.typeface = Typeface.create(plainLabel, Typeface.BOLD_ITALIC)
         }
     }
 
@@ -146,38 +137,36 @@ class Croller @JvmOverloads constructor(
         setMainCircleColor(a.getColor(R.styleable.Croller_main_circle_color, mainCircleColor))
         setIndicatorColor(a.getColor(R.styleable.Croller_indicator_color, indicatorColor))
         setProgressPrimaryColor(
-            a.getColor(
-                R.styleable.Croller_progress_primary_color, progressPrimaryColor
-            )
+            a.getColor(R.styleable.Croller_progress_primary_color, progressPrimaryColor)
         )
         setProgressSecondaryColor(
             a.getColor(
-                R.styleable.Croller_progress_secondary_color,                progressSecondaryColor
+                R.styleable.Croller_progress_secondary_color, progressSecondaryColor
             )
         )
         setBackCircleDisabledColor(
             a.getColor(
-                R.styleable.Croller_back_circle_disable_color,                backCircleDisabledColor
+                R.styleable.Croller_back_circle_disable_color, backCircleDisabledColor
             )
         )
         setMainCircleDisabledColor(
             a.getColor(
-                R.styleable.Croller_main_circle_disable_color,                mainCircleDisabledColor
+                R.styleable.Croller_main_circle_disable_color, mainCircleDisabledColor
             )
         )
         setIndicatorDisabledColor(
             a.getColor(
-                R.styleable.Croller_indicator_disable_color,                indicatorDisabledColor
+                R.styleable.Croller_indicator_disable_color, indicatorDisabledColor
             )
         )
         setProgressPrimaryDisabledColor(
             a.getColor(
-                R.styleable.Croller_progress_primary_disable_color,                progressPrimaryDisabledColor
+                R.styleable.Croller_progress_primary_disable_color, progressPrimaryDisabledColor
             )
         )
         setProgressSecondaryDisabledColor(
             a.getColor(
-                R.styleable.Croller_progress_secondary_disable_color,                progressSecondaryDisabledColor
+                R.styleable.Croller_progress_secondary_disable_color, progressSecondaryDisabledColor
             )
         )
         setLabelSize(
@@ -206,9 +195,7 @@ class Croller @JvmOverloads constructor(
             a.getFloat(R.styleable.Croller_progress_primary_stroke_width, 25f)
         )
         setProgressSecondaryStrokeWidth(
-            a.getFloat(
-                R.styleable.Croller_progress_secondary_stroke_width,                10f
-            )
+            a.getFloat(R.styleable.Croller_progress_secondary_stroke_width, 10f)
         )
         setSweepAngle(a.getInt(R.styleable.Croller_sweep_angle, -1))
         setStartOffset(a.getInt(R.styleable.Croller_start_offset, 30))
@@ -229,25 +216,31 @@ class Croller @JvmOverloads constructor(
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
         val heightSize = MeasureSpec.getSize(heightMeasureSpec)
-        var width: Int
-        var height: Int
-        width = if (widthMode == MeasureSpec.EXACTLY) {
-            widthSize
-        } else if (widthMode == MeasureSpec.AT_MOST) {
-            Math.min(minWidth, widthSize)
-        } else {
-            // only in case of ScrollViews, otherwise MeasureSpec.UNSPECIFIED is never triggered
-            // If width is wrap_content i.e. MeasureSpec.UNSPECIFIED, then make width equal to height
-            heightSize
+        var width = when (widthMode) {
+            MeasureSpec.EXACTLY -> {
+                widthSize
+            }
+            MeasureSpec.AT_MOST -> {
+                min(minWidth, widthSize)
+            }
+            else -> {
+                // only in case of ScrollViews, otherwise MeasureSpec.UNSPECIFIED is never triggered
+                // If width is wrap_content i.e. MeasureSpec.UNSPECIFIED, then make width equal to height
+                heightSize
+            }
         }
-        height = if (heightMode == MeasureSpec.EXACTLY) {
-            heightSize
-        } else if (heightMode == MeasureSpec.AT_MOST) {
-            Math.min(minHeight, heightSize)
-        } else {
-            // only in case of ScrollViews, otherwise MeasureSpec.UNSPECIFIED is never triggered
-            // If height is wrap_content i.e. MeasureSpec.UNSPECIFIED, then make height equal to width
-            widthSize
+        var height = when (heightMode) {
+            MeasureSpec.EXACTLY -> {
+                heightSize
+            }
+            MeasureSpec.AT_MOST -> {
+                min(minHeight, heightSize)
+            }
+            else -> {
+                // only in case of ScrollViews, otherwise MeasureSpec.UNSPECIFIED is never triggered
+                // If height is wrap_content i.e. MeasureSpec.UNSPECIFIED, then make height equal to width
+                widthSize
+            }
         }
         if (widthMode == MeasureSpec.UNSPECIFIED && heightMode == MeasureSpec.UNSPECIFIED) {
             width = minWidth
@@ -264,11 +257,12 @@ class Croller @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        if (mProgressChangeListener != null) mProgressChangeListener!!.onProgressChanged((deg - 2).toInt())
-        if (mCrollerChangeListener != null) mCrollerChangeListener!!.onProgressChanged(
-            this,
-            (deg - 2).toInt()
-        )
+        if (mProgressChangeListener != null) {
+            mProgressChangeListener?.onProgressChanged((deg - 2).toInt())
+        }
+        if (mCrollerChangeListener != null) {
+            mCrollerChangeListener?.onProgressChanged(this, (deg - 2).toInt())
+        }
         if (isEnabled) {
             circlePaint2.color = progressPrimaryColor
             circlePaint.color = progressSecondaryColor
@@ -284,7 +278,7 @@ class Croller @JvmOverloads constructor(
             startOffset2 = startOffset - 15
             linePaint.strokeWidth = indicatorWidth
             textPaint.textSize = labelSize
-            val radius = (Math.min(midx, midy) * (14.5.toFloat() / 16)).toInt()
+            val radius = (min(midx, midy) * (14.5.toFloat() / 16)).toInt()
             if (sweepAngle == -1) {
                 sweepAngle = 360 - 2 * startOffset2
             }
@@ -299,16 +293,16 @@ class Croller @JvmOverloads constructor(
             }
             var x: Float
             var y: Float
-            val deg2 = Math.max(3f, deg)
-            val deg3 = Math.min(deg, (max + 2).toFloat())
+            val deg2 = max(3f, deg)
+            val deg3 = min(deg, (max + 2).toFloat())
             for (i in deg2.toInt() until max + 3) {
                 var tmp =
                     startOffset2.toFloat() / 360 + sweepAngle.toFloat() / 360 * i.toFloat() / (max + 5)
                 if (isAntiClockwise) {
                     tmp = 1.0f - tmp
                 }
-                x = midx + (progressRadius * Math.sin(2 * Math.PI * (1.0 - tmp))).toFloat()
-                y = midy + (progressRadius * Math.cos(2 * Math.PI * (1.0 - tmp))).toFloat()
+                x = midx + (progressRadius * sin(2 * Math.PI * (1.0 - tmp))).toFloat()
+                y = midy + (progressRadius * cos(2 * Math.PI * (1.0 - tmp))).toFloat()
                 if (progressSecondaryCircleSize == -1f) canvas.drawCircle(
                     x,
                     y,
@@ -323,8 +317,8 @@ class Croller @JvmOverloads constructor(
                 if (isAntiClockwise) {
                     tmp = 1.0f - tmp
                 }
-                x = midx + (progressRadius * Math.sin(2 * Math.PI * (1.0 - tmp))).toFloat()
-                y = midy + (progressRadius * Math.cos(2 * Math.PI * (1.0 - tmp))).toFloat()
+                x = midx + (progressRadius * sin(2 * Math.PI * (1.0 - tmp))).toFloat()
+                y = midy + (progressRadius * cos(2 * Math.PI * (1.0 - tmp))).toFloat()
                 if (progressPrimaryCircleSize == -1f) canvas.drawCircle(
                     x,
                     y,
@@ -340,9 +334,9 @@ class Croller @JvmOverloads constructor(
             val x1 =
                 midx + (radius * (2.toFloat() / 5) * sin(2 * Math.PI * (1.0 - tmp2))).toFloat()
             val y1 =
-                midy + (radius * (2.toFloat() / 5) * Math.cos(2 * Math.PI * (1.0 - tmp2))).toFloat()
+                midy + (radius * (2.toFloat() / 5) * cos(2 * Math.PI * (1.0 - tmp2))).toFloat()
             val x2 =
-                midx + (radius * (3.toFloat() / 5) * Math.sin(2 * Math.PI * (1.0 - tmp2))).toFloat()
+                midx + (radius * (3.toFloat() / 5) * sin(2 * Math.PI * (1.0 - tmp2))).toFloat()
             val y2 =
                 midy + (radius * (3.toFloat() / 5) * cos(2 * Math.PI * (1.0 - tmp2))).toFloat()
             if (isEnabled) circlePaint.color = backCircleColor else circlePaint.color =
@@ -351,15 +345,18 @@ class Croller @JvmOverloads constructor(
             if (isEnabled) circlePaint.color = mainCircleColor else circlePaint.color =
                 mainCircleDisabledColor
             canvas.drawCircle(midx, midy, mainCircleRadius, circlePaint)
-            canvas.drawText(
-                label!!,
-                midx,
-                midy + (radius * 1.1).toFloat() - textPaint.fontMetrics.descent,
-                textPaint
-            )
+            label?.let {
+                canvas.drawText(
+                    it,
+                    midx,
+                    midy + (radius * 1.1).toFloat() - textPaint.fontMetrics.descent,
+                    textPaint
+                )
+            }
             canvas.drawLine(x1, y1, x2, y2, linePaint)
         } else {
-            val radius = (Math.min(midx, midy) * (14.5.toFloat() / 16)).toInt()
+            val radius = (min(midx, midy) * (14.5.toFloat() / 16)).toInt()
+            val deg3 = min(deg, (max + 2).toFloat())
             if (sweepAngle == -1) {
                 sweepAngle = 360 - 2 * startOffset
             }
@@ -378,7 +375,6 @@ class Croller @JvmOverloads constructor(
             circlePaint2.style = Paint.Style.STROKE
             linePaint.strokeWidth = indicatorWidth
             textPaint.textSize = labelSize
-            val deg3 = Math.min(deg, (max + 2).toFloat())
             oval[midx - progressRadius, midy - progressRadius, midx + progressRadius] =
                 midy + progressRadius
             canvas.drawArc(
@@ -410,13 +406,13 @@ class Croller @JvmOverloads constructor(
                 tmp2 = 1.0f - tmp2
             }
             val x1 =
-                midx + (radius * (2.toFloat() / 5) * Math.sin(2 * Math.PI * (1.0 - tmp2))).toFloat()
+                midx + (radius * (2.toFloat() / 5) * sin(2 * Math.PI * (1.0 - tmp2))).toFloat()
             val y1 =
-                midy + (radius * (2.toFloat() / 5) * Math.cos(2 * Math.PI * (1.0 - tmp2))).toFloat()
+                midy + (radius * (2.toFloat() / 5) * cos(2 * Math.PI * (1.0 - tmp2))).toFloat()
             val x2 =
-                midx + (radius * (3.toFloat() / 5) * Math.sin(2 * Math.PI * (1.0 - tmp2))).toFloat()
+                midx + (radius * (3.toFloat() / 5) * sin(2 * Math.PI * (1.0 - tmp2))).toFloat()
             val y2 =
-                midy + (radius * (3.toFloat() / 5) * Math.cos(2 * Math.PI * (1.0 - tmp2))).toFloat()
+                midy + (radius * (3.toFloat() / 5) * cos(2 * Math.PI * (1.0 - tmp2))).toFloat()
             circlePaint.style = Paint.Style.FILL
             if (isEnabled) circlePaint.color = backCircleColor else circlePaint.color =
                 backCircleDisabledColor
@@ -424,26 +420,30 @@ class Croller @JvmOverloads constructor(
             if (isEnabled) circlePaint.color = mainCircleColor else circlePaint.color =
                 mainCircleDisabledColor
             canvas.drawCircle(midx, midy, mainCircleRadius, circlePaint)
-            canvas.drawText(
-                label!!,
-                midx,
-                midy + (radius * 1.1).toFloat() - textPaint.fontMetrics.descent,
-                textPaint
-            )
+            label?.let {
+                canvas.drawText(
+                    it,
+                    midx,
+                    midy + (radius * 1.1).toFloat() - textPaint.fontMetrics.descent,
+                    textPaint
+                )
+            }
             canvas.drawLine(x1, y1, x2, y2, linePaint)
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(e: MotionEvent): Boolean {
-        if (!isEnabled) return false
-        if (getDistance(e.x, e.y, midx, midy) > Math.max(
+        if (!isEnabled) {
+            return false
+        }
+        if (getDistance(e.x, e.y, midx, midy) > max(
                 mainCircleRadius,
-                Math.max(backCircleRadius, progressRadius)
+                max(backCircleRadius, progressRadius)
             )
         ) {
             if (startEventSent && mCrollerChangeListener != null) {
-                mCrollerChangeListener!!.onStopTrackingTouch(this)
+                mCrollerChangeListener?.onStopTrackingTouch(this)
                 startEventSent = false
             }
             return super.onTouchEvent(e)
@@ -458,7 +458,7 @@ class Croller @JvmOverloads constructor(
             }
             downdeg = floor((downdeg / 360 * (max + 5)).toDouble()).toFloat()
             if (mCrollerChangeListener != null) {
-                mCrollerChangeListener!!.onStartTrackingTouch(this)
+                mCrollerChangeListener?.onStartTrackingTouch(this)
                 startEventSent = true
             }
             return true
@@ -515,7 +515,7 @@ class Croller @JvmOverloads constructor(
         }
         if (e.action == MotionEvent.ACTION_UP) {
             if (mCrollerChangeListener != null) {
-                mCrollerChangeListener!!.onStopTrackingTouch(this)
+                mCrollerChangeListener?.onStopTrackingTouch(this)
                 startEventSent = false
             }
             return true
