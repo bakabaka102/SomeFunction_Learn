@@ -1,10 +1,15 @@
 package com.app.func
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.app.func.databinding.ActivityViewCustomBinding
+import com.app.func.utils.MyToast
 import com.app.func.view.chart.stock.WaterTankTemperatureView
+import com.app.func.view.seekbarcustom.crollerTest.Croller
+import com.app.func.view.seekbarcustom.crollerTest.Croller.onProgressChangedListener
+import com.app.func.view.seekbarcustom.crollerTest.OnCrollerChangeListener
 
 class ViewCustomActivity : AppCompatActivity() {
 
@@ -46,6 +51,41 @@ class ViewCustomActivity : AppCompatActivity() {
         binding.waterViewTempProgress.settingTemp(50)
         binding.waterViewTempProgress.updateState(WaterTankTemperatureView.State.WORKING)
 
+        initScrollSeekbar()
 
+    }
+
+    private fun initScrollSeekbar() {
+//        binding.crollerSeekbar.setIndicatorWidth(10f)
+//        binding.crollerSeekbar.setBackCircleColor(Color.parseColor("#EDEDED"))
+//        binding.crollerSeekbar.setMainCircleColor(Color.WHITE)
+//        binding.crollerSeekbar.setMax(50)
+//        binding.crollerSeekbar.setStartOffset(45)
+//        binding.crollerSeekbar.setIsContinuous(false)
+//        binding.crollerSeekbar.setLabelColor(Color.BLACK)
+//        binding.crollerSeekbar.setProgressPrimaryColor(Color.parseColor("#0B3C49"))
+//        binding.crollerSeekbar.setIndicatorColor(Color.parseColor("#0B3C49"))
+//        binding.crollerSeekbar.setProgressSecondaryColor(Color.parseColor("#EEEEEE"))
+
+        binding.crollerSeekbar.setOnCrollerChangeListener(object : OnCrollerChangeListener {
+            override fun onProgressChanged(croller: Croller?, progress: Int) {
+
+            }
+
+            override fun onStartTrackingTouch(croller: Croller?) {
+
+            }
+
+            override fun onStopTrackingTouch(croller: Croller?) {
+
+            }
+        })
+
+        binding.crollerSeekbar.setOnProgressChangedListener(object : onProgressChangedListener {
+            override fun onProgressChanged(progress: Int) {
+                // use the progress
+                //MyToast.showToast(this@ViewCustomActivity, "Value: $progress")
+            }
+        })
     }
 }

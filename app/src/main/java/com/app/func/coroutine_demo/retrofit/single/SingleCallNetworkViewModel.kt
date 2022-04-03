@@ -14,7 +14,7 @@ class SingleCallNetworkViewModel : ViewModel() {
 
     private val api =
         RetrofitObject.getRetrofit(ApiConstants.BASE_URL_QUOTE).create(RetrofitService::class.java)
-    val quotes = MutableLiveData<Response<QuoteListResponse>>()
+    private val quotes = MutableLiveData<Response<QuoteListResponse>>()
     val errorMessage = MutableLiveData<String>()
     var job: Job? = null
     val loading = MutableLiveData<Boolean>()
@@ -22,7 +22,7 @@ class SingleCallNetworkViewModel : ViewModel() {
         onError("Exception handled: ${throwable.localizedMessage}")
     }
 
-    val quoteList = quotes
+    val quoteList: MutableLiveData<Response<QuoteListResponse>> = quotes
 
     fun getQuotes() {
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
