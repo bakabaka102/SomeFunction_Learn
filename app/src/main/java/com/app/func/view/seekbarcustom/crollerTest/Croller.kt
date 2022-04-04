@@ -140,28 +140,21 @@ class Croller @JvmOverloads constructor(
             a.getColor(R.styleable.Croller_progress_primary_color, progressPrimaryColor)
         )
         setProgressSecondaryColor(
-            a.getColor(
-                R.styleable.Croller_progress_secondary_color, progressSecondaryColor
-            )
+            a.getColor(R.styleable.Croller_progress_secondary_color, progressSecondaryColor)
         )
         setBackCircleDisabledColor(
-            a.getColor(
-                R.styleable.Croller_back_circle_disable_color, backCircleDisabledColor
-            )
+            a.getColor(R.styleable.Croller_back_circle_disable_color, backCircleDisabledColor)
         )
         setMainCircleDisabledColor(
-            a.getColor(
-                R.styleable.Croller_main_circle_disable_color, mainCircleDisabledColor
-            )
+            a.getColor(R.styleable.Croller_main_circle_disable_color, mainCircleDisabledColor)
         )
         setIndicatorDisabledColor(
-            a.getColor(
-                R.styleable.Croller_indicator_disable_color, indicatorDisabledColor
-            )
+            a.getColor(R.styleable.Croller_indicator_disable_color, indicatorDisabledColor)
         )
         setProgressPrimaryDisabledColor(
             a.getColor(
-                R.styleable.Croller_progress_primary_disable_color, progressPrimaryDisabledColor
+                R.styleable.Croller_progress_primary_disable_color,
+                progressPrimaryDisabledColor
             )
         )
         setProgressSecondaryDisabledColor(
@@ -332,13 +325,13 @@ class Croller @JvmOverloads constructor(
                 tmp2 = 1.0f - tmp2
             }
             val x1 =
-                midx + (radius * (2.toFloat() / 5) * sin(2 * Math.PI * (1.0 - tmp2))).toFloat()
+                midx + (radius * (1f / 5) * sin(2 * Math.PI * (1.0 - tmp2))).toFloat()
             val y1 =
-                midy + (radius * (2.toFloat() / 5) * cos(2 * Math.PI * (1.0 - tmp2))).toFloat()
+                midy + (radius * (1f / 5) * cos(2 * Math.PI * (1.0 - tmp2))).toFloat()
             val x2 =
-                midx + (radius * (3.toFloat() / 5) * sin(2 * Math.PI * (1.0 - tmp2))).toFloat()
+                midx + (radius * (4f / 5) * sin(2 * Math.PI * (1.0 - tmp2))).toFloat()
             val y2 =
-                midy + (radius * (3.toFloat() / 5) * cos(2 * Math.PI * (1.0 - tmp2))).toFloat()
+                midy + (radius * (4f / 5) * cos(2 * Math.PI * (1.0 - tmp2))).toFloat()
             if (isEnabled) circlePaint.color = backCircleColor else circlePaint.color =
                 backCircleDisabledColor
             canvas.drawCircle(midx, midy, backCircleRadius, circlePaint)
@@ -406,13 +399,13 @@ class Croller @JvmOverloads constructor(
                 tmp2 = 1.0f - tmp2
             }
             val x1 =
-                midx + (radius * (2.toFloat() / 5) * sin(2 * Math.PI * (1.0 - tmp2))).toFloat()
+                midx + (radius * (1f / 5) * sin(2 * Math.PI * (1.0 - tmp2))).toFloat()
             val y1 =
-                midy + (radius * (2.toFloat() / 5) * cos(2 * Math.PI * (1.0 - tmp2))).toFloat()
+                midy + (radius * (1f / 5) * cos(2 * Math.PI * (1.0 - tmp2))).toFloat()
             val x2 =
-                midx + (radius * (3.toFloat() / 5) * sin(2 * Math.PI * (1.0 - tmp2))).toFloat()
+                midx + (radius * (4f / 5) * sin(2 * Math.PI * (1.0 - tmp2))).toFloat()
             val y2 =
-                midy + (radius * (3.toFloat() / 5) * cos(2 * Math.PI * (1.0 - tmp2))).toFloat()
+                midy + (radius * (4f / 5) * cos(2 * Math.PI * (1.0 - tmp2))).toFloat()
             circlePaint.style = Paint.Style.FILL
             if (isEnabled) circlePaint.color = backCircleColor else circlePaint.color =
                 backCircleDisabledColor

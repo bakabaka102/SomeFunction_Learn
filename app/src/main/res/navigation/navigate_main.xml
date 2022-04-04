@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_homeFragment_to_snowyMainFragment"
             app:destination="@id/snowyMainFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_listUserFragment"
+            app:destination="@id/listUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
@@ -54,4 +57,9 @@
         android:name="com.app.func.thread_demo.snowy.SnowyMainFragment"
         android:label="fragment_snowy_main"
         tools:layout="@layout/fragment_snowy_main" />
+    <fragment
+        android:id="@+id/listUserFragment"
+        android:name="com.app.func.view.ListUserFragment"
+        android:label="fragment_list_user"
+        tools:layout="@layout/fragment_list_user" />
 </navigation>
