@@ -9,6 +9,7 @@
     <string name="sign_in">Sign In</string>
     <string name="create_account">Create account</string>
     <string name="go">Go</string>
+    <string name="recyclerView" translatable="false">RecyclerView</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="kotlin_title">Kotlin</string>

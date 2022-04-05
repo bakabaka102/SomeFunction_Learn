@@ -3,7 +3,6 @@ package com.app.func.view.recycler_view_custom
 import android.graphics.Canvas
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.app.func.view.recycler_view_custom.adapters.UserAdapter
 
 class RecyclerViewItemTouchHelper(
     dragDirs: Int,
@@ -20,13 +19,25 @@ class RecyclerViewItemTouchHelper(
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        itemTouchHelperListener?.onSwipedView(viewHolder)
+        when (direction) {
+            ItemTouchHelper.LEFT -> {
+                itemTouchHelperListener.onSwipedViewToLeft(viewHolder)
+            }
+            ItemTouchHelper.RIGHT -> {
+                itemTouchHelperListener.onSwipedViewToRight(viewHolder)
+            }
+        }
     }
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-        val viewForeground = (viewHolder as UserAdapter.UserViewHolder).consItem
-        getDefaultUIUtil().onSelected(viewForeground)
+        super.onSelectedChanged(viewHolder, actionState)
     }
+//    override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+//        val viewForeground = (viewHolder as UserAdapter.UserViewHolder).consItem
+//        getDefaultUIUtil().onSelected(viewForeground)
+//    }
+//
+
 
     override fun onChildDrawOver(
         c: Canvas,
@@ -37,17 +48,30 @@ class RecyclerViewItemTouchHelper(
         actionState: Int,
         isCurrentlyActive: Boolean
     ) {
-        val viewForeground = (viewHolder as UserAdapter.UserViewHolder).consItem
-        getDefaultUIUtil().onDrawOver(
-            c,
-            recyclerView,
-            viewForeground,
-            dX,
-            dY,
-            actionState,
-            isCurrentlyActive
-        )
+        super.onChildDrawOver(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }
+//    override fun onChildDrawOver(
+//        c: Canvas,
+//        recyclerView: RecyclerView,
+//        viewHolder: RecyclerView.ViewHolder?,
+//        dX: Float,
+//        dY: Float,
+//        actionState: Int,
+//        isCurrentlyActive: Boolean
+//    ) {
+//        val viewForeground = (viewHolder as UserAdapter.UserViewHolder).consItem
+//        getDefaultUIUtil().onDrawOver(
+//            c,
+//            recyclerView,
+//            viewForeground,
+//            dX,
+//            dY,
+//            actionState,
+//            isCurrentlyActive
+//        )
+//    }
+//
+
 
     override fun onChildDraw(
         c: Canvas,
@@ -58,21 +82,37 @@ class RecyclerViewItemTouchHelper(
         actionState: Int,
         isCurrentlyActive: Boolean
     ) {
-        val viewForeground = (viewHolder as UserAdapter.UserViewHolder).consItem
-        getDefaultUIUtil().onDraw(
-            c,
-            recyclerView,
-            viewForeground,
-            dX,
-            dY,
-            actionState,
-            isCurrentlyActive
-        )
+        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }
-
+//    override fun onChildDraw(
+//        c: Canvas,
+//        recyclerView: RecyclerView,
+//        viewHolder: RecyclerView.ViewHolder,
+//        dX: Float,
+//        dY: Float,
+//        actionState: Int,
+//        isCurrentlyActive: Boolean
+//    ) {
+//        val viewForeground = (viewHolder as UserAdapter.UserViewHolder).consItem
+//        getDefaultUIUtil().onDraw(
+//            c,
+//            recyclerView,
+//            viewForeground,
+//            dX,
+//            dY,
+//            actionState,
+//            isCurrentlyActive
+//        )
+//    }
+//
+//
 
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
-        val viewForeground = (viewHolder as UserAdapter.UserViewHolder).consItem
-        getDefaultUIUtil().clearView(viewForeground)
+        super.clearView(recyclerView, viewHolder)
     }
+
+//    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+//        val viewForeground = (viewHolder as UserAdapter.UserViewHolder).consItem
+//        getDefaultUIUtil().clearView(viewForeground)
+//    }
 }

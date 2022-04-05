@@ -4,5 +4,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 interface ItemTouchHelperListener {
 
-    fun onSwipedView(viewHolder: RecyclerView.ViewHolder)
+    fun onSwipedViewToLeft(viewHolder: RecyclerView.ViewHolder)
+
+    fun onSwipedViewToRight(viewHolder: RecyclerView.ViewHolder)
+
 }

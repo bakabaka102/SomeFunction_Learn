@@ -34,6 +34,9 @@ class MainContainFragment : BaseFragment() {
         binding.btnSignUp.setOnClickListener {
             getNavController()?.navigate(R.id.signUpFragment)
         }
+        binding.btnGotoRecyclerView.setOnClickListener {
+            getNavController()?.navigate(R.id.listUserFragment)
+        }
     }
 
 
