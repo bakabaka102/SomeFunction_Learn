@@ -32,7 +32,7 @@ class UserAdapter2 : RecyclerView.Adapter<UserAdapter2.UserViewHolder>() {
 
     inner class UserViewHolder(val binding: ItemUser2Binding) :
         RecyclerView.ViewHolder(binding.root) {
-        val consItem = binding.consItem2
+        val consItem2 = binding.consItem2
 
         fun bindDataToView(user: User) {
             binding.textNameUser2.text = user.name

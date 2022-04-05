@@ -78,6 +78,7 @@
     <string name="fill_number_phone_please">Vui lòng điền số điện thoại</string>
     <string name="error_validation_room_name">Tên phòng có độ dài 30 ký tự</string>
     <string name="error_validation_room_name_empty">Bạn không được để trống Tên phòng</string>
+    <string name="button_delete">Xóa</string>
 
 
 </resources>

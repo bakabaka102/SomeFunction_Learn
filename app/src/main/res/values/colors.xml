@@ -32,4 +32,5 @@
     <color name="color_text">@android:color/white</color>
     <color name="color_progress">#58D4DE</color>
     <color name="color_cac9c9">#CAC9C9</color>
+    <color name="color_E93333">#E93333</color>
 </resources>
