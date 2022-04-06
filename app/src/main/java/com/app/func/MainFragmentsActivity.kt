@@ -3,8 +3,6 @@ package com.app.func
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.app.func.base_content.BaseActivity
