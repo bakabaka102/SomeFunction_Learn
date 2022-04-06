@@ -79,6 +79,8 @@
     <string name="error_validation_room_name">Tên phòng có độ dài 30 ký tự</string>
     <string name="error_validation_room_name_empty">Bạn không được để trống Tên phòng</string>
     <string name="button_delete">Xóa</string>
+    <string name="non_data">--</string>
+    <string name="title_value">Index</string>
 
 
 </resources>

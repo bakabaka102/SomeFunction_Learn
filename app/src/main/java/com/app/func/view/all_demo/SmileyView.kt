@@ -18,11 +18,18 @@ class SmileyView @JvmOverloads constructor(
         style = Paint.Style.FILL
         color = Color.YELLOW
     }
-    private var mEyeAndMouthPaint: Paint = Paint().apply {
+    private var eyePaint: Paint = Paint().apply {
+        isAntiAlias = true
+        style = Paint.Style.STROKE
+        strokeWidth = 10 * resources.displayMetrics.density
+        strokeCap = Paint.Cap.ROUND
+        color = Color.RED
+    }
+    private var mouthPaint: Paint = Paint().apply {
         isAntiAlias = true
         style = Paint.Style.STROKE
         strokeWidth = 16 * resources.displayMetrics.density
-        strokeCap = Paint.Cap.ROUND;
+        strokeCap = Paint.Cap.ROUND
         color = Color.RED
     }
 
@@ -56,12 +63,12 @@ class SmileyView @JvmOverloads constructor(
         val eyeRadius = mRadius / 5f
         val eyeOffsetX = mRadius / 3f
         val eyeOffsetY = mRadius / 3f
-        canvas?.drawCircle(mCenterX - eyeOffsetX, mCenterY - eyeOffsetY, eyeRadius, mEyeAndMouthPaint)
-        canvas?.drawCircle(mCenterX + eyeOffsetX, mCenterY - eyeOffsetY, eyeRadius, mEyeAndMouthPaint)
+        canvas?.drawCircle(mCenterX - eyeOffsetX, mCenterY - eyeOffsetY, eyeRadius, eyePaint)
+        canvas?.drawCircle(mCenterX + eyeOffsetX, mCenterY - eyeOffsetY, eyeRadius, eyePaint)
 
         // draw mouth
         val mouthInset = mRadius / 3f
         mArcBounds[mouthInset, mouthInset, mRadius * 2 - mouthInset] = mRadius * 2 - mouthInset
-        canvas?.drawArc(mArcBounds, 45f, 90f, false, mEyeAndMouthPaint)
+        canvas?.drawArc(mArcBounds, 45f, 90f, false, mouthPaint)
     }
 }
