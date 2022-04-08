@@ -28,9 +28,6 @@ class SignUpFragment : BaseFragment(), View.OnClickListener {
     override fun onClick(view: View?) {
         when (view) {
             binding?.btnCreateAccount -> {
-//                val navHostFragment: NavHostFragment =
-//                    activity?.supportFragmentManager?.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-//                val mNavController = navHostFragment.navController
                 getNavController()?.navigate(R.id.profileFragment)
             }
         }
