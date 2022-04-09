@@ -44,13 +44,8 @@ class AnalogClockViewDemo @JvmOverloads constructor(
     }
 
     private fun init() {
-  /*      mFontSize = TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_SP,
-            14f,
-            resources.displayMetrics
-        ).toInt()*/
         mFontSize = dpToPixel(16f)
-        mFontSize = dpToPixel(14f)
+        mFontSize = dpToPixel(12f)
         mHeight = height
         mWidth = width
         mPadding = 50
@@ -141,8 +136,8 @@ class AnalogClockViewDemo @JvmOverloads constructor(
         canvas?.drawLine(
             mCentreX,
             mCentreY,
-            (mCentreX + cos(mAngle) * 7 * mRadius / 8).toFloat(),
-            (mCentreY + sin(mAngle) * 7 * mRadius / 8).toFloat(),
+            (mCentreX + cos(mAngle) * 6 * mRadius / 8).toFloat(),
+            (mCentreY + sin(mAngle) * 6 * mRadius / 8).toFloat(),
             mPaint
         )
     }
@@ -150,8 +145,8 @@ class AnalogClockViewDemo @JvmOverloads constructor(
     private fun drawHourHand(canvas: Canvas?, hour: Double) {
         setPaintAttributes(Color.RED, Paint.Style.STROKE, 5)
         mAngle = Math.PI * hour / 30 - Math.PI / 2
-        val stopX = (mCentreX + cos(mAngle) * 4 * mRadius / 5).toFloat()
-        val stopY = (mCentreY + sin(mAngle) * 4 * mRadius / 5).toFloat()
+        val stopX = (mCentreX + cos(mAngle) * 3 * mRadius / 5).toFloat()
+        val stopY = (mCentreY + sin(mAngle) * 3 * mRadius / 5).toFloat()
         canvas?.drawLine(mCentreX, mCentreY, stopX, stopY, mPaint)
     }
 
@@ -161,8 +156,8 @@ class AnalogClockViewDemo @JvmOverloads constructor(
             val num = number.toString()
             mPaint.getTextBounds(num, 0, num.length, mRect)
             val angle = Math.PI / 6 * (number - 3)
-            val x = mCentreX + cos(angle) * mRadius - mRect.width() / 2
-            val y = mCentreY + sin(angle) * mRadius + mRect.height() / 2
+            val x = mCentreX + cos(angle) * (mRadius + 10) - mRect.width() / 2
+            val y = mCentreY + sin(angle) * (mRadius + 10) + mRect.height() / 2
             canvas?.drawText(num, x.toFloat(), y.toFloat(), mPaint)
         }
     }

@@ -24,8 +24,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="Hello View!"
-                android:visibility="gone"
+                android:text="@string/analog_clock_text"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sp"
+                android:visibility="visible"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -33,8 +35,8 @@
 
             <com.app.func.view.all_demo.EmotionalFaceView
                 android:id="@+id/happyButton"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_40dp"
+                android:layout_height="@dimen/_40dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="16dp"
                 app:borderColor="@color/purple_200"
@@ -44,8 +46,8 @@
 
             <com.app.func.view.all_demo.EmotionalFaceView
                 android:id="@+id/sadButton"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_40dp"
+                android:layout_height="@dimen/_40dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 app:eyesColor="@color/purple_500"

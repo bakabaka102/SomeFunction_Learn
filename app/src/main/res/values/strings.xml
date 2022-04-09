@@ -81,6 +81,7 @@
     <string name="button_delete">Xóa</string>
     <string name="non_data">--</string>
     <string name="title_value">Index</string>
+    <string name="analog_clock_text">Analog clock view!</string>
 
 
 </resources>
