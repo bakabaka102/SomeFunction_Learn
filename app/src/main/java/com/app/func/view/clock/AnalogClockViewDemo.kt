@@ -120,7 +120,6 @@ class AnalogClockViewDemo @JvmOverloads constructor(
             (mCentreY + sin(mAngle) * 7 * mRadius / 8).toFloat(),
             mPaint
         )
-
     }
 
     private fun drawHourHand(canvas: Canvas?, hour: Double) {
@@ -143,11 +142,49 @@ class AnalogClockViewDemo @JvmOverloads constructor(
         }
     }
 
+    private var mBlackPaint: Paint = Paint().apply {
+        isAntiAlias = true
+        color = Color.BLACK
+        style = Paint.Style.STROKE
+    }
+
+    private fun drawScale(canvas: Canvas?) {
+        var scaleLength: Float?
+        canvas?.save()
+        //0.. 59 for [0,59]
+        for (i in 0..59) {
+            if (i % 5 == 0) {
+                //Large scale
+                mBlackPaint.strokeWidth = 5f
+                scaleLength = 20f
+            } else {
+                //Small scale
+                mBlackPaint.strokeWidth = 3f
+                scaleLength = 10f
+            }
+            canvas?.drawLine(
+                measuredWidth / 2.toFloat(),
+                5f,
+                measuredWidth / 2.toFloat(),
+                (5 + scaleLength),
+                mBlackPaint
+            )
+            canvas?.rotate(
+                360f / 60,
+                measuredWidth / 2.toFloat(),
+                measuredHeight / 2.toFloat()
+            )
+        }
+        //Restore the original state
+        canvas?.restore()
+    }
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         if (!mIsInit) {
             init()
         }
+        drawScale(canvas)
         drawBackgroundCircle(canvas)
         drawHand(canvas)
         drawDotCenter(canvas)

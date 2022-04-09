@@ -19,8 +19,11 @@ import kotlin.math.sin
  * Created by zhang on 2017/12/20.
  */
 
-class ClockView(context: Context?, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    View(context, attrs, defStyleAttr) {
+class ClockView @JvmOverloads constructor(
+    context: Context?,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : View(context, attrs, defStyleAttr) {
 
     companion object {
         private const val DEFAULT_WIDTH = 200 // default width
@@ -47,78 +50,36 @@ class ClockView(context: Context?, attrs: AttributeSet? = null, defStyleAttr: In
         textSize = 30f
         isAntiAlias = true
     }
-    private var hour: Int? = null
-    private var minute: Int? = null
-    private var second: Int? = null
+    private var hour: Int = Calendar.getInstance().get(Calendar.HOUR)
+    private var minute: Int = Calendar.getInstance().get(Calendar.MINUTE)
+    private var second: Int = Calendar.getInstance().get(Calendar.SECOND)
     private val textArray = arrayOf("12", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11")
     private var refreshThread: Thread? = null
-//    private var mHandler = @SuppressLint("HandlerLeak")
-//    object : Handler(Looper.getMainLooper()) {
-//        override fun handleMessage(msg: Message) {
-//            super.handleMessage(msg)
-//            when (msg.what) {
-//                0 -> {
-//                    invalidate()
-//                }
-//            }
-//
-//        }
-//    }
+    private var mHandler = @SuppressLint("HandlerLeak")
+    object : Handler(Looper.getMainLooper()) {
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+            when (msg.what) {
+                0 -> {
+                    invalidate()
+                }
+            }
 
-    init {
-        initPaints()
-    }
-
-    /**
-     *Initialize brush
-     */
-    private fun initPaints() {
-//        mBlackPaint = Paint()
-//        with(mBlackPaint) {
-//            color = Color.BLACK
-//            strokeWidth = 5f
-//            isAntiAlias = true
-//            style = Paint.Style.STROKE
-//        }
-        //Used for drawing surface center
-//        mBlackPaint2 = Paint()
-//        with(mBlackPaint2) {
-//            color = Color.BLACK
-//            isAntiAlias = true
-//            style = Paint.Style.FILL
-//        }
-//        mRedPaint = Paint()
-//        with(mRedPaint) {
-//            color = Color.RED
-//            strokeWidth = 5f
-//            isAntiAlias = true
-//        }
-//
-//        mTextPaint = Paint()
-//        with(mTextPaint) {
-//            color = Color.BLACK
-//            textSize = 30f
-//            isAntiAlias = true
-//        }
+        }
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         //Get current time
         getCurrentTime()
-
         //Draw the outermost circle first
         drawOuterCircle(canvas)
-
         //Draw scale
         drawScale(canvas)
-
         //Draw text
         drawTimeText(canvas)
-
         //Draw the needle
         drawHand(canvas)
-
         //Draw epicenter
         drawCenter(canvas)
     }
@@ -151,9 +112,9 @@ class ClockView(context: Context?, attrs: AttributeSet? = null, defStyleAttr: In
 
     private fun drawHand(canvas: Canvas?) {
         drawSecond(canvas, mRedPaint)
-        mBlackPaint.strokeWidth = 10f
+        mBlackPaint.strokeWidth = 7f
         drawMinute(canvas, mBlackPaint)
-        mBlackPaint.strokeWidth = 15f
+        mBlackPaint.strokeWidth = 9f
         drawHour(canvas, mBlackPaint)
     }
 
@@ -208,50 +169,44 @@ class ClockView(context: Context?, attrs: AttributeSet? = null, defStyleAttr: In
     /**
      *Draw second hand
      */
-    private fun drawSecond(canvas: Canvas?, paint: Paint?) {
+    private fun drawSecond(canvas: Canvas?, paint: Paint) {
         //Second hand long radius (the needle will pass through the center of the watch, so you need to calculate the start and end radius according to the two radii)
-        val longR = measuredWidth / 2 - 60
+        val longR = measuredWidth / 2 - 50
         val shortR = 60
-        val startX = (measuredWidth / 2 - shortR * sin(second!!.times(Math.PI / 30))).toFloat()
-        val startY = (measuredWidth / 2 + shortR * cos(second!!.times(Math.PI / 30))).toFloat()
-        val endX = (measuredWidth / 2 + longR * sin(second!!.times(Math.PI / 30))).toFloat()
-        val endY = (measuredWidth / 2 - longR * cos(second!!.times(Math.PI / 30))).toFloat()
-        if (paint != null) {
-            canvas?.drawLine(startX, startY, endX, endY, paint)
-        }
+        val startX = (measuredWidth / 2 - shortR * sin(second.times(Math.PI / 30))).toFloat()
+        val startY = (measuredWidth / 2 + shortR * cos(second.times(Math.PI / 30))).toFloat()
+        val endX = (measuredWidth / 2 + longR * sin(second.times(Math.PI / 30))).toFloat()
+        val endY = (measuredWidth / 2 - longR * cos(second.times(Math.PI / 30))).toFloat()
+        canvas?.drawLine(startX, startY, endX, endY, paint)
     }
 
     /**
      *Draw minute hand
      */
-    private fun drawMinute(canvas: Canvas?, paint: Paint?) {
+    private fun drawMinute(canvas: Canvas?, paint: Paint) {
         //The radius is a little smaller than the second hand
-        val longR = measuredWidth / 2 - 90
+        val longR = measuredWidth / 2 - 70
         val shortR = 50
-        val startX = (measuredWidth / 2 - shortR * sin(minute!!.times(Math.PI / 30))).toFloat()
-        val startY = (measuredWidth / 2 + shortR * cos(minute!!.times(Math.PI / 30))).toFloat()
-        val endX = (measuredWidth / 2 + longR * sin(minute!!.times(Math.PI / 30))).toFloat()
-        val endY = (measuredWidth / 2 - longR * cos(minute!!.times(Math.PI / 30))).toFloat()
-        if (paint != null) {
-            canvas?.drawLine(startX, startY, endX, endY, paint)
-        }
+        val startX = (measuredWidth / 2 - shortR * sin(minute.times(Math.PI / 30))).toFloat()
+        val startY = (measuredWidth / 2 + shortR * cos(minute.times(Math.PI / 30))).toFloat()
+        val endX = (measuredWidth / 2 + longR * sin(minute.times(Math.PI / 30))).toFloat()
+        val endY = (measuredWidth / 2 - longR * cos(minute.times(Math.PI / 30))).toFloat()
+        canvas?.drawLine(startX, startY, endX, endY, paint)
     }
 
 
     /**
      *Draw the hour hand
      */
-    private fun drawHour(canvas: Canvas?, paint: Paint?) {
+    private fun drawHour(canvas: Canvas?, paint: Paint) {
         //The radius is a little smaller than the second hand
-        val longR = measuredWidth / 2 - 120
+        val longR = measuredWidth / 2 - 90
         val shortR = 40
-        val startX = (measuredWidth / 2 - shortR * sin(hour!!.times(Math.PI / 6))).toFloat()
-        val startY = (measuredWidth / 2 + shortR * cos(hour!!.times(Math.PI / 6))).toFloat()
-        val endX = (measuredWidth / 2 + longR * sin(hour!!.times(Math.PI / 6))).toFloat()
-        val endY = (measuredWidth / 2 - longR * cos(hour!!.times(Math.PI / 6))).toFloat()
-        if (paint != null) {
-            canvas?.drawLine(startX, startY, endX, endY, paint)
-        }
+        val startX = (measuredWidth / 2 - shortR * sin(hour.times(Math.PI / 6))).toFloat()
+        val startY = (measuredWidth / 2 + shortR * cos(hour.times(Math.PI / 6))).toFloat()
+        val endX = (measuredWidth / 2 + longR * sin(hour.times(Math.PI / 6))).toFloat()
+        val endY = (measuredWidth / 2 - longR * cos(hour.times(Math.PI / 6))).toFloat()
+        canvas?.drawLine(startX, startY, endX, endY, paint)
     }
 
     /**
@@ -278,8 +233,8 @@ class ClockView(context: Context?, attrs: AttributeSet? = null, defStyleAttr: In
         refreshThread = Thread {
             while (true) {
                 try {
-//                    Thread.sleep(1000)
-//                    mHandler.sendEmptyMessage(0)
+                    Thread.sleep(500)
+                    mHandler.sendEmptyMessage(0)
                 } catch (e: InterruptedException) {
                     break
                 }
@@ -290,8 +245,8 @@ class ClockView(context: Context?, attrs: AttributeSet? = null, defStyleAttr: In
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-//        mHandler.removeCallbacksAndMessages(null)
+        mHandler.removeCallbacksAndMessages(null)
         //Interrupt thread
-//        refreshThread?.interrupt()
+        refreshThread?.interrupt()
     }
 }
