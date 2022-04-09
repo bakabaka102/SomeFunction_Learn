@@ -5,6 +5,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
+import com.app.func.R
 import java.util.*
 import kotlin.math.cos
 import kotlin.math.min
@@ -35,9 +36,7 @@ class AnalogClockViewDemo @JvmOverloads constructor(
     private var mHour = 0
     private var mMinute = 0f
     private var mSecond = 0f
-    private var mHourHandSize = 0
-    private var mHandSize = 0
-    private var mFontSize = 0
+    private var mFontSize = 0f
     private var mBlackPaint: Paint = Paint().apply {
         isAntiAlias = true
         color = Color.BLACK
@@ -45,11 +44,13 @@ class AnalogClockViewDemo @JvmOverloads constructor(
     }
 
     private fun init() {
-        mFontSize = TypedValue.applyDimension(
+  /*      mFontSize = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_SP,
-            13f,
+            14f,
             resources.displayMetrics
-        ).toInt()
+        ).toInt()*/
+        mFontSize = dpToPixel(16f)
+        mFontSize = dpToPixel(14f)
         mHeight = height
         mWidth = width
         mPadding = 50
@@ -58,8 +59,6 @@ class AnalogClockViewDemo @JvmOverloads constructor(
         mMinimum = min(mHeight, mWidth)
         mRadius = mMinimum / 2 - mPadding
         mAngle = (Math.PI / 30 - Math.PI / 2)
-        mHourHandSize = mRadius - mRadius / 2
-        mHandSize = mRadius - mRadius / 4
         mIsInit = true
     }
 
@@ -74,6 +73,21 @@ class AnalogClockViewDemo @JvmOverloads constructor(
     private fun drawBackgroundCircle(canvas: Canvas?) {
         setPaintAttributes(Color.BLACK, Paint.Style.STROKE, 5)
         canvas?.drawCircle(mCentreX, mCentreY, measuredWidth.toFloat(), mPaint)
+    }
+
+    private fun dimenToPixel(value: Int) = context.resources.getDimensionPixelOffset(value)
+
+    private fun dpToPixel(dpValue: Float): Float {
+        /*return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dpValue,
+            Resources.getSystem().displayMetrics
+        )*/
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dpValue,
+            resources.displayMetrics
+        )
     }
 
     private fun drawOuterCircle(canvas: Canvas?) {
@@ -118,7 +132,6 @@ class AnalogClockViewDemo @JvmOverloads constructor(
             (mCentreY + sin(mAngle) * mRadius).toFloat(),
             mPaint
         )
-
     }
 
     private fun drawMinuteHand(canvas: Canvas?, minute: Float) {
@@ -143,13 +156,13 @@ class AnalogClockViewDemo @JvmOverloads constructor(
     }
 
     private fun drawNumerals(canvas: Canvas?) {
-        mPaint.textSize = mFontSize.toFloat()
+        mPaint.textSize = mFontSize
         for (number in mNumbers) {
             val num = number.toString()
             mPaint.getTextBounds(num, 0, num.length, mRect)
             val angle = Math.PI / 6 * (number - 3)
-            val x = (mCentreX + cos(angle) * mRadius - mRect.width() / 2).toInt()
-            val y = (mCentreY + sin(angle) * mRadius + mRect.height() / 2).toInt()
+            val x = mCentreX + cos(angle) * mRadius - mRect.width() / 2
+            val y = mCentreY + sin(angle) * mRadius + mRect.height() / 2
             canvas?.drawText(num, x.toFloat(), y.toFloat(), mPaint)
         }
     }
