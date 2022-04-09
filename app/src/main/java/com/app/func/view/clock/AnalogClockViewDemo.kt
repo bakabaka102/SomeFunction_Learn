@@ -20,7 +20,7 @@ class AnalogClockViewDemo @JvmOverloads constructor(
     https://medium.com/@mayurjajoomj/custom-analog-clock-using-custom-view-android-429cc180f6a3
      */
 
-    private lateinit var mRect: Rect
+    private var mRect = Rect()
     private var mHeight = 0
     private var mWidth = 0
     private var mRadius = 0
@@ -30,8 +30,7 @@ class AnalogClockViewDemo @JvmOverloads constructor(
     private var mPadding = 0
     private var mIsInit = false
     private var mPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private var mPath: Path? = null
-    private lateinit var mNumbers: IntArray
+    private var mNumbers = intArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
     private var mMinimum = 0
     private var mHour = 0
     private var mMinute = 0f
@@ -39,11 +38,18 @@ class AnalogClockViewDemo @JvmOverloads constructor(
     private var mHourHandSize = 0
     private var mHandSize = 0
     private var mFontSize = 0
+    private var mBlackPaint: Paint = Paint().apply {
+        isAntiAlias = true
+        color = Color.BLACK
+        style = Paint.Style.STROKE
+    }
 
     private fun init() {
-        mFontSize =
-            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 13f, resources.displayMetrics)
-                .toInt()
+        mFontSize = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_SP,
+            13f,
+            resources.displayMetrics
+        ).toInt()
         mHeight = height
         mWidth = width
         mPadding = 50
@@ -52,12 +58,8 @@ class AnalogClockViewDemo @JvmOverloads constructor(
         mMinimum = min(mHeight, mWidth)
         mRadius = mMinimum / 2 - mPadding
         mAngle = (Math.PI / 30 - Math.PI / 2)
-        mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        mPath = Path()
-        mRect = Rect()
         mHourHandSize = mRadius - mRadius / 2
         mHandSize = mRadius - mRadius / 4
-        mNumbers = intArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
         mIsInit = true
     }
 
@@ -70,8 +72,18 @@ class AnalogClockViewDemo @JvmOverloads constructor(
     }
 
     private fun drawBackgroundCircle(canvas: Canvas?) {
-        setPaintAttributes(Color.BLACK, Paint.Style.STROKE, 8)
-        canvas?.drawCircle(mCentreX, mCentreY, mRadius.toFloat() + mPadding - 10, mPaint)
+        setPaintAttributes(Color.BLACK, Paint.Style.STROKE, 5)
+        canvas?.drawCircle(mCentreX, mCentreY, measuredWidth.toFloat(), mPaint)
+    }
+
+    private fun drawOuterCircle(canvas: Canvas?) {
+        mBlackPaint.strokeWidth = 5f
+        canvas?.drawCircle(
+            measuredWidth / 2.toFloat(),
+            measuredHeight / 2.toFloat(),
+            (measuredWidth / 2 - 5).toFloat(),
+            mBlackPaint
+        )
     }
 
     private fun drawDotCenter(canvas: Canvas?) {
@@ -142,23 +154,15 @@ class AnalogClockViewDemo @JvmOverloads constructor(
         }
     }
 
-    private var mBlackPaint: Paint = Paint().apply {
-        isAntiAlias = true
-        color = Color.BLACK
-        style = Paint.Style.STROKE
-    }
-
     private fun drawScale(canvas: Canvas?) {
-        var scaleLength: Float?
+        var scaleLength: Float
         canvas?.save()
         //0.. 59 for [0,59]
         for (i in 0..59) {
             if (i % 5 == 0) {
-                //Large scale
                 mBlackPaint.strokeWidth = 5f
                 scaleLength = 20f
             } else {
-                //Small scale
                 mBlackPaint.strokeWidth = 3f
                 scaleLength = 10f
             }
@@ -166,7 +170,7 @@ class AnalogClockViewDemo @JvmOverloads constructor(
                 measuredWidth / 2.toFloat(),
                 5f,
                 measuredWidth / 2.toFloat(),
-                (5 + scaleLength),
+                5 + scaleLength,
                 mBlackPaint
             )
             canvas?.rotate(
@@ -179,13 +183,19 @@ class AnalogClockViewDemo @JvmOverloads constructor(
         canvas?.restore()
     }
 
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        setMeasuredDimension(measuredWidth, measuredWidth)
+    }
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         if (!mIsInit) {
             init()
         }
         drawScale(canvas)
-        drawBackgroundCircle(canvas)
+        //drawBackgroundCircle(canvas)
+        drawOuterCircle(canvas)
         drawHand(canvas)
         drawDotCenter(canvas)
         drawNumerals(canvas)
