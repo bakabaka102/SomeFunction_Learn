@@ -33,4 +33,9 @@
     <color name="color_progress">#58D4DE</color>
     <color name="color_cac9c9">#CAC9C9</color>
     <color name="color_E93333">#E93333</color>
+
+    <color name="colorAccent">#ea3732</color>
+    <color name="bg_row_background">#fa315b</color>
+    <color name="item_name">#535353</color>
+    <color name="description">#a9a9a9</color>
 </resources>

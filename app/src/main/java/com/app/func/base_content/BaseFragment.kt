@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import com.app.func.R
+import com.app.func.coroutine_demo.retrofit.aaa.DataRepository
+import com.app.func.coroutine_demo.retrofit.base.RetrofitObject
+import com.app.func.coroutine_demo.retrofit.base.RetrofitService
 import com.app.func.utils.Logger
 
 open class BaseFragment : Fragment() {
@@ -19,6 +22,11 @@ open class BaseFragment : Fragment() {
 
     fun getNavController(): NavController? {
         return (activity as? BaseActivity)?.getNavController()
+    }
+
+    fun getRepositoryRetrofit(url: String): DataRepository {
+        val retrofitService = RetrofitObject.getRetrofit(url).create(RetrofitService::class.java)
+        return DataRepository(retrofitService)
     }
 
     override fun onCreateView(

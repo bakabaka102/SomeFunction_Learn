@@ -8,5 +8,8 @@ object ApiConstants {
     const val QUOTES = "/quotes"
     const val MOVIE_LIST = "movielist.json"
 
+    //https://api.androidhive.info/json/menu.json
+    const val BASE_URL_FOOD = "https://api.androidhive.info/"
+    const val MENU_LIST = "json/menu.json"
 
 }

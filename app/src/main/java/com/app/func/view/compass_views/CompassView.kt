@@ -1,4 +1,4 @@
-package com.app.func.view.clock
+package com.app.func.view.compass_views
 
 import android.content.Context
 import android.graphics.Canvas
