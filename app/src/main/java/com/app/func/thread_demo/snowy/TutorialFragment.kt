@@ -48,6 +48,10 @@ class TutorialFragment : BaseFragment() {
         return binding?.root
     }
 
+    override fun setTitleActionBar() {
+        //Remove title
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val tutorial = arguments?.getParcelable(TUTORIAL_KEY) as? Tutorial

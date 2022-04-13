@@ -9,8 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.func.base_content.BaseFragment
 import com.app.func.coroutine_demo.retrofit.base.ApiConstants
-import com.app.func.coroutine_demo.retrofit.base.RetrofitObject
-import com.app.func.coroutine_demo.retrofit.base.RetrofitService
 import com.app.func.databinding.FragmentSingleCallNetworkBinding
 
 class ListMoviesFragment : BaseFragment() {
@@ -29,15 +27,7 @@ class ListMoviesFragment : BaseFragment() {
         mBinding?.recyclerView?.layoutManager = layoutManager
         mBinding?.recyclerView?.adapter = movieAdapter
 
-        val retrofitService = RetrofitObject.getRetrofit(ApiConstants.BASE_URL_ANDROID)
-            .create(RetrofitService::class.java)
-        val mainRepository = DataRepository(retrofitService)
-
-        mViewModel =
-            ViewModelProvider(
-                this,
-                MyViewModelFactory(mainRepository)
-            )[ListMovieViewModel::class.java]
+        initViewModel()
 
         mViewModel.movieList.observe(viewLifecycleOwner) {
             movieAdapter.setMovies(it)
@@ -57,8 +47,6 @@ class ListMoviesFragment : BaseFragment() {
 
         mViewModel.getAllMovies()
 
-
-        initViewModel()
         initObserver()
         initRecyclerView()
         return mBinding?.root
@@ -69,7 +57,11 @@ class ListMoviesFragment : BaseFragment() {
     }
 
     private fun initViewModel() {
-
+        val mainRepository = getRepositoryRetrofit(ApiConstants.BASE_URL_ANDROID)
+        mViewModel = ViewModelProvider(
+            this,
+            MyViewModelFactory(mainRepository)
+        )[ListMovieViewModel::class.java]
     }
 
     private fun initRecyclerView() {
