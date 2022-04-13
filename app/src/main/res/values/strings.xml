@@ -83,6 +83,7 @@
     <string name="title_value">Index</string>
     <string name="analog_clock_text">Analog clock view!</string>
     <string name="delete">delete</string>
+    <string name="profile">Profile</string>
 
 
 </resources>

@@ -23,6 +23,7 @@
         tools:visibility="visible" />
 
     <com.app.func.view.all_demo.SmileyView
+        android:id="@+id/smileyView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_64dp"
@@ -37,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/smileyView"
         app:layout_constraintVertical_bias="0.95">
 
         <Button
@@ -79,6 +80,17 @@
             android:text="@string/recyclerView"
             android:textAllCaps="false"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnHome" />
+
+        <Button
+            android:id="@+id/btnProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:text="@string/profile"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toEndOf="@id/btnGotoRecyclerView"
             app:layout_constraintTop_toBottomOf="@id/btnHome" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

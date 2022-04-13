@@ -89,7 +89,7 @@ class ListUserFragment : BaseFragment() {
                         c.drawRect(background, paint)
                         val icon = BitmapFactory.decodeResource(
                             requireActivity().resources,
-                            R.drawable.ic_baseline_delete
+                            R.drawable.ic_white_delete
                         )
                         val margin = (dX / 5 - width) / 2
                         val iconDest = RectF(
@@ -180,7 +180,7 @@ class ListUserFragment : BaseFragment() {
                     UnderlayButton(
                         requireContext(),
                         getString(R.string.button_delete),
-                        R.drawable.ic_baseline_delete,
+                        R.drawable.ic_white_delete,
                         ContextCompat.getColor(requireContext(), R.color.color_E93333),
                         object : UnderlayButtonClickListener {
                             override fun onClick(pos: Int) {

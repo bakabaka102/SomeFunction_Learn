@@ -11,31 +11,35 @@ import com.app.func.databinding.MainContainFragmentBinding
 
 class MainContainFragment : BaseFragment() {
 
-    private lateinit var binding: MainContainFragmentBinding
+    private var binding: MainContainFragmentBinding? = null
     private lateinit var viewModel: LoginViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
+    ): View? {
 
         binding = MainContainFragmentBinding.inflate(inflater, container, false)
 
         initActions()
-        return binding.root
+        return binding?.root
     }
 
     private fun initActions() {
-        binding.btnHome.setOnClickListener {
+        binding?.btnHome?.setOnClickListener {
             getNavController()?.navigate(R.id.homeFragment)
         }
-        binding.btnSignIn.setOnClickListener {
+        binding?.btnSignIn?.setOnClickListener {
             getNavController()?.navigate(R.id.signInFragment)
         }
-        binding.btnSignUp.setOnClickListener {
+        binding?.btnSignUp?.setOnClickListener {
             getNavController()?.navigate(R.id.signUpFragment)
         }
-        binding.btnGotoRecyclerView.setOnClickListener {
+        binding?.btnGotoRecyclerView?.setOnClickListener {
             getNavController()?.navigate(R.id.listUserFragment)
+        }
+
+        binding?.btnProfile?.setOnClickListener {
+            getNavController()?.navigate(R.id.profileFragment)
         }
     }
 
