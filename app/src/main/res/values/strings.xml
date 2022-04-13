@@ -84,6 +84,8 @@
     <string name="analog_clock_text">Analog clock view!</string>
     <string name="delete">delete</string>
     <string name="profile">Profile</string>
+    <string name="label_count">Count</string>
+    <string name="label_duration">Duration</string>
 
 
 </resources>
