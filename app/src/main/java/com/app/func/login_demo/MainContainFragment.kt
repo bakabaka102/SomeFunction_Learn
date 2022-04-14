@@ -41,6 +41,9 @@ class MainContainFragment : BaseFragment() {
         binding?.btnProfile?.setOnClickListener {
             getNavController()?.navigate(R.id.profileFragment)
         }
+        binding?.viewPager?.setOnClickListener {
+            getNavController()?.navigate(R.id.viewPagerFragment)
+        }
     }
 
 

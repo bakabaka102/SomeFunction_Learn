@@ -51,6 +51,9 @@
         <action
             android:id="@+id/action_mainContainFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_mainContainFragment_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment" />
     </fragment>
     <fragment
         android:id="@+id/snowyMainFragment"
@@ -62,4 +65,9 @@
         android:name="com.app.func.view.ListUserFragment"
         android:label="fragment_list_user"
         tools:layout="@layout/fragment_list_user" />
+    <fragment
+        android:id="@+id/viewPagerFragment"
+        android:name="com.app.func.login_demo.ViewPagerFragment"
+        android:label="view_pager_fragment"
+        tools:layout="@layout/view_pager_fragment" />
 </navigation>

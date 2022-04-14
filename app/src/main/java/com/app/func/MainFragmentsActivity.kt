@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.app.func.base_content.BaseActivity
 import com.app.func.databinding.ActivityMainFragmentsBinding
+import com.app.func.login_demo.MainContainFragment
 import java.util.*
 
 
@@ -26,6 +27,19 @@ class MainFragmentsActivity : BaseActivity() {
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         return navHostFragment.navController
     }
+
+    /*override fun onBackPressed() {
+        val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
+        navHost?.let { navFragment ->
+            navFragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
+                if (fragment is MainContainFragment) {
+                    //finish()
+                } else {
+                    //super.onBackPressed()
+                }
+            }
+        }
+    }*/
 
     // Pass "en","hi", etc.
     private fun setLocale(locale: String) {

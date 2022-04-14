@@ -3,7 +3,8 @@ package com.app.func.features.room_database
 import android.content.Context
 import androidx.room.*
 
-@Database(entities = [User::class], version = 101, exportSchema = false)
+//@Database(entities = [User::class], version = 101, exportSchema = false)
+@Database(entities = arrayOf(User::class), version = 101, exportSchema = false)
 
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
