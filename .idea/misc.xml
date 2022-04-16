@@ -37,6 +37,7 @@
         <entry key="..\:/Projects/Demo/SomeFunc_Learn/app/src/main/res/layout/activity_scroll.xml" value="0.24155622060709706" />
         <entry key="..\:/Projects/Demo/SomeFunc_Learn/app/src/main/res/layout/activity_second.xml" value="0.13697916666666668" />
         <entry key="..\:/Projects/Demo/SomeFunc_Learn/app/src/main/res/layout/activity_view_custom.xml" value="0.24155622060709706" />
+        <entry key="..\:/Projects/Demo/SomeFunc_Learn/app/src/main/res/layout/add_new_word_fragment.xml" value="0.24155622060709706" />
         <entry key="..\:/Projects/Demo/SomeFunc_Learn/app/src/main/res/layout/cart_list_item.xml" value="0.15049166310389056" />
         <entry key="..\:/Projects/Demo/SomeFunc_Learn/app/src/main/res/layout/content_main.xml" value="0.24155622060709706" />
         <entry key="..\:/Projects/Demo/SomeFunc_Learn/app/src/main/res/layout/fragment_coroutines.xml" value="0.2264151024877837" />
@@ -57,6 +58,8 @@
         <entry key="..\:/Projects/Demo/SomeFunc_Learn/app/src/main/res/layout/item_user_2.xml" value="0.24155622060709706" />
         <entry key="..\:/Projects/Demo/SomeFunc_Learn/app/src/main/res/layout/item_user_list.xml" value="0.24155622060709706" />
         <entry key="..\:/Projects/Demo/SomeFunc_Learn/app/src/main/res/layout/main_contain_fragment.xml" value="0.24155622060709706" />
+        <entry key="..\:/Projects/Demo/SomeFunc_Learn/app/src/main/res/layout/note_add_edit_layout.xml" value="0.24155622060709706" />
+        <entry key="..\:/Projects/Demo/SomeFunc_Learn/app/src/main/res/layout/note_home_layout.xml" value="0.24155622060709706" />
         <entry key="..\:/Projects/Demo/SomeFunc_Learn/app/src/main/res/layout/profile_fragment.xml" value="0.24155622060709706" />
         <entry key="..\:/Projects/Demo/SomeFunc_Learn/app/src/main/res/layout/simple_selectable_list_item.xml" value="0.2942708333333333" />
         <entry key="..\:/Projects/Demo/SomeFunc_Learn/app/src/main/res/layout/test_layout.xml" value="0.19924529018924966" />

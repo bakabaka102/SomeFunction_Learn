@@ -1,6 +1,7 @@
 package com.app.func.features.room_database
 
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
@@ -15,7 +16,7 @@ interface UserDao {
     fun getUsers(): List<User>
 
     @Query("select * from user order by userName asc")
-    fun getUsersWithAsc(): List<User>
+    fun getUsersWithAsc(): Flow<List<User>>
 
     @Query("select * from user order by userName desc")
     fun getUsersWithDesc(): List<User>

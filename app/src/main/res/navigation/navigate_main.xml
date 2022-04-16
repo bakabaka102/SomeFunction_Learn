@@ -54,6 +54,12 @@
         <action
             android:id="@+id/action_mainContainFragment_to_viewPagerFragment"
             app:destination="@id/viewPagerFragment" />
+        <action
+            android:id="@+id/action_mainContainFragment_to_noteHomeFragment"
+            app:destination="@id/noteHomeFragment" />
+        <action
+            android:id="@+id/action_mainContainFragment_to_mainRoomCoroutinesFragment"
+            app:destination="@id/mainRoomCoroutinesFragment" />
     </fragment>
     <fragment
         android:id="@+id/snowyMainFragment"
@@ -70,4 +76,32 @@
         android:name="com.app.func.login_demo.ViewPagerFragment"
         android:label="view_pager_fragment"
         tools:layout="@layout/view_pager_fragment" />
+    <fragment
+        android:id="@+id/noteHomeFragment"
+        android:name="com.app.func.features.room_database_sqlite_mvvm.view.NoteHomeFragment"
+        android:label="NoteHomeFragment"
+        tools:layout="@layout/note_home_layout">
+        <action
+            android:id="@+id/action_noteHomeFragment_to_noteDeleteAddFragment"
+            app:destination="@id/noteDeleteAddFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/noteDeleteAddFragment"
+        android:name="com.app.func.features.room_database_sqlite_mvvm.view.NoteDeleteAddFragment"
+        android:label="NoteDeleteAddFragment"
+        tools:layout="@layout/note_add_edit_layout" />
+    <fragment
+        android:id="@+id/mainRoomCoroutinesFragment"
+        android:name="com.app.func.features.room_coroutines.views.MainRoomCoroutinesFragment"
+        android:label="MainRoomCoroutinesFragment"
+        tools:layout="@layout/note_home_layout" >
+        <action
+            android:id="@+id/action_mainRoomCoroutinesFragment_to_addNewWordFragment"
+            app:destination="@id/addNewWordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewWordFragment"
+        android:name="com.app.func.features.room_coroutines.views.AddNewWordFragment"
+        android:label="add_new_word_fragment"
+        tools:layout="@layout/add_new_word_fragment" />
 </navigation>

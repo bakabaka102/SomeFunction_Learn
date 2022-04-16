@@ -24,9 +24,9 @@ class UserRepository(context: Context) {
         }
     }
 
-//    suspend fun suspendInsertUser(user: User) {
-//        dao?.suspendInsertUser(user)
-//    }
+    fun suspendInsertUser(user: User) {
+        dao?.suspendInsertUser(user)
+    }
 
     fun updateUser(user: User) {
         dao?.updateUser(user)

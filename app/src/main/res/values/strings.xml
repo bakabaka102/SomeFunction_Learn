@@ -87,6 +87,13 @@
     <string name="label_count">Count</string>
     <string name="label_duration">Duration</string>
     <string name="view_pager">ViewPager</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="priority">Priority</string>
+    <string name="room_rx_mvvm">RoomRxMVVM</string>
+    <string name="room_coroutines">Room Coroutines</string>
+    <string name="save">Save</string>
+    <string name="hint_word">Word</string>
 
 
 </resources>

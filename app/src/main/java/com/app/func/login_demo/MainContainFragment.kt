@@ -44,6 +44,12 @@ class MainContainFragment : BaseFragment() {
         binding?.viewPager?.setOnClickListener {
             getNavController()?.navigate(R.id.viewPagerFragment)
         }
+        binding?.btnRoomWithRx?.setOnClickListener{
+            getNavController()?.navigate(R.id.noteHomeFragment)
+        }
+        binding?.btnRoomCoroutines?.setOnClickListener{
+            getNavController()?.navigate(R.id.mainRoomCoroutinesFragment)
+        }
     }
 
 

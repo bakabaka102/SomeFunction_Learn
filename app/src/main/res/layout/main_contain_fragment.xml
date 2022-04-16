@@ -103,6 +103,28 @@
             android:textAllCaps="false"
             app:layout_constraintStart_toEndOf="@id/btnProfile"
             app:layout_constraintTop_toBottomOf="@id/btnHome" />
+
+        <Button
+            android:id="@+id/btnRoomWithRx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:text="@string/room_rx_mvvm"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnGotoRecyclerView" />
+
+        <Button
+            android:id="@+id/btnRoomCoroutines"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:text="@string/room_coroutines"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toEndOf="@id/btnRoomWithRx"
+            app:layout_constraintTop_toBottomOf="@id/btnProfile" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
