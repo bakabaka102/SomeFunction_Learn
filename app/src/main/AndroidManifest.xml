@@ -28,6 +28,7 @@
         <activity
             android:name=".MultiThreadActivity"
             android:exported="false" />
+        <activity android:name=".ViewAnimationsActivity2" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

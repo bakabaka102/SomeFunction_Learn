@@ -46,6 +46,9 @@ class MainActivity : AppCompatActivity(), View.OnTouchListener {
         binding.btnNext3.setOnClickListener {
             startActivity(Intent(this, ViewAnimationsActivity::class.java))
         }
+        binding.btnAnimation.setOnClickListener {
+            startActivity(Intent(this, ViewAnimationsActivity2::class.java))
+        }
 
         val spannableString = SpannableString("@RM123.456")
         spannableString.setSpan(
