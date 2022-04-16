@@ -21,6 +21,13 @@ interface UserDao {
     @Query("select * from user order by userName desc")
     fun getUsersWithDesc(): List<User>
 
+    @Query("SELECT * FROM user WHERE userId = :id")
+    fun getUserById(id: Int?): User?
+
+    //    @Query("SELECT * FROM user WHERE userName LIKE :name")
+    @Query("SELECT * FROM user WHERE userName IN (:name)")
+    fun getUserByName(name: String?): User?
+
     @Update
     fun updateUser(user: User)
 
