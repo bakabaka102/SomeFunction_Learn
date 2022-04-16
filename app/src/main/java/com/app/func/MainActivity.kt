@@ -38,13 +38,13 @@ class MainActivity : AppCompatActivity(), View.OnTouchListener {
         }
 
         binding.btnNext1.setOnClickListener {
-            startActivity(Intent(this, SecondActivity::class.java))
+            startActivity(Intent(this, MultiThreadActivity::class.java))
         }
         binding.btnNext2.setOnClickListener {
             startActivity(Intent(this, ViewCustomActivity::class.java))
         }
         binding.btnNext3.setOnClickListener {
-            startActivity(Intent(this, MainFragmentsActivity::class.java))
+            startActivity(Intent(this, ViewAnimationsActivity::class.java))
         }
 
         val spannableString = SpannableString("@RM123.456")

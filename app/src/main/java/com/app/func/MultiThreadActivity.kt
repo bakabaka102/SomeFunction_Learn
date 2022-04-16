@@ -4,17 +4,17 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.app.func.base_content.BaseActivity
-import com.app.func.databinding.ActivitySecondBinding
+import com.app.func.databinding.ActivityMultiThreadBinding
 
-class SecondActivity : BaseActivity() {
+class MultiThreadActivity : BaseActivity() {
 
-    private lateinit var binding: ActivitySecondBinding
+    private lateinit var binding: ActivityMultiThreadBinding
     private var mNavController: NavController? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySecondBinding.inflate(layoutInflater)
+        binding = ActivityMultiThreadBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initNavController()
     }

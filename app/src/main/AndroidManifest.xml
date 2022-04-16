@@ -20,13 +20,13 @@
             android:name=".base_content.BaseActivity"
             android:exported="false" />
         <activity
-            android:name=".MainFragmentsActivity"
+            android:name=".ViewAnimationsActivity"
             android:exported="false" />
         <activity
             android:name=".ViewCustomActivity"
             android:exported="false" />
         <activity
-            android:name=".SecondActivity"
+            android:name=".MultiThreadActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

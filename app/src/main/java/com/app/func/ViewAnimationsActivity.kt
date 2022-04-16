@@ -6,19 +6,18 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.app.func.base_content.BaseActivity
-import com.app.func.databinding.ActivityMainFragmentsBinding
-import com.app.func.login_demo.MainContainFragment
+import com.app.func.databinding.ActivityViewAnimationsBinding
 import java.util.*
 
 
-class MainFragmentsActivity : BaseActivity() {
+class ViewAnimationsActivity : BaseActivity() {
 
-    private lateinit var binding: ActivityMainFragmentsBinding
+    private lateinit var binding: ActivityViewAnimationsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setLocale("en")
-        binding = ActivityMainFragmentsBinding.inflate(layoutInflater)
+        binding = ActivityViewAnimationsBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
 
