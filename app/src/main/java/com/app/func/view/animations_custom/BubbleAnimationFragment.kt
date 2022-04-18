@@ -1,4 +1,4 @@
-package com.app.func.features.animations_custom
+package com.app.func.view.animations_custom
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -94,6 +94,7 @@
     <string name="room_coroutines">Room Coroutines</string>
     <string name="save">Save</string>
     <string name="hint_word">Word</string>
+    <string name="ball_1">Bóng_1</string>
 
 
 </resources>
