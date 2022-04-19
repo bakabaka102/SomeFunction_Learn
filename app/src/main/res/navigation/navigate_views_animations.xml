@@ -19,6 +19,14 @@
         <action
             android:id="@+id/action_mainAnimationFragment_to_bubbleAnimationFragment"
             app:destination="@id/bubbleAnimationFragment" />
+        <action
+            android:id="@+id/action_mainAnimationFragment_to_bubbleEmitterFragment"
+            app:destination="@id/bubbleEmitterFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/bubbleEmitterFragment"
+        android:name="com.app.func.view.animations_custom.BubbleEmitterFragment"
+        android:label="BubbleEmitterFragment"
+        tools:layout="@layout/bubble_emitter_fragment" />
 
 </navigation>

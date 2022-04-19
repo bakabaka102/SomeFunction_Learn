@@ -25,6 +25,9 @@ class MainAnimationFragment : BaseFragment() {
         binding?.btnBall1?.setOnClickListener {
             getNavController()?.navigate(R.id.bubbleAnimationFragment)
         }
+        binding?.btnBall2?.setOnClickListener {
+            getNavController()?.navigate(R.id.bubbleEmitterFragment)
+        }
     }
 
     override fun onDestroyView() {
