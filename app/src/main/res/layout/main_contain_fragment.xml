@@ -125,6 +125,38 @@
             android:textAllCaps="false"
             app:layout_constraintStart_toEndOf="@id/btnRoomWithRx"
             app:layout_constraintTop_toBottomOf="@id/btnProfile" />
+
+        <Button
+            android:id="@+id/btnEditTexts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:text="Edittext"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnRoomCoroutines" />
+
+        <Button
+            android:id="@+id/btnNotify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:text="Notify"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toEndOf="@id/btnEditTexts"
+            app:layout_constraintTop_toBottomOf="@id/btnRoomCoroutines" />
+        <Button
+            android:id="@+id/btnNotify2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:text="Notify2"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toEndOf="@id/btnNotify"
+            app:layout_constraintTop_toBottomOf="@id/btnRoomCoroutines" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

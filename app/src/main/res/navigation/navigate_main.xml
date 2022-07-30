@@ -60,6 +60,9 @@
         <action
             android:id="@+id/action_mainContainFragment_to_mainRoomCoroutinesFragment"
             app:destination="@id/mainRoomCoroutinesFragment" />
+        <action
+            android:id="@+id/action_mainContainFragment_to_imageGalleryFragment2"
+            app:destination="@id/imageGalleryFragment" />
     </fragment>
     <fragment
         android:id="@+id/snowyMainFragment"
@@ -104,4 +107,9 @@
         android:name="com.app.func.features.room_coroutines.views.AddNewWordFragment"
         android:label="add_new_word_fragment"
         tools:layout="@layout/add_new_word_fragment" />
+    <fragment
+        android:id="@+id/imageGalleryFragment"
+        android:name="com.app.func.view.animations_custom.ImageGalleryFragment"
+        android:label="ImageGalleryFragment"
+        tools:layout="@layout/image_gallery_fragment" />
 </navigation>

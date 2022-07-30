@@ -7,5 +7,7 @@ object Constants {
     const val LINE_SEPARATOR = "\n"
 
     const val STRING_EMPTY = ""
+    const val CHANNEL_NOTIFY_ID = "Function_App"
+    const val CHANNEL_NOTIFY_ID_2 = "Function_App_channel_2"
 
 }

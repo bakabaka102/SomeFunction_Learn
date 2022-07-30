@@ -98,4 +98,11 @@
     <string name="ball_2">Bóng_2</string>
 
 
+    <string name="channel_name">My notification</string>
+    <string name="channel_description">Much longer text that cannot fit one line…</string>
+    <string name="channel_description_1">Much longer text that cannot fit one line…</string>
+
+
+
+
 </resources>
