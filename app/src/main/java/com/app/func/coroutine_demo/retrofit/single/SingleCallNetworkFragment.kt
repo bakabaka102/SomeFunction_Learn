@@ -56,7 +56,7 @@ class SingleCallNetworkFragment : BaseFragment() {
     }
 
     private fun initViewModel() {
-        mViewModel.getQuotes()
+        //mViewModel.getQuotes()
     }
 
     private fun initRecyclerView() {
@@ -69,7 +69,7 @@ class SingleCallNetworkFragment : BaseFragment() {
             )
         )
         mBinding?.recyclerView?.adapter = quoteAdapter
-        mViewModel.getQuotes()
+        //mViewModel.getQuotes()
 
     }
 

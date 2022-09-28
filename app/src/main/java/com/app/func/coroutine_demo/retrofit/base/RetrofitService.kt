@@ -10,7 +10,7 @@ import retrofit2.http.GET
 interface RetrofitService {
 
     @GET(ApiConstants.QUOTES)
-    suspend fun getQuotes(): Response<QuoteListResponse>
+    suspend fun getQuotes(): Response<QuoteListResponse>?
 
     @GET(ApiConstants.MOVIE_LIST)
     suspend fun getAllMovies() : Response<List<Movie>>

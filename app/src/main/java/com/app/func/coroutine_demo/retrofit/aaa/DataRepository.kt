@@ -11,6 +11,6 @@ class DataRepository constructor(private val retrofitService: RetrofitService) {
 
     suspend fun getMenuFood(): Response<List<ItemCart>> = retrofitService.getMenuFood()
 
-    suspend fun getAllQuotes(): Response<QuoteListResponse> = retrofitService.getQuotes()
+    suspend fun getAllQuotes(): Response<QuoteListResponse>? = retrofitService.getQuotes()
 
 }
