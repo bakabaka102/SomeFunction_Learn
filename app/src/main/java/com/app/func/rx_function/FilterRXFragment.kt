@@ -68,7 +68,7 @@ class FilterRXFragment : BaseFragment(), View.OnClickListener {
         return object : Observer<Int> {
 
             override fun onSubscribe(d: Disposable) {
-                Logger.logD(TAG, " onSubscribe : " + d.isDisposed)
+                Logger.d("onSubscribe : " + d.isDisposed)
             }
 
             override fun onNext(value: Int) {
@@ -76,21 +76,20 @@ class FilterRXFragment : BaseFragment(), View.OnClickListener {
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
                 binding?.textView?.append(" value : $value")
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
-                Logger.logD(TAG, " onNext ")
-                Logger.logD(TAG, " value : $value")
+                Logger.d("onNext - value : $value")
             }
 
             override fun onError(e: Throwable) {
                 binding?.textView?.append(" onError : " + e.message)
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
-                Logger.logD(TAG, " onError : " + e.message)
+                Logger.d("onError : " + e.message)
                 binding?.loadingView?.visibility = View.GONE
             }
 
             override fun onComplete() {
                 binding?.textView?.append(" onComplete")
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
-                Logger.logD(TAG, " onComplete")
+                Logger.d("onComplete")
                 binding?.loadingView?.visibility = View.GONE
             }
         }

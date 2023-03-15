@@ -51,7 +51,6 @@ class WeatherDemoFragment : BaseFragment() {
 
         locationAdapter = LocationAdapter(locations, object : LocationAdapter.OnItemClickListener {
             override fun onItemClick(location: Location) {
-//                loadForecast(location.forecast)
             }
         })
 
@@ -89,14 +88,14 @@ class WeatherDemoFragment : BaseFragment() {
     private fun loadJsonString(): String? {
         var json: String? = null
         try {
-            val inputStream =activity?.assets?.open("data.json")
+            val inputStream = activity?.assets?.open("data.json")
             val size = inputStream?.available()
             val buffer = size?.let { ByteArray(it) }
             inputStream?.read(buffer)
             inputStream?.close()
             json = buffer?.let { String(it, Charset.forName("UTF-8")) }
         } catch (e: IOException) {
-           Logger.logD("WeatherDemoFragment", e.toString())
+            Logger.d(e.toString())
         }
         return json
     }

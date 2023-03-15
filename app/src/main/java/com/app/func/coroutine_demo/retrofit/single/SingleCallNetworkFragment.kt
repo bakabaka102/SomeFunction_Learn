@@ -33,7 +33,7 @@ class SingleCallNetworkFragment : BaseFragment() {
 
     private fun initObserver() {
         mViewModel.quoteList.observe(viewLifecycleOwner) {
-            Logger.logD("aaaa", "aaaaa ${it.body()}")
+            Logger.d("quoteList ${it.body()}")
             data = it.body()?.results
             data?.let { it1 ->
                 quoteAdapter.setData(it1)

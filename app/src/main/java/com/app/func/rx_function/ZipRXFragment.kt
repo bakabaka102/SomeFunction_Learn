@@ -79,7 +79,7 @@ class ZipRXFragment : BaseFragment(), View.OnClickListener {
         return object : Observer<List<User>> {
 
             override fun onSubscribe(d: Disposable) {
-                Logger.logD(TAG, " onSubscribe : " + d.isDisposed)
+                Logger.d("onSubscribe : " + d.isDisposed)
             }
 
             override fun onNext(userList: List<User>) {
@@ -89,13 +89,13 @@ class ZipRXFragment : BaseFragment(), View.OnClickListener {
                     binding?.textView?.append(" firstname : ${user.firstname}")
                     binding?.textView?.append(AppConstant.LINE_SEPARATOR)
                 }
-                Logger.logD(TAG, " onNext : " + userList.size)
+                Logger.d("onNext : " + userList.size)
             }
 
             override fun onError(e: Throwable) {
                 binding?.textView?.append(" onError : " + e.message)
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
-                Logger.logD(TAG, " onError : " + e.message)
+                Logger.d("onError : " + e.message)
                 binding?.loadingView?.visibility = View.GONE
 
             }
@@ -103,7 +103,7 @@ class ZipRXFragment : BaseFragment(), View.OnClickListener {
             override fun onComplete() {
                 binding?.textView?.append(" onComplete")
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
-                Logger.logD(TAG, " onComplete")
+                Logger.d("onComplete")
                 binding?.loadingView?.visibility = View.GONE
 
             }

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.app.func.R
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.MainContainFragmentBinding
@@ -100,7 +99,7 @@ class MainContainFragment : BaseFragment() {
 
     private fun getNotificationId(): Int {
         val time = Date().time.toInt()
-        Logger.logD("aa", "$time")
+        Logger.d("$time")
         return time
     }
 

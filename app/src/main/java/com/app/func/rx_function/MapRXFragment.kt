@@ -88,7 +88,7 @@ class MapRXFragment : BaseFragment(), View.OnClickListener {
     private fun getObserver(): Observer<List<User>> {
         val observer = object : Observer<List<User>> {
             override fun onSubscribe(d: Disposable) {
-                Logger.logD(TAG, " onSubscribe : ${d.isDisposed}")
+                Logger.d("onSubscribe : ${d.isDisposed}")
             }
 
             override fun onNext(userList: List<User>) {
@@ -98,20 +98,20 @@ class MapRXFragment : BaseFragment(), View.OnClickListener {
                     binding?.textView?.append(" firstname : ${user.firstname}")
                     binding?.textView?.append(AppConstant.LINE_SEPARATOR)
                 }
-                Logger.logD(TAG, " onNext : value : ${userList.size}")
+                Logger.d("onNext : value : ${userList.size}")
             }
 
             override fun onError(e: Throwable) {
                 binding?.textView?.append(" onError : " + e.message)
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
-                Logger.logD(TAG, " onError : " + e.message)
+                Logger.d("onError : " + e.message)
                 binding?.loadingView?.visibility = View.GONE
             }
 
             override fun onComplete() {
                 binding?.textView?.append(" onComplete")
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
-                Logger.logD(TAG, " onComplete")
+                Logger.d("onComplete")
                 binding?.loadingView?.visibility = View.GONE
             }
         }

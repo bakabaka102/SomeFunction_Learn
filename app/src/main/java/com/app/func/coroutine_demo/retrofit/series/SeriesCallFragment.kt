@@ -44,12 +44,12 @@ class SeriesCallFragment : BaseFragment() {
                     response: Response<QuoteListResponse>
                 ) {
                     val valueGet: QuoteListResponse? = response.body()
-                    Logger.logD("series_aaa", "Okie, thanh cong   --- ${valueGet?.results}")
+                    Logger.d("Okie, thanh cong   --- ${valueGet?.results}")
                     valueGet?.results?.let { quoteAdapter.setData(it) }
                 }
 
                 override fun onFailure(call: Call<QuoteListResponse>, t: Throwable) {
-                    Logger.logD("series_aaa", "Co loi xay ra   --- ")
+                    Logger.d("Co loi xay ra   --- ")
                 }
             })
     }

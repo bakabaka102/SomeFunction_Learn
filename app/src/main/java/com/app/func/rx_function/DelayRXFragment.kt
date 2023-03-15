@@ -72,26 +72,26 @@ class DelayRXFragment : BaseFragment(), View.OnClickListener {
     private fun getObserver(): Observer<String> {
         return object : Observer<String> {
             override fun onSubscribe(d: Disposable) {
-                Logger.logD(TAG, " onSubscribe : " + d.isDisposed)
+                Logger.d("onSubscribe : " + d.isDisposed)
             }
 
             override fun onNext(value: String) {
                 binding?.textView?.append(" onNext : value : $value")
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
-                Logger.logD(TAG, " onNext : value : $value")
+                Logger.d("onNext : value : $value")
             }
 
             override fun onError(e: Throwable) {
                 binding?.textView?.append(" onError : " + e.message)
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
-                Logger.logD(TAG, " onError : " + e.message)
+                Logger.d("onError : " + e.message)
                 binding?.loadingView?.visibility = View.GONE
             }
 
             override fun onComplete() {
                 binding?.textView?.append(" onComplete")
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
-                Logger.logD(TAG, " onComplete")
+                Logger.d("onComplete")
                 binding?.loadingView?.visibility = View.GONE
             }
         }
