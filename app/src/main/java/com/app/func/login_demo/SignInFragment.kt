@@ -10,7 +10,7 @@ import com.app.func.databinding.FragmentSignInBinding
 import com.app.func.utils.Constants
 import com.app.func.view.animation_view.WaveHelper
 
-class SignInFragment : BaseFragment(), View.OnClickListener {
+class SignInFragment : BaseFragment() {
 
     private var binding: FragmentSignInBinding? = null
     private var mWaveHelper: WaveHelper? = null
@@ -20,13 +20,9 @@ class SignInFragment : BaseFragment(), View.OnClickListener {
 
     ): View? {
         binding = FragmentSignInBinding.inflate(inflater, container, false)
-        binding?.btnSignIn?.setOnClickListener(this)
-        binding?.btnSignUp?.setOnClickListener(this)
 
         mWaveHelper = WaveHelper(binding?.contentWater)
-        binding?.contentWater?.setContent("120" ?: Constants.EMPTY_STRING)
-
-        //binding?.contentWater?.changeToLostConnection()
+        binding?.contentWater?.setContent("120")
 
         binding?.contentWater?.onAnimationUp = {
             //startAnimationUp()
@@ -41,16 +37,5 @@ class SignInFragment : BaseFragment(), View.OnClickListener {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-    }
-
-    override fun onClick(view: View?) {
-        when (view) {
-            binding?.btnSignIn -> {
-                getNavController()?.navigate(R.id.homeFragment)
-            }
-            binding?.btnSignUp -> {
-                getNavController()?.navigate(R.id.homeFragment)
-            }
-        }
     }
 }

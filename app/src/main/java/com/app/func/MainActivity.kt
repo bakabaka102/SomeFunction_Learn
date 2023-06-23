@@ -3,14 +3,13 @@ package com.app.func
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.app.func.databinding.ActivityMainBinding
-import com.app.func.view.TopAlignSuperscriptSpan
 import com.app.func.view.all_demo.EmotionalFaceView
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 
 class MainActivity : AppCompatActivity(), View.OnTouchListener {
@@ -49,16 +48,6 @@ class MainActivity : AppCompatActivity(), View.OnTouchListener {
         binding.btnAnimation.setOnClickListener {
             startActivity(Intent(this, ViewAnimationsActivity2::class.java))
         }
-
-        val spannableString = SpannableString("@RM123.456")
-        spannableString.setSpan(
-            TopAlignSuperscriptSpan(0.35f), 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        binding.textDemo.text = spannableString
-
-
-        binding.textPinchZoom.textSize = mRatio + 13
-
     }
 
 
@@ -73,9 +62,8 @@ class MainActivity : AppCompatActivity(), View.OnTouchListener {
                 // if ACTION_POINTER_UP then after finding the distance
                 // we will increase the text size by 15
                 val scale = (getDistance(event) - bastDst) / move
-                val factor = Math.pow(2.0, scale.toDouble()).toFloat()
-                ratio = Math.min(1024.0f, Math.max(0.1f, baseratio * factor))
-                binding.textPinchZoom.textSize = ratio + 15
+                val factor = 2.0.pow(scale.toDouble()).toFloat()
+                ratio = 1024.0f.coerceAtMost(0.1f.coerceAtLeast(baseratio * factor))
             }
         }
         return true
@@ -85,7 +73,7 @@ class MainActivity : AppCompatActivity(), View.OnTouchListener {
     private fun getDistance(event: MotionEvent): Int {
         val dx = (event.getX(0) - event.getX(1)).toInt()
         val dy = (event.getY(0) - event.getY(1)).toInt()
-        return Math.sqrt((dx * dx + dy * dy).toDouble()).toInt()
+        return sqrt((dx * dx + dy * dy).toDouble()).toInt()
     }
 
     @SuppressLint("ClickableViewAccessibility")
