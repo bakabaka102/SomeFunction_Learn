@@ -4,34 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login_demo.MainContainFragment">
-
-    <com.app.func.textview_view.NoneSpaceTextView
-        android:id="@+id/id_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/_20dp"
-        android:background="#FFFF00FF"
-        android:text="6ms jkÖÄ"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+    tools:context=".login_demo.MainContainFragment"
+    tools:ignore="HardcodedText">
 
     <com.app.func.view.all_demo.SmileyView
         android:id="@+id/smileyView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_64dp"
+        android:layout_width="@dimen/_200dp"
+        android:layout_height="@dimen/_200dp"
         android:layout_marginTop="@dimen/_8dp"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/id_value" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/consButton1"
@@ -46,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16dp"
-            android:text="@string/home"
+            android:text="Pulsator"
             android:textAllCaps="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -56,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12dp"
-            android:text="@string/sign_in"
+            android:text="Wave drop"
             android:textAllCaps="false"
             app:layout_constraintStart_toEndOf="@id/btnHome"
             app:layout_constraintTop_toTopOf="parent" />
@@ -66,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12dp"
-            android:text="@string/sign_up"
+            android:text="Compass"
             android:textAllCaps="false"
             app:layout_constraintStart_toEndOf="@id/btnSignIn"
             app:layout_constraintTop_toTopOf="parent" />
@@ -147,6 +131,7 @@
             android:textAllCaps="false"
             app:layout_constraintStart_toEndOf="@id/btnEditTexts"
             app:layout_constraintTop_toBottomOf="@id/btnRoomCoroutines" />
+
         <Button
             android:id="@+id/btnNotify2"
             android:layout_width="wrap_content"
@@ -157,6 +142,16 @@
             android:textAllCaps="false"
             app:layout_constraintStart_toEndOf="@id/btnNotify"
             app:layout_constraintTop_toBottomOf="@id/btnRoomCoroutines" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <Button
+            android:id="@+id/btnCoroutinesFunc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8dp"
+            android:text="Co func"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnEditTexts" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

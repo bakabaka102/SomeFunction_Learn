@@ -1,14 +1,9 @@
 package com.app.func.coroutine_demo.retrofit.series
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.func.base_content.BaseFragment
 import com.app.func.coroutine_demo.data.model.QuoteListResponse
-import com.app.func.coroutine_demo.data.model.Result
 import com.app.func.coroutine_demo.retrofit.base.ApiConstants
 import com.app.func.coroutine_demo.retrofit.base.RetrofitObject
 import com.app.func.coroutine_demo.retrofit.base.RetrofitService
@@ -19,21 +14,28 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SeriesCallFragment : BaseFragment() {
+class SeriesCallFragment : BaseFragment<FragmentSingleCallNetworkBinding>() {
 
-    private var mBinding: FragmentSingleCallNetworkBinding? = null
     private var quoteAdapter: QuotesAdapter = QuotesAdapter()
-    private var data: List<Result>? = null
+    override fun getViewBinding(): FragmentSingleCallNetworkBinding {
+        return FragmentSingleCallNetworkBinding.inflate(layoutInflater)
+    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        mBinding = FragmentSingleCallNetworkBinding.inflate(inflater, container, false)
+    override fun setUpViews() {
 
-        initViewModel()
+    }
+
+    override fun observeView() {
+
+    }
+
+    override fun observeData() {
         initObserver()
         initRecyclerView()
-        return mBinding?.root
+    }
+
+    override fun initActions() {
+
     }
 
     private fun initObserver() {
@@ -54,30 +56,15 @@ class SeriesCallFragment : BaseFragment() {
             })
     }
 
-    private fun initViewModel() {
-    }
-
     private fun initRecyclerView() {
-        mBinding?.recyclerView?.layoutManager = LinearLayoutManager(activity)
-//        mBinding?.recyclerView?.addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
-        mBinding?.recyclerView?.addItemDecoration(
+        binding?.recyclerView?.layoutManager = LinearLayoutManager(activity)
+//        binding?.recyclerView?.addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
+        binding?.recyclerView?.addItemDecoration(
             DividerItemDecoration(
                 activity,
-                (mBinding?.recyclerView?.layoutManager as LinearLayoutManager).orientation
+                (binding?.recyclerView?.layoutManager as LinearLayoutManager).orientation
             )
         )
-        mBinding?.recyclerView?.adapter = quoteAdapter
-//        mViewModel.getQuotes()
-
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        mBinding = null
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = SeriesCallFragment()
+        binding?.recyclerView?.adapter = quoteAdapter
     }
 }

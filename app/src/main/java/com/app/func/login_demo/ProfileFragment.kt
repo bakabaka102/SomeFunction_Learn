@@ -1,10 +1,6 @@
 package com.app.func.login_demo
 
 import android.app.AlertDialog
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.func.R
@@ -15,29 +11,18 @@ import com.app.func.features.room_database.User
 import com.app.func.features.room_database.UserListAdapter
 import com.app.func.features.room_database.UserRepository
 
-class ProfileFragment : BaseFragment() {
-
-    private var binding: ProfileFragmentBinding? = null
-    var user: User? = null
+class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
 
     private var userAdapter = UserListAdapter()
     private val repo: UserRepository by lazy {
         UserRepository(requireContext())
     }
-
-    companion object {
-        fun newInstance() = ProfileFragment()
+    var user: User? = null
+    override fun getViewBinding(): ProfileFragmentBinding {
+        return ProfileFragmentBinding.inflate(layoutInflater)
     }
 
-    private fun fetchUsers() {
-        val allUsers = repo.getAllUsers()
-        allUsers?.let { userAdapter.setUsers(it) }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        binding = ProfileFragmentBinding.inflate(inflater, container, false)
+    override fun setUpViews() {
         binding?.btnAdd?.setOnClickListener {
             addNewUser()
         }
@@ -77,7 +62,23 @@ class ProfileFragment : BaseFragment() {
         binding?.recyclerviewUsers?.layoutManager = LinearLayoutManager(requireContext())
         binding?.recyclerviewUsers?.adapter = userAdapter
         fetchUsers()
-        return binding?.root
+    }
+
+    override fun observeView() {
+
+    }
+
+    override fun observeData() {
+
+    }
+
+    override fun initActions() {
+
+    }
+
+    private fun fetchUsers() {
+        val allUsers = repo.getAllUsers()
+        allUsers?.let { userAdapter.setUsers(it) }
     }
 
     private fun updateUser() {

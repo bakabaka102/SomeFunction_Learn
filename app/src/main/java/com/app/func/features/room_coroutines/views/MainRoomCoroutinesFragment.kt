@@ -1,9 +1,5 @@
 package com.app.func.features.room_coroutines.views
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.func.R
@@ -14,18 +10,17 @@ import com.app.func.features.room_coroutines.WordViewModel
 import com.app.func.features.room_coroutines.WordViewModelFactory
 import com.app.func.features.room_coroutines.adapters.WordListAdapter
 
-class MainRoomCoroutinesFragment : BaseFragment() {
+class MainRoomCoroutinesFragment : BaseFragment<NoteHomeLayoutBinding>() {
 
-    private var binding: NoteHomeLayoutBinding? = null
     private val wordViewModel: WordViewModel by viewModels {
         WordViewModelFactory((activity?.application as WordsApplication).repository)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = NoteHomeLayoutBinding.inflate(inflater, container, false)
+    override fun getViewBinding(): NoteHomeLayoutBinding {
+        return NoteHomeLayoutBinding.inflate(layoutInflater)
+    }
+
+    override fun setUpViews() {
         binding?.buttonAddNote?.setOnClickListener {
             getNavController()?.navigate(R.id.addNewWordFragment)
         }
@@ -39,16 +34,18 @@ class MainRoomCoroutinesFragment : BaseFragment() {
         wordViewModel.allWords.observe(viewLifecycleOwner) {
             it.let { wordListAdapter.submitList(it) }
         }
-        return binding?.root
     }
 
-    companion object {
-        fun newFragment() = MainRoomCoroutinesFragment()
+    override fun observeView() {
+
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
+    override fun observeData() {
+
+    }
+
+    override fun initActions() {
+
     }
 }
 

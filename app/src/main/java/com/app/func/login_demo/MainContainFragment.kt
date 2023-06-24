@@ -1,24 +1,23 @@
 package com.app.func.login_demo
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Notification
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.fragment.app.viewModels
 import com.app.func.R
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.MainContainFragmentBinding
 import com.app.func.utils.Constants
 import com.app.func.utils.Logger
-import java.util.*
+import java.util.Date
 
-class MainContainFragment : BaseFragment() {
+class MainContainFragment : BaseFragment<MainContainFragmentBinding>() {
 
-    private var binding: MainContainFragmentBinding? = null
-    private val viewModel: LoginViewModel by viewModels()
     private val longTitle1 = "My notification"
     private val longTitle2 = "My notification channel 2"
     private val longText1 =
@@ -26,17 +25,24 @@ class MainContainFragment : BaseFragment() {
     private val longText2 =
         "Much longer text that cannot fit one line of channel 2. I think it need more, at least is two lines. Much longer text that cannot fit one line of channel 2. I think it need more, at least is two lines."
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-
-        binding = MainContainFragmentBinding.inflate(inflater, container, false)
-
-        initActions()
-        return binding?.root
+    override fun getViewBinding(): MainContainFragmentBinding {
+        return MainContainFragmentBinding.inflate(layoutInflater)
     }
 
-    private fun initActions() {
+    override fun setUpViews() {
+
+    }
+
+    override fun observeView() {
+
+    }
+
+    override fun observeData() {
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    override fun initActions() {
         binding?.btnHome?.setOnClickListener {
             getNavController()?.navigate(R.id.homeFragment)
         }
@@ -71,8 +77,13 @@ class MainContainFragment : BaseFragment() {
         binding?.btnNotify2?.setOnClickListener {
             showNotification2()
         }
+        binding?.btnCoroutinesFunc?.setOnClickListener {
+            getNavController()?.navigate(R.id.snowyMainFragment)
+        }
     }
 
+    @SuppressLint("MissingPermission")
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun showNotification() {
         val notification: Notification =
             NotificationCompat.Builder(requireContext(), Constants.CHANNEL_NOTIFY_ID)
@@ -82,9 +93,16 @@ class MainContainFragment : BaseFragment() {
                 .setStyle(NotificationCompat.BigTextStyle().bigText(longText1))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT).build()
 
-        NotificationManagerCompat.from(requireContext()).notify(getNotificationId(), notification)
+        if (isPermitPostNotification()) {
+            NotificationManagerCompat.from(requireContext())
+                .notify(getNotificationId(), notification)
+        } else {
+            Logger.d("POST_NOTIFICATIONS is denied.")
+        }
     }
 
+    @SuppressLint("MissingPermission")
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun showNotification2() {
         val notification: Notification =
             NotificationCompat.Builder(requireContext(), Constants.CHANNEL_NOTIFY_ID_2)
@@ -93,8 +111,20 @@ class MainContainFragment : BaseFragment() {
                 .setContentText(longText2)
                 .setStyle(NotificationCompat.BigTextStyle().bigText(longText2))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT).build()
+        if (isPermitPostNotification()) {
+            NotificationManagerCompat.from(requireContext())
+                .notify(getNotificationId(), notification)
+        } else {
+            Logger.d("POST_NOTIFICATIONS is denied.")
+        }
+    }
 
-        NotificationManagerCompat.from(requireContext()).notify(getNotificationId(), notification)
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun isPermitPostNotification(): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            requireActivity(),
+            Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun getNotificationId(): Int {
@@ -102,10 +132,5 @@ class MainContainFragment : BaseFragment() {
         Logger.d("$time")
         return time
     }
-
-    companion object {
-        fun newInstance() = MainContainFragment()
-    }
-
 
 }

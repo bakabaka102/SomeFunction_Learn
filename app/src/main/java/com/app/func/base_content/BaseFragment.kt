@@ -2,19 +2,30 @@ package com.app.func.base_content
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import com.app.func.R
+import androidx.viewbinding.ViewBinding
 import com.app.func.coroutine_demo.retrofit.aaa.DataRepository
 import com.app.func.coroutine_demo.retrofit.base.RetrofitObject
 import com.app.func.coroutine_demo.retrofit.base.RetrofitService
 import com.app.func.utils.Logger
 
-open class BaseFragment : Fragment() {
+abstract class BaseFragment<VB : ViewBinding> : Fragment() {
+
+    protected var binding: VB? = null
+    abstract fun getViewBinding(): VB
+
+    abstract fun setUpViews()
+
+    abstract fun observeData()
+
+    abstract fun observeView()
+
+    abstract fun initActions()
 
     open fun setTitleActionBar() {
         (activity as AppCompatActivity).supportActionBar?.title = this::class.java.simpleName
@@ -33,7 +44,15 @@ open class BaseFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         Logger.d("${this::class.java.simpleName} onCreateView is called...")
-        return inflater.inflate(R.layout.fragment_base, container, false)
+        return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpViews()
+        observeData()
+        observeView()
+        initActions()
     }
 
 
@@ -45,6 +64,7 @@ open class BaseFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Logger.d("${this::class.java.simpleName} onCreate is called...")
+        binding = getViewBinding()
     }
 
     override fun onStart() {
@@ -70,6 +90,7 @@ open class BaseFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding = null
         Logger.d("${this::class.java.simpleName} onStop is called...")
     }
 
@@ -81,10 +102,5 @@ open class BaseFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         Logger.d("${this::class.java.simpleName} onDetach is called...")
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = BaseFragment()
     }
 }

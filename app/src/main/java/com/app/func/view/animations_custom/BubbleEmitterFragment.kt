@@ -1,27 +1,13 @@
 package com.app.func.view.animations_custom
 
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.BubbleEmitterFragmentBinding
 import kotlin.random.Random
 
-class BubbleEmitterFragment : BaseFragment() {
+class BubbleEmitterFragment : BaseFragment<BubbleEmitterFragmentBinding>() {
 
-    private var binding: BubbleEmitterFragmentBinding? = null
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        binding = BubbleEmitterFragmentBinding.inflate(inflater, container, false)
-        emitBubbles()
-        initActions()
-        return binding?.root
-    }
 
     private fun emitBubbles() {
         Handler(Looper.getMainLooper()).postDelayed({
@@ -31,13 +17,24 @@ class BubbleEmitterFragment : BaseFragment() {
         }, Random.nextLong(100, 500))
     }
 
+    override fun getViewBinding(): BubbleEmitterFragmentBinding {
+        return BubbleEmitterFragmentBinding.inflate(layoutInflater)
+    }
 
-    private fun initActions() {
+    override fun setUpViews() {
+        emitBubbles()
+    }
+
+    override fun observeView() {
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
+    override fun observeData() {
+
     }
+
+    override fun initActions() {
+
+    }
+
 }

@@ -1,8 +1,5 @@
 package com.app.func.login_demo
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.TooltipCompat
@@ -15,13 +12,12 @@ import com.app.func.login_demo.tab_viewpager.TabSecondFragment
 import com.app.func.utils.MyToast
 import com.google.android.material.tabs.TabLayoutMediator
 
-class ViewPagerFragment : BaseFragment() {
+class ViewPagerFragment : BaseFragment<ViewPagerFragmentBinding>() {
 
     private var viewPagerAdapter: ViewPagerAdapter? = null
 
-    private var binding: ViewPagerFragmentBinding? = null
 
-    val animalsArray = arrayOf(
+    private val animalsArray = arrayOf(
         "Cat",
         "Dog",
         "Bird"
@@ -31,11 +27,11 @@ class ViewPagerFragment : BaseFragment() {
         fun newInstance() = ViewPagerFragment()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        binding = ViewPagerFragmentBinding.inflate(inflater, container, false)
+    override fun getViewBinding(): ViewPagerFragmentBinding {
+        return ViewPagerFragmentBinding.inflate(layoutInflater)
+    }
 
+    override fun setUpViews() {
         viewPagerAdapter = ViewPagerAdapter(this)
         binding?.recyclerviewTab?.adapter = viewPagerAdapter
 
@@ -66,7 +62,18 @@ class ViewPagerFragment : BaseFragment() {
         }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, mOnBackPress)
-        return binding?.root
+    }
+
+    override fun observeView() {
+
+    }
+
+    override fun observeData() {
+
+    }
+
+    override fun initActions() {
+
     }
 
     private val mOnBackPress = object : OnBackPressedCallback(true) {
@@ -106,11 +113,5 @@ class ViewPagerFragment : BaseFragment() {
             TooltipCompat.setTooltipText(tabStrip.getChildAt(i), null)
         }
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
-
 
 }

@@ -1,9 +1,5 @@
 package com.app.func.features.room_database_sqlite_mvvm.view
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import com.app.func.R
@@ -13,18 +9,16 @@ import com.app.func.features.room_database_sqlite_mvvm.Note
 import com.app.func.features.room_database_sqlite_mvvm.utils.ConstantsNote
 import com.app.func.utils.MyToast
 
-class NoteDeleteAddFragment : BaseFragment() {
+class NoteDeleteAddFragment : BaseFragment<NoteAddEditLayoutBinding>() {
 
-    private var binding: NoteAddEditLayoutBinding? = null
     private lateinit var mode: Mode
     private var noteId: Int = -1
     private val noteViewModel: NoteViewModel by viewModels()
+    override fun getViewBinding(): NoteAddEditLayoutBinding {
+        return NoteAddEditLayoutBinding.inflate(layoutInflater)
+    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = NoteAddEditLayoutBinding.inflate(inflater, container, false)
+    override fun setUpViews() {
         binding?.numberPickerPriority?.minValue = 1
         binding?.numberPickerPriority?.maxValue = 10
 
@@ -41,6 +35,7 @@ class NoteDeleteAddFragment : BaseFragment() {
             Mode.AddNote -> {
 //                title = "Add Note"
             }
+
             Mode.EditNote -> {
 //                title = "Edit Note"
                 binding?.etTitle?.setText(arguments?.getString(ConstantsNote.EXTRA_TITLE))
@@ -54,7 +49,18 @@ class NoteDeleteAddFragment : BaseFragment() {
             saveNote()
         }
 
-        return binding?.root
+    }
+
+    override fun observeView() {
+
+    }
+
+    override fun observeData() {
+
+    }
+
+    override fun initActions() {
+
     }
 
     private fun saveNote() {
@@ -79,29 +85,6 @@ class NoteDeleteAddFragment : BaseFragment() {
                 MyToast.showToast(requireContext(), "Update note.")
             }
         }
-
-//        getNavController()?.navigateUp()
-
-        //val data = activity?.intent
-        // only if note ID was provided i.e. we are editing
-        /* if (noteId != -1) {
-             data?.putExtra(ConstantsNote.EXTRA_ID, noteId)
-             data?.putExtra(ConstantsNote.EXTRA_TITLE, title)
-             data?.putExtra(ConstantsNote.EXTRA_DESCRIPTION, desc)
-             data?.putExtra(ConstantsNote.EXTRA_PRIORITY, priority)
-         }*/
-
-//        setResult(Activity.RESULT_OK, data)
-//        finish()
-    }
-
-    companion object {
-        fun newFragment() = NoteDeleteAddFragment()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
     }
 
     private sealed class Mode {

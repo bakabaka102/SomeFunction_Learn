@@ -14,30 +14,26 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 
-class FilterRXFragment : BaseFragment(), View.OnClickListener {
-
-    private var binding: FragmentSimpleRxBinding? = null
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentSimpleRxBinding.inflate(inflater, container, false)
-        initViews()
-        initActions()
-        initObservers()
-        return binding?.root
+class FilterRXFragment : BaseFragment<FragmentSimpleRxBinding>(), View.OnClickListener {
+    override fun getViewBinding(): FragmentSimpleRxBinding {
+        return FragmentSimpleRxBinding.inflate(layoutInflater)
     }
 
-    private fun initObservers() {
+    override fun setUpViews() {
 
     }
 
-    private fun initActions() {
+    override fun observeView() {
+
+    }
+
+    override fun observeData() {
+
+    }
+
+
+    override fun initActions() {
         binding?.doSomeWork?.setOnClickListener(this)
-    }
-
-    private fun initViews() {
-
     }
 
     override fun onClick(view: View?) {
@@ -94,13 +90,4 @@ class FilterRXFragment : BaseFragment(), View.OnClickListener {
             }
         }
     }
-
-
-    companion object {
-        val TAG: String = this::class.java.simpleName
-
-        @JvmStatic
-        fun newInstance() = FilterRXFragment()
-    }
-
 }

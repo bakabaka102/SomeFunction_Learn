@@ -1,11 +1,8 @@
 package com.app.func.rx_function
 
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentSimpleRxBinding
 import com.app.func.utils.Constants
@@ -16,43 +13,26 @@ import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class SimpleRXFragment : BaseFragment(), View.OnClickListener {
-
-    private var binding: FragmentSimpleRxBinding? = null
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentSimpleRxBinding.inflate(inflater, container, false)
-
-        initViews()
-        initActions()
-        initObservers()
-        return binding?.root
+class SimpleRXFragment : BaseFragment<FragmentSimpleRxBinding>(), View.OnClickListener {
+    override fun getViewBinding(): FragmentSimpleRxBinding {
+        return FragmentSimpleRxBinding.inflate(layoutInflater)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
-
-    private fun initObservers() {
+    override fun setUpViews() {
 
     }
 
-    private fun initActions() {
+    override fun observeView() {
+
+    }
+
+    override fun observeData() {
+
+    }
+
+
+    override fun initActions() {
         binding?.doSomeWork?.setOnClickListener(this)
-    }
-
-    private fun initViews() {
-
-    }
-
-    companion object {
-        val TAG: String = SimpleRXFragment::class.java.simpleName
-
-        @JvmStatic
-        fun newInstance() = SimpleRXFragment()
     }
 
     override fun onClick(view: View?) {

@@ -13,9 +13,8 @@ import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentRxFunctionBinding
 import kotlin.math.roundToInt
 
-class RxFunctionFragment : BaseFragment(), View.OnClickListener {
+class RxFunctionFragment : BaseFragment<FragmentRxFunctionBinding>(), View.OnClickListener {
 
-    private var binding: FragmentRxFunctionBinding? = null
     private var dp16Pixel = 0
 
     private val mBinding get() = binding!!
@@ -46,7 +45,23 @@ class RxFunctionFragment : BaseFragment(), View.OnClickListener {
         })
     }
 
-    private fun initActions() {
+    override fun getViewBinding(): FragmentRxFunctionBinding {
+        return FragmentRxFunctionBinding.inflate(layoutInflater)
+    }
+
+    override fun setUpViews() {
+
+    }
+
+    override fun observeView() {
+
+    }
+
+    override fun observeData() {
+
+    }
+
+    override fun initActions() {
         binding?.btnForecast?.setOnClickListener(this)
         binding?.btnSimpleRx?.setOnClickListener(this)
         binding?.btnMapRx?.setOnClickListener(this)
@@ -85,11 +100,13 @@ class RxFunctionFragment : BaseFragment(), View.OnClickListener {
                     //part of the tvProgress is to the left of 0 bound
                     mBinding.marker.tvProgress.x = mBinding.marker.vArrow.x - 20
                 }
+
                 thumbPos + mBinding.marker.tvProgress.width / 2 + sb.paddingRight > deviceDisplay.x -> {
                     //part of the tvProgress is to the right of screen width bound
                     mBinding.marker.tvProgress.x =
                         mBinding.marker.vArrow.x - mBinding.marker.tvProgress.width + 20 + mBinding.marker.vArrow.width
                 }
+
                 else -> {
                     //tvProgress is between 0 and screen width bounds
                     mBinding.marker.tvProgress.x = thumbPos - mBinding.marker.tvProgress.width / 2f
@@ -108,49 +125,44 @@ class RxFunctionFragment : BaseFragment(), View.OnClickListener {
     override fun onClick(view: View?) {
         when (view) {
             binding?.btnForecast -> {
-                getNavController()?.navigate(R.id.weatherDemoFragment)
+
             }
+
             binding?.btnSimpleRx -> {
                 getNavController()?.navigate(R.id.simpleRXFragment)
             }
+
             binding?.btnMapRx -> {
                 getNavController()?.navigate(R.id.mapRXFragment)
             }
+
             binding?.btnZipRx -> {
                 getNavController()?.navigate(R.id.zipRXFragment)
             }
+
             binding?.btnTimeRx -> {
                 getNavController()?.navigate(R.id.timerRXFragment)
             }
+
             binding?.btnFilterRx -> {
                 getNavController()?.navigate(R.id.filterRXFragment)
             }
+
             binding?.btnConcatRx -> {
                 getNavController()?.navigate(R.id.concatRXFragment)
             }
+
             binding?.btnMergeRx -> {
                 getNavController()?.navigate(R.id.mergeRXFragment)
             }
+
             binding?.btnDelayRx -> {
                 getNavController()?.navigate(R.id.delayRXFragment)
             }
+
             binding?.btnSearchRx -> {
                 getNavController()?.navigate(R.id.searchByRXFragment)
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
-
-    companion object {
-
-        private const val TAG: String = "RxFunctionFragment"
-
-        @JvmStatic
-        fun newInstance() = RxFunctionFragment()
-
     }
 }
