@@ -1,32 +1,19 @@
 package com.app.func.login_demo
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.app.func.R
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentSignInBinding
-import com.app.func.utils.Constants
 import com.app.func.view.animation_view.WaveHelper
 
-class SignInFragment : BaseFragment(), View.OnClickListener {
+class SignInFragment : BaseFragment<FragmentSignInBinding>() {
 
-    private var binding: FragmentSignInBinding? = null
     private var mWaveHelper: WaveHelper? = null
+    override fun getViewBinding(): FragmentSignInBinding {
+        return FragmentSignInBinding.inflate(layoutInflater)
+    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-
-    ): View? {
-        binding = FragmentSignInBinding.inflate(inflater, container, false)
-        binding?.btnSignIn?.setOnClickListener(this)
-        binding?.btnSignUp?.setOnClickListener(this)
-
+    override fun setUpViews() {
         mWaveHelper = WaveHelper(binding?.contentWater)
-        binding?.contentWater?.setContent("120" ?: Constants.EMPTY_STRING)
-
-        //binding?.contentWater?.changeToLostConnection()
+        binding?.contentWater?.setContent("120")
 
         binding?.contentWater?.onAnimationUp = {
             //startAnimationUp()
@@ -35,22 +22,17 @@ class SignInFragment : BaseFragment(), View.OnClickListener {
             //startAnimationDown()
         }
         mWaveHelper?.start()
-        return binding?.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
+    override fun observeView() {
+
     }
 
-    override fun onClick(view: View?) {
-        when (view) {
-            binding?.btnSignIn -> {
-                getNavController()?.navigate(R.id.homeFragment)
-            }
-            binding?.btnSignUp -> {
-                getNavController()?.navigate(R.id.homeFragment)
-            }
-        }
+    override fun observeData() {
+
+    }
+
+    override fun initActions() {
+
     }
 }

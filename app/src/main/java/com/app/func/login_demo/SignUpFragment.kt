@@ -2,13 +2,14 @@ package com.app.func.login_demo
 
 import android.graphics.Canvas
 import android.graphics.Color
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.app.func.R
 import com.app.func.base_content.BaseFragment
 import com.app.func.coroutine_demo.retrofit.aaa.MyViewModelFactory
@@ -20,19 +21,14 @@ import com.app.func.view.recycler_view_custom.ravi_recyclerview.ItemCart
 import com.app.func.view.recycler_view_custom.ravi_recyclerview.RecyclerItemTouchHelper
 import com.google.android.material.snackbar.Snackbar
 
-class SignUpFragment : BaseFragment(), View.OnClickListener,
+class SignUpFragment : BaseFragment<FragmentSignUpBinding>(), View.OnClickListener,
     RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
-    private var binding: FragmentSignUpBinding? = null
-    private val cartList = mutableListOf<ItemCart>()
-    private var mAdapter = CartListAdapter()
-    private var mViewModel: SignUpViewModel? = null
+    override fun getViewBinding(): FragmentSignUpBinding {
+        return FragmentSignUpBinding.inflate(layoutInflater)
+    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentSignUpBinding.inflate(inflater, container, false)
-
+    override fun setUpViews() {
         mViewModel = ViewModelProvider(
             this,
             MyViewModelFactory(getRepositoryRetrofit(ApiConstants.BASE_URL_FOOD))
@@ -53,10 +49,9 @@ class SignUpFragment : BaseFragment(), View.OnClickListener,
             if (it) {
                 //mBinding?.progressBar?.visibility = View.VISIBLE
             } else {
-               // mBinding?.progressBar?.visibility = View.GONE
+                // mBinding?.progressBar?.visibility = View.GONE
             }
         }
-
 
 
         /* adding item touch helper
@@ -110,12 +105,27 @@ class SignUpFragment : BaseFragment(), View.OnClickListener,
         ItemTouchHelper(itemTouchHelperCallback1).attachToRecyclerView(binding?.recyclerView)
 
         binding?.btnCreateAccount?.setOnClickListener(this)
-        return binding?.root
     }
+
+    override fun observeView() {
+
+    }
+
+    override fun observeData() {
+
+    }
+
+    override fun initActions() {
+
+    }
+
+    private val cartList = mutableListOf<ItemCart>()
+    private var mAdapter = CartListAdapter()
+    private var mViewModel: SignUpViewModel? = null
 
     private fun initObservers() {
         mViewModel?.menuFoodList?.observe(viewLifecycleOwner) {
-           mAdapter.setDataAdapter(it)
+            mAdapter.setDataAdapter(it)
         }
 
         observerError()
@@ -135,11 +145,6 @@ class SignUpFragment : BaseFragment(), View.OnClickListener,
 //        cartList.add(ItemCart(5, "Item 5", "description 5", 345.0, "aaaa"))
 //        cartList.add(ItemCart(6, "Item 6", "description 6", 678.0, "aaaa"))
 //    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
 
     override fun onClick(view: View?) {
         when (view) {

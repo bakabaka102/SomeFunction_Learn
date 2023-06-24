@@ -3,21 +3,24 @@ package com.app.func.thread_demo.snowy
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.app.func.R
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentTutorialBinding
 import com.app.func.thread_demo.snowy.model.Tutorial
 import com.app.func.thread_demo.snowy.utils.SnowFilter
-import kotlinx.coroutines.*
 import java.io.InputStream
 import java.net.URL
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class TutorialFragment : BaseFragment() {
+class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
 
-    private var binding: FragmentTutorialBinding? = null
     private val parentJob = Job()
 
     // 1
@@ -37,15 +40,27 @@ class TutorialFragment : BaseFragment() {
     private val coroutineScope =
         CoroutineScope(Dispatchers.Main + parentJob + coroutineExceptionHandler)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    override fun getViewBinding(): FragmentTutorialBinding {
+        return FragmentTutorialBinding.inflate(layoutInflater)
+    }
+
+    override fun setUpViews() {
         val tutorial: Tutorial? = arguments?.getParcelable(TUTORIAL_KEY) as? Tutorial
 //        val view = inflater.inflate(R.layout.fragment_tutorial, container, false)
-        binding = FragmentTutorialBinding.inflate(inflater, container, false)
         binding?.tutorialName?.text = tutorial?.name
         binding?.tutorialDesc?.text = tutorial?.description
-        return binding?.root
+    }
+
+    override fun observeView() {
+
+    }
+
+    override fun observeData() {
+
+    }
+
+    override fun initActions() {
+
     }
 
     override fun setTitleActionBar() {

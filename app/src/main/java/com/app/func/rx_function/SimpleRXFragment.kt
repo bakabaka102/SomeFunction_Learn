@@ -1,11 +1,8 @@
 package com.app.func.rx_function
 
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentSimpleRxBinding
 import com.app.func.utils.Constants
@@ -16,43 +13,26 @@ import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class SimpleRXFragment : BaseFragment(), View.OnClickListener {
-
-    private var binding: FragmentSimpleRxBinding? = null
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentSimpleRxBinding.inflate(inflater, container, false)
-
-        initViews()
-        initActions()
-        initObservers()
-        return binding?.root
+class SimpleRXFragment : BaseFragment<FragmentSimpleRxBinding>(), View.OnClickListener {
+    override fun getViewBinding(): FragmentSimpleRxBinding {
+        return FragmentSimpleRxBinding.inflate(layoutInflater)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
-
-    private fun initObservers() {
+    override fun setUpViews() {
 
     }
 
-    private fun initActions() {
+    override fun observeView() {
+
+    }
+
+    override fun observeData() {
+
+    }
+
+
+    override fun initActions() {
         binding?.doSomeWork?.setOnClickListener(this)
-    }
-
-    private fun initViews() {
-
-    }
-
-    companion object {
-        val TAG: String = SimpleRXFragment::class.java.simpleName
-
-        @JvmStatic
-        fun newInstance() = SimpleRXFragment()
     }
 
     override fun onClick(view: View?) {
@@ -81,26 +61,26 @@ class SimpleRXFragment : BaseFragment(), View.OnClickListener {
     private fun getObserver(): Observer<String> {
         val observer = object : Observer<String> {
             override fun onSubscribe(d: Disposable) {
-                Logger.logD(TAG, " onSubscribe : ${d.isDisposed}")
+                Logger.d("onSubscribe : ${d.isDisposed}")
             }
 
             override fun onNext(value: String) {
                 binding?.textView?.append(" onNext : value : $value")
                 binding?.textView?.append(Constants.LINE_SEPARATOR)
-                Logger.logD(TAG, " onNext : value : $value")
+                Logger.d("onNext : value : $value")
             }
 
             override fun onError(e: Throwable) {
                 binding?.textView?.append(" onError : " + e.message)
                 binding?.textView?.append(Constants.LINE_SEPARATOR)
-                Logger.logD(TAG, " onError : " + e.message)
+                Logger.d("onError : " + e.message)
                 binding?.loadingView?.visibility = View.GONE
             }
 
             override fun onComplete() {
                 binding?.textView?.append(" onComplete")
                 binding?.textView?.append(Constants.LINE_SEPARATOR)
-                Logger.logD(TAG, " onComplete")
+                Logger.d("onComplete")
                 binding?.loadingView?.visibility = View.GONE
             }
         }

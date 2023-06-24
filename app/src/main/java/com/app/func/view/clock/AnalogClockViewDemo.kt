@@ -203,7 +203,7 @@ class AnalogClockViewDemo @JvmOverloads constructor(
         }
         drawScale(canvas)
         //drawBackgroundCircle(canvas)
-        drawOuterCircle(canvas)
+        //drawOuterCircle(canvas)
         drawHand(canvas)
         drawDotCenter(canvas)
         drawNumerals(canvas)

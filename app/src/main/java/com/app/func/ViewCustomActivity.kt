@@ -1,12 +1,10 @@
 package com.app.func
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.app.func.databinding.ActivityViewCustomBinding
 import com.app.func.utils.Logger
-import com.app.func.utils.MyToast
 import com.app.func.view.chart.stock.WaterTankTemperatureView
 import com.app.func.view.seekbarcustom.crollerTest.Croller
 import com.app.func.view.seekbarcustom.crollerTest.OnCrollerChangeListener
@@ -70,7 +68,7 @@ class ViewCustomActivity : AppCompatActivity() {
 
         binding.crollerSeekbar.setOnCrollerChangeListener(object : OnCrollerChangeListener {
             override fun onProgressChanged(croller: Croller?, progress: Int) {
-                Logger.logD("croller_onProgressChanged", "setOnCrollerChangeListener ----  $progress")
+                Logger.d("setOnCrollerChangeListener ----  $progress")
             }
 
             override fun onStartTrackingTouch(croller: Croller?) {
@@ -85,7 +83,7 @@ class ViewCustomActivity : AppCompatActivity() {
         binding.crollerSeekbar.setOnProgressChangedListener(object : OnProgressChangedListener {
             override fun onProgressChanged(progress: Int) {
                 // use the progress
-                Logger.logD("croller_onProgressChanged", "setOnProgressChangedListener ------ $progress")
+                Logger.d("setOnProgressChangedListener ------ $progress")
             }
         })
     }

@@ -39,9 +39,7 @@
         android:name="com.app.func.rx_function.RxFunctionFragment"
         android:label="fragment_rx_function"
         tools:layout="@layout/fragment_rx_function">
-        <action
-            android:id="@+id/action_rxFunctionFragment_to_weatherDemoFragment"
-            app:destination="@id/weatherDemoFragment" />
+
         <action
             android:id="@+id/action_rxFunctionFragment_to_simpleRXFragment"
             app:destination="@id/simpleRXFragment" />
@@ -71,11 +69,6 @@
             app:destination="@id/mergeRXFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/weatherDemoFragment"
-        android:name="com.app.func.login_demo.WeatherDemoFragment"
-        android:label="WeatherDemoFragment"
-        tools:layout="@layout/fragment_weather_demo" />
     <fragment
         android:id="@+id/simpleRXFragment"
         android:name="com.app.func.rx_function.SimpleRXFragment"

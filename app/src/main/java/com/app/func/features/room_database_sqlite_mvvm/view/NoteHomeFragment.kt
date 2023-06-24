@@ -1,9 +1,5 @@
 package com.app.func.features.room_database_sqlite_mvvm.view
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -16,26 +12,34 @@ import com.app.func.features.room_database_sqlite_mvvm.adapters.NoteAdapter
 import com.app.func.features.room_database_sqlite_mvvm.utils.ConstantsNote
 import com.app.func.utils.DebugLog
 
-class NoteHomeFragment : BaseFragment() {
-
-    private var binding: NoteHomeLayoutBinding? = null
+class NoteHomeFragment : BaseFragment<NoteHomeLayoutBinding>() {
 
     private val noteViewModel: NoteViewModel by viewModels()
     private lateinit var noteAdapter: NoteAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = NoteHomeLayoutBinding.inflate(inflater, container, false)
+    override fun getViewBinding(): NoteHomeLayoutBinding {
+        return NoteHomeLayoutBinding.inflate(layoutInflater)
+    }
 
+    override fun setUpViews() {
         setUpRecyclerView()
         setUpListeners()
         noteViewModel.getAllNotes()?.observe(viewLifecycleOwner) {
             DebugLog.i("Notes observed ----- $it")
             noteAdapter.submitList(it)
         }
-        return binding?.root
+    }
+
+    override fun observeView() {
+
+    }
+
+    override fun observeData() {
+
+    }
+
+    override fun initActions() {
+
     }
 
     private fun setUpListeners() {
@@ -85,14 +89,5 @@ class NoteHomeFragment : BaseFragment() {
             getNavController()?.navigate(R.id.noteDeleteAddFragment, bundle)
         }
         binding?.recyclerView?.adapter = noteAdapter
-    }
-
-    companion object {
-        fun newFragment() = NoteHomeFragment()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
     }
 }

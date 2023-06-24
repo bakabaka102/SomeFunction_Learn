@@ -14,30 +14,26 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 
-class FilterRXFragment : BaseFragment(), View.OnClickListener {
-
-    private var binding: FragmentSimpleRxBinding? = null
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentSimpleRxBinding.inflate(inflater, container, false)
-        initViews()
-        initActions()
-        initObservers()
-        return binding?.root
+class FilterRXFragment : BaseFragment<FragmentSimpleRxBinding>(), View.OnClickListener {
+    override fun getViewBinding(): FragmentSimpleRxBinding {
+        return FragmentSimpleRxBinding.inflate(layoutInflater)
     }
 
-    private fun initObservers() {
+    override fun setUpViews() {
 
     }
 
-    private fun initActions() {
+    override fun observeView() {
+
+    }
+
+    override fun observeData() {
+
+    }
+
+
+    override fun initActions() {
         binding?.doSomeWork?.setOnClickListener(this)
-    }
-
-    private fun initViews() {
-
     }
 
     override fun onClick(view: View?) {
@@ -68,7 +64,7 @@ class FilterRXFragment : BaseFragment(), View.OnClickListener {
         return object : Observer<Int> {
 
             override fun onSubscribe(d: Disposable) {
-                Logger.logD(TAG, " onSubscribe : " + d.isDisposed)
+                Logger.d("onSubscribe : " + d.isDisposed)
             }
 
             override fun onNext(value: Int) {
@@ -76,32 +72,22 @@ class FilterRXFragment : BaseFragment(), View.OnClickListener {
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
                 binding?.textView?.append(" value : $value")
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
-                Logger.logD(TAG, " onNext ")
-                Logger.logD(TAG, " value : $value")
+                Logger.d("onNext - value : $value")
             }
 
             override fun onError(e: Throwable) {
                 binding?.textView?.append(" onError : " + e.message)
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
-                Logger.logD(TAG, " onError : " + e.message)
+                Logger.d("onError : " + e.message)
                 binding?.loadingView?.visibility = View.GONE
             }
 
             override fun onComplete() {
                 binding?.textView?.append(" onComplete")
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
-                Logger.logD(TAG, " onComplete")
+                Logger.d("onComplete")
                 binding?.loadingView?.visibility = View.GONE
             }
         }
     }
-
-
-    companion object {
-        val TAG: String = this::class.java.simpleName
-
-        @JvmStatic
-        fun newInstance() = FilterRXFragment()
-    }
-
 }

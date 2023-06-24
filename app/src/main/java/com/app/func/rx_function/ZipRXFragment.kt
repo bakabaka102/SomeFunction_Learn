@@ -1,11 +1,8 @@
 package com.app.func.rx_function
 
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentSimpleRxBinding
 import com.app.func.rx_function.model.User
@@ -14,36 +11,30 @@ import com.app.func.rx_function.utils.Utils
 import com.app.func.utils.Logger
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class ZipRXFragment : BaseFragment(), View.OnClickListener {
-
-    private var binding: FragmentSimpleRxBinding? = null
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentSimpleRxBinding.inflate(inflater, container, false)
-        initViews()
-        initActions()
-        initObservers()
-        return binding?.root
+class ZipRXFragment : BaseFragment<FragmentSimpleRxBinding>(), View.OnClickListener {
+    override fun getViewBinding(): FragmentSimpleRxBinding {
+        return FragmentSimpleRxBinding.inflate(layoutInflater)
     }
 
-    private fun initObservers() {
+    override fun setUpViews() {
 
     }
 
-    private fun initActions() {
+    override fun observeView() {
+
+    }
+
+    override fun observeData() {
+
+    }
+
+    override fun initActions() {
         binding?.doSomeWork?.setOnClickListener(this)
-    }
-
-    private fun initViews() {
-
     }
 
 
@@ -79,7 +70,7 @@ class ZipRXFragment : BaseFragment(), View.OnClickListener {
         return object : Observer<List<User>> {
 
             override fun onSubscribe(d: Disposable) {
-                Logger.logD(TAG, " onSubscribe : " + d.isDisposed)
+                Logger.d("onSubscribe : " + d.isDisposed)
             }
 
             override fun onNext(userList: List<User>) {
@@ -89,13 +80,13 @@ class ZipRXFragment : BaseFragment(), View.OnClickListener {
                     binding?.textView?.append(" firstname : ${user.firstname}")
                     binding?.textView?.append(AppConstant.LINE_SEPARATOR)
                 }
-                Logger.logD(TAG, " onNext : " + userList.size)
+                Logger.d("onNext : " + userList.size)
             }
 
             override fun onError(e: Throwable) {
                 binding?.textView?.append(" onError : " + e.message)
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
-                Logger.logD(TAG, " onError : " + e.message)
+                Logger.d("onError : " + e.message)
                 binding?.loadingView?.visibility = View.GONE
 
             }
@@ -103,7 +94,7 @@ class ZipRXFragment : BaseFragment(), View.OnClickListener {
             override fun onComplete() {
                 binding?.textView?.append(" onComplete")
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
-                Logger.logD(TAG, " onComplete")
+                Logger.d("onComplete")
                 binding?.loadingView?.visibility = View.GONE
 
             }
@@ -111,28 +102,21 @@ class ZipRXFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun getFootballFansObservable(): Observable<List<User>> {
-        return Observable.create(ObservableOnSubscribe<List<User>> {
+        return Observable.create {
             if (!it.isDisposed) {
                 it.onNext(Utils.getUserListWhoLovesFootball())
                 it.onComplete()
             }
-        }).subscribeOn(Schedulers.io())
+        }.subscribeOn(Schedulers.io())
     }
 
     private fun getCricketFansObservable(): Observable<List<User>> {
-        return Observable.create(ObservableOnSubscribe<List<User>> {
+        return Observable.create {
             if (!it.isDisposed) {
                 it.onNext(Utils.getUserListWhoLovesCricket())
                 it.onComplete()
             }
-        }).subscribeOn(Schedulers.io())
-    }
-
-    companion object {
-        val TAG: String = this::class.java.simpleName
-
-        @JvmStatic
-        fun newInstance() = ZipRXFragment()
+        }.subscribeOn(Schedulers.io())
     }
 
 }

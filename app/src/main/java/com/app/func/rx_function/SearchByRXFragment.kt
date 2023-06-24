@@ -1,9 +1,5 @@
 package com.app.func.rx_function
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentSearchByRxBinding
 import com.app.func.rx_function.utils.getQueryTextChangeObservable
@@ -13,19 +9,8 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
-class SearchByRXFragment : BaseFragment() {
+class SearchByRXFragment : BaseFragment<FragmentSearchByRxBinding>() {
 
-    private var binding: FragmentSearchByRxBinding? = null
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentSearchByRxBinding.inflate(inflater, container, false)
-        initViews()
-        initActions()
-        initObservers()
-        return binding?.root
-    }
 
     private fun initObservers() {
         /* binding!!.searchView.getQueryTextChangeObservable()
@@ -80,20 +65,23 @@ class SearchByRXFragment : BaseFragment() {
         return Observable.just(true).delay(2, TimeUnit.SECONDS).map { query }
     }
 
-    private fun initActions() {
+    override fun getViewBinding(): FragmentSearchByRxBinding {
+        return FragmentSearchByRxBinding.inflate(layoutInflater)
+    }
+
+    override fun setUpViews() {
 
     }
 
-    private fun initViews() {
+    override fun observeView() {
+        initObservers()
+    }
+
+    override fun observeData() {
 
     }
 
+    override fun initActions() {
 
-    companion object {
-        val TAG: String = this::class.java.simpleName
-
-        @JvmStatic
-        fun newInstance() = SearchByRXFragment()
     }
-
 }
