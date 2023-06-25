@@ -20,13 +20,7 @@
             android:name=".base_content.BaseActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewAnimationsActivity"
-            android:exported="false" />
-        <activity
             android:name=".ViewCustomActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MultiThreadActivity"
             android:exported="false" />
         <activity android:name=".ViewAnimationsActivity2" />
         <activity

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".startapp.HomeStartFragment"
+    tools:ignore="HardcodedText">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/_32dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cons1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.app.func.view.all_demo.EmotionalFaceView
+                android:id="@+id/happyButton"
+                android:layout_width="@dimen/_40dp"
+                android:layout_height="@dimen/_40dp"
+                android:layout_marginTop="@dimen/_16dp"
+                android:layout_marginEnd="@dimen/_16dp"
+                app:borderColor="@color/purple_200"
+                app:eyesColor="@color/purple_700"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.app.func.view.all_demo.EmotionalFaceView
+                android:id="@+id/sadButton"
+                android:layout_width="@dimen/_40dp"
+                android:layout_height="@dimen/_40dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="@dimen/_16dp"
+                app:eyesColor="@color/purple_500"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:mouthColor="@color/black"
+                app:state="sad" />
+
+            <com.app.func.view.all_demo.EmotionalFaceView
+                android:id="@+id/emotionalFaceView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="@dimen/_16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.app.func.view.clock.AnalogClockViewDemo
+                android:id="@+id/clockViewDemo"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_marginTop="@dimen/_16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emotionalFaceView" />
+
+            <com.app.func.view.clock.ClockView
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_marginTop="@dimen/_16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/clockViewDemo" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/consGroupButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cons1">
+
+            <Button
+                android:id="@+id/btnThread"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thread"
+                android:textAllCaps="false"
+                android:visibility="visible"
+                app:layout_constraintEnd_toStartOf="@id/btnViewCustom"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btnViewCustom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16dp"
+                android:text="View"
+                android:textAllCaps="false"
+                app:layout_constraintEnd_toStartOf="@id/btnParseJson"
+                app:layout_constraintStart_toEndOf="@+id/btnThread"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btnParseJson"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16dp"
+                android:text="Json"
+                android:textAllCaps="false"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnViewCustom"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btnAnimation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16dp"
+                android:text="Anim2"
+                android:textAllCaps="false"
+                android:visibility="visible"
+                app:layout_constraintEnd_toStartOf="@+id/btnViewCustom"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnThread" />
+
+            <Button
+                android:id="@+id/btnRX"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rx"
+                android:textAllCaps="false"
+                app:layout_constraintBottom_toBottomOf="@id/btnAnimation"
+                app:layout_constraintEnd_toStartOf="@id/btnCoroutines"
+                app:layout_constraintStart_toEndOf="@id/btnAnimation"
+                app:layout_constraintTop_toTopOf="@id/btnAnimation" />
+
+            <Button
+                android:id="@+id/btnCoroutines"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/coroutines"
+                android:textAllCaps="false"
+                app:layout_constraintBottom_toBottomOf="@+id/btnRX"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnRX"
+                app:layout_constraintTop_toTopOf="@id/btnRX" />
+
+            <Button
+                android:id="@+id/btnMainContain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contain"
+                android:textAllCaps="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnAnimation" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
+

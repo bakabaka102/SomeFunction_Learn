@@ -89,12 +89,6 @@
             app:progress_secondary_color="#EEEEEE"
             app:start_offset="0" />
 
-        <com.app.func.view.seekbarcustom.CircularSeekBar
-            android:id="@+id/circularSeekBar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_300dp"
-            android:layout_marginTop="@dimen/_32dp"
-            app:layout_constraintTop_toBottomOf="@id/crollerSeekbar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
