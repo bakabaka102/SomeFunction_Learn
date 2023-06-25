@@ -32,7 +32,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     }
 
     fun getNavController(): NavController? {
-        return (activity as? BaseActivity)?.getNavController()
+        return (activity as? BaseActivity<*>)?.getNavController()
     }
 
     fun getRepositoryRetrofit(url: String): DataRepository {
