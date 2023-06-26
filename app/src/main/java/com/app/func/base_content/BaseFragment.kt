@@ -44,11 +44,13 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         Logger.d("${this::class.java.simpleName} onCreateView is called...")
+        binding = getViewBinding()
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Logger.d("${this::class.java.simpleName} onViewCreated is called...")
         setUpViews()
         observeData()
         observeView()
@@ -64,7 +66,6 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Logger.d("${this::class.java.simpleName} onCreate is called...")
-        binding = getViewBinding()
     }
 
     override fun onStart() {
@@ -91,7 +92,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-        Logger.d("${this::class.java.simpleName} onStop is called...")
+        Logger.d("${this::class.java.simpleName} onDestroyView is called...")
     }
 
     override fun onDestroy() {

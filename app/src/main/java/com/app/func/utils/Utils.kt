@@ -7,6 +7,7 @@ import android.content.res.Resources
 import android.os.Build
 import android.provider.Settings
 import android.text.TextUtils
+import java.io.IOException
 import java.text.DecimalFormat
 import java.text.Normalizer
 import java.util.regex.Pattern
@@ -35,7 +36,7 @@ object Utils {
      */
     fun getStatusBarHeight(context: Context): Int {
         var sttBarHeight = 0
-        var resId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
+        val resId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
         if (resId > 0) {
             sttBarHeight = context.resources.getDimensionPixelSize(resId)
         }
@@ -97,16 +98,6 @@ object Utils {
         )
     }
 
-    fun getDeviceType(serial: String): ModelType {
-        return when (serial) {
-            "Constants_WATER" -> ModelType.WATER_PURIFIER
-            "Constants_FAN" -> ModelType.SMART_FAN
-            "Constants_FRIDGE" -> ModelType.FRIDGE
-            "Constants_WATER_TANK" -> ModelType.HOT_WATER_TANK
-            else -> ModelType.FREEZER
-        }
-    }
-
     private fun capitalize(str: String): String {
         if (TextUtils.isEmpty(str)) {
             return str
@@ -127,12 +118,23 @@ object Utils {
         return phrase
     }
 
-    enum class ModelType {
-        WATER_PURIFIER,
-        FREEZER,
-        SMART_FAN,
-        FRIDGE,
-        HOT_WATER_TANK
+    fun getJsonFromAssets(context: Context, fileName: String): String? {
+        val jsonString: String = try {
+            val inputStream = context.assets.open(fileName)
+            val size = inputStream.available()
+            val buffer = ByteArray(size)
+            inputStream.read(buffer)
+            inputStream.close()
+            String(buffer)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return null
+        }
+        return jsonString
+    }
+
+    fun loadJsonFromAssets(context: Context, fileName: String): String {
+        return context.assets.open(fileName).bufferedReader().use { it.readText() }
     }
 
 }

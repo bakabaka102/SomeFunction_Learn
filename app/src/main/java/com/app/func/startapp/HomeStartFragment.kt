@@ -31,7 +31,7 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
             startActivity(Intent(requireActivity(), ViewCustomActivity::class.java))
         }
         binding?.btnParseJson?.setOnClickListener {
-
+            getNavController()?.navigate(R.id.jsonFuncFragment)
         }
         binding?.btnAnimation?.setOnClickListener {
             startActivity(Intent(requireContext(), ViewAnimationsActivity2::class.java))
