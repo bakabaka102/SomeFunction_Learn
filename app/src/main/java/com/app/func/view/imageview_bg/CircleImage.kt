@@ -35,7 +35,7 @@ class CircleImage @JvmOverloads constructor(context: Context, attrs: AttributeSe
         ) {
             setLayerType(LAYER_TYPE_SOFTWARE, null)
         }
-        mImageSize = context.resources.getDimensionPixelSize(R.dimen._300dp)
+        mImageSize = context.resources.getDimensionPixelSize(R.dimen.dimen_300dp)
         setBorderColor(mBorderColor)
     }
 

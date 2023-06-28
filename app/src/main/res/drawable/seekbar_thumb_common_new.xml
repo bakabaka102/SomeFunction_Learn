@@ -8,7 +8,7 @@
         android:top="0dp">
         <shape android:shape="oval">
             <solid android:color="#E7EAEC" />
-            <corners android:radius="@dimen/_20dp" />
+            <corners android:radius="@dimen/dimen_20dp" />
         </shape>
     </item>
 
@@ -18,9 +18,9 @@
         android:right="1dp"
         android:top="1dp">
         <shape android:shape="oval">
-            <corners android:radius="@dimen/_20dp" />
+            <corners android:radius="@dimen/dimen_20dp" />
             <stroke
-                android:width="@dimen/_3dp"
+                android:width="@dimen/dimen_3dp"
                 android:color="@color/white" />
             <solid android:color="@color/color_63B128" />
         </shape>

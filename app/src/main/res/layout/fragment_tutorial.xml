@@ -38,7 +38,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:elevation="@dimen/_16dp"
+        android:elevation="@dimen/dimen_16dp"
         android:textColor="@android:color/holo_red_light"
         android:textSize="15sp"
         android:visibility="gone"

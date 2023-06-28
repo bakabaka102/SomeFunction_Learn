@@ -63,7 +63,7 @@ class WaveWaterView @JvmOverloads constructor(
         isAntiAlias = true
         textAlign = Paint.Align.CENTER
         color = Color.WHITE
-        textSize = resources.getDimension(R.dimen._12sp)
+        textSize = resources.getDimension(R.dimen.dimen_12sp)
         typeface = ResourcesCompat.getFont(context, R.font.roboto_medium)
     }
 
@@ -77,7 +77,7 @@ class WaveWaterView @JvmOverloads constructor(
             isAntiAlias = true
             textAlign = Paint.Align.CENTER
             color = Color.WHITE
-            textSize = resources.getDimension(R.dimen._88sp)
+            textSize = resources.getDimension(R.dimen.dimen_88sp)
             typeface = ResourcesCompat.getFont(context, R.font.inter_extra_bold)
         }
 
@@ -85,7 +85,7 @@ class WaveWaterView @JvmOverloads constructor(
             isAntiAlias = true
             textAlign = Paint.Align.CENTER
             color = Color.WHITE
-            textSize = resources.getDimension(R.dimen._14sp)
+            textSize = resources.getDimension(R.dimen.dimen_14sp)
             typeface = ResourcesCompat.getFont(context, R.font.roboto_medium)
         }
 
@@ -280,7 +280,7 @@ class WaveWaterView @JvmOverloads constructor(
                 (width / 2).toFloat(),
                 height * RATIO_TEXT_H + rect.height(),
                 textPaint.apply {
-                    textSize = resources.getDimensionPixelSize(R.dimen._60sp).toFloat()
+                    textSize = resources.getDimensionPixelSize(R.dimen.dimen_60sp).toFloat()
                 }
             )
             canvas.drawMultilineText(

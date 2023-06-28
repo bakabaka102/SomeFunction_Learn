@@ -1,13 +1,22 @@
 package com.app.func.startapp
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Log
 import com.app.func.R
 import com.app.func.ViewAnimationsActivity2
 import com.app.func.ViewCustomActivity
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentHomeStartBinding
 import com.app.func.view.all_demo.EmotionalFaceView
-
+import java.io.IOException
+import java.net.MalformedURLException
+import java.net.URL
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
 
@@ -16,6 +25,25 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
     }
 
     override fun setUpViews() {
+        showImage()
+    }
+
+    override fun observeData() {
+
+    }
+
+    override fun observeView() {
+
+    }
+
+    override fun initActions() {
+        binding?.btnRX?.setOnClickListener {
+            getNavController()?.navigate(R.id.rxFunctionFragment)
+        }
+
+        binding?.btnCoroutines?.setOnClickListener {
+            getNavController()?.navigate(R.id.coroutinesFragment)
+        }
         binding?.happyButton?.setOnClickListener {
             binding?.emotionalFaceView?.happinessState = EmotionalFaceView.HAPPY
         }
@@ -36,24 +64,35 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
         binding?.btnAnimation?.setOnClickListener {
             startActivity(Intent(requireContext(), ViewAnimationsActivity2::class.java))
         }
-    }
 
-    override fun observeData() {
+        binding?.btnDataBinding?.setOnClickListener {
 
-    }
-
-    override fun observeView() {
-
-    }
-
-    override fun initActions() {
-        binding?.btnRX?.setOnClickListener {
-            getNavController()?.navigate(R.id.rxFunctionFragment)
         }
+    }
 
-        binding?.btnCoroutines?.setOnClickListener {
-            getNavController()?.navigate(R.id.coroutinesFragment)
+    private fun showImage() {
+        val imageJob = CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val imagePath =
+                    "https://img.freepik.com/free-vector/3d-cartoon-character-woman-working-with-laptop-search-bar-illustration-vector-design_40876-3096.jpg"
+                val imageBitmap = loadImage(imagePath)
+                withContext(Dispatchers.Main) {
+                    binding?.imageView?.setImageBitmap(imageBitmap)
+                }
+            } catch (e: MalformedURLException) {
+                Log.d("aaa - e", e.message.toString())
+            } catch (eio: IOException) {
+                Log.d("aaa - eio", eio.message.toString())
+            }
         }
+        //imageJob.cancel()
+    }
+
+    @Throws(MalformedURLException::class, IOException::class)
+    private fun loadImage(imagePath: String): Bitmap {
+        val url = URL(imagePath)
+        val inputStream = url.openConnection().getInputStream()
+        return BitmapFactory.decodeStream(inputStream)
     }
 
     companion object {

@@ -10,7 +10,7 @@
         android:id="@+id/textContentData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_24dp"
+        android:layout_marginHorizontal="@dimen/dimen_24dp"
         android:text="FragmentContainJson"
         android:textColor="@color/black"
         android:textSize="24sp"

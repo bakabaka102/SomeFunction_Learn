@@ -26,10 +26,10 @@ class CustomSeekBar @JvmOverloads constructor(
     private var maxValue = 100f
     private var minValue = 0f
     private var currentValue: Float = DEFAULT_CURRENT_VALUE
-    private val marginLeftProgress = resources.getDimensionPixelOffset(R.dimen._4dp)
-    private val marginRightProgress = resources.getDimensionPixelOffset(R.dimen._4dp)
-    private val paddingHorizontal = resources.getDimensionPixelOffset(R.dimen._10dp)
-    private val thumbWidth = resources.getDimensionPixelOffset(R.dimen._46dp)
+    private val marginLeftProgress = resources.getDimensionPixelOffset(R.dimen.dimen_4dp)
+    private val marginRightProgress = resources.getDimensionPixelOffset(R.dimen.dimen_4dp)
+    private val paddingHorizontal = resources.getDimensionPixelOffset(R.dimen.dimen_10dp)
+    private val thumbWidth = resources.getDimensionPixelOffset(R.dimen.dimen_46dp)
     private var currentState = State.WORKING
     private var counterTouchPoint = 0
     private var formatter = DecimalFormat("0.0", DecimalFormatSymbols(Locale.US))

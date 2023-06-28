@@ -30,7 +30,7 @@ abstract class SwipeHelper(context: Context?) :
         private const val DEFAULT_WIDTH = 200F
     }
 
-    private val defaultButtonWidth = context?.resources?.getDimension(R.dimen._84dp) ?: DEFAULT_WIDTH
+    private val defaultButtonWidth = context?.resources?.getDimension(R.dimen.dimen_84dp) ?: DEFAULT_WIDTH
 
     private var recyclerView: RecyclerView? = null
     private var buttons: MutableList<UnderlayButton> = mutableListOf()
@@ -267,7 +267,7 @@ abstract class SwipeHelper(context: Context?) :
     ) {
         private var pos = 0
         private var clickRegion: RectF? = null
-        private val marginStart = context.resources.getDimension(R.dimen._16dp)
+        private val marginStart = context.resources.getDimension(R.dimen.dimen_16dp)
         fun onClick(x: Float, y: Float): Boolean {
             if (clickRegion != null && clickRegion!!.contains(x, y)) {
                 clickListener.onClick(pos)
@@ -310,7 +310,7 @@ abstract class SwipeHelper(context: Context?) :
             // Draw icon
             iconBitmap?.let {
                 val withOffset = (buttonRectF.width() + marginStart - it.width) / 2
-                val heightOffset = (buttonRectF.height() - it.height - contentRect.height() - context.resources.getDimension(R.dimen._4dp)) / 2
+                val heightOffset = (buttonRectF.height() - it.height - contentRect.height() - context.resources.getDimension(R.dimen.dimen_4dp)) / 2
                 if (rectBackground.width() < it.width) return@let
                 canvas.drawBitmap(
                     it,
@@ -323,7 +323,7 @@ abstract class SwipeHelper(context: Context?) :
                 buttonPaint.color = Color.WHITE
 
                 val x = (cWidth - marginStart - contentRect.width()) / 2f
-                val y = it.height + heightOffset + contentRect.height() + context.resources.getDimension(R.dimen._4dp)
+                val y = it.height + heightOffset + contentRect.height() + context.resources.getDimension(R.dimen.dimen_4dp)
 
                 canvas.drawText(text, buttonRectF.left + x + marginStart, buttonRectF.top + y, buttonPaint)
             }
