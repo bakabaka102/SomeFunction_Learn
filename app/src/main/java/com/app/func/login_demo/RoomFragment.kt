@@ -1,25 +1,33 @@
 package com.app.func.login_demo
 
-import android.app.AlertDialog
+import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.func.R
 import com.app.func.base_content.BaseFragment
-import com.app.func.databinding.ProfileFragmentBinding
+import com.app.func.databinding.RoomFragmentBinding
 import com.app.func.features.room_database.ListClickListener
 import com.app.func.features.room_database.User
 import com.app.func.features.room_database.UserListAdapter
 import com.app.func.features.room_database.UserRepository
 
-class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
+class RoomFragment : BaseFragment<RoomFragmentBinding>() {
 
     private var userAdapter = UserListAdapter()
-    private val repo: UserRepository by lazy {
+    private var mViewModel: ProfileViewModel? = null
+    private val repository: UserRepository by lazy {
         UserRepository(requireContext())
     }
     var user: User? = null
-    override fun getViewBinding(): ProfileFragmentBinding {
-        return ProfileFragmentBinding.inflate(layoutInflater)
+
+    override fun getViewBinding(): RoomFragmentBinding = RoomFragmentBinding.inflate(layoutInflater)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mViewModel =
+            ViewModelProvider(this, RoomDBFactory(repository))[ProfileViewModel::class.java]
     }
 
     override fun setUpViews() {
@@ -43,25 +51,32 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
                 binding?.btnUpdate?.isEnabled = true
             }
 
-            override fun onDelete(user: User) {
+            /*override fun onDelete(user: User) {
                 AlertDialog.Builder(context)
                     .setTitle("Delete user")
                     .setMessage("Are you sure you want to delete this user?")
-                    .setPositiveButton(
-                        "Yes"
-                    ) { dialog, which ->
-                        repo.deleteUser(user)
-                        fetchUsers()
-                    } // A null listener allows the button to dismiss the dialog and take no further action.
+                    .setPositiveButton("Yes") { _, _ ->
+                        repository.deleteUser(user)
+                    }
                     .setNegativeButton("No", null)
                     .setIcon(R.drawable.ic_white_delete)
                     .show()
-            }
+            }*/
         })
 
+        userAdapter.onDeleteItem = {
+            AlertDialog.Builder(requireActivity())
+                .setTitle("Delete user")
+                .setMessage("Are you sure you want to delete this user?")
+                .setPositiveButton("Yes") { _, _ ->
+                    repository.deleteUser(it)
+                }
+                .setNegativeButton("No", null)
+                .setIcon(R.drawable.ic_white_delete)
+                .show()
+        }
         binding?.recyclerviewUsers?.layoutManager = LinearLayoutManager(requireContext())
         binding?.recyclerviewUsers?.adapter = userAdapter
-        fetchUsers()
     }
 
     override fun observeView() {
@@ -69,7 +84,9 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
     }
 
     override fun observeData() {
-
+        mViewModel?.getUsersWithAsc?.observe(viewLifecycleOwner) {
+            userAdapter.setUsers(it)
+        }
     }
 
     override fun initActions() {
@@ -77,23 +94,19 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
     }
 
     private fun fetchUsers() {
-        val allUsers = repo.getAllUsers()
+        val allUsers = repository.getAllUsers()
         allUsers?.let { userAdapter.setUsers(it) }
     }
 
     private fun updateUser() {
-        if (binding?.edUsername?.text?.isNotEmpty() == true
-            && binding?.edEmail?.text?.isNotEmpty() == true
-            && binding?.edLocation?.text?.isNotEmpty() == true
-        ) {
+        if (isNotEmptyData()) {
             val user = User(
                 userId = user?.userId,
                 userName = binding?.edUsername?.text.toString(),
                 location = binding?.edLocation?.text.toString(),
                 email = binding?.edEmail?.text.toString()
             )
-            repo.updateUser(user)
-            fetchUsers()
+            repository.updateUser(user)
         } else {
             Toast.makeText(requireContext(), "Invalid Input", Toast.LENGTH_SHORT).show()
         }
@@ -101,20 +114,22 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
     }
 
     private fun addNewUser() {
-        if (binding?.edUsername?.text?.isNotEmpty() == true
-            && binding?.edEmail?.text?.isNotEmpty() == true
-            && binding?.edLocation?.text?.isNotEmpty() == true
-        ) {
+        if (isNotEmptyData()) {
             val user = User(
                 userName = binding?.edUsername?.text.toString(),
                 location = binding?.edLocation?.text.toString(),
                 email = binding?.edEmail?.text.toString()
             )
-            repo.insertUser(user)
-            fetchUsers()
+            repository.insertUser(user)
         } else {
             Toast.makeText(requireContext(), "Invalid Input", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun isNotEmptyData(): Boolean {
+        return (binding?.edUsername?.text?.isNotEmpty() == true
+                && binding?.edEmail?.text?.isNotEmpty() == true
+                && binding?.edLocation?.text?.isNotEmpty() == true)
     }
 
 

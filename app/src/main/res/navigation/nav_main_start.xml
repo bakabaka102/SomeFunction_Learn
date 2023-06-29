@@ -172,9 +172,9 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.app.func.login_demo.ProfileFragment"
+        android:name="com.app.func.login_demo.RoomFragment"
         android:label="profile_fragment"
-        tools:layout="@layout/profile_fragment" />
+        tools:layout="@layout/room_fragment" />
     <fragment
         android:id="@+id/mainContainFragment"
         android:name="com.app.func.login_demo.MainContainFragment"

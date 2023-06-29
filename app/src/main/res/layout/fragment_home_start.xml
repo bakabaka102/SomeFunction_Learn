@@ -83,7 +83,7 @@
                 android:id="@+id/btnThread"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Thread"
+                android:text="Synthetic"
                 android:textAllCaps="false"
                 android:visibility="visible"
                 app:layout_constraintEnd_toStartOf="@id/btnViewCustom"

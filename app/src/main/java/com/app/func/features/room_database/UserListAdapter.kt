@@ -9,6 +9,7 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
 
     var userList = mutableListOf<User>()
     var clickListener: ListClickListener<User>? = null
+    var onDeleteItem: ((User) -> Unit)? = null
 
     fun setUsers(users: List<User>) {
         this.userList = users.toMutableList()
@@ -33,7 +34,8 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
             }
 
             binding.imgDelete.setOnClickListener {
-                clickListener?.onDelete(user)
+                //clickListener?.onDelete(user)
+                onDeleteItem?.invoke(user)
             }
         }
     }
@@ -54,5 +56,5 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
 
 interface ListClickListener<T> {
     fun onClick(data: T, position: Int)
-    fun onDelete(user: T)
+    //fun onDelete(user: T)
 }

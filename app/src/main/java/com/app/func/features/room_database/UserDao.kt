@@ -1,7 +1,11 @@
 package com.app.func.features.room_database
 
-import androidx.room.*
-import kotlinx.coroutines.flow.Flow
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface UserDao {
@@ -16,7 +20,7 @@ interface UserDao {
     fun getUsers(): List<User>
 
     @Query("select * from user order by userName asc")
-    fun getUsersWithAsc(): Flow<List<User>>
+    fun getUsersWithAsc(): LiveData<List<User>>
 
     @Query("select * from user order by userName desc")
     fun getUsersWithDesc(): List<User>
