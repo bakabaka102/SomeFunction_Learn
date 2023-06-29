@@ -96,7 +96,7 @@ class WaterTankTemperatureView @JvmOverloads constructor(
 
     init {
         widthScreen = Resources.getSystem().displayMetrics.widthPixels
-        _radiusShaderDotWhite = context.resources.getDimension(R.dimen._10dp)
+        _radiusShaderDotWhite = context.resources.getDimension(R.dimen.dimen_10dp)
         initColorByState()
         initPaint()
         initText()

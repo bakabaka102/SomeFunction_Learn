@@ -24,8 +24,8 @@ class CircularProgressView @JvmOverloads constructor(
     private val maxValue = 75f
     private val paddingValue = 30f
     private var radiusView = 0f
-    private val ovalSize = resources.getDimensionPixelSize(R.dimen._200dp)
-    private val widthSize = resources.getDimensionPixelSize(R.dimen._40dp)
+    private val ovalSize = resources.getDimensionPixelSize(R.dimen.dimen_200dp)
+    private val widthSize = resources.getDimensionPixelSize(R.dimen.dimen_40dp)
     private val parentArcPaint = Paint().apply {
         style = Paint.Style.STROKE
         isAntiAlias = true

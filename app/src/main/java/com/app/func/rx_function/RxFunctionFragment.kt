@@ -23,7 +23,7 @@ class RxFunctionFragment : BaseFragment<FragmentRxFunctionBinding>(), View.OnCli
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRxFunctionBinding.inflate(inflater)
-        dp16Pixel = resources.getDimensionPixelOffset(R.dimen._16dp)
+        dp16Pixel = resources.getDimensionPixelOffset(R.dimen.dimen_16dp)
         eventSeekbarChange()
         initActions()
         return binding?.root

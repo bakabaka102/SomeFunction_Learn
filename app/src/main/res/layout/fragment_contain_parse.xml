@@ -4,18 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.app.func.login_demo.tab_viewpager.TabSecondFragment">
+    tools:context=".features.jsonfunction.ContainParseFragment">
 
     <TextView
-        android:id="@+id/textInfo"
+        android:id="@+id/textContentData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/color_00BCD4"
-        android:textSize="@dimen/dimen_16sp"
-        android:text="Tab____"
+        android:layout_marginHorizontal="@dimen/dimen_24dp"
+        android:text="FragmentContainJson"
+        android:textColor="@color/black"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="aaaaaaa" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

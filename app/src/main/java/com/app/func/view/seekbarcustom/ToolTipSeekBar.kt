@@ -21,7 +21,7 @@ class ToolTipSeekBar @JvmOverloads constructor(
         const val DEFAULT_TEXT_SIZE = 16F
     }
 
-    private var strokeWidth = resources.getDimensionPixelOffset(R.dimen._1dp).toFloat()
+    private var strokeWidth = resources.getDimensionPixelOffset(R.dimen.dimen_1dp).toFloat()
 
     private var outlinePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
@@ -49,7 +49,7 @@ class ToolTipSeekBar @JvmOverloads constructor(
 
     private var path = Path()
 
-    private var radius = resources.getDimensionPixelOffset(R.dimen._6dp).toFloat()
+    private var radius = resources.getDimensionPixelOffset(R.dimen.dimen_6dp).toFloat()
 
     private var content: String? = null
 

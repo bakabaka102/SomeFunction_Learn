@@ -113,7 +113,7 @@ class ChartStatisticsView @JvmOverloads constructor(
         _paintFill.alpha = 150
         _paintFill.isAntiAlias = true
 
-        _paintText.textSize = context.resources.getDimension(R.dimen._12sp)
+        _paintText.textSize = context.resources.getDimension(R.dimen.dimen_12sp)
         addTextView()
     }
 

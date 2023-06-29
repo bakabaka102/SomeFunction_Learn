@@ -9,8 +9,8 @@
 
     <com.app.func.view.seekbarcustom.ToolTipSeekBar
         android:id="@+id/bubbleView"
-        android:layout_width="@dimen/_40dp"
-        android:layout_height="@dimen/_36dp"
+        android:layout_width="@dimen/dimen_40dp"
+        android:layout_height="@dimen/dimen_36dp"
         android:visibility="gone"
         tools:visibility="visible"
         app:layout_constraintEnd_toEndOf="@id/guideline"
@@ -19,19 +19,19 @@
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
-        android:layout_width="@dimen/_0dp"
+        android:layout_width="@dimen/dimen_0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:layout_constraintGuide_percent="0.5" />
 
     <View
         android:id="@+id/view_background"
-        android:layout_width="@dimen/_0dp"
-        android:layout_height="@dimen/_18dp"
-        android:layout_marginStart="@dimen/_4dp"
-        android:layout_marginTop="@dimen/_8dp"
-        android:layout_marginBottom="@dimen/_8dp"
-        android:layout_marginEnd="@dimen/_4dp"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="@dimen/dimen_18dp"
+        android:layout_marginStart="@dimen/dimen_4dp"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:layout_marginBottom="@dimen/dimen_8dp"
+        android:layout_marginEnd="@dimen/dimen_4dp"
         android:background="@drawable/bg_inner_top_shadow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/tvMaxValue"
@@ -40,8 +40,8 @@
 
     <View
         android:id="@+id/view_progress"
-        android:layout_width="@dimen/_0dp"
-        android:layout_height="@dimen/_18dp"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="@dimen/dimen_18dp"
         android:background="@drawable/bg_progress_seekbar_water"
         app:layout_constraintBottom_toBottomOf="@id/view_background"
         app:layout_constraintEnd_toEndOf="@id/guideline"
@@ -61,16 +61,16 @@
 
         <TextView
             android:id="@+id/tvCurrentValue"
-            android:layout_width="@dimen/_36dp"
-            android:layout_height="@dimen/_36dp"
+            android:layout_width="@dimen/dimen_36dp"
+            android:layout_height="@dimen/dimen_36dp"
             android:layout_gravity="center"
             android:background="@drawable/seekbar_thumb_common_new"
             android:fontFamily="@font/roboto_bold"
             android:gravity="center"
             android:maxLines="1"
-            android:minWidth="@dimen/_50dp"
+            android:minWidth="@dimen/dimen_50dp"
             android:textColor="@color/white"
-            android:textSize="@dimen/_14sp"
+            android:textSize="@dimen/dimen_14sp"
             tools:text="50" />
     </FrameLayout>
 
@@ -78,10 +78,10 @@
         android:id="@+id/tvMinValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_16dp"
+        android:layout_marginStart="@dimen/dimen_16dp"
         android:fontFamily="@font/roboto_medium"
         android:textColor="@color/color_7A868D"
-        android:textSize="@dimen/_14sp"
+        android:textSize="@dimen/dimen_14sp"
         app:layout_constraintBottom_toBottomOf="@id/view_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/view_background"
@@ -91,10 +91,10 @@
         android:id="@+id/tvMaxValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_16dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
         android:fontFamily="@font/roboto_medium"
         android:textColor="@color/color_7A868D"
-        android:textSize="@dimen/_14sp"
+        android:textSize="@dimen/dimen_14sp"
         app:layout_constraintBottom_toBottomOf="@id/view_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/view_background"

@@ -13,11 +13,11 @@ class ImageBackgroundDraw @JvmOverloads constructor(
     private var mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val mPath = Path()
     private var mCenterCircleRectF: RectF? = null
-    private val mBorderWidth = resources.getDimensionPixelSize(R.dimen._1dp).toFloat()
-    private val mTopCornerRadius = resources.getDimensionPixelSize(R.dimen._20dp).toFloat()
-    private val mMiddleCornerRadius = resources.getDimensionPixelSize(R.dimen._18dp).toFloat()
-    private val mBottomCornerRadius = resources.getDimensionPixelSize(R.dimen._16dp).toFloat()
-    private val mCenterCircleRadius = resources.getDimensionPixelSize(R.dimen._32dp).toFloat()
+    private val mBorderWidth = resources.getDimensionPixelSize(R.dimen.dimen_1dp).toFloat()
+    private val mTopCornerRadius = resources.getDimensionPixelSize(R.dimen.dimen_20dp).toFloat()
+    private val mMiddleCornerRadius = resources.getDimensionPixelSize(R.dimen.dimen_18dp).toFloat()
+    private val mBottomCornerRadius = resources.getDimensionPixelSize(R.dimen.dimen_16dp).toFloat()
+    private val mCenterCircleRadius = resources.getDimensionPixelSize(R.dimen.dimen_32dp).toFloat()
 
     init {
         mPaint.apply {

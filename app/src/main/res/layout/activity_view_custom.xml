@@ -18,12 +18,12 @@
             android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_16dp"
-            android:layout_marginTop="@dimen/_40dp"
-            android:paddingBottom="@dimen/_16dp"
+            android:layout_marginHorizontal="@dimen/dimen_16dp"
+            android:layout_marginTop="@dimen/dimen_40dp"
+            android:paddingBottom="@dimen/dimen_16dp"
             android:stateListAnimator="@null"
             app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="@dimen/_8dp"
+            app:cardCornerRadius="@dimen/dimen_8dp"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.app.func.view.seekbarcustom.CustomSeekBar
@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginVertical="@dimen/_10dp" />
+                android:layout_marginVertical="@dimen/dimen_10dp" />
         </androidx.cardview.widget.CardView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,14 +40,14 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="-8dp"
             android:background="@android:color/transparent"
-            android:elevation="@dimen/_10dp"
+            android:elevation="@dimen/dimen_10dp"
             app:layout_constraintBottom_toTopOf="@+id/cardView"
             app:layout_constraintStart_toStartOf="parent">
 
             <com.app.func.view.seekbarcustom.ToolTipSeekBar
                 android:id="@+id/toolTipSeekBar"
-                android:layout_width="@dimen/_34dp"
-                android:layout_height="@dimen/_34dp"
+                android:layout_width="@dimen/dimen_34dp"
+                android:layout_height="@dimen/dimen_34dp"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -72,8 +72,8 @@
             android:id="@+id/crollerSeekbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_48dp"
-            android:layout_marginTop="@dimen/_32dp"
+            android:layout_marginHorizontal="@dimen/dimen_48dp"
+            android:layout_marginTop="@dimen/dimen_32dp"
             app:back_circle_color="#EDEDED"
             app:indicator_color="#0B3C49"
             app:indicator_width="5"

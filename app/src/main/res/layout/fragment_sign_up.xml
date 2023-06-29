@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_32dp">
+        android:layout_marginBottom="@dimen/dimen_32dp">
 
         <EditText
             android:id="@+id/edtCreateUsername"
@@ -52,9 +52,9 @@
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollView"
-            android:layout_width="@dimen/_0dp"
-            android:layout_height="@dimen/_0dp"
-            android:layout_marginVertical="@dimen/_18dp"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="@dimen/dimen_0dp"
+            android:layout_marginVertical="@dimen/dimen_18dp"
             android:clickable="false"
             android:fillViewport="true"
             android:focusableInTouchMode="false"
@@ -75,8 +75,8 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_32dp"
-            android:layout_marginBottom="@dimen/_32dp"
+            android:layout_marginTop="@dimen/dimen_32dp"
+            android:layout_marginBottom="@dimen/dimen_32dp"
             android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/scrollView" />

@@ -10,19 +10,19 @@
         android:id="@+id/edit_word"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_16dp"
+        android:layout_margin="@dimen/dimen_16dp"
         android:autofillHints="@null"
         android:fontFamily="sans-serif-light"
         android:hint="@string/hint_word"
         android:inputType="textAutoComplete"
-        android:minHeight="@dimen/_48dp"
+        android:minHeight="@dimen/dimen_48dp"
         android:textSize="18sp" />
 
     <Button
         android:id="@+id/button_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_16dp"
+        android:layout_margin="@dimen/dimen_16dp"
         android:background="@color/colorPrimary"
         android:text="@string/save"
         android:textAllCaps="false"

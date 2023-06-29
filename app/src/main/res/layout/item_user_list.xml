@@ -51,8 +51,8 @@
 
         <ImageView
             android:id="@+id/imgDelete"
-            android:layout_width="@dimen/_32dp"
-            android:layout_height="@dimen/_32dp"
+            android:layout_width="@dimen/dimen_32dp"
+            android:layout_height="@dimen/dimen_32dp"
             android:background="@drawable/ic_red_delete"
             android:contentDescription="@null"
             app:layout_constraintBottom_toBottomOf="parent"

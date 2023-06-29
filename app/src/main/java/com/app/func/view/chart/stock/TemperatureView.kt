@@ -77,9 +77,9 @@ class TemperatureView @JvmOverloads constructor(
 
     init {
         widthScreen = Resources.getSystem().displayMetrics.widthPixels
-        strokeWidthBorder = context.resources.getDimension(R.dimen._14sp)
-        _radiusDotWhite = context.resources.getDimension(R.dimen._14dp)
-        _radiusShaderDotWhite = context.resources.getDimension(R.dimen._10dp)
+        strokeWidthBorder = context.resources.getDimension(R.dimen.dimen_14sp)
+        _radiusDotWhite = context.resources.getDimension(R.dimen.dimen_14dp)
+        _radiusShaderDotWhite = context.resources.getDimension(R.dimen.dimen_10dp)
         _padding32dp = RATIO_PADDING_TOP * widthScreen
         _paddingBottom40dp = RATIO_PADDING_BOTTOM * widthScreen
         initColorByState()
@@ -178,7 +178,7 @@ class TemperatureView @JvmOverloads constructor(
         paintLine.strokeCap = Paint.Cap.ROUND
         paintLine.isAntiAlias = true
 
-        textSizeTempOnProgressCurve = resources.getDimensionPixelSize(R.dimen._14sp)
+        textSizeTempOnProgressCurve = resources.getDimensionPixelSize(R.dimen.dimen_14sp)
         val paintTypeFace = ResourcesCompat.getFont(context, R.font.roboto_medium)
         paintText.typeface = paintTypeFace
         paintText.strokeWidth = strokeWidthText

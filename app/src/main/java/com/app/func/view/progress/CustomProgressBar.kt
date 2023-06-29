@@ -38,15 +38,15 @@ class CustomProgressBar @JvmOverloads constructor(
     }
     private var centerX = 0
     private var centerY = 0
-    private var mWidthArcBG = resources.getDimensionPixelSize(R.dimen._20dp).toFloat()
-    private var mWidthAcrPrimary = resources.getDimensionPixelSize(R.dimen._20dp).toFloat()
-    private var mTextSizeProgress = resources.getDimensionPixelSize(R.dimen._16dp).toFloat()
+    private var mWidthArcBG = resources.getDimensionPixelSize(R.dimen.dimen_20dp).toFloat()
+    private var mWidthAcrPrimary = resources.getDimensionPixelSize(R.dimen.dimen_20dp).toFloat()
+    private var mTextSizeProgress = resources.getDimensionPixelSize(R.dimen.dimen_16dp).toFloat()
     val rect = RectF()
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         val viewWidthHeight =
-            MeasureSpec.getSize(resources.getDimensionPixelSize(R.dimen._200dp))
+            MeasureSpec.getSize(resources.getDimensionPixelSize(R.dimen.dimen_200dp))
         centerX = viewWidthHeight / 2
         centerY = viewWidthHeight / 2
         setMeasuredDimension(viewWidthHeight, viewWidthHeight)

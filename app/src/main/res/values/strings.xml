@@ -98,4 +98,14 @@
     <string name="channel_description">Much longer text that cannot fit one line…</string>
     <string name="channel_description_1">Much longer text that cannot fit one line…</string>
 
+    <!--Text in Json File-->
+    <string name="json_home">Home</string>
+    <string name="json_content">Content</string>
+    <string name="json_about">About</string>
+
+    <string-array name="title_fragment_json">
+        <item>@string/json_home</item>
+        <item>@string/json_content</item>
+        <item>@string/json_about</item>
+    </string-array>
 </resources>

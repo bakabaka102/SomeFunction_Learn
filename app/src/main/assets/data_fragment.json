@@ -1,0 +1,33 @@
+{
+  "home": [
+    {
+      "type": "switch",
+      "title": "On",
+      "default": "false"
+    },
+    {
+      "type": "input",
+      "title": "Device",
+      "default": "KL"
+    }
+  ],
+  "content": [
+    {
+      "type": "switch",
+      "title": "Modify",
+      "default": "false"
+    },
+    {
+      "type": "input",
+      "title": "Name",
+      "default": "KU"
+    }
+  ],
+  "about": [
+    {
+      "type": "input",
+      "title": "Name",
+      "default": "KK"
+    }
+  ]
+}
