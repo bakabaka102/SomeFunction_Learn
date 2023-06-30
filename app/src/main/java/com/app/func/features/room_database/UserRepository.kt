@@ -3,6 +3,7 @@ package com.app.func.features.room_database
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import androidx.lifecycle.LiveData
 
 class UserRepository(context: Context) {
 
@@ -15,6 +16,10 @@ class UserRepository(context: Context) {
         //return dao?.getUsers()
         //return dao?.getUsersWithAsc()
         return dao?.getUsersWithDesc()
+    }
+
+    fun getUserAsc() : LiveData<List<User>>? {
+        return dao?.getUsersWithAsc()
     }
 
     // Insert new user

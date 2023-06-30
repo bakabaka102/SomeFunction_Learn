@@ -81,7 +81,7 @@
     <string name="title_value">Index</string>
     <string name="analog_clock_text">Analog clock view!</string>
     <string name="delete">delete</string>
-    <string name="profile">Profile</string>
+    <string name="room_db">RoomDB</string>
     <string name="label_count">Count</string>
     <string name="label_duration">Duration</string>
     <string name="view_pager">ViewPager</string>
