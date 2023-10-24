@@ -16,10 +16,16 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     abstract fun instanceViewBinding(): VB
 
+    abstract fun initViews()
+
+    abstract fun initActions()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = instanceViewBinding()
         setContentView(mBinding.root)
+        initViews()
+        initActions()
     }
 
     // Pass "en","hi", etc.
