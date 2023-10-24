@@ -11,6 +11,11 @@ import com.app.func.ViewCustomActivity
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentHomeStartBinding
 import com.app.func.view.all_demo.EmotionalFaceView
+import com.app.func.view.chart.CHARTTYPE
+import com.app.func.view.chart.StatisticsView
+import com.app.func.view.chart.models.ReportResponse
+import com.app.func.view.chart.models.Temperature
+import com.app.func.view.chart.utils.ModelType
 import java.io.IOException
 import java.net.MalformedURLException
 import java.net.URL
@@ -21,12 +26,15 @@ import kotlinx.coroutines.withContext
 
 class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
 
+    private var model = ModelType.FREEZER
+
     override fun getViewBinding(): FragmentHomeStartBinding {
         return FragmentHomeStartBinding.inflate(layoutInflater)
     }
 
     override fun setUpViews() {
         showImage()
+        loadChart()
     }
 
     override fun observeData() {
@@ -68,6 +76,44 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
 
         binding?.btnDataBinding?.setOnClickListener {
 
+        }
+    }
+
+    private fun loadChart() {
+        val listData = ReportResponse(
+            listOf(
+                Temperature(10L, "123"),
+                Temperature(13L, "98"),
+                Temperature(20L, "116"),
+                Temperature(16L, "87"),
+                Temperature(2L, "78"),
+                Temperature(8L, "80"),
+                Temperature(1L, "100")
+            ),
+            listOf(
+                Temperature(10L, "140"),
+                Temperature(8L, "99"),
+                Temperature(21L, "66"),
+                Temperature(14L, "56"),
+                Temperature(11L, "98"),
+                Temperature(6L, "52"),
+                Temperature(2L, "78"),
+                Temperature(4L, "123"),
+                Temperature(16L, "25")
+            ),
+        )
+        binding?.customStaticView?.resetIndicatorView()
+        loadStaticView(statisticsView = binding?.customStaticView, list = listData)
+
+
+    }
+
+    private fun loadStaticView(statisticsView: StatisticsView?, list: ReportResponse?) {
+        if (list != null) {
+            statisticsView?.loadData(
+                list,
+                chartType = if (model == ModelType.FREEZER || model == ModelType.FRIDGE || model == ModelType.HOT_WATER_TANK) CHARTTYPE.POWER else CHARTTYPE.WATER_OUT
+            )
         }
     }
 

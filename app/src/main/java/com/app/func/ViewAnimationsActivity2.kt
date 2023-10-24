@@ -9,4 +9,12 @@ class ViewAnimationsActivity2 : BaseActivity<ActivityViewAnimations2Binding>() {
         return ActivityViewAnimations2Binding.inflate(layoutInflater)
     }
 
+    override fun initViews() {
+
+    }
+
+    override fun initActions() {
+
+    }
+
 }
