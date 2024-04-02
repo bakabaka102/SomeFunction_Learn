@@ -84,9 +84,4 @@ class JsonFuncFragment : BaseFragment<FragmentJsonFuncBinding>() {
 
     }
 
-    companion object {
-
-        @JvmStatic
-        fun newInstance() = JsonFuncFragment()
-    }
 }

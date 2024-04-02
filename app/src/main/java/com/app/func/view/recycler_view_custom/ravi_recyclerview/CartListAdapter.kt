@@ -45,7 +45,7 @@ class CartListAdapter : RecyclerView.Adapter<MyViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val (_, name, description, price, thumbnail) = cartList!![position]
+        val (_, name, description, price, thumbnail) = cartList[position]
         holder.name.text = name
         holder.description.text = description
         holder.price.text = "₹$price"

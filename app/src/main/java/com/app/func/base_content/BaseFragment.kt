@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
 import androidx.viewbinding.ViewBinding
 import com.app.func.coroutine_demo.retrofit.aaa.DataRepository
 import com.app.func.coroutine_demo.retrofit.base.RetrofitObject
@@ -29,10 +28,6 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     open fun setTitleActionBar() {
         (activity as AppCompatActivity).supportActionBar?.title = this::class.java.simpleName
-    }
-
-    fun getNavController(): NavController? {
-        return (activity as? BaseActivity<*>)?.getNavController()
     }
 
     fun getRepositoryRetrofit(url: String): DataRepository {

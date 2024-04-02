@@ -9,19 +9,18 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 // Annotates class to be a Room Database with a table (entity) of the Word class
-@Database(entities = arrayOf(Word::class), version = 1, exportSchema = false)
+@Database(entities = [Word::class], version = 1, exportSchema = false)
 abstract class WordRoomDatabase : RoomDatabase() {
 
     abstract fun wordDao(): WordDao
 
-    private class WordDatabaseCallback(private val scope: CoroutineScope) :
-        RoomDatabase.Callback() {
+    private class WordDatabaseCallback(private val scope: CoroutineScope) : Callback() {
 
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
-            INSTANCE?.let { database ->
+            _instance?.let { database ->
                 scope.launch {
-                    var wordDao = database.wordDao()
+                    val wordDao = database.wordDao()
 
                     // Delete all content here.
                     wordDao.deleteAll()
@@ -43,20 +42,20 @@ abstract class WordRoomDatabase : RoomDatabase() {
     companion object {
         // Singleton prevents multiple instances of database opening at the same time.
         @Volatile
-        private var INSTANCE: WordRoomDatabase? = null
+        private var _instance: WordRoomDatabase? = null
 
         fun getDatabase(context: Context, scope: CoroutineScope): WordRoomDatabase {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database
-            return INSTANCE ?: synchronized(this) {
+            return _instance ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     WordRoomDatabase::class.java,
                     "word_database"
                 ).addCallback(WordDatabaseCallback(scope))
+                    .fallbackToDestructiveMigration()
                     .build()
-                INSTANCE = instance
-                // return instance
+                _instance = instance
                 instance
             }
         }

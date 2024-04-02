@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.navigation.fragment.findNavController
 import com.app.func.R
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentRxFunctionBinding
@@ -129,39 +130,39 @@ class RxFunctionFragment : BaseFragment<FragmentRxFunctionBinding>(), View.OnCli
             }
 
             binding?.btnSimpleRx -> {
-                getNavController()?.navigate(R.id.simpleRXFragment)
+                findNavController().navigate(R.id.simpleRXFragment)
             }
 
             binding?.btnMapRx -> {
-                getNavController()?.navigate(R.id.mapRXFragment)
+                findNavController().navigate(R.id.mapRXFragment)
             }
 
             binding?.btnZipRx -> {
-                getNavController()?.navigate(R.id.zipRXFragment)
+                findNavController().navigate(R.id.zipRXFragment)
             }
 
             binding?.btnTimeRx -> {
-                getNavController()?.navigate(R.id.timerRXFragment)
+                findNavController().navigate(R.id.timerRXFragment)
             }
 
             binding?.btnFilterRx -> {
-                getNavController()?.navigate(R.id.filterRXFragment)
+                findNavController().navigate(R.id.filterRXFragment)
             }
 
             binding?.btnConcatRx -> {
-                getNavController()?.navigate(R.id.concatRXFragment)
+                findNavController().navigate(R.id.concatRXFragment)
             }
 
             binding?.btnMergeRx -> {
-                getNavController()?.navigate(R.id.mergeRXFragment)
+                findNavController().navigate(R.id.mergeRXFragment)
             }
 
             binding?.btnDelayRx -> {
-                getNavController()?.navigate(R.id.delayRXFragment)
+                findNavController().navigate(R.id.delayRXFragment)
             }
 
             binding?.btnSearchRx -> {
-                getNavController()?.navigate(R.id.searchByRXFragment)
+                findNavController().navigate(R.id.searchByRXFragment)
             }
         }
     }

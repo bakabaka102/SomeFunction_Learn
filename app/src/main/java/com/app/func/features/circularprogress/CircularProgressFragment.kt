@@ -5,13 +5,6 @@ import com.app.func.databinding.FragmentCircularProgressBinding
 
 class CircularProgressFragment : BaseFragment<FragmentCircularProgressBinding>() {
 
-    
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = CircularProgressFragment()
-    }
-
     override fun getViewBinding(): FragmentCircularProgressBinding {
         return FragmentCircularProgressBinding.inflate(layoutInflater)
     }

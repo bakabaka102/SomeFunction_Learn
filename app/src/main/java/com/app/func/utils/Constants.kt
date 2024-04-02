@@ -1,6 +1,8 @@
 package com.app.func.utils
 
 object Constants {
+    const val DB_USER_NAME = "user.db"
+
     const val EMPTY_STRING: String = ""
     const val FLOAT_ZERO: Float = 0f
     const val INT_ZERO: Int = 0

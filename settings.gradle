@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "SomeFunction_Learn"
 include ':app'
+include ':server'
