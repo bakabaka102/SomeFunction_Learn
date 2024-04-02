@@ -102,6 +102,8 @@
     <string name="json_home">Home</string>
     <string name="json_content">Content</string>
     <string name="json_about">About</string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close\n</string>
 
     <string-array name="title_fragment_json">
         <item>@string/json_home</item>

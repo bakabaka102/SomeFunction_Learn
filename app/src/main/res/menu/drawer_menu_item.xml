@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText">
+    <group
+        android:id="@+id/group_menu_1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_account"
+            android:title="Account" />
+        <item
+            android:id="@+id/nav_settings"
+            android:title="Settings" />
+    </group>
+    <group
+        android:id="@+id/group_menu_2"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_logout"
+            android:title="Logout" />
+    </group>
+</menu>

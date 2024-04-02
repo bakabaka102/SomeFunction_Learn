@@ -156,6 +156,7 @@
                 app:layout_constraintTop_toBottomOf="@id/btnAnimation" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="@dimen/dimen_300dp"
@@ -163,7 +164,18 @@
             android:layout_marginTop="@dimen/dimen_16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/consGroupButton" />
+            app:layout_constraintTop_toBottomOf="@+id/consGroupButton"
+            android:contentDescription="@null" />
+
+        <com.app.func.view.chart.StatisticsView
+            android:id="@+id/customStaticView"
+            android:layout_width="@dimen/dimen_300dp"
+            android:layout_height="@dimen/dimen_300dp"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:background="#89bef2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>
