@@ -82,11 +82,6 @@ class RoomFragment : BaseFragment<RoomFragmentBinding>() {
 
     }
 
-    private fun fetchUsers() {
-        val allUsers = mViewModel.getAllUsers()
-        allUsers?.let { userAdapter.setUsers(it) }
-    }
-
     private fun updateUser() {
         if (isNotEmptyData()) {
             val user = User(
@@ -120,6 +115,5 @@ class RoomFragment : BaseFragment<RoomFragmentBinding>() {
                 && binding?.edEmail?.text?.isNotEmpty() == true
                 && binding?.edLocation?.text?.isNotEmpty() == true)
     }
-
 
 }
