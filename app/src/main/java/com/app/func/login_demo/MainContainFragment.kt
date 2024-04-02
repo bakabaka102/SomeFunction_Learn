@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.navigation.fragment.findNavController
 import com.app.func.R
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.MainContainFragmentBinding
@@ -44,32 +45,32 @@ class MainContainFragment : BaseFragment<MainContainFragmentBinding>() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun initActions() {
         binding?.btnHome?.setOnClickListener {
-            getNavController()?.navigate(R.id.homeFragment)
+            findNavController().navigate(R.id.homeFragment)
         }
         binding?.btnSignIn?.setOnClickListener {
-            getNavController()?.navigate(R.id.signInFragment)
+            findNavController().navigate(R.id.signInFragment)
         }
         binding?.btnSignUp?.setOnClickListener {
-            getNavController()?.navigate(R.id.signUpFragment)
+            findNavController().navigate(R.id.signUpFragment)
         }
         binding?.btnGotoRecyclerView?.setOnClickListener {
-            getNavController()?.navigate(R.id.listUserFragment)
+            findNavController().navigate(R.id.listUserFragment)
         }
 
         binding?.btnProfile?.setOnClickListener {
-            getNavController()?.navigate(R.id.profileFragment)
+            findNavController().navigate(R.id.profileFragment)
         }
         binding?.viewPager?.setOnClickListener {
-            getNavController()?.navigate(R.id.viewPagerFragment)
+            findNavController().navigate(R.id.viewPagerFragment)
         }
         binding?.btnRoomWithRx?.setOnClickListener {
-            getNavController()?.navigate(R.id.noteHomeFragment)
+            findNavController().navigate(R.id.noteHomeFragment)
         }
         binding?.btnRoomCoroutines?.setOnClickListener {
-            getNavController()?.navigate(R.id.mainRoomCoroutinesFragment)
+            findNavController().navigate(R.id.mainRoomCoroutinesFragment)
         }
         binding?.btnEditTexts?.setOnClickListener {
-            getNavController()?.navigate(R.id.imageGalleryFragment)
+            findNavController().navigate(R.id.imageGalleryFragment)
         }
         binding?.btnNotify?.setOnClickListener {
             showNotification()
@@ -78,7 +79,7 @@ class MainContainFragment : BaseFragment<MainContainFragmentBinding>() {
             showNotification2()
         }
         binding?.btnCoroutinesFunc?.setOnClickListener {
-            getNavController()?.navigate(R.id.snowyMainFragment)
+            findNavController().navigate(R.id.snowyMainFragment)
         }
     }
 

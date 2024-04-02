@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.TooltipCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.ViewPagerFragmentBinding
 import com.app.func.login_demo.adapter.ViewPagerAdapter
@@ -22,10 +23,6 @@ class ViewPagerFragment : BaseFragment<ViewPagerFragmentBinding>() {
         "Dog",
         "Bird"
     )
-
-    companion object {
-        fun newInstance() = ViewPagerFragment()
-    }
 
     override fun getViewBinding(): ViewPagerFragmentBinding {
         return ViewPagerFragmentBinding.inflate(layoutInflater)
@@ -79,10 +76,10 @@ class ViewPagerFragment : BaseFragment<ViewPagerFragmentBinding>() {
     private val mOnBackPress = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             if (binding?.recyclerviewTab == null) {
-                getNavController()?.navigateUp()
+                findNavController().navigateUp()
             } else {
                 if (binding?.recyclerviewTab?.currentItem == 0) {
-                    getNavController()?.navigateUp()
+                    findNavController().navigateUp()
                 } else {
                     binding?.recyclerviewTab?.currentItem =
                         binding?.recyclerviewTab?.currentItem?.minus(1)!!

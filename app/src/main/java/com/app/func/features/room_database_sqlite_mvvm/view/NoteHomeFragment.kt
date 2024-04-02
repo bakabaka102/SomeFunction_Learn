@@ -2,6 +2,7 @@ package com.app.func.features.room_database_sqlite_mvvm.view
 
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,7 +47,7 @@ class NoteHomeFragment : BaseFragment<NoteHomeLayoutBinding>() {
         binding?.buttonAddNote?.setOnClickListener {
 //            val intent = Intent(this, AddEditNoteActivity::class.java)
 //            startActivityForResult(intent, ADD_NOTE_REQUEST)
-            getNavController()?.navigate(R.id.noteDeleteAddFragment)
+            findNavController().navigate(R.id.noteDeleteAddFragment)
         }
 
         // swipe listener
@@ -86,7 +87,7 @@ class NoteHomeFragment : BaseFragment<NoteHomeLayoutBinding>() {
                 ConstantsNote.EXTRA_DESCRIPTION to clickedNote.description,
                 ConstantsNote.EXTRA_PRIORITY to clickedNote.priority
             )
-            getNavController()?.navigate(R.id.noteDeleteAddFragment, bundle)
+            findNavController().navigate(R.id.noteDeleteAddFragment, bundle)
         }
         binding?.recyclerView?.adapter = noteAdapter
     }

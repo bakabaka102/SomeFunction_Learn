@@ -2,9 +2,10 @@ package com.app.func.features.room_database
 
 import android.content.Context
 import androidx.room.*
+import com.app.func.utils.Constants
 
-//@Database(entities = [User::class], version = 101, exportSchema = false)
-@Database(entities = arrayOf(User::class), version = 101, exportSchema = false)
+//@Database(entities = arrayOf(User::class), version = 101, exportSchema = false)
+@Database(entities = [User::class], version = 101, exportSchema = false)
 
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -12,23 +13,24 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 
     companion object {
-        private var instance: AppDatabase? = null
+        @Volatile
+        private var _instance: AppDatabase? = null
 
-        fun newInstance(context: Context): AppDatabase? {
+        fun initInstanceDatabase(context: Context): AppDatabase = synchronized(this) {
+            var instance = _instance
             if (instance == null) {
-                synchronized(AppDatabase::class) {
-                    instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        AppDatabase::class.java,
-                        "user.db"
-                    ).allowMainThreadQueries().build()
-                }
+                instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java,
+                    "user.db"
+                ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
             }
+            _instance = instance
             return instance
         }
 
         fun destroyInstance() {
-            instance = null
+            _instance = null
         }
     }
 }

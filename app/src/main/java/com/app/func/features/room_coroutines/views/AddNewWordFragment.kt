@@ -1,6 +1,7 @@
 package com.app.func.features.room_coroutines.views
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.app.func.base_content.BaseFragment
 import com.app.func.base_content.WordsApplication
 import com.app.func.databinding.AddNewWordFragmentBinding
@@ -24,6 +25,7 @@ class AddNewWordFragment : BaseFragment<AddNewWordFragmentBinding>() {
             val word: String = binding?.editWord?.text.toString().trim()
             if (word.isNotBlank() && word.isNotEmpty()) {
                 wordViewModel.insert(Word(word = word))
+                findNavController().navigateUp()
             } else {
                 MyToast.showToast(requireContext(), "Input in valid")
             }

@@ -1,9 +1,8 @@
 package com.app.func.login_demo
 
-import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.func.R
 import com.app.func.base_content.BaseFragment
@@ -11,24 +10,14 @@ import com.app.func.databinding.RoomFragmentBinding
 import com.app.func.features.room_database.ListClickListener
 import com.app.func.features.room_database.User
 import com.app.func.features.room_database.UserListAdapter
-import com.app.func.features.room_database.UserRepository
 
 class RoomFragment : BaseFragment<RoomFragmentBinding>() {
 
     private var userAdapter = UserListAdapter()
-    private var mViewModel: ProfileViewModel? = null
-    private val repository: UserRepository by lazy {
-        UserRepository(requireContext())
-    }
+    private val mViewModel: ProfileViewModel by viewModels()
     var user: User? = null
 
     override fun getViewBinding(): RoomFragmentBinding = RoomFragmentBinding.inflate(layoutInflater)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mViewModel =
-            ViewModelProvider(this, RoomDBFactory(repository))[ProfileViewModel::class.java]
-    }
 
     override fun setUpViews() {
         binding?.btnAdd?.setOnClickListener {
@@ -69,7 +58,7 @@ class RoomFragment : BaseFragment<RoomFragmentBinding>() {
                 .setTitle("Delete user")
                 .setMessage("Are you sure you want to delete this user?")
                 .setPositiveButton("Yes") { _, _ ->
-                    repository.deleteUser(it)
+                    mViewModel.deleteUser(it)
                 }
                 .setNegativeButton("No", null)
                 .setIcon(R.drawable.ic_white_delete)
@@ -84,7 +73,7 @@ class RoomFragment : BaseFragment<RoomFragmentBinding>() {
     }
 
     override fun observeData() {
-        mViewModel?.getUsersWithAsc?.observe(viewLifecycleOwner) {
+        mViewModel.getUsersWithAsc?.observe(viewLifecycleOwner) {
             userAdapter.setUsers(it)
         }
     }
@@ -94,7 +83,7 @@ class RoomFragment : BaseFragment<RoomFragmentBinding>() {
     }
 
     private fun fetchUsers() {
-        val allUsers = repository.getAllUsers()
+        val allUsers = mViewModel.getAllUsers()
         allUsers?.let { userAdapter.setUsers(it) }
     }
 
@@ -106,7 +95,7 @@ class RoomFragment : BaseFragment<RoomFragmentBinding>() {
                 location = binding?.edLocation?.text.toString(),
                 email = binding?.edEmail?.text.toString()
             )
-            repository.updateUser(user)
+            mViewModel.updateUser(user)
         } else {
             Toast.makeText(requireContext(), "Invalid Input", Toast.LENGTH_SHORT).show()
         }
@@ -120,7 +109,7 @@ class RoomFragment : BaseFragment<RoomFragmentBinding>() {
                 location = binding?.edLocation?.text.toString(),
                 email = binding?.edEmail?.text.toString()
             )
-            repository.insertUser(user)
+            mViewModel.insertUser(user)
         } else {
             Toast.makeText(requireContext(), "Invalid Input", Toast.LENGTH_SHORT).show()
         }

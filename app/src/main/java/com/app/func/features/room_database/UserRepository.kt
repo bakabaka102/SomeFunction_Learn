@@ -1,14 +1,13 @@
 package com.app.func.features.room_database
 
-import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.LiveData
 
-class UserRepository(context: Context) {
+class UserRepository(database: AppDatabase) {
 
     //https://developer.android.com/codelabs/android-room-with-a-view-kotlin#6
-    var dao: UserDao? = AppDatabase.newInstance(context)?.userDao()
+    var dao: UserDao? = database.userDao()
     val handler: Handler = Handler(Looper.getMainLooper())
 
     //Fetch All the Users

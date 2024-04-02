@@ -20,8 +20,8 @@ class ImageBg @JvmOverloads constructor(
         super.onDraw(canvas)
 //        drawRectCorner(canvas)
         canvas?.drawRoundRectPath(
-            mRectF, 40f, true, true,
-            true, true, mPaint
+            mRectF, 40f, roundTopLeft = true, roundTopRight = true,
+            roundBottomLeft = true, roundBottomRight = true, paint = mPaint
         )
     }
 

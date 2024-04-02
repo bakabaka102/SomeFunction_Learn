@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -149,7 +150,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(), View.OnClickListen
     override fun onClick(view: View?) {
         when (view) {
             binding?.btnCreateAccount -> {
-                getNavController()?.navigate(R.id.profileFragment)
+                findNavController().navigate(R.id.profileFragment)
             }
         }
     }

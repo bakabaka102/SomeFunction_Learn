@@ -1,6 +1,7 @@
 package com.app.func.coroutine_demo
 
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import com.app.func.R
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentCoroutinesBinding
@@ -10,12 +11,11 @@ class CoroutinesFragment : BaseFragment<FragmentCoroutinesBinding>(), View.OnCli
     override fun onClick(view: View?) {
         when (view) {
             binding?.btnSingleCallNetwork -> {
-                getNavController()?.navigate(R.id.singleCallNetworkFragment)
+                findNavController().navigate(R.id.singleCallNetworkFragment)
             }
 
             binding?.btnSeriesCallNetwork -> {
-//                getNavController()?.navigate(R.id.listMoviesFragment)
-                getNavController()?.navigate(R.id.seriesCallFragment)
+                findNavController().navigate(R.id.seriesCallFragment)
             }
 
             binding?.btnParallelCallNetwork -> {
