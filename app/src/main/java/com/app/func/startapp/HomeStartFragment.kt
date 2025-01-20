@@ -4,7 +4,9 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.app.func.MainActivityViewModel
 import com.app.func.R
 import com.app.func.ViewAnimationsActivity2
 import com.app.func.ViewCustomActivity
@@ -27,6 +29,7 @@ import kotlinx.coroutines.withContext
 class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
 
     private var model = ModelType.FREEZER
+    private val viewModel : MainActivityViewModel by viewModels()
 
     override fun getViewBinding(): FragmentHomeStartBinding {
         return FragmentHomeStartBinding.inflate(layoutInflater)
@@ -35,9 +38,23 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
     override fun setUpViews() {
         showImage()
         loadChart()
+        viewModel.downloadNote()
+        viewModel.getNote()
     }
 
     override fun observeData() {
+        viewModel.note.observe(viewLifecycleOwner) {
+            Log.d("fileTag", it.toString())
+        }
+
+        viewModel.response.observe(viewLifecycleOwner) {
+            Log.d("fileTag", "Response $it")
+            viewModel.saveFileToDisk(requireContext(), responseBody = it, fileName = "test.json")
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) {
+            Log.d("fileTag", it)
+        }
 
     }
 
