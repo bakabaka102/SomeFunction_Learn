@@ -8,6 +8,13 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="hn.single.server.IServiceAidl.Access" />
+    <queries>
+        <package android:name="hn.single.server.IServiceAidl" />
+        <intent>
+            <action android:name="hn.single.server.IServiceAidl" />
+        </intent>
+    </queries>
 
     <application
         android:name=".base_content.WordsApplication"

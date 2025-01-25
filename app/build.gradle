@@ -41,6 +41,7 @@ android {
         viewBinding true
         dataBinding true
         compose true //Jetpack Compose
+        aidl true
     }
 
     //Jetpack Compose
