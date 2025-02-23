@@ -8,10 +8,11 @@
 
     <TextView
         android:id="@+id/textContentData"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/dimen_24dp"
-        android:text="FragmentContainJson"
+        android:gravity="center"
+        tools:text="FragmentContainJson"
         android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"

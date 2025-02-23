@@ -18,16 +18,16 @@ class JsonFuncFragment : BaseFragment<FragmentJsonFuncBinding>() {
         DataJsonAdapter(this)
     }
 
-    private fun createListFragmentData(data: DataJson): List<Fragment> {
-        val list = mutableListOf<Fragment>()
+    private fun createListFragmentData(data: DataJson): List<Pair<String,Fragment>> {
+        val list = mutableListOf<Pair<String,Fragment>>()
         if (data.home.isNotEmpty()) {
-            list.add(createFragmentDetail(DataTabJson.HOME, data.home.toString()))
+            list.add(Pair(getString(R.string.json_home), ContainParseFragment.newInstance(DataTabJson.HOME, data.home.toString())))
         }
         if (data.content.isNotEmpty()) {
-            list.add(createFragmentDetail(DataTabJson.CONTENT, data.content.toString()))
+            list.add(Pair(getString(R.string.json_content), ContainParseFragment.newInstance(DataTabJson.CONTENT, data.content.toString())))
         }
         if (data.about.isNotEmpty()) {
-            list.add(createFragmentDetail(DataTabJson.ABOUT, data.about.toString()))
+            list.add(Pair(getString(R.string.json_about), ContainParseFragment.newInstance(DataTabJson.ABOUT, data.about.toString())))
         }
         return list
     }
@@ -50,26 +50,15 @@ class JsonFuncFragment : BaseFragment<FragmentJsonFuncBinding>() {
     }
 
     override fun setUpViews() {
-        val jsonString = Utils.loadJsonFromAssets(requireActivity(), jsonFile).also {
-            //Logger.d("loadJsonFromAssets ----------- $it")
-        }
+        val jsonString = Utils.loadJsonFromAssets(requireActivity(), jsonFile)
         val dataJ = Json.decodeFromString<DataJson>(jsonString)
         val listFragment = createListFragmentData(dataJ)
         binding?.viewPager2Json?.adapter = dataAdapter
         dataAdapter.fillFragmentList(listFragment)
         TabLayoutMediator(binding?.tabLayoutJson!!, binding?.viewPager2Json!!) { tab, position ->
-            //tab.text = position.createTitleFromPosition()
-            tab.text = resources.getStringArray(R.array.title_fragment_json)[position]
+            tab.text = listFragment[position].first
+            //tab.text = resources.getStringArray(R.array.title_fragment_json)[position]
         }.attach()
-    }
-
-    private fun Int.createTitleFromPosition(): String {
-        return when (this) {
-            0 -> "Home"
-            1 -> "Content"
-            2 -> "About"
-            else -> "None"
-        }
     }
 
     override fun observeData() {

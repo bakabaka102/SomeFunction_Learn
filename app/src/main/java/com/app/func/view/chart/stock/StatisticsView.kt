@@ -12,7 +12,7 @@ import android.widget.TextView
 import androidx.annotation.Keep
 import com.app.func.R
 import com.app.func.view.chart.models.ReportResponse
-import com.app.func.view.chart.models.Temperature
+import com.app.func.view.chart.models.ConsumeData
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.Comparator
@@ -39,7 +39,7 @@ class ChartStatisticsView @JvmOverloads constructor(
     private var _startDate = ""
     private var _endDate = ""
     private var _textView: TextView? = null
-    private var _listTemperature: List<Temperature> = arrayListOf()
+    private var _listConsumeData: List<ConsumeData> = arrayListOf()
     private var _arrayListText: ArrayList<String> = arrayListOf()
     private var _xValueLongest = ""
     private var _xValueLongestWidth = 0
@@ -151,20 +151,20 @@ class ChartStatisticsView @JvmOverloads constructor(
     fun loadData(data: ReportResponse, isToday: Boolean = false, chartType: CHARTTYPE) {
         _chartType = chartType
         _needRecreateRect = true
-        _listTemperature = arrayListOf()
+        _listConsumeData = arrayListOf()
         _arrayXValue.clear()
         _arrayYValue.clear()
-        _listTemperature = when (chartType) {
+        _listConsumeData = when (chartType) {
             CHARTTYPE.POWER -> simulateData(data.power)
-            CHARTTYPE.TEMPERATURE -> simulateData(data.temperature)
-            CHARTTYPE.WATER_IN -> simulateData(data.temperature)
+            CHARTTYPE.TEMPERATURE -> simulateData(data.consumeData)
+            CHARTTYPE.WATER_IN -> simulateData(data.consumeData)
             CHARTTYPE.WATER_OUT -> simulateData(data.power)
         }
         this._isToday = isToday
 
         _points.clear()
         _pointsAdjusted.clear()
-        _listTemperature.forEachIndexed { i, element ->
+        _listConsumeData.forEachIndexed { i, element ->
             val x = i.toFloat() // x la ngay tuong ung
             val y = element.value.toFloat()
             _points.add(Point(x, y))
@@ -257,21 +257,21 @@ class ChartStatisticsView @JvmOverloads constructor(
         _xValueLongestWidth = _rect.width()
     }
 
-    private fun simulateData(temperatures: List<Temperature>): List<Temperature> {
+    private fun simulateData(consumeData: List<ConsumeData>): List<ConsumeData> {
         // sort theo ngay
-        temperatures.sortedWith(Temperature.comparatorSortDate)
+        consumeData.sortedWith(ConsumeData.comparatorSortDate)
 
         // gan lai du lieu ve ngay truoc do
-        temperatures.forEachIndexed { index, element ->
+        consumeData.forEachIndexed { index, element ->
             if (element.value == null) {
                 if (index == 0) {
                     element.value = "0"
                 } else {
-                    element.value = temperatures[index - 1].value
+                    element.value = consumeData[index - 1].value
                 }
             }
         }
-        return temperatures
+        return consumeData
     }
 
     private fun adjustPoint() {
@@ -637,7 +637,7 @@ fun Date.fromString(dateString: String): Date {
 }
 
 fun Date.fromStringHour(): String {
-    val sdf = SimpleDateFormat("HH:mm")
+    val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
     return sdf.format(this)
 }
 

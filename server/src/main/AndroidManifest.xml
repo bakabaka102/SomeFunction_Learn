@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
+
+    <permission android:name="hn.single.server.permission.ACCESS_ASSETS"
+                android:protectionLevel="normal" />
 
     <permission
         android:name="hn.single.server.IServiceAidl.Access"
@@ -30,6 +34,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+                android:name=".provider.AssetsFileProvider"
+                android:authorities="hn.single.server.provider.AssetsFileProvider"
+                android:enabled="true"
+                android:exported="true"
+                android:grantUriPermissions="true"
+                android:permission="hn.single.server.permission.ACCESS_ASSETS"
+                tools:ignore="ExportedContentProvider"/>
+
+        <provider
+            android:permission="hn.single.server.permission.ACCESS_ASSETS"
+                android:name=".provider.AssetFileProvider"
+                android:authorities="hn.single.server.provider.AssetFileProvider"
+                android:exported="false"
+                android:grantUriPermissions="true"/>
+
+        <provider
+            android:permission="hn.single.server.permission.ACCESS_ASSETS"
+            android:name=".provider.AssetProvider"
+            android:authorities="hn.single.server.asset.provider"
+            android:exported="false" />
     </application>
 
 </manifest>

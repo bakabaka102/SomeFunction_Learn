@@ -22,11 +22,11 @@ import android.widget.TextView
 import androidx.annotation.Keep
 import com.app.func.R
 import com.app.func.view.chart.models.ReportResponse
-import com.app.func.view.chart.models.Temperature
-import com.app.func.view.chart.utils.ModelType
+import com.app.func.view.chart.models.ConsumeData
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.math.abs
 import kotlin.math.roundToInt
 
 class StatisticsView @JvmOverloads constructor(
@@ -34,13 +34,59 @@ class StatisticsView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
-    private val _paintTriang = Paint()
-    private val _paintCurve = Paint()
-    private val _paintLine = Paint()
-    private val _paintText = Paint()
-    private val _paintFill = Paint()
-    private val _paintCircle = Paint()
-    private val _paintTick = Paint()
+    private val _paintTriangle = Paint().apply {
+        style = Paint.Style.FILL
+        strokeCap = Paint.Cap.ROUND
+        strokeWidth = 7f
+        color = Color.parseColor("#4caf50")
+        isAntiAlias = true
+    }
+    private val _paintCurve = Paint().apply {
+        style = Paint.Style.STROKE
+        strokeCap = Paint.Cap.ROUND
+        strokeWidth = 7f
+        color = Color.parseColor("#53944E")
+        isAntiAlias = true
+        alpha = 200
+    }
+    private val _paintLine = Paint().apply {
+        style = Paint.Style.STROKE
+        strokeCap = Paint.Cap.ROUND
+        strokeWidth = 3f
+        color = Color.LTGRAY
+        isAntiAlias = true
+        alpha = 200
+    }
+    private val _paintText = Paint().apply {
+        strokeWidth = 3f
+        color = Color.parseColor("#b4b4b4")
+        style = Paint.Style.FILL
+        isAntiAlias = true
+        textSize = context.resources.getDimension(R.dimen.dimen_12dp)
+    }
+    private val _paintFill = Paint().apply {
+        color = Color.BLUE
+        style = Paint.Style.FILL
+        alpha = 150
+        isAntiAlias = true
+    }
+    private val _paintCircle = Paint().apply {
+        style = Paint.Style.FILL
+        strokeCap = Paint.Cap.ROUND
+        strokeWidth = 7f
+        color = Color.parseColor("#FFFFFF")
+        isAntiAlias = true
+        setShadowLayer(20f, 0f, 0f, _shadowColor)
+        setLayerType(LAYER_TYPE_SOFTWARE, this)
+    }
+    private val _paintTick = Paint().apply {
+        style = Paint.Style.FILL_AND_STROKE
+        strokeWidth = 2f
+        strokeCap = Paint.Cap.ROUND
+        color = Color.parseColor("#53944E")
+        pathEffect = DashPathEffect(floatArrayOf(5f, 5f), 0f)
+        isAntiAlias = true
+    }
     private val _points = mutableListOf<Point>()
     private val _pointsAdjusted = mutableListOf<Point>()
     private val _chartRect = Rect()
@@ -52,7 +98,7 @@ class StatisticsView @JvmOverloads constructor(
     private var _startDate = ""
     private var _endDate = ""
     private var _textView: TextView? = null
-    private var _listTemperature: List<Temperature> = arrayListOf()
+    private var _listConsumeData: List<ConsumeData> = arrayListOf()
     private var _arrayListText: ArrayList<String> = arrayListOf()
     private var _xValueLongest = ""
     private var _xValueLongestWidth = 0
@@ -69,72 +115,23 @@ class StatisticsView @JvmOverloads constructor(
     private var _arrayYValue: ArrayList<String> = arrayListOf()
     private var _arrayXValue: ArrayList<String> = arrayListOf()
     private var _needRecreateRect = false
-    private var _chartType: CHARTTYPE = CHARTTYPE.TEMPERATURE
+    private var _chartType: ChartType = ChartType.TEMPERATURE
 
     init {
-        _paintTriang.style = Paint.Style.FILL
-        _paintTriang.strokeCap = Paint.Cap.ROUND
-        _paintTriang.strokeWidth = 7f
-        _paintTriang.color = Color.parseColor("#4caf50")
-        _paintTriang.isAntiAlias = true
-
-        _paintCurve.style = Paint.Style.STROKE
-        _paintCurve.strokeCap = Paint.Cap.ROUND
-        _paintCurve.strokeWidth = 7f
-        _paintCurve.color = Color.parseColor("#53944E")
-        _paintCurve.isAntiAlias = true
-        _paintCurve.alpha = 200
-
-        _paintCircle.style = Paint.Style.FILL
-        _paintCircle.strokeCap = Paint.Cap.ROUND
-        _paintCircle.strokeWidth = 7f
-        _paintCircle.color = Color.parseColor("#FFFFFF")
-        _paintCircle.isAntiAlias = true
-        _paintCircle.setShadowLayer(20f, 0f, 0f, _shadowColor)
-        setLayerType(LAYER_TYPE_SOFTWARE, _paintCircle)
-        _paintCurve.alpha = 200
-
-        _paintTick.style = Paint.Style.FILL_AND_STROKE
-        _paintTick.strokeWidth = 2f
-        _paintTick.strokeCap = Paint.Cap.ROUND
-        _paintTick.strokeWidth = 4f
-        _paintTick.color = Color.parseColor("#53944E")
-        _paintTick.pathEffect = DashPathEffect(floatArrayOf(5f, 5f), 0f)
-        _paintTick.isAntiAlias = true
-
-
-        _paintLine.style = Paint.Style.STROKE
-        _paintLine.strokeCap = Paint.Cap.ROUND
-        _paintLine.strokeWidth = 3f
-        _paintLine.color = Color.LTGRAY
-        _paintLine.isAntiAlias = true
-        _paintLine.alpha = 200
-
-        _paintText.strokeWidth = 3f
-        _paintText.color = Color.parseColor("#b4b4b4")
-        _paintText.style = Paint.Style.FILL
-        _paintText.isAntiAlias = true
-
-        _paintFill.style = Paint.Style.FILL
-        _paintFill.color = Color.BLUE
-        _paintFill.alpha = 150
-        _paintFill.isAntiAlias = true
-
-        _paintFill.style = Paint.Style.FILL
-        _paintFill.color = Color.BLACK
-        _paintFill.alpha = 150
-        _paintFill.isAntiAlias = true
-
-        _paintText.textSize = context.resources.getDimension(R.dimen.dimen_12dp)
+        //setLayerType(LAYER_TYPE_SOFTWARE, _paintCircle)
         addTextView()
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        updateDrawingRect() // this function must to call first
+        updateDrawingRect() // this function must call first
         adjustPoint()
         drawLine(canvas)
         drawCurve(canvas)
+        eventTouchPoint(canvas)
+    }
+
+    private fun eventTouchPoint(canvas: Canvas) {
         if (_viewOnTouchEvent) {
             if (_currentPoint.y > 0) {
                 canvas.drawLine(
@@ -147,7 +144,7 @@ class StatisticsView @JvmOverloads constructor(
                 canvas.drawCircle(_currentPoint.x, _currentPoint.y, _RADIUS, _paintCircle)
                 drawToolTip(canvas)
             }
-        } else showTextView(false)
+        } else hideTextView()
     }
 
     private fun initShader() {
@@ -160,36 +157,36 @@ class StatisticsView @JvmOverloads constructor(
         _paintFill.shader = linearGradient
     }
 
-    fun loadData(data: ReportResponse, isToday: Boolean = false, chartType: CHARTTYPE) {
+    fun loadData(data: ReportResponse, isToday: Boolean = false, chartType: ChartType) {
         _chartType = chartType
         _needRecreateRect = true
-        _listTemperature = arrayListOf()
+        _listConsumeData = arrayListOf()
         _arrayXValue.clear()
         _arrayYValue.clear()
-        _listTemperature = when (chartType) {
-            CHARTTYPE.POWER -> simulateData(data.power)
-            CHARTTYPE.TEMPERATURE -> simulateData(data.temperature)
-            CHARTTYPE.WATER_IN -> simulateData(data.temperature)
-            CHARTTYPE.WATER_OUT -> simulateData(data.power)
+        _listConsumeData = when (_chartType) {
+            ChartType.POWER -> simulateData(data.power)
+            ChartType.TEMPERATURE -> simulateData(data.consumeData)
+            ChartType.WATER_IN -> simulateData(data.consumeData)
+            ChartType.WATER_OUT -> simulateData(data.power)
         }
         this._isToday = isToday
 
         _points.clear()
         _pointsAdjusted.clear()
-        _listTemperature.forEachIndexed { i, element ->
+        _listConsumeData.forEachIndexed { i, element ->
             val x = i.toFloat() // x la ngay tuong ung
             val y = element.value.toFloat()
             _points.add(Point(x, y))
             val xValue = when (_chartType) {
-                CHARTTYPE.POWER -> "%.1f".format(Locale.ENGLISH, element.value.toFloatOrNull())
+                ChartType.POWER -> "%.1f".format(Locale.ENGLISH, element.value.toFloatOrNull())
                     .plus("kW")
 
-                CHARTTYPE.TEMPERATURE -> "%.2f".format(
+                ChartType.TEMPERATURE -> "%.2f".format(
                     Locale.ENGLISH,
                     element.value.toFloatOrNull()
                 ).plus("°C")
 
-                CHARTTYPE.WATER_OUT, CHARTTYPE.WATER_IN -> {
+                ChartType.WATER_OUT, ChartType.WATER_IN -> {
                     val floatData: Float = element.value.toFloatOrNull() ?: 0f
                     (floatData.roundToInt()).toString().plus(" TDS")
                 }
@@ -201,10 +198,8 @@ class StatisticsView @JvmOverloads constructor(
                 _arrayYValue.add(Date(element.ts).getHourReport())
             }
         }
-        _startDate = if (!isToday) Date().fromString(_arrayYValue.first())
-            .toSStringNotHaveYear() else _arrayYValue.first()
-        _endDate = if (!isToday) Date().fromString(_arrayYValue.last())
-            .toSStringNotHaveYear() else _arrayYValue.last()
+        _startDate = if (!isToday) dateFromString(_arrayYValue.first()).toStringNotHaveYear() else _arrayYValue.first()
+        _endDate = if (!isToday) dateFromString(_arrayYValue.last()).toStringNotHaveYear() else _arrayYValue.last()
         _points.sortWith(Point.comparator)
         invalidate()
     }
@@ -217,10 +212,10 @@ class StatisticsView @JvmOverloads constructor(
             if (it.y > maxY) {
                 maxY = it.y
             }
-            minY = Math.min(minY, it.y)
+            minY = minY.coerceAtMost(it.y)
         }
         _maxValue = when (_chartType) {
-            CHARTTYPE.WATER_IN, CHARTTYPE.WATER_OUT -> {
+            ChartType.WATER_IN, ChartType.WATER_OUT -> {
                 maxY.toInt() / 100 * 100 + 100
             }
 
@@ -235,20 +230,20 @@ class StatisticsView @JvmOverloads constructor(
             } else minY.toInt() / 10 * 10
 
         if (
-            _chartType == CHARTTYPE.POWER ||
-            _chartType == CHARTTYPE.WATER_IN ||
-            _chartType == CHARTTYPE.WATER_OUT
+            _chartType == ChartType.POWER ||
+            _chartType == ChartType.WATER_IN ||
+            _chartType == ChartType.WATER_OUT
         ) {
             bottomValue = 0
         }
 
         val isSingleValue = _points.size == 1
         if (_maxValue == 0 && bottomValue == 0) {
-            if (_chartType != CHARTTYPE.WATER_IN && _chartType != CHARTTYPE.WATER_OUT) {
+            if (_chartType != ChartType.WATER_IN && _chartType != ChartType.WATER_OUT) {
                 _maxValue += _VALUE_DEFAULT_IF_VALUE_EQUAL_0
             }
             // power have not negative value
-            if (_chartType == CHARTTYPE.TEMPERATURE) {
+            if (_chartType == ChartType.TEMPERATURE) {
                 bottomValue -= _VALUE_DEFAULT_IF_VALUE_EQUAL_0
             }
         }
@@ -256,12 +251,12 @@ class StatisticsView @JvmOverloads constructor(
             _arrayXValue.add(_arrayXValue.first())
             _arrayYValue.add(_arrayYValue.first())
         }
-        _distanceFromMaxToMin = Math.abs(_maxValue - bottomValue)
+        _distanceFromMaxToMin = abs(_maxValue - bottomValue)
 
         val span = _distanceFromMaxToMin.toDouble() / 4
         _arrayListText.clear()
         for (i in 0 until 5) {
-            val value = if (_chartType == CHARTTYPE.WATER_IN || _chartType == CHARTTYPE.WATER_OUT) {
+            val value = if (_chartType == ChartType.WATER_IN || _chartType == ChartType.WATER_OUT) {
                 (_maxValue - span * i).roundToInt().toString()
             } else "%.2f".format(locale = Locale.ENGLISH, _maxValue - span * i)
             if (value.length > _xValueLongest.length) {
@@ -274,21 +269,21 @@ class StatisticsView @JvmOverloads constructor(
         _xValueLongestWidth = _rect.width()
     }
 
-    private fun simulateData(temperatures: List<Temperature>): List<Temperature> {
+    private fun simulateData(consumeData: List<ConsumeData>): List<ConsumeData> {
         // sort theo ngay
-        temperatures.sortedWith(Temperature.comparatorSortDate)
+        consumeData.sortedWith(ConsumeData.comparatorSortDate)
 
         // gan lai du lieu ve ngay truoc do
-        temperatures.forEachIndexed { index, element ->
+        /*consumeData.forEachIndexed { index, element ->
             if (element.value == null) {
                 if (index == 0) {
                     element.value = "0"
                 } else {
-                    element.value = temperatures[index - 1].value
+                    element.value = consumeData[index - 1].value
                 }
             }
-        }
-        return temperatures
+        }*/
+        return consumeData
     }
 
     private fun adjustPoint() {
@@ -308,12 +303,12 @@ class StatisticsView @JvmOverloads constructor(
             val xEnd = endPoint.x
             val axesSpan = xEnd - xStart // center x
             val chartLeft = _chartRect.left
-            _points.forEachIndexed { index, point ->
+            _points.forEach { point ->
                 val xAdjusted = (point.x - xStart) * chartWidth / axesSpan + chartLeft
                 val yAdjusted: Float = if (point.y > 0) {
                     _chartRect.top + ((_maxValue - point.y) / _distanceFromMaxToMin) * chartHeight
                 } else {
-                    _chartRect.top + ((_maxValue + Math.abs(point.y)) / _distanceFromMaxToMin) * chartHeight
+                    _chartRect.top + ((_maxValue + abs(point.y)) / _distanceFromMaxToMin) * chartHeight
                 }
                 val newPointAdjusted = Point(xAdjusted, yAdjusted)
                 _pointsAdjusted.add(newPointAdjusted)
@@ -371,32 +366,28 @@ class StatisticsView @JvmOverloads constructor(
 
     private fun drawToolTip(canvas: Canvas) {
         _textView?.apply {
-            if (_textView!!.visibility == VISIBLE) {
+            if (_textView?.visibility == VISIBLE) {
                 val x1 = _currentPoint.x - _WIDTH_TRIANG / 2
                 var inverted = true
                 var y1 =
                     _currentPoint.y - _HEIGHT_TRIANG - _RADIUS - _PADDING_BETWEEN_DOT_CIRCLE_WITH_TRIANG
-                if (y1 - _textView!!.height < _chartRect.top) {
+                if (y1 - (_textView?.height ?: 0) < _chartRect.top) {
                     y1 = _currentPoint.y + _HEIGHT_TRIANG + _RADIUS
                     inverted = false
                 }
-                val width = _WIDTH_TRIANG// textView!!.height / 2
-                val height = _HEIGHT_TRIANG
                 drawTriangle(
-                    x1.toInt(), y1.toInt(),
-                    width, height,
-                    inverted, _paintTriang, canvas
+                    x = x1.toInt(), y = y1.toInt(),
+                    inverted = inverted, paint = _paintTriangle, canvas = canvas,
                 )
             }
         }
-
     }
 
     private fun drawTriangle(
         x: Int,
         y: Int,
-        width: Int,
-        height: Int,
+        width: Int = _WIDTH_TRIANG, // textView!!.height / 2
+        height: Int = _HEIGHT_TRIANG,
         inverted: Boolean,
         paint: Paint,
         canvas: Canvas
@@ -451,11 +442,10 @@ class StatisticsView @JvmOverloads constructor(
             val widthScreen = Resources.getSystem().displayMetrics.widthPixels
             _paddingTop = _RATIO_PADDING_TOP * widthScreen
             _paddingBottom = _RATIO_PADDING_BOTTOM * widthScreen
-
-            _chartRect.left = _chartRect.left + _xValueLongestWidth + _BUFFER_PADDING_LEFT
+            _chartRect.left += _xValueLongestWidth + _BUFFER_PADDING_LEFT
             _chartRect.right = _chartRect.right
-            _chartRect.top = _chartRect.top + _paddingTop.toInt()
-            _chartRect.bottom = _chartRect.bottom - _paddingBottom.toInt()
+            _chartRect.top += _paddingTop.toInt()
+            _chartRect.bottom -= _paddingBottom.toInt()
             _needRecreateRect = false
         }
     }
@@ -498,18 +488,17 @@ class StatisticsView @JvmOverloads constructor(
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        val parent = parent
         parent.requestDisallowInterceptTouchEvent(true)
         touchOnScreen(event)
         return true
     }
 
     private fun touchOnScreen(event: MotionEvent) {
-        if (event.action == MotionEvent.ACTION_CANCEL || event.action == MotionEvent.ACTION_UP) {
-//            _viewOnTouchEvent = false
-//            showTextView(false)
-//            invalidate()
-        }
+        /*if (event.action == MotionEvent.ACTION_CANCEL || event.action == MotionEvent.ACTION_UP) {
+            _viewOnTouchEvent = false
+            showTextView(false)
+            invalidate()
+        }*/
         if (event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_MOVE) {
             _viewOnTouchEvent = true
             val newX = event.x
@@ -524,7 +513,7 @@ class StatisticsView @JvmOverloads constructor(
                 val text = "${_arrayXValue[indexP]} | ${_arrayYValue[indexP]}"
                 drawTextView(text)
             } else {
-                showTextView(false)
+                hideTextView()
             }
         }
     }
@@ -557,7 +546,6 @@ class StatisticsView @JvmOverloads constructor(
             }
             removeAllViews()
             addView(_textView)
-            _textView?.setOnClickListener {}
         }
     }
 
@@ -574,9 +562,16 @@ class StatisticsView @JvmOverloads constructor(
         }
     }
 
+    private fun hideTextView() {
+        if (_textView == null) return
+        if (_textView?.visibility != GONE) {
+            _textView?.visibility = View.GONE
+        }
+    }
+
     private fun drawTextView(text: String) {
         _textView?.apply {
-            if (_textView!!.visibility != VISIBLE) {
+            if (_textView?.visibility != VISIBLE) {
                 _textView?.visibility = VISIBLE
             }
             this.text = text
@@ -642,14 +637,14 @@ class StatisticsView @JvmOverloads constructor(
 }
 
 @Keep
-enum class CHARTTYPE {
+enum class ChartType {
     POWER,
     TEMPERATURE,
     WATER_IN,
     WATER_OUT
 }
 
-fun Date.fromString(dateString: String): Date {
+fun dateFromString(dateString: String): Date {
     val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     return sdf.parse(dateString)
 }
@@ -669,7 +664,7 @@ fun Date.toSString(): String {
     return sdf.format(this)
 }
 
-fun Date.toSStringNotHaveYear(): String {
+fun Date.toStringNotHaveYear(): String {
     val sdf = SimpleDateFormat("dd/MM", Locale.getDefault())
     return sdf.format(this)
 }

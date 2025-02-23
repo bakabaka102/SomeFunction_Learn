@@ -1,8 +1,11 @@
 package com.app.func.startapp
 
+import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -12,24 +15,28 @@ import com.app.func.ViewAnimationsActivity2
 import com.app.func.ViewCustomActivity
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentHomeStartBinding
+import com.app.func.utils.Constants
 import com.app.func.view.all_demo.EmotionalFaceView
-import com.app.func.view.chart.CHARTTYPE
+import com.app.func.view.chart.ChartType
 import com.app.func.view.chart.StatisticsView
 import com.app.func.view.chart.models.ReportResponse
-import com.app.func.view.chart.models.Temperature
+import com.app.func.view.chart.models.ConsumeData
 import com.app.func.view.chart.utils.ModelType
+import java.io.BufferedReader
 import java.io.IOException
 import java.net.MalformedURLException
 import java.net.URL
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.withContext
 
 class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
 
     private var model = ModelType.FREEZER
-    private val viewModel : MainActivityViewModel by viewModels()
+    private val viewModel: MainActivityViewModel by viewModels()
 
     override fun getViewBinding(): FragmentHomeStartBinding {
         return FragmentHomeStartBinding.inflate(layoutInflater)
@@ -40,6 +47,54 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
         loadChart()
         viewModel.downloadNote()
         viewModel.getNote()
+        //loadJson<String>(this@HomeStartFragment.context, fileJson)
+        /*val uri = Uri.parse("${CUSTOM_PROVIDER_URI}/${fileJson}")
+        val resolver = context?.contentResolver
+        val inputStream = resolver?.openInputStream(uri)
+        val reader = BufferedReader(InputStreamReader(inputStream))
+        var line: String
+        while ((reader.readLine().also { line = it }) != null) {
+            Log.d(Constants.TAG_PROVIDER, "Content - $line")
+        }
+        reader.close()*/
+    }
+
+    private val fileJson = "data_custom.json"
+    private val CUSTOM_PROVIDER_URI get() = "content://hn.single.server.provider.AssetsFileProvider"
+
+
+    private inline fun <reified T> loadJson(context: Context?, fileName: String): T? {
+        val contentResolver = context?.contentResolver
+        contentResolver?.readCustomFile(CUSTOM_PROVIDER_URI, fileName)?.let {
+            Log.d(Constants.TAG_PROVIDER, "Content of file = $it")
+            return it as T
+        }
+        return null
+        //throw InvalidParameterException("Fail to Load $fileName File")
+    }
+
+    private fun ContentResolver.readCustomFile(
+        customProviderUri: String,
+        file: String,
+        mandatory: Boolean = false
+    ): String? {
+        return try {
+            val assetUri = Uri.parse("$customProviderUri/$file").also {
+                Log.d(Constants.TAG_PROVIDER, "Asset Uri = $it")
+            }
+            val inputStream = openInputStream(assetUri)
+            inputStream?.let {
+                val content = it.bufferedReader().use(BufferedReader::readText)
+                // Process the content
+                it.close()
+                content
+            }
+        } catch (ex: IOException) {
+            if (mandatory) {
+                Log.d(Constants.TAG_PROVIDER, "File Not Found = $file", ex)
+            }
+            null
+        }
     }
 
     override fun observeData() {
@@ -99,24 +154,24 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
     private fun loadChart() {
         val listData = ReportResponse(
             listOf(
-                Temperature(10L, "123"),
-                Temperature(13L, "98"),
-                Temperature(20L, "116"),
-                Temperature(16L, "87"),
-                Temperature(2L, "78"),
-                Temperature(8L, "80"),
-                Temperature(1L, "100")
+                ConsumeData(10L, "123"),
+                ConsumeData(13L, "98"),
+                ConsumeData(20L, "116"),
+                ConsumeData(16L, "87"),
+                ConsumeData(2L, "78"),
+                ConsumeData(8L, "80"),
+                ConsumeData(1L, "100")
             ),
             listOf(
-                Temperature(10L, "140"),
-                Temperature(8L, "99"),
-                Temperature(21L, "66"),
-                Temperature(14L, "56"),
-                Temperature(11L, "98"),
-                Temperature(6L, "52"),
-                Temperature(2L, "78"),
-                Temperature(4L, "123"),
-                Temperature(16L, "25")
+                ConsumeData(10L, "140"),
+                ConsumeData(8L, "99"),
+                ConsumeData(21L, "66"),
+                ConsumeData(14L, "56"),
+                ConsumeData(11L, "98"),
+                ConsumeData(6L, "52"),
+                ConsumeData(2L, "78"),
+                ConsumeData(4L, "123"),
+                ConsumeData(16L, "25")
             ),
         )
         binding?.customStaticView?.resetIndicatorView()
@@ -125,11 +180,13 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
 
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun loadStaticView(statisticsView: StatisticsView?, list: ReportResponse?) {
+        val counterContext = newSingleThreadContext("CounterContext")
         if (list != null) {
             statisticsView?.loadData(
                 list,
-                chartType = if (model == ModelType.FREEZER || model == ModelType.FRIDGE || model == ModelType.HOT_WATER_TANK) CHARTTYPE.POWER else CHARTTYPE.WATER_OUT
+                chartType = if (model == ModelType.FREEZER || model == ModelType.FRIDGE || model == ModelType.HOT_WATER_TANK) ChartType.POWER else ChartType.WATER_OUT
             )
         }
     }

@@ -4,27 +4,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class DataJson(
-    val home: List<Home>,
-    val content: List<Content>,
-    val about: List<About>,
+    val home: List<TabInfo>,
+    val content: List<TabInfo>,
+    val about: List<TabInfo>,
 )
 
 @Serializable
-data class About(
-    val default: String,
-    val title: String,
-    val type: String
-)
-
-@Serializable
-data class Content(
-    val default: String,
-    val title: String,
-    val type: String
-)
-
-@Serializable
-data class Home(
+data class TabInfo(
     val default: String,
     val title: String,
     val type: String

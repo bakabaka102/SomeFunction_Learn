@@ -22,6 +22,10 @@ class MainActivityViewModel(val app: Application) : AndroidViewModel(app) {
     val error: LiveData<String> get() = repository.error
     val response: LiveData<ResponseBody> get() = repository.body
 
+//    fun <T> Flow<T>.stateIn(){
+//
+//    }
+
     fun getNote() {
         viewModelScope.launch {
             repository.getNote()

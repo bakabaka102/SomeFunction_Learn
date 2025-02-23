@@ -23,3 +23,17 @@ buildscript {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+tasks.register('cleanclean', Delete) {
+    delete rootProject.layout.buildDirectory
+}
+
+tasks.register('cleanAllBuildFolders', Delete) {
+    //delete rootProject.layout.buildDirectory
+    delete rootProject.layout.projectDirectory.dir("buildSrc/build")
+    subprojects.each { subproject ->
+        println("Deleting build folder for project: ${subproject.name}")
+        delete subproject.layout.buildDirectory
+    }
+}
+

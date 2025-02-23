@@ -109,18 +109,14 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
         parentJob.cancel()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
-
     companion object {
         const val TUTORIAL_KEY = "TUTORIAL"
 
         fun newInstance(tutorial: Tutorial): TutorialFragment {
             val fragmentHome = TutorialFragment()
-            val args = Bundle()
-            args.putParcelable(TUTORIAL_KEY, tutorial)
+            val args = Bundle().apply {
+                putParcelable(TUTORIAL_KEY, tutorial)
+            }
             fragmentHome.arguments = args
             return fragmentHome
         }

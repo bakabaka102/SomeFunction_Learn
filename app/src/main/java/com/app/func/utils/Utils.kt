@@ -1,5 +1,6 @@
 package com.app.func.utils
 
+import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.app.ActivityManager.RunningAppProcessInfo
 import android.content.Context
@@ -34,6 +35,7 @@ object Utils {
     /**
      * Get status bar height in pixel
      */
+    @SuppressLint("InternalInsetResource")
     fun getStatusBarHeight(context: Context): Int {
         var sttBarHeight = 0
         val resId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
@@ -91,6 +93,7 @@ object Utils {
         } else capitalize(manufacturer) + " " + model
     }
 
+    @SuppressLint("HardwareIds")
     fun getGetDeviceId(context: Context): String {
         return Settings.Secure.getString(
             context.contentResolver,

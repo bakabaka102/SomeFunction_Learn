@@ -44,9 +44,9 @@ class ContainParseFragment(private val type: DataTabJson) :
     companion object {
         @JvmStatic
         fun newInstance(type: DataTabJson, data: String? = null) = ContainParseFragment(type).apply {
-            /*arguments = Bundle().apply {
+            arguments = Bundle().apply {
                 putString(key, data)
-            }*/
+            }
         }
     }
 }
