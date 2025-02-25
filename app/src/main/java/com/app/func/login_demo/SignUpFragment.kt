@@ -81,25 +81,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(), View.OnClickListen
                 // remove it from adapter
             }
 
-            override fun onChildDraw(
-                c: Canvas,
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                dX: Float,
-                dY: Float,
-                actionState: Int,
-                isCurrentlyActive: Boolean
-            ) {
-                super.onChildDraw(
-                    c,
-                    recyclerView,
-                    viewHolder,
-                    dX,
-                    dY,
-                    actionState,
-                    isCurrentlyActive
-                )
-            }
         }
 
         //attaching the touch helper to recycler view

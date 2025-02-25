@@ -77,12 +77,12 @@ class ImageBackgroundDraw @JvmOverloads constructor(
         )
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         if (mCenterCircleRectF == null) {
             mCenterCircleRectF = calculateCenterCircleRectF()
         }
         drawPath()
-        canvas?.drawPath(mPath, mPaint)
+        canvas.drawPath(mPath, mPaint)
     }
 }

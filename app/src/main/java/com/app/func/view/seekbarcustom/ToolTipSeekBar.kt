@@ -92,7 +92,7 @@ class ToolTipSeekBar @JvmOverloads constructor(
         invalidate()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawBubble(canvas)
     }

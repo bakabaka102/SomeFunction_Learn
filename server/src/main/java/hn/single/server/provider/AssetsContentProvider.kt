@@ -49,7 +49,7 @@ class AssetProvider : ContentProvider() {
     }
 
 
-    override fun getType(uri: Uri): String? {
+    override fun getType(uri: Uri): String {
         return "json"
     }
 

@@ -6,5 +6,4 @@ data class ItemCart(
     var description: String? = null,
     var price: Double = 0.0,
     var thumbnail: String? = null
-) {
-}
+)

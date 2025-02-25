@@ -5,7 +5,7 @@ import com.app.func.coroutine_demo.retrofit.base.RetrofitService
 import com.app.func.view.recycler_view_custom.ravi_recyclerview.ItemCart
 import retrofit2.Response
 
-class DataRepository constructor(private val retrofitService: RetrofitService) {
+class DataRepository(private val retrofitService: RetrofitService) {
 
     suspend fun getAllMovies(): Response<List<Movie>> = retrofitService.getAllMovies()
 

@@ -16,10 +16,10 @@ class ImageBg @JvmOverloads constructor(
     private val mRectF = RectF(0f, 0f, 200f, 200f)
 
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 //        drawRectCorner(canvas)
-        canvas?.drawRoundRectPath(
+        canvas.drawRoundRectPath(
             mRectF, 40f, roundTopLeft = true, roundTopRight = true,
             roundBottomLeft = true, roundBottomRight = true, paint = mPaint
         )

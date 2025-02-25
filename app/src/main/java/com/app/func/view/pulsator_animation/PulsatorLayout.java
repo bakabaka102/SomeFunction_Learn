@@ -51,7 +51,7 @@ public class PulsatorLayout extends RelativeLayout {
 
     private final List<View> mViews = new ArrayList<>();
     private AnimatorSet mAnimatorSet;
-    private Paint mPaint;
+    private final Paint mPaint;
     private float mRadius;
     private float mCenterX;
     private float mCenterY;
@@ -310,7 +310,7 @@ public class PulsatorLayout extends RelativeLayout {
             addView(pulseView, index, layoutParams);
             mViews.add(pulseView);
 
-            long delay = index * mDuration / mCount;
+            long delay = (long) index * mDuration / mCount;
 
             // setup animators
             ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(pulseView, "ScaleX", 0f, 1f);

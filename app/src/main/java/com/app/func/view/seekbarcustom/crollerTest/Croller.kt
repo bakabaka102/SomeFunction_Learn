@@ -18,29 +18,7 @@ class Croller @JvmOverloads constructor(
 
     private var midx = 0f
     private var midy = 0f
-    private var textPaint: Paint = Paint().apply {
-        isAntiAlias = true
-        style = Paint.Style.FILL
-        isFakeBoldText = true
-        textAlign = Paint.Align.CENTER
-        textSize = labelSize
-    }
-    private var circlePaint: Paint = Paint().apply {
-        isAntiAlias = true
-        strokeWidth = progressSecondaryStrokeWidth
-        style = Paint.Style.FILL
-    }
-
-    private var circlePaint2: Paint = Paint().apply {
-        isAntiAlias = true
-        strokeWidth = progressPrimaryStrokeWidth
-        style = Paint.Style.FILL
-    }
-    private var linePaint: Paint = Paint().apply {
-        isAntiAlias = true
-        strokeWidth = indicatorWidth
-    }
-
+    private var labelSize = 14f
     private var currdeg = 0f
     private var deg = 3f
     private var downdeg = 0f
@@ -66,6 +44,31 @@ class Croller @JvmOverloads constructor(
     private var min = 1
     private var indicatorWidth = 7f
     private var label: String? = "Label"
+
+    private var textPaint: Paint = Paint().apply {
+        isAntiAlias = true
+        style = Paint.Style.FILL
+        isFakeBoldText = true
+        textAlign = Paint.Align.CENTER
+        textSize = labelSize
+    }
+    private var circlePaint: Paint = Paint().apply {
+        isAntiAlias = true
+        strokeWidth = progressSecondaryStrokeWidth
+        style = Paint.Style.FILL
+    }
+
+    private var circlePaint2: Paint = Paint().apply {
+        isAntiAlias = true
+        strokeWidth = progressPrimaryStrokeWidth
+        style = Paint.Style.FILL
+    }
+    private var linePaint: Paint = Paint().apply {
+        isAntiAlias = true
+        strokeWidth = indicatorWidth
+    }
+
+
     private var labelFont: String? = null
         set(labelFont) {
             field = labelFont
@@ -77,7 +80,6 @@ class Croller @JvmOverloads constructor(
             field = labelStyle
             invalidate()
         }
-    private var labelSize = 14f
     private var labelColor = Color.WHITE
     private var labelDisabledColor = Color.BLACK
     private var startOffset = 30

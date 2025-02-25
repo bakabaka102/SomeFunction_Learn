@@ -153,7 +153,7 @@ class BubbleEmitterView @JvmOverloads constructor(
         return animator
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         bubbles = bubbles.filter { it.alive }.toMutableList()
         bubbles.forEach {
@@ -166,9 +166,9 @@ class BubbleEmitterView @JvmOverloads constructor(
             paintFill.alpha = it.alpha
             paintGloss.alpha = it.alpha
 
-            canvas?.drawCircle(it.x, it.y, it.radius, paintStroke)
-            canvas?.drawCircle(it.x, it.y, it.radius, paintFill)
-            canvas?.drawCircle(it.x + it.radius / 2.5F, it.y - it.radius / 2.5F, it.radius / 4, paintGloss)
+            canvas.drawCircle(it.x, it.y, it.radius, paintStroke)
+            canvas.drawCircle(it.x, it.y, it.radius, paintFill)
+            canvas.drawCircle(it.x + it.radius / 2.5F, it.y - it.radius / 2.5F, it.radius / 4, paintGloss)
 
             if (!it.animating) {
                 it.animating = true

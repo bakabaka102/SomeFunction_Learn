@@ -42,7 +42,7 @@ class ChartStasticView @JvmOverloads constructor(
         canvas?.drawLine(10.toFloat(), y, 30f, y, paintLines)
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawLines(canvas)
 

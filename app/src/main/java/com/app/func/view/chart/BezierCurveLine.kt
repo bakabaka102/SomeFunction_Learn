@@ -128,7 +128,7 @@ class BezierCurveLine @JvmOverloads constructor(
     }
     var path: Path = Path()
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         path.moveTo(34f, 259f)
         path.cubicTo(68f, 151f, 286f, 350f, 336f, 252f)
@@ -142,9 +142,9 @@ class BezierCurveLine @JvmOverloads constructor(
 //                listData[i + 2].cy
 //            )
 //        }
-        canvas?.drawPath(path, paint)
+        canvas.drawPath(path, paint)
         for (i in 1..5) {
-            canvas?.drawLine(
+            canvas.drawLine(
                 0 + 20f,
                 ((height - 30f) / 5f) * i,
                 width - 50f,
@@ -153,7 +153,7 @@ class BezierCurveLine @JvmOverloads constructor(
             )
         }
 
-        canvas?.drawLine(
+        canvas.drawLine(
             0 + 20f,
             ((height - 30f) / 5f) - 30f,
             0 + 20f,

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Server app</string>
+
+    <string name="success_data">Success: %1$s</string>
 </resources>

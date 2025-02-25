@@ -54,21 +54,21 @@ class SmileyView @JvmOverloads constructor(
         mRadius = min(w, h) / 2f
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         // draw face
-        canvas?.drawCircle(mCenterX, mCenterY, mRadius, mCirclePaint)
+        canvas.drawCircle(mCenterX, mCenterY, mRadius, mCirclePaint)
 
         // draw eyes
         val eyeRadius = mRadius / 5f
         val eyeOffsetX = mRadius / 3f
         val eyeOffsetY = mRadius / 3f
-        canvas?.drawCircle(mCenterX - eyeOffsetX, mCenterY - eyeOffsetY, eyeRadius, eyePaint)
-        canvas?.drawCircle(mCenterX + eyeOffsetX, mCenterY - eyeOffsetY, eyeRadius, eyePaint)
+        canvas.drawCircle(mCenterX - eyeOffsetX, mCenterY - eyeOffsetY, eyeRadius, eyePaint)
+        canvas.drawCircle(mCenterX + eyeOffsetX, mCenterY - eyeOffsetY, eyeRadius, eyePaint)
 
         // draw mouth
         val mouthInset = mRadius / 3f
         mArcBounds[mouthInset, mouthInset, mRadius * 2 - mouthInset] = mRadius * 2 - mouthInset
-        canvas?.drawArc(mArcBounds, 45f, 90f, false, mouthPaint)
+        canvas.drawArc(mArcBounds, 45f, 90f, false, mouthPaint)
     }
 }

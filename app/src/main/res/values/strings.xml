@@ -39,71 +39,74 @@
     <string name="image_failed_loading" translatable="false">Image failed loading</string>
     <string name="demo_string_pinch_zoom" translatable="false">This is my sample text for pinch zoom demo, you can zoom in and out using pinch zoom, thanks</string>
 
-    <string name="simple">Simple</string>
-    <string name="map">Map</string>
-    <string name="zip">Zip</string>
-    <string name="timer">Time</string>
-    <string name="filter">Filter</string>
-    <string name="concat">Concat</string>
-    <string name="merge">Merge</string>
-    <string name="delay">Delay</string>
-    <string name="doSomeWork">doSomeWork</string>
-    <string name="result">Result</string>
-    <string name="weather">Weather</string>
-    <string name="search">Search</string>
-    <string name="rx">Rx</string>
-    <string name="coroutines">Coroutines</string>
+    <string name="simple" translatable="false">Simple</string>
+    <string name="map" translatable="false">Map</string>
+    <string name="zip" translatable="false">Zip</string>
+    <string name="timer" translatable="false">Time</string>
+    <string name="filter" translatable="false">Filter</string>
+    <string name="concat" translatable="false">Concat</string>
+    <string name="merge" translatable="false">Merge</string>
+    <string name="delay" translatable="false">Delay</string>
+    <string name="doSomeWork" translatable="false">doSomeWork</string>
+    <string name="result" translatable="false">Result</string>
+    <string name="weather" translatable="false">Weather</string>
+    <string name="search" translatable="false">Search</string>
+    <string name="rx" translatable="false">Rx</string>
+    <string name="coroutines" translatable="false">Coroutines</string>
 
-    <string name="single_network_call">Single Network Call</string>
-    <string name="series_network_calls">Series Network Calls</string>
-    <string name="parallel_network_calls">Parallel Network Calls</string>
-    <string name="room_database">Room Database</string>
-    <string name="timeout">Timeout</string>
-    <string name="try_catch_error">Try-Catch Error</string>
-    <string name="exception_handler">ExceptionHandler</string>
-    <string name="ignore_error_and_continue">Ignore Error And Continue</string>
-    <string name="long_running_task">Long Running Task</string>
-    <string name="two_long_running_tasks">Two Long Running Tasks</string>
-
-
-    <string name="current_temperature">Nhiệt độ hiện tại</string>
-    <string name="temp_format">%s°C</string>
+    <string name="single_network_call" translatable="false">Single Network Call</string>
+    <string name="series_network_calls" translatable="false">Series Network Calls</string>
+    <string name="parallel_network_calls" translatable="false">Parallel Network Calls</string>
+    <string name="room_database" translatable="false">Room Database</string>
+    <string name="timeout" translatable="false">Timeout</string>
+    <string name="try_catch_error" translatable="false">Try-Catch Error</string>
+    <string name="exception_handler" translatable="false">ExceptionHandler</string>
+    <string name="ignore_error_and_continue" translatable="false">Ignore Error And Continue</string>
+    <string name="long_running_task" translatable="false">Long Running Task</string>
+    <string name="two_long_running_tasks" translatable="false">Two Long Running Tasks</string>
 
 
-    <string name="name_contain_special_character">"Chỉ hỗ trợ kí tự a-z, A-Z, 0-9, -, _ và dấu cách"</string>
-    <string name="name_is_blank_error">"Thông tin Họ và tên đang chỉ chứa kí tự trắng. Vui lòng nhập lại"</string>
-    <string name="input_phone_number">Số điện thoại có độ dài từ 9 đến 15 kí tự</string>
-    <string name="fill_number_phone_please">Vui lòng điền số điện thoại</string>
-    <string name="error_validation_room_name">Tên phòng có độ dài 30 ký tự</string>
-    <string name="error_validation_room_name_empty">Bạn không được để trống Tên phòng</string>
-    <string name="button_delete">Xóa</string>
-    <string name="non_data">--</string>
-    <string name="title_value">Index</string>
-    <string name="analog_clock_text">Analog clock view!</string>
-    <string name="delete">delete</string>
-    <string name="room_db">RoomDB</string>
-    <string name="label_count">Count</string>
-    <string name="label_duration">Duration</string>
-    <string name="view_pager">ViewPager</string>
-    <string name="title">Title</string>
-    <string name="description">Description</string>
-    <string name="priority">Priority</string>
-    <string name="room_rx_mvvm">RoomRxMVVM</string>
-    <string name="room_coroutines">Room Coroutines</string>
-    <string name="save">Save</string>
-    <string name="hint_word">Word</string>
-    <string name="ball_1">Bóng_1</string>
-    <string name="ball_2">Bóng_2</string>
-    <string name="channel_name">My notification</string>
-    <string name="channel_description">Much longer text that cannot fit one line…</string>
-    <string name="channel_description_1">Much longer text that cannot fit one line…</string>
+    <string name="current_temperature" translatable="false">Nhiệt độ hiện tại</string>
+    <string name="temp_format" translatable="false">%s°C</string>
+
+
+    <string name="name_contain_special_character" translatable="false">"Chỉ hỗ trợ kí tự a-z, A-Z, 0-9, -, _ và dấu cách"</string>
+    <string name="name_is_blank_error" translatable="false">"Thông tin Họ và tên đang chỉ chứa kí tự trắng. Vui lòng nhập lại"</string>
+    <string name="input_phone_number" translatable="false">Số điện thoại có độ dài từ 9 đến 15 kí tự</string>
+    <string name="fill_number_phone_please" translatable="false">Vui lòng điền số điện thoại</string>
+    <string name="error_validation_room_name" translatable="false">Tên phòng có độ dài 30 ký tự</string>
+    <string name="error_validation_room_name_empty" translatable="false">Bạn không được để trống Tên phòng</string>
+    <string name="button_delete" translatable="false">Xóa</string>
+    <string name="non_data" translatable="false">--</string>
+    <string name="title_value" translatable="false">Index</string>
+    <string name="analog_clock_text" translatable="false">Analog clock view!</string>
+    <string name="delete" translatable="false">delete</string>
+    <string name="room_db" translatable="false">RoomDB</string>
+    <string name="label_count" translatable="false">Count</string>
+    <string name="label_duration" translatable="false">Duration</string>
+    <string name="view_pager" translatable="false">ViewPager</string>
+    <string name="title" translatable="false">Title</string>
+    <string name="description" translatable="false">Description</string>
+    <string name="priority" translatable="false">Priority</string>
+    <string name="room_rx_mvvm" translatable="false">RoomRxMVVM</string>
+    <string name="room_coroutines" translatable="false">Room Coroutines</string>
+    <string name="save" translatable="false">Save</string>
+    <string name="hint_word" translatable="false">Word</string>
+    <string name="ball_1" translatable="false">Bóng_1</string>
+    <string name="ball_2" translatable="false">Bóng_2</string>
+    <string name="channel_name" translatable="false">My notification</string>
+    <string name="channel_description" translatable="false">Much longer text that cannot fit one line…</string>
+    <string name="channel_description_1" translatable="false">Much longer text that cannot fit one line…</string>
 
     <!--Text in Json File-->
-    <string name="json_home">Home</string>
-    <string name="json_content">Content</string>
-    <string name="json_about">About</string>
-    <string name="nav_open">Open</string>
-    <string name="nav_close">Close\n</string>
+    <string name="json_home" translatable="false">Home</string>
+    <string name="json_content" translatable="false">Content</string>
+    <string name="json_about" translatable="false">About</string>
+    <string name="nav_open" translatable="false">Open</string>
+    <string name="nav_close" translatable="false">Close\n</string>
+    <string name="main_animation_screen" translatable="false">Main animation screen</string>
+    <string name="bubble_animation_screen" translatable="false">Bubble animation screen</string>
+    <string name="bubble_emitter_animation_screen" translatable="false">Bubble emitter animation screen</string>
 
     <string-array name="title_fragment_json">
         <item>@string/json_home</item>

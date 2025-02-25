@@ -34,6 +34,7 @@ class StatisticsView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
+    private var _shadowColor = Color.parseColor("#664F5979")
     private val _paintTriangle = Paint().apply {
         style = Paint.Style.FILL
         strokeCap = Paint.Cap.ROUND
@@ -76,7 +77,7 @@ class StatisticsView @JvmOverloads constructor(
         strokeWidth = 7f
         color = Color.parseColor("#FFFFFF")
         isAntiAlias = true
-        setShadowLayer(20f, 0f, 0f, _shadowColor)
+        setShadowLayer(20f, 0f, 0f, Color.parseColor("#664F5979"))
         setLayerType(LAYER_TYPE_SOFTWARE, this)
     }
     private val _paintTick = Paint().apply {
@@ -111,7 +112,6 @@ class StatisticsView @JvmOverloads constructor(
     private var _controlPoint1: ArrayList<Point> = arrayListOf()
     private var _controlPoint2: ArrayList<Point> = arrayListOf()
     private var _viewOnTouchEvent: Boolean = false
-    private var _shadowColor = Color.parseColor("#664F5979")
     private var _arrayYValue: ArrayList<String> = arrayListOf()
     private var _arrayXValue: ArrayList<String> = arrayListOf()
     private var _needRecreateRect = false

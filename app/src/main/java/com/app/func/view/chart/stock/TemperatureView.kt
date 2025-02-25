@@ -97,7 +97,7 @@ class TemperatureView @JvmOverloads constructor(
 
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         radius = (RATIO_CIRCLE_PROGRESS * widthScreen) / 2
         val width = width.toFloat()
@@ -119,7 +119,7 @@ class TemperatureView @JvmOverloads constructor(
 
             textViewHint.y = textViewTemperature.y + textViewTemperature.height
         }
-        canvas?.let {
+        canvas.let {
             drawCircleCenterOut(it)
             drawCircleCenterIn(it)
             drawBorderBackground(it)

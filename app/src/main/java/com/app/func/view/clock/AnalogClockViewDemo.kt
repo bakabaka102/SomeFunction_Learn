@@ -196,7 +196,7 @@ class AnalogClockViewDemo @JvmOverloads constructor(
         setMeasuredDimension(measuredWidth, measuredWidth)
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         if (!mIsInit) {
             init()

@@ -132,7 +132,7 @@ class WaterTankTemperatureView @JvmOverloads constructor(
         repositionTextViewsXCoordinates()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         val width = width.toFloat()
         val height = height.toFloat()
@@ -153,7 +153,7 @@ class WaterTankTemperatureView @JvmOverloads constructor(
 
             textViewHint.y = textViewTemperature.y + textViewTemperature.height
         }
-        canvas?.let {
+        canvas.let {
             paintCircle.shader = null
             paintCircle.setShadowLayer(
                 radius * 0.1f,

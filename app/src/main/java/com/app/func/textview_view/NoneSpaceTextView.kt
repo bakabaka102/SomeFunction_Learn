@@ -9,7 +9,7 @@ import androidx.appcompat.widget.AppCompatTextView
 class NoneSpaceTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     AppCompatTextView(context, attrs) {
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         Log.d(
             "NoneSpaceTextView",
             "\nfont bottom:" + paint.fontMetricsInt.bottom + "  \ndescent:" + paint.fontMetricsInt.descent + " \nascent:" + paint.fontMetricsInt.ascent + " \ntop:" + paint.fontMetricsInt.top + " \nbaseline:" + baseline

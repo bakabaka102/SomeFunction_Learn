@@ -58,7 +58,7 @@ class CustomViewDemo @JvmOverloads constructor(
         mPath?.let { canvas?.drawPath(it, mPaint) }
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 //        drawPointByCanvas(canvas)
 //        drawPointsByCanvas(canvas)

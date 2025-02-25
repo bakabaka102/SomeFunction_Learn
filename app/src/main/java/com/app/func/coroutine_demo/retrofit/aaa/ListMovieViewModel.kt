@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
 
-class ListMovieViewModel constructor(private val repository: DataRepository) : ViewModel() {
+class ListMovieViewModel(private val repository: DataRepository) : ViewModel() {
 
     val errorMessage = MutableLiveData<String>()
     val movieList = MutableLiveData<List<Movie>>()

@@ -88,17 +88,12 @@ class CircularProgressView @JvmOverloads constructor(
         canvas?.drawArc(ovalSpace, startAngle, percentageToFill * multiple, false, fillArcPaint)
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         createBackGroundCircle()
         drawBackground(canvas)
         drawInnerArc(canvas, 2)
         drawCircleMark(canvas)
-    }
-
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        //radiusView = width.div(2) - paddingValue
     }
 
     private fun drawCircleMark(canvas: Canvas?) {

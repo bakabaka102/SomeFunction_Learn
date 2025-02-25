@@ -265,11 +265,11 @@ class RallyLineGraphChart @JvmOverloads constructor(
         borderPathPaint.color = ContextCompat.getColor(context, color)
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawBezierCurve(canvas)
         bitmap?.let {
-            canvas?.drawBitmap(it, 0f, 0f, bitmapPaint)
+            canvas.drawBitmap(it, 0f, 0f, bitmapPaint)
         }
     }
 

@@ -29,10 +29,7 @@ class RecyclerViewItemTouchHelper(
         }
     }
 
-    override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-        super.onSelectedChanged(viewHolder, actionState)
-    }
-//    override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+    //    override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
 //        val viewForeground = (viewHolder as UserAdapter.UserViewHolder).consItem
 //        getDefaultUIUtil().onSelected(viewForeground)
 //    }
@@ -73,18 +70,7 @@ class RecyclerViewItemTouchHelper(
 //
 
 
-    override fun onChildDraw(
-        c: Canvas,
-        recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder,
-        dX: Float,
-        dY: Float,
-        actionState: Int,
-        isCurrentlyActive: Boolean
-    ) {
-        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-    }
-//    override fun onChildDraw(
+    //    override fun onChildDraw(
 //        c: Canvas,
 //        recyclerView: RecyclerView,
 //        viewHolder: RecyclerView.ViewHolder,
@@ -107,11 +93,7 @@ class RecyclerViewItemTouchHelper(
 //
 //
 
-    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
-        super.clearView(recyclerView, viewHolder)
-    }
-
-//    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+    //    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
 //        val viewForeground = (viewHolder as UserAdapter.UserViewHolder).consItem
 //        getDefaultUIUtil().clearView(viewForeground)
 //    }

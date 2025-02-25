@@ -147,7 +147,7 @@ class EmotionalFaceView @JvmOverloads constructor(
         const val SAD = 1
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawFaceBackground(canvas)
         drawEyes(canvas)

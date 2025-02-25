@@ -15,6 +15,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import com.app.func.R;
 
 public class CircularSeekBar extends View {
@@ -490,10 +491,10 @@ public class CircularSeekBar extends View {
 	}
 
 	@Override
-	protected void onDraw(Canvas canvas) {
+	protected void onDraw(@NonNull Canvas canvas) {
 		super.onDraw(canvas);
 
-		canvas.translate(this.getWidth() / 2, this.getHeight() / 2);
+		canvas.translate(this.getWidth() / 2f, this.getHeight() / 2f);
 
 		canvas.drawPath(mCirclePath, mCirclePaint);
 		canvas.drawPath(mCircleProgressPath, mCircleProgressGlowPaint);
@@ -513,8 +514,7 @@ public class CircularSeekBar extends View {
 	 * @return The progress of the CircularSeekBar.
 	 */
 	public int getProgress() {
-		int progress = Math.round((float)mMax * mProgressDegrees / mTotalCircleDegrees);
-		return progress;
+        return Math.round((float)mMax * mProgressDegrees / mTotalCircleDegrees);
 	}
 
 	/**
@@ -598,7 +598,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Set whether the pointer locks at zero and max or not.
-	 * @param boolean value. True if the pointer should lock at zero and max, false if it should not.
+	 * @param lockEnabled value. True if the pointer should lock at zero and max, false if it should not.
 	 */
 	public void setLockEnabled(boolean lockEnabled) {
 		this.lockEnabled = lockEnabled;
@@ -633,12 +633,9 @@ public class CircularSeekBar extends View {
 		float outerRadius = Math.max(mCircleHeight, mCircleWidth) + additionalRadius; // Max outer radius of the circle, including the minimumTouchTarget or wheel width
 		float innerRadius = Math.min(mCircleHeight, mCircleWidth) - additionalRadius; // Min inner radius of the circle, including the minimumTouchTarget or wheel width
 
-		if (mPointerRadius < (minimumTouchTarget / 2)) { // If the pointer radius is less than the minimumTouchTarget, use the minimumTouchTarget
-			additionalRadius = minimumTouchTarget / 2;
-		}
-		else {
-			additionalRadius = mPointerRadius; // Otherwise use the radius
-		}
+        // If the pointer radius is less than the minimumTouchTarget, use the minimumTouchTarget
+        // Otherwise use the radius
+        additionalRadius = Math.max(mPointerRadius, (minimumTouchTarget / 2));
 
 		float touchAngle;
 		touchAngle = (float) ((Math.atan2(y, x) / Math.PI * 180) % 360); // Verified
@@ -873,11 +870,11 @@ public class CircularSeekBar extends View {
 	*/
 	public interface OnCircularSeekBarChangeListener {
 
-		public abstract void onProgressChanged(CircularSeekBar circularSeekBar, int progress, boolean fromUser);
+		void onProgressChanged(CircularSeekBar circularSeekBar, int progress, boolean fromUser);
 
-		public abstract void onStopTrackingTouch(CircularSeekBar seekBar);
+		void onStopTrackingTouch(CircularSeekBar seekBar);
 
-		public abstract void onStartTrackingTouch(CircularSeekBar seekBar);
+		void onStartTrackingTouch(CircularSeekBar seekBar);
 	}
 
 	/**
@@ -1039,7 +1036,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Set whether user touch input is accepted or ignored.
-	 * @param boolean value. True if user touch input is to be accepted, false if user touch input is to be ignored.
+	 * @param isTouchEnabled value. True if user touch input is to be accepted, false if user touch input is to be ignored.
 	 */
 	public void setIsTouchEnabled(boolean isTouchEnabled) {
 		this.isTouchEnabled = isTouchEnabled;

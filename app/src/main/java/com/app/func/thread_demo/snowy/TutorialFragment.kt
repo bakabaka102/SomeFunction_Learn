@@ -2,6 +2,7 @@ package com.app.func.thread_demo.snowy
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import com.app.func.R
@@ -45,8 +46,19 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
     }
 
     override fun setUpViews() {
-        val tutorial: Tutorial? = arguments?.getParcelable(TUTORIAL_KEY) as? Tutorial
-//        val view = inflater.inflate(R.layout.fragment_tutorial, container, false)
+        val tutorial = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable(TUTORIAL_KEY, Tutorial::class.java)
+        } else {
+            arguments?.getParcelable(TUTORIAL_KEY) as? Tutorial
+        }
+        coroutineScope.launch(Dispatchers.Main) {
+            val originalBitmap: Bitmap? = tutorial?.let { getOriginalBitmapAsync(it) }
+            //1
+            //val snowFilterBitmap: Bitmap? = originalBitmap?.let { loadSnowFilterAsync(it) }
+            //2
+            //snowFilterBitmap?.let { loadImage(it) }
+            originalBitmap?.let { loadImage(it) }
+        }
         binding?.tutorialName?.text = tutorial?.name
         binding?.tutorialDesc?.text = tutorial?.description
     }
@@ -65,19 +77,6 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
 
     override fun setTitleActionBar() {
         //Remove title
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val tutorial = arguments?.getParcelable(TUTORIAL_KEY) as? Tutorial
-        coroutineScope.launch(Dispatchers.Main) {
-            val originalBitmap: Bitmap? = tutorial?.let { getOriginalBitmapAsync(it) }
-            //1
-            //val snowFilterBitmap: Bitmap? = originalBitmap?.let { loadSnowFilterAsync(it) }
-            //2
-            //snowFilterBitmap?.let { loadImage(it) }
-            originalBitmap?.let { loadImage(it) }
-        }
     }
 
     // 1

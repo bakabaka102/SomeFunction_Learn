@@ -66,14 +66,14 @@ class PolygonPathView @JvmOverloads constructor(
 
     }
 
-    override fun onDraw(canvas: Canvas?) {
-        canvas?.drawColor(Color.BLACK)
+    override fun onDraw(canvas: Canvas) {
+        canvas.drawColor(Color.BLACK)
         paint.style = Paint.Style.STROKE
         for (i in 0..(maxNumOfSides - 3)) {
             val polygon = polygons[i]
             paint.color = polygon.color
             val path = createPathAndEffect(polygon, paint)
-            canvas?.drawPath(path, paint)
+            canvas.drawPath(path, paint)
             calculateBitmap(path, canvas)
         }
         super.onDraw(canvas)

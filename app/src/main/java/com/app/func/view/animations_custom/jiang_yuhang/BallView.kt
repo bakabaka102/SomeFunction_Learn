@@ -112,14 +112,14 @@ class BallView @JvmOverloads constructor(
 
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         val startTime = System.currentTimeMillis()
         //Draw all the circles first
         for (i in 0 until mCount) {
             val (radius, cx, cy, _, _, paint) = mBalls[i]!!
             if (paint != null) {
-                canvas?.drawCircle(cx, cy, radius.toFloat(), paint)
+                canvas.drawCircle(cx, cy, radius.toFloat(), paint)
             }
         }
         //Ball collision boundary

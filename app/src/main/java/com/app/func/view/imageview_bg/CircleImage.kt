@@ -115,16 +115,16 @@ class CircleImage @JvmOverloads constructor(context: Context, attrs: AttributeSe
         mRect[0f, 0f, screenWidth.toFloat()] = screenHeight.toFloat()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         val borderWidth = 1f
-        canvas?.drawCircle(mRect.centerX(), mRect.centerY(), (mRect.height() / 2) - borderWidth, mPaint)
-        canvas?.drawCircle(mRect.centerX(), mRect.centerY(), (mRect.height() / 2) - borderWidth, mBorderPaint)
+        canvas.drawCircle(mRect.centerX(), mRect.centerY(), (mRect.height() / 2) - borderWidth, mPaint)
+        canvas.drawCircle(mRect.centerX(), mRect.centerY(), (mRect.height() / 2) - borderWidth, mBorderPaint)
         mClipPath.addCircle(mRect.centerX(), mRect.centerY(), (mRect.height() / 2), Path.Direction.CW)
-        canvas?.clipPath(mClipPath)
+        canvas.clipPath(mClipPath)
         super.onDraw(canvas)
         showImage()
-        canvas?.drawColor(Color.TRANSPARENT)
+        canvas.drawColor(Color.TRANSPARENT)
     }
 
     private fun showImage() {

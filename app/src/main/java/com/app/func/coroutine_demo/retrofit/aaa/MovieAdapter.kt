@@ -36,6 +36,4 @@ class MovieAdapter : RecyclerView.Adapter<MainViewHolder>() {
     }
 }
 
-class MainViewHolder(val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
-
-}
+class MainViewHolder(val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root)

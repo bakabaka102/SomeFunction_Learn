@@ -52,7 +52,7 @@ class CustomProgressBar @JvmOverloads constructor(
         setMeasuredDimension(viewWidthHeight, viewWidthHeight)
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         rect.set(0 + 10f, 0 + 10f, (width - 10).toFloat(), (height - 10).toFloat())
         drawBackgroundProgress(canvas)

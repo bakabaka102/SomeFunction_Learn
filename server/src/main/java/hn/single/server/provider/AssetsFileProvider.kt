@@ -103,7 +103,7 @@ class AssetsFileProvider : ContentProvider() {
             }.also {
                 println("${Constants.TAG_PROVIDER} - Asset file name: $it")
             } ?: throw FileNotFoundException("$uri")
-            return assetFileName?.let {
+            return assetFileName.let {
                 //context?.assets?.openNonAssetFd(it)
                 context?.assets?.openFd(it)
             }

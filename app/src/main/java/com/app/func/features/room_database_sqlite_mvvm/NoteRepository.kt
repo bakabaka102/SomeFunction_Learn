@@ -7,11 +7,11 @@ import com.app.func.features.room_database_sqlite_mvvm.utils.Utils.subscribeOnBa
 class NoteRepository(context: Context) {
 
     private val database = NoteDatabase.getInstance(context.applicationContext)
-    private var noteDao: NoteDao?= database?.noteDao()
+    private var noteDao: NoteDao?= database.noteDao()
     private var allNotes: LiveData<List<Note>>?= noteDao?.getAllNotes()
 
     init {
-        noteDao = database?.noteDao()
+        noteDao = database.noteDao()
         allNotes = noteDao?.getAllNotes()
     }
 
