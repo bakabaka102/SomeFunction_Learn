@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<navigation xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            app:startDestination="@id/randomFragment">
+    <fragment
+            android:id="@+id/randomFragment"
+            android:name="hn.single.server.features.randomvalue.RandomFragment"
+            android:label="fragment_random"
+            tools:layout="@layout/fragment_random"/>
+</navigation>
