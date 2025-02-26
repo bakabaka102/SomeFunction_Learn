@@ -8,7 +8,11 @@
     <permission
         android:name="hn.single.server.IServiceAidl.Access"
         android:protectionLevel="normal" />
+    <permission
+        android:name="com.hn.libs.ICalculatorAidl.Access"
+        android:protectionLevel="normal" />
     <application
+        android:name=".base.ServerApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,12 +20,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SomeFunction_Learn">
         <service
-            android:name=".MyService"
+            android:name=".aidlservice.MyService"
             android:enabled="true"
             android:exported="true"
             android:permission="hn.single.server.IServiceAidl.Access">
             <intent-filter>
                 <action android:name="hn.single.server.IServiceAidl" />
+            </intent-filter>
+        </service>
+        <service android:name=".aidlservice.CalculatorAidl"
+                 android:exported="true"
+                 android:enabled="true"
+                 android:permission="com.hn.libs.ICalculatorAidl.Access">
+            <intent-filter>
+                <action android:name="com.hn.libs.ICalculatorAidl" />
             </intent-filter>
         </service>
 

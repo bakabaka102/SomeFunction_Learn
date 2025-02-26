@@ -25,6 +25,9 @@ plugins {
 
     // For build.gradle (Groovy DSL)
     id "org.jetbrains.kotlin.jvm" version "2.0.0"
+
+    id("com.google.dagger.hilt.android") version "2.51" apply false //<-- this one
+
 }
 
 /*ext {

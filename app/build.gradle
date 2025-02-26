@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId "com.app.func"
-        minSdk 21
+        minSdk 23
         //noinspection OldTargetApi
         //noinspection EditedTargetSdkVersion
         targetSdk 35
@@ -133,5 +133,7 @@ dependencies {
 
     //
     compileOnly 'org.glassfish:javax.annotation:10.0-b28'
+
+    implementation(project(":aidl-library"))
 
 }

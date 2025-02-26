@@ -8,12 +8,21 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <!--AIDL-->
     <uses-permission android:name="hn.single.server.IServiceAidl.Access" />
+
+    <uses-permission android:name="com.hn.libs.ICalculatorAidl.Access"/>
     <uses-permission android:name="hn.single.server.permission.ACCESS_ASSETS" />
     <queries>
         <package android:name="hn.single.server.IServiceAidl" />
         <intent>
             <action android:name="hn.single.server.IServiceAidl" />
+        </intent>
+    </queries>
+    <queries>
+        <package android:name="com.hn.libs.ICalculatorAidl" />
+        <intent>
+            <action android:name="com.hn.libs.ICalculatorAidl" />
         </intent>
     </queries>
 

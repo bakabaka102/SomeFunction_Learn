@@ -14,6 +14,8 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.app.func.base_content.BaseActivity
 import com.app.func.databinding.ActivityMainBinding
+import com.hn.libs.ICalculatorAidl
+import com.hn.libs.RemoteConstants
 import hn.single.server.IServiceAidl
 
 
@@ -32,15 +34,19 @@ NavigationView.OnNavigationItemSelectedListener*/ {
             }
         }
     }
+    private var service: IServiceAidl? = null
+    private var calculatorService: ICalculatorAidl? = null
+
+    companion object {
+        const val ACTION = "hn.single.server.IServiceAidl"
+        const val ACTION_CAL = "com.hn.libs.ICalculatorAidl"
+        const val PKG_SERVER = "hn.single.server"
+    }
 
     override fun instanceViewBinding(): ActivityMainBinding {
         return ActivityMainBinding.inflate(layoutInflater)
     }
 
-    val ACTION = "hn.single.server.IServiceAidl"
-    val PKG_SERVER = "hn.single.server"
-
-    private var service: IServiceAidl? = null
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName, binder: IBinder) {
             service = IServiceAidl.Stub.asInterface(binder)
@@ -54,6 +60,18 @@ NavigationView.OnNavigationItemSelectedListener*/ {
 
     }
 
+    private val calculatorServiceConn = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName, service: IBinder) {
+            calculatorService = ICalculatorAidl.Stub.asInterface(service)
+            Log.i("AIDL-Client", "CalculatorService connected: sum = ${calculatorService?.add(11, 22)}")
+        }
+
+        override fun onServiceDisconnected(name: ComponentName) {
+            calculatorService = null
+            Log.i("AIDL-Client", "CalculatorService disconnected")
+        }
+    }
+
     override fun initViews() {
         initDrawerLayout()
         service?.sayHi()
@@ -61,17 +79,18 @@ NavigationView.OnNavigationItemSelectedListener*/ {
 
     private fun bindAidl() {
         // Bind to the AIDL Service
-        val intent = Intent(ACTION)
-        intent.setPackage(PKG_SERVER)
-        //intent.setClassName("hn.single.server","IServiceAidl" )
-        //val intentAidl =
-        /*val intent = Intent()
-        intent.setClassName("hn.single.server", "hn.single.server.MyService")*/
-        /*val intent = Intent(this, MusicService::class.java)
-        bindService(intent, mServiceConnection, BIND_AUTO_CREATE)
-        startService(intent)*/
+        val intent = Intent(ACTION).apply {
+            setPackage(PKG_SERVER)
+        }
 
         try {
+            val intentCal = Intent().apply {
+                action = ACTION_CAL
+                `package` = PKG_SERVER
+            }
+            bindService(intentCal, calculatorServiceConn, BIND_AUTO_CREATE).also {
+                Log.i("AIDL-Client", "CalculatorAidl bindService is $it")
+            }
             bindService(intent, serviceConnection, BIND_AUTO_CREATE).also {
                 Log.i("AIDL-Client", "bindService is $it")
             }
