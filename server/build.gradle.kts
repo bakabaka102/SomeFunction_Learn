@@ -1,8 +1,14 @@
+import java.util.*
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt") //<-- this one
-    id("com.google.dagger.hilt.android") // <-- this one
+    id("kotlin-kapt") //<-- this one //for Hilt
+    id("com.google.dagger.hilt.android") // <-- this one //for Hilt
+
+    //
+    id("kotlinx-serialization")
+
 }
 
 android {
@@ -18,6 +24,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        val apiKey = getApiKey()
+        buildConfigField("String", "API_KEY", apiKey)
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -65,10 +73,31 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
+    //Kotlin serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
     //ViewModel scope
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+}
+
+fun getApiKey(): String {
+    val properties = Properties()
+    val keystoreFile = project.rootProject.file("gradle.properties")
+    properties.load(keystoreFile.inputStream())
+    //val apiKey = properties.getProperty("apiKey") ?: ""
+
+    val propertiesFile = project.rootProject.file("gradle.properties")
+    val apiKey = if (propertiesFile.exists()) {
+        properties.load(propertiesFile.inputStream())
+        properties.getProperty("apiKey") ?: ""
+    } else {
+        System.getenv("apiKey") ?: ""
+    }
+    return apiKey
 }

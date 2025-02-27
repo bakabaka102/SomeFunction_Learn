@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import hn.single.server.R
 import hn.single.server.base.BaseFragment
 import hn.single.server.databinding.FragmentRandomBinding
@@ -90,7 +91,7 @@ class RandomFragment : BaseFragment<FragmentRandomBinding>() {
             viewModel.setEvent(RandomContract.Event.OnShowToastClicked)
         }
         binding?.secondActivity?.setOnClickListener {
-
+            findNavController().navigate(R.id.action_randomFragment_to_mainMovieFragment)
         }
     }
 

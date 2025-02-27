@@ -2,4 +2,6 @@
     <string name="app_name">Server app</string>
 
     <string name="success_data">Success: %1$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
