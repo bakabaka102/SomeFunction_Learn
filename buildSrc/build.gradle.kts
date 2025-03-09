@@ -20,8 +20,7 @@ kotlin {
     //jvmToolchain(8)
 }
 
-tasks {
-    val cleanBuildSrc by register("cleanBuildSrc", Delete::class) {
-        delete(rootProject.file("buildSrc/build"))
-    }
+tasks.register("cleanSrc", Delete::class) {
+    delete(rootProject.layout.buildDirectory)
+    //delete(rootProject.file("buildSrc/build"))
 }

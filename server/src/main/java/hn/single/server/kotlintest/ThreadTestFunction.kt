@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger
 import kotlin.system.measureTimeMillis
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -142,7 +143,7 @@ class ThreadingTestUseLockUseConfinement {
 
     private var counter = 0
     private val data = mutableListOf<Int>()
-    @OptIn(DelicateCoroutinesApi::class)
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val counterContext = newSingleThreadContext("CounterContext")
 
     private suspend fun massiveRun(action: suspend () -> Unit) {
@@ -162,6 +163,7 @@ class ThreadingTestUseLockUseConfinement {
         println("Completed ${n * k} actions in $time ms")
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     suspend fun tryToTest() {
         withContext(counterContext) { // single-threaded context
             massiveRun {
