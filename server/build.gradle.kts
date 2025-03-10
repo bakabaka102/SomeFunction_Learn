@@ -57,7 +57,7 @@ android {
                    output.outputFileName = outputFileName
                }
        }*/
-        setProperty("archivesBaseName", "${ProjectInfo.name}-${applicationVersion.toString().replace("/", "-")}")
+        setProperty("archivesBaseName", "${ProjectInfo.NAME_SERVER}-${applicationVersion.toString().replace("/", "-")}")
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")

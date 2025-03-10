@@ -1,3 +1,5 @@
+import ProjectInfo.versionName
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
@@ -7,6 +9,9 @@ android {
     namespace = "com.hn.libs"
     compileSdk = 34
 
+    // existing configurations...
+    val archivesBaseName = project.name
+    setProperty("archivesBaseName", "${archivesBaseName}-$versionName")
     defaultConfig {
         minSdk = 23
 

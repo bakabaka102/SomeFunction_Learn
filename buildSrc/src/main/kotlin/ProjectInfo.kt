@@ -1,11 +1,12 @@
 object ProjectInfo {
 
-    const val group = "com.ingenico"
-    const val name = "tms-client-config-app"
-    const val applicationId = "$group.tms.client.config"
+    private const val GROUP_SERVER = "hn.single"
+    const val NAME_SERVER = "Server-app"
+    const val NAME_LIB = "Lib-app"
+    const val NAME_APP = "Client-app"
+    const val SERVER_APPLICATION_ID = "$GROUP_SERVER.server"
+    const val APP_APPLICATION_ID = "com.app.func"
 
-    const val sonarKey = "$group:tms.client.config"
-    const val sonarName = "TMS Client config"
     const val outPutFileName = "%s-%s.apk"
 
     const val majorVersion = 1
