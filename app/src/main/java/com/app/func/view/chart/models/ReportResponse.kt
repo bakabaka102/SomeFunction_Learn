@@ -2,7 +2,6 @@ package com.app.func.view.chart.models
 
 //import kotlinx.android.parcel.Parcelize
 import android.os.Parcelable
-import com.app.func.view.chart.utils.TelemetryParsingConstant
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
@@ -20,20 +19,20 @@ data class ReportData(
     val power: List<ConsumeData>?,
     @SerializedName("freezerTemperature")
     val consumeData: List<ConsumeData>,
-    @SerializedName(TelemetryParsingConstant.PURITY_WATER_IN)
+    @SerializedName("purityWaterIn")
     val waterIn: List<ConsumeData>?,
-    @SerializedName(TelemetryParsingConstant.PURITY_WATER_OUT)
+    @SerializedName("purityWaterOut")
     val waterOut: List<ConsumeData>?,
-    @SerializedName(TelemetryParsingConstant.FAN_TEMPERATURE)
+    @SerializedName("temperature")
     val consumeDataFan: List<ConsumeData>?
 ) : Parcelable
 
 
 @Parcelize
 data class ReportWaterResponse(
-    @SerializedName(TelemetryParsingConstant.PURITY_WATER_IN)
+    @SerializedName("purityWaterIn")
     val waterIn: List<ConsumeData>?,
-    @SerializedName(TelemetryParsingConstant.PURITY_WATER_OUT)
+    @SerializedName("purityWaterOut")
     val waterOut: List<ConsumeData>?,
 ) : Parcelable
 
@@ -45,7 +44,7 @@ data class ConsumeData(
     var value: String
 ) : Parcelable {
     companion object {
-        val comparatorSortDate: Comparator<ConsumeData> = kotlin.Comparator { o1, o2 ->
+        val comparatorSortDate: Comparator<ConsumeData> = Comparator { o1, o2 ->
             (o1.ts - o2.ts).toInt()
         }
     }

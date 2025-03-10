@@ -4,10 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.app.func.features.room_database_sqlite_mvvm.Note
-import com.app.func.features.room_database_sqlite_mvvm.NoteRepository
+import com.app.func.features.room_database_sqlite_mvvm.NoteRepositoryImpl
 
 class NoteViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository = NoteRepository(application)
+    private val repository = NoteRepositoryImpl(application)
     private val allNotes = repository.getAllNotes()
 
     fun insert(note: Note) {

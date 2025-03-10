@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import com.app.func.features.room_database_sqlite_mvvm.utils.Utils.subscribeOnBackground
 
-class NoteRepository(context: Context) {
+class NoteRepositoryImpl(context: Context): INoteRepository {
 
     private val database = NoteDatabase.getInstance(context.applicationContext)
     private var noteDao: NoteDao?= database.noteDao()
@@ -15,7 +15,7 @@ class NoteRepository(context: Context) {
         allNotes = noteDao?.getAllNotes()
     }
 
-    fun insert(note: Note) {
+    override fun insert(note: Note) {
 //        Single.just(noteDao.insert(note))
 //            .subscribeOn(Schedulers.io())
 //            .observeOn(AndroidSchedulers.mainThread())
@@ -25,25 +25,25 @@ class NoteRepository(context: Context) {
         }
     }
 
-    fun update(note: Note) {
+    override fun update(note: Note) {
         subscribeOnBackground {
             noteDao?.update(note)
         }
     }
 
-    fun delete(note: Note) {
+    override fun delete(note: Note) {
         subscribeOnBackground {
             noteDao?.delete(note)
         }
     }
 
-    fun deleteAllNotes() {
+    override fun deleteAllNotes() {
         subscribeOnBackground {
             noteDao?.deleteAllNotes()
         }
     }
 
-    fun getAllNotes(): LiveData<List<Note>>? {
+    override fun getAllNotes(): LiveData<List<Note>>? {
         return allNotes
     }
 }

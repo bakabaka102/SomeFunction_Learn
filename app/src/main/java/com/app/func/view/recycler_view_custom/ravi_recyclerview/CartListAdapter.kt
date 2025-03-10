@@ -20,22 +20,13 @@ class CartListAdapter : RecyclerView.Adapter<MyViewHolder>() {
     }
 
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var name: TextView
-        var description: TextView
-        var price: TextView
-        var thumbnail: ImageView
-        var viewBackground: RelativeLayout
+        var name: TextView = view.findViewById(R.id.name)
+        var description: TextView = view.findViewById(R.id.description)
+        var price: TextView = view.findViewById(R.id.price)
+        var thumbnail: ImageView = view.findViewById(R.id.thumbnail)
+        var viewBackground: RelativeLayout = view.findViewById(R.id.view_background)
         @JvmField
-        var viewForeground: RelativeLayout
-
-        init {
-            name = view.findViewById(R.id.name)
-            description = view.findViewById(R.id.description)
-            price = view.findViewById(R.id.price)
-            thumbnail = view.findViewById(R.id.thumbnail)
-            viewBackground = view.findViewById(R.id.view_background)
-            viewForeground = view.findViewById(R.id.view_foreground)
-        }
+        var viewForeground: RelativeLayout = view.findViewById(R.id.view_foreground)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

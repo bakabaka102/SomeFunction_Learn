@@ -24,5 +24,5 @@ object RetrofitObject {
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             /*.addConverterFactory(GsonConverterFactory.create(gson))*/.build()
 
-    val apiService = getRetrofit.create(IApiService::class.java)
+    val apiService: IApiService = getRetrofit.create(IApiService::class.java)
 }

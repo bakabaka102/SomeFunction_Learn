@@ -21,10 +21,6 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         notifyItemRemoved(position)
     }
 
-    fun removeUser(user: User) {
-        listUser.remove(user)
-    }
-
     fun undoRemoveUser(position: Int, user: User) {
         listUser.add(position, user)
         notifyItemInserted(position)

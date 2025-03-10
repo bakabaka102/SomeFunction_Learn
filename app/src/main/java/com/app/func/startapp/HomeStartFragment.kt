@@ -3,6 +3,7 @@ package com.app.func.startapp
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -47,7 +48,7 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
         loadChart()
         viewModel.downloadNote()
         viewModel.getNote()
-        //loadJson<String>(this@HomeStartFragment.context, fileJson)
+        loadJson<String>(this@HomeStartFragment.context, fileJson)
         /*val uri = Uri.parse("${CUSTOM_PROVIDER_URI}/${fileJson}")
         val resolver = context?.contentResolver
         val inputStream = resolver?.openInputStream(uri)
@@ -64,12 +65,19 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
 
 
     private inline fun <reified T> loadJson(context: Context?, fileName: String): T? {
-        val contentResolver = context?.contentResolver
+        context?.packageManager?.getResourcesForApplication("hn.single.server")?.let {
+            val inputStream = it.assets.open(fileName)
+            val content = inputStream.bufferedReader().use(BufferedReader::readText)
+            Log.d(Constants.TAG_PROVIDER, "Content of file = $content")
+            return content as T
+        }
+        return null
+        /*val contentResolver = context?.contentResolver
         contentResolver?.readCustomFile(CUSTOM_PROVIDER_URI, fileName)?.let {
             Log.d(Constants.TAG_PROVIDER, "Content of file = $it")
             return it as T
         }
-        return null
+        return null*/
         //throw InvalidParameterException("Fail to Load $fileName File")
     }
 
@@ -214,12 +222,5 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
         val url = URL(imagePath)
         val inputStream = url.openConnection().getInputStream()
         return BitmapFactory.decodeStream(inputStream)
-    }
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance() = HomeStartFragment()
-
     }
 }

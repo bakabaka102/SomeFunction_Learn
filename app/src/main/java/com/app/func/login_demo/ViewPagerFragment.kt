@@ -9,20 +9,24 @@ import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.ViewPagerFragmentBinding
 import com.app.func.login_demo.adapter.ViewPagerAdapter
 import com.app.func.login_demo.tab_viewpager.TabFirstFragment
-import com.app.func.login_demo.tab_viewpager.TabSecondFragment
+import com.app.func.utils.Logger
 import com.app.func.utils.MyToast
 import com.google.android.material.tabs.TabLayoutMediator
+
+data class TabInfo(
+    val title: String,
+    val fragment: Fragment,
+)
 
 class ViewPagerFragment : BaseFragment<ViewPagerFragmentBinding>() {
 
     private var viewPagerAdapter: ViewPagerAdapter? = null
+    var listTab = mutableListOf<TabInfo>()
+    val maxTab = 5
 
-
-    private val animalsArray = arrayOf(
-        "Cat",
-        "Dog",
-        "Bird"
-    )
+    override fun setTitleActionBar() {
+        super.setTitleActionBar()
+    }
 
     override fun getViewBinding(): ViewPagerFragmentBinding {
         return ViewPagerFragmentBinding.inflate(layoutInflater)
@@ -30,35 +34,20 @@ class ViewPagerFragment : BaseFragment<ViewPagerFragmentBinding>() {
 
     override fun setUpViews() {
         viewPagerAdapter = ViewPagerAdapter(this)
-        binding?.recyclerviewTab?.adapter = viewPagerAdapter
-
-        binding?.tabViewPager?.let {
-            binding?.recyclerviewTab?.let { it1 ->
-                TabLayoutMediator(it, it1) { tab, position ->
-                    tab.text = animalsArray[position]
+        listTab = mutableListOf(
+            TabInfo("Tab 1", TabFirstFragment.newFragment()),
+            TabInfo("Tab 2", TabFirstFragment.newFragment()),
+            TabInfo("Tab 3", TabFirstFragment.newFragment()),
+        )
+        viewPagerAdapter?.submitFragments(listTab)
+        binding?.viewPager2DynamicTab?.adapter = viewPagerAdapter
+        binding?.tabViewPager?.let { tabLayout ->
+            binding?.viewPager2DynamicTab?.let { viewPager ->
+                TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                    tab.text = listTab[position].title
                 }
             }
         }?.attach()
-
-//        addNewTab("Tab1", TabFirstFragment.newFragment())
-//        addNewTab("Tab2", TabSecondFragment.newFragment())
-
-
-        viewPagerAdapter?.setData(
-            TabFirstFragment.newFragment(),
-            TabSecondFragment.newFragment(),
-            TabSecondFragment.newFragment()
-        )
-
-        binding?.btnAddTab?.setOnClickListener {
-            val fragment = TabFirstFragment.newFragment()
-            addNewTab("Tab", fragment)
-        }
-        binding?.btnRemoveTab?.setOnClickListener {
-            removeTab()
-        }
-
-        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, mOnBackPress)
     }
 
     override fun observeView() {
@@ -70,45 +59,61 @@ class ViewPagerFragment : BaseFragment<ViewPagerFragmentBinding>() {
     }
 
     override fun initActions() {
-
+        binding?.btnAddTab?.setOnClickListener {
+            val fragment = TabFirstFragment.newFragment()
+            addNewTab(fragment)
+        }
+        binding?.btnRemoveTab?.setOnClickListener {
+            removeTab()
+        }
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, mOnBackPress)
     }
 
     private val mOnBackPress = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            if (binding?.recyclerviewTab == null) {
+            if (binding?.viewPager2DynamicTab == null) {
                 findNavController().navigateUp()
             } else {
-                if (binding?.recyclerviewTab?.currentItem == 0) {
+                if (binding?.viewPager2DynamicTab?.currentItem == 0) {
                     findNavController().navigateUp()
                 } else {
-                    binding?.recyclerviewTab?.currentItem =
-                        binding?.recyclerviewTab?.currentItem?.minus(1)!!
+                    binding?.viewPager2DynamicTab?.currentItem =
+                        binding?.viewPager2DynamicTab?.currentItem?.minus(1) ?: 0
                 }
             }
         }
     }
 
     private fun removeTab() {
-        viewPagerAdapter?.removeFragment()
-//       viewPagerAdapter?.removeFragment(1)
+        if (listTab.isNotEmpty()) {
+            listTab.apply {
+                removeAt(size - 1)
+            }.run {
+                Logger.d("listTab size after removed: ${listTab.size}")
+                viewPagerAdapter?.submitFragments(this)
+            }
+        } else {
+            Logger.d("No longer any tab")
+            MyToast.showToast(requireContext(), "No longer any tab")
+        }
     }
 
-    private fun addNewTab(title: String, fragment: Fragment) {
-        if (binding?.edtNameTab?.text?.isBlank() == false) {
-            binding?.tabViewPager?.newTab()?.setText(binding?.edtNameTab?.text)
-                ?.let { it1 -> binding?.tabViewPager?.addTab(it1) }
-            //fragment.setInfo("Tab 1")
-            viewPagerAdapter?.addFragment(fragment)
+    private fun addNewTab(fragment: Fragment) {
+        val name = binding?.edtNameTab?.text?.toString()?.trim()
+        if (name.isValidData()) {
+            if (canAddMoreTab()) {
+                listTab.add(TabInfo(name.toString(), fragment))
+                viewPagerAdapter?.submitFragments(listTab)
+            } else {
+                MyToast.showToast(requireContext(), "Max tab is $maxTab")
+            }
         } else {
             MyToast.showToast(requireContext(), "Input invalid......")
         }
     }
 
-    private fun disableToolTipTabLayout() {
-        val tabStrip = binding?.tabViewPager?.getChildAt(0) as ViewGroup
-        for (i in 0 until tabStrip.childCount) {
-            TooltipCompat.setTooltipText(tabStrip.getChildAt(i), null)
-        }
-    }
+    private fun String?.isValidData(): Boolean = this?.isNotBlank() == true
+
+    private fun canAddMoreTab(): Boolean = listTab.size < maxTab
 
 }
