@@ -41,6 +41,7 @@ plugins {
             dataBinding = true
             compose = true
             aidl = true
+            buildConfig = true
         }
 
         namespace = "com.app.func"
