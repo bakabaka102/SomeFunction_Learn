@@ -2,6 +2,7 @@ package com.app.func.coroutine_demo.retrofit.single
 
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,9 +16,7 @@ class SingleCallNetworkFragment : BaseFragment<FragmentSingleCallNetworkBinding>
     private var quoteAdapter: QuotesAdapter = QuotesAdapter()
     private var data: List<Result>? = null
     private val mViewModel: SingleCallNetworkViewModel by viewModels()
-    override fun getViewBinding(): FragmentSingleCallNetworkBinding {
-        return FragmentSingleCallNetworkBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentSingleCallNetworkBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
         initObserver()
@@ -47,6 +46,8 @@ class SingleCallNetworkFragment : BaseFragment<FragmentSingleCallNetworkBinding>
 
         mViewModel.errorMessage.observe(viewLifecycleOwner) {
             Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+            binding?.textStatus?.text = it
+            binding?.textStatus?.isVisible = true
         }
 
         mViewModel.loading.observe(viewLifecycleOwner) {

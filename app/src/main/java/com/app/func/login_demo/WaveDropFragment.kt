@@ -1,33 +1,26 @@
 package com.app.func.login_demo
 
-import android.graphics.Canvas
 import android.graphics.Color
-import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.app.func.R
 import com.app.func.base_content.BaseFragment
 import com.app.func.coroutine_demo.retrofit.aaa.MyViewModelFactory
 import com.app.func.coroutine_demo.retrofit.base.ApiConstants
-import com.app.func.databinding.FragmentSignUpBinding
+import com.app.func.databinding.FragmentWaveDropBinding
 import com.app.func.view.recycler_view_custom.ravi_recyclerview.CartListAdapter
 import com.app.func.view.recycler_view_custom.ravi_recyclerview.CartListAdapter.MyViewHolder
 import com.app.func.view.recycler_view_custom.ravi_recyclerview.ItemCart
 import com.app.func.view.recycler_view_custom.ravi_recyclerview.RecyclerItemTouchHelper
 import com.google.android.material.snackbar.Snackbar
 
-class SignUpFragment : BaseFragment<FragmentSignUpBinding>(), View.OnClickListener,
-    RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
+class WaveDropFragment : BaseFragment<FragmentWaveDropBinding>(), RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
-    override fun getViewBinding(): FragmentSignUpBinding {
-        return FragmentSignUpBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentWaveDropBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
         mViewModel = ViewModelProvider(
@@ -85,8 +78,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(), View.OnClickListen
 
         //attaching the touch helper to recycler view
         ItemTouchHelper(itemTouchHelperCallback1).attachToRecyclerView(binding?.recyclerView)
-
-        binding?.btnCreateAccount?.setOnClickListener(this)
     }
 
     override fun observeView() {
@@ -107,7 +98,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(), View.OnClickListen
 
     private fun initObservers() {
         mViewModel?.menuFoodList?.observe(viewLifecycleOwner) {
-            mAdapter.setDataAdapter(it)
+            mAdapter.setDataAdapter(it.body() ?: emptyList())
         }
 
         observerError()
@@ -119,33 +110,16 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(), View.OnClickListen
         }
     }
 
-//    private fun prepareCart() {
-//        cartList.add(ItemCart(1, "Item 1", "description 1", 123.0, "aaaa"))
-//        cartList.add(ItemCart(2, "Item 2", "description 2", 456.0, "aaaa"))
-//        cartList.add(ItemCart(3, "Item 3", "description 3", 789.0, "aaaa"))
-//        cartList.add(ItemCart(4, "Item 4", "description 4", 112.0, "aaaa"))
-//        cartList.add(ItemCart(5, "Item 5", "description 5", 345.0, "aaaa"))
-//        cartList.add(ItemCart(6, "Item 6", "description 6", 678.0, "aaaa"))
-//    }
-
-    override fun onClick(view: View?) {
-        when (view) {
-            binding?.btnCreateAccount -> {
-                findNavController().navigate(R.id.profileFragment)
-            }
-        }
-    }
-
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int, position: Int) {
         if (viewHolder is MyViewHolder) {
             // get the removed item name to display it in snack bar
-            val name = cartList[viewHolder.getAdapterPosition()].name
+            val name = cartList[viewHolder.adapterPosition].name
             // backup of removed item for undo purpose
-            val deletedItem = cartList[viewHolder.getAdapterPosition()]
-            val deletedIndex = viewHolder.getAdapterPosition()
+            val deletedItem = cartList[viewHolder.adapterPosition]
+            val deletedIndex = viewHolder.adapterPosition
 
             // remove the item from recycler view
-            mAdapter.removeItem(viewHolder.getAdapterPosition())
+            mAdapter.removeItem(viewHolder.adapterPosition)
 
             // showing snack bar with Undo option
             val snackbar = binding?.scrollViewSignUp?.let {

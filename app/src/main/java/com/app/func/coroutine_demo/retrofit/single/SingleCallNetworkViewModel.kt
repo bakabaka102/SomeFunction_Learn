@@ -4,9 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.app.func.coroutine_demo.data.model.QuoteListResponse
 import com.app.func.coroutine_demo.retrofit.base.ApiConstants
-import com.app.func.coroutine_demo.retrofit.base.RetrofitService
 import com.app.func.coroutine_demo.retrofit.base.RetrofitObject
-import kotlinx.coroutines.CoroutineExceptionHandler
+import com.app.func.coroutine_demo.retrofit.base.RetrofitService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -22,14 +21,11 @@ class SingleCallNetworkViewModel : ViewModel() {
     val errorMessage = MutableLiveData<String>()
     private var job: Job? = null
     val loading = MutableLiveData<Boolean>()
-    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        onError("Exception handled: ${throwable.localizedMessage}")
-    }
 
     val quoteList: MutableLiveData<Response<QuoteListResponse>> = quotes
 
     fun getQuotes() {
-        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+        job = CoroutineScope(Dispatchers.IO).launch {
             loading.postValue(true)
             val response: Response<QuoteListResponse>? = api.getQuotes()
             withContext(Dispatchers.Main) {
@@ -39,18 +35,14 @@ class SingleCallNetworkViewModel : ViewModel() {
                     quotes.value = api.getQuotes()
                     loading.value = false
                 } else {
-                    onError("Error : ${response?.message()} ")
+                    errorMessage.postValue(response?.message())
+                    loading.postValue(false)
                 }
             }
         }
 //        viewModelScope.launch {
 //            quotes.value = api.getQuotes()
 //        }
-    }
-
-    private fun onError(message: String) {
-        errorMessage.value = message
-        loading.value = false
     }
 
     override fun onCleared() {

@@ -16,9 +16,7 @@ import java.util.concurrent.TimeUnit
 
 class DelayRXFragment : BaseFragment<FragmentSimpleRxBinding>(), View.OnClickListener {
 
-    override fun getViewBinding(): FragmentSimpleRxBinding {
-        return FragmentSimpleRxBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentSimpleRxBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
 

@@ -2,7 +2,9 @@ package com.app.func.features.room_database
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.app.func.base_content.DiffCallBack
 import com.app.func.databinding.ItemUserListBinding
 
 class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
@@ -12,20 +14,36 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
     var onDeleteItem: ((User) -> Unit)? = null
 
     fun setUsers(users: List<User>) {
-        this.userList = users.toMutableList()
-        notifyDataSetChanged()
+        val diffResult = calculateDiff(users)
+        userList.clear()
+        userList.addAll(users)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     fun setOnItemClick(listClickListener: ListClickListener<User>) {
         this.clickListener = listClickListener
     }
 
+    private fun calculateDiff(newList: List<User>): DiffUtil.DiffResult = DiffUtil.calculateDiff(
+        DiffCallBack(
+            oldList = userList,
+            newList = newList,
+            areItemsTheSame = { oldItem, newItem ->
+                oldItem.userId == newItem.userId
+            },
+            areContentsTheSame = { oldItem, newItem ->
+                oldItem == newItem
+            }
+        )
+    )
+
     inner class UserViewHolder(val binding: ItemUserListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindDataToViews(position: Int) {
             val user = userList[position]
-            binding.textUsername.text = "${user.userId} - ${user.userName}"
+            val userName = "${user.userId} - ${user.userName}"
+            binding.textUsername.text = userName
             binding.textLocation.text = user.location
             binding.textEmail.text = user.email
 

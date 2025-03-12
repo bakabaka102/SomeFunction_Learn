@@ -65,9 +65,7 @@ class SearchByRXFragment : BaseFragment<FragmentSearchByRxBinding>() {
         return Observable.just(true).delay(2, TimeUnit.SECONDS).map { query }
     }
 
-    override fun getViewBinding(): FragmentSearchByRxBinding {
-        return FragmentSearchByRxBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentSearchByRxBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
 

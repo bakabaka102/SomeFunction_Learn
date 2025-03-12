@@ -41,9 +41,7 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
     private val coroutineScope =
         CoroutineScope(Dispatchers.Main + parentJob + coroutineExceptionHandler)
 
-    override fun getViewBinding(): FragmentTutorialBinding {
-        return FragmentTutorialBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentTutorialBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
         val tutorial = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

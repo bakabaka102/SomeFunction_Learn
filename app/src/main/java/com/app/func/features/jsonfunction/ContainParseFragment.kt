@@ -21,9 +21,7 @@ class ContainParseFragment(private val type: DataTabJson) :
 
     }
 
-    override fun getViewBinding(): FragmentContainParseBinding {
-        return FragmentContainParseBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentContainParseBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
         binding?.textContentData?.text = "${type.name} \n ${arguments?.getString(key)}"

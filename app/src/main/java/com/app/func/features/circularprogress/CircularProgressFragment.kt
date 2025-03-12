@@ -5,9 +5,7 @@ import com.app.func.databinding.FragmentCircularProgressBinding
 
 class CircularProgressFragment : BaseFragment<FragmentCircularProgressBinding>() {
 
-    override fun getViewBinding(): FragmentCircularProgressBinding {
-        return FragmentCircularProgressBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentCircularProgressBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
         

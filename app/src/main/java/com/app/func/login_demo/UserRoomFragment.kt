@@ -9,9 +9,7 @@ import java.util.Locale
 
 class UserRoomFragment : BaseFragment<FragmentUserRoomBinding>() {
 
-    override fun getViewBinding(): FragmentUserRoomBinding {
-        return FragmentUserRoomBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentUserRoomBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
 

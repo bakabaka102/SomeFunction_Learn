@@ -43,9 +43,7 @@ class SnowyMainFragment : BaseFragment<FragmentSnowyMainBinding>() {
         return tutorialList
     }
 
-    override fun getViewBinding(): FragmentSnowyMainBinding {
-        return FragmentSnowyMainBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentSnowyMainBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
         createTabsForTabLayout()

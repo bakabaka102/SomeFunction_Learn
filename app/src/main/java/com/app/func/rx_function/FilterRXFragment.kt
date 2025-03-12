@@ -1,11 +1,8 @@
 package com.app.func.rx_function
 
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentSimpleRxBinding
 import com.app.func.rx_function.utils.AppConstant
@@ -15,9 +12,8 @@ import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 
 class FilterRXFragment : BaseFragment<FragmentSimpleRxBinding>(), View.OnClickListener {
-    override fun getViewBinding(): FragmentSimpleRxBinding {
-        return FragmentSimpleRxBinding.inflate(layoutInflater)
-    }
+    
+    override fun getViewBinding() = FragmentSimpleRxBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
 

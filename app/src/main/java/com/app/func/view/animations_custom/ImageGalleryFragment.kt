@@ -16,9 +16,7 @@ class ImageGalleryFragment : BaseFragment<ImageGalleryFragmentBinding>() {
         }, Random.nextLong(100, 500))
     }
 
-    override fun getViewBinding(): ImageGalleryFragmentBinding {
-        return ImageGalleryFragmentBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = ImageGalleryFragmentBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
 

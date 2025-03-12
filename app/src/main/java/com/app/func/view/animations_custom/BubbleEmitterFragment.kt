@@ -17,9 +17,7 @@ class BubbleEmitterFragment : BaseFragment<BubbleEmitterFragmentBinding>() {
         }, Random.nextLong(100, 500))
     }
 
-    override fun getViewBinding(): BubbleEmitterFragmentBinding {
-        return BubbleEmitterFragmentBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = BubbleEmitterFragmentBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
         emitBubbles()

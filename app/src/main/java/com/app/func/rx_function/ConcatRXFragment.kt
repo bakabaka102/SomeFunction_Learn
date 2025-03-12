@@ -13,9 +13,7 @@ import io.reactivex.rxjava3.disposables.Disposable
 
 class ConcatRXFragment : BaseFragment<FragmentSimpleRxBinding>(), View.OnClickListener {
 
-    override fun getViewBinding(): FragmentSimpleRxBinding {
-        return FragmentSimpleRxBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentSimpleRxBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
 

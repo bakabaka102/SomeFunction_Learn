@@ -6,8 +6,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.app.func.R
+import com.app.func.base_content.DiffCallBack
 import com.app.func.view.recycler_view_custom.ravi_recyclerview.CartListAdapter.MyViewHolder
 import com.bumptech.glide.Glide
 
@@ -15,10 +17,24 @@ class CartListAdapter : RecyclerView.Adapter<MyViewHolder>() {
     private var cartList = mutableListOf<ItemCart>()
 
     fun setDataAdapter(list: List<ItemCart>) {
-        cartList = list.toMutableList()
-        notifyDataSetChanged()
+        val diffResult = calculateDiff(list)
+        cartList.clear()
+        cartList.addAll(list)
+        diffResult.dispatchUpdatesTo(this)
     }
 
+    private fun calculateDiff(newList: List<ItemCart>): DiffUtil.DiffResult = DiffUtil.calculateDiff(
+        DiffCallBack(
+            oldList = cartList,
+            newList = newList,
+            areItemsTheSame = { oldItem, newItem ->
+                oldItem.id == newItem.id
+            },
+            areContentsTheSame = { oldItem, newItem ->
+                oldItem == newItem
+            }
+        )
+    )
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var name: TextView = view.findViewById(R.id.name)
         var description: TextView = view.findViewById(R.id.description)

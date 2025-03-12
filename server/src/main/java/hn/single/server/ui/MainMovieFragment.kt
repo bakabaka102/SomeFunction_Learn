@@ -23,9 +23,7 @@ class MainMovieFragment : BaseFragment<FragmentMainMovieBinding>() {
         ViewModelProvider(this)[MainViewModel::class.java]
     }
 
-    override fun getViewBinding(): FragmentMainMovieBinding {
-        return FragmentMainMovieBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentMainMovieBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
         collector()

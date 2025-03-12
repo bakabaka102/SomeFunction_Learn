@@ -1,16 +1,59 @@
 package com.app.func.coroutine_demo.retrofit.aaa
 
-import com.app.func.coroutine_demo.data.model.QuoteListResponse
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.app.func.coroutine_demo.retrofit.base.RetrofitService
 import com.app.func.view.recycler_view_custom.ravi_recyclerview.ItemCart
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 
-class DataRepository(private val retrofitService: RetrofitService) {
+class DataRepository(private val retrofitService: RetrofitService) : IDataRepository{
 
-    suspend fun getAllMovies(): Response<List<Movie>> = retrofitService.getAllMovies()
+    private val _errorMovie = MutableLiveData<String>()
+    val errorMovie : LiveData<String> get() = _errorMovie
 
-    suspend fun getMenuFood(): Response<List<ItemCart>> = retrofitService.getMenuFood()
+    private val _errorFood = MutableLiveData<String>()
+    val errorFood: LiveData<String> get() = _errorFood
 
-    suspend fun getAllQuotes(): Response<QuoteListResponse>? = retrofitService.getQuotes()
+    private val _allMovies = MutableLiveData<Response<List<Movie>>>()
+    val allMovies : LiveData<Response<List<Movie>>>
+        get() = _allMovies
 
+    private val _menuFood = MutableLiveData<Response<List<ItemCart>>>()
+    val menuFood: LiveData<Response<List<ItemCart>>> get() = _menuFood
+
+    override suspend fun getAllMovies() {
+        withContext(Dispatchers.IO){
+            try {
+                val response = retrofitService.getAllMovies()
+                if (response.isSuccessful) {
+                    _allMovies.postValue(response)
+                }
+            } catch (ex: Exception) {
+                _errorMovie.postValue(ex.message)
+            }
+        }
+    }
+
+    override suspend fun getMenuFood() {
+        withContext(Dispatchers.IO) {
+            try {
+                val response = retrofitService.getMenuFood()
+                if (response.isSuccessful) {
+                    _menuFood.postValue(response)
+                }
+            } catch (ex: Exception) {
+                _errorFood.postValue(ex.message)
+            }
+
+        }
+    }
+}
+
+interface IDataRepository {
+
+    suspend fun getAllMovies()
+
+    suspend fun getMenuFood()
 }

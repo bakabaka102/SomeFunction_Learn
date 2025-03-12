@@ -2,6 +2,7 @@ package com.app.func.features.room_database_sqlite_mvvm.view
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.app.func.R
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.NoteAddEditLayoutBinding
@@ -14,9 +15,7 @@ class NoteDeleteAddFragment : BaseFragment<NoteAddEditLayoutBinding>() {
     private lateinit var mode: Mode
     private var noteId: Int = -1
     private val noteViewModel: NoteViewModel by viewModels()
-    override fun getViewBinding(): NoteAddEditLayoutBinding {
-        return NoteAddEditLayoutBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = NoteAddEditLayoutBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
         binding?.numberPickerPriority?.minValue = 1
@@ -78,6 +77,7 @@ class NoteDeleteAddFragment : BaseFragment<NoteAddEditLayoutBinding>() {
             note?.let {
                 noteViewModel.insert(it)
                 MyToast.showToast(requireContext(), "Insert note.")
+                findNavController().navigateUp()
             }
         } else if (mode == Mode.EditNote) {
             note?.let {

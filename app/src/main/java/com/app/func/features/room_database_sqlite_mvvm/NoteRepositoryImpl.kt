@@ -2,18 +2,13 @@ package com.app.func.features.room_database_sqlite_mvvm
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.app.func.features.room_database_sqlite_mvvm.utils.Utils.subscribeOnBackground
 
-class NoteRepositoryImpl(context: Context): INoteRepository {
+class NoteRepositoryImpl(context: Context) : INoteRepository {
 
     private val database = NoteDatabase.getInstance(context.applicationContext)
-    private var noteDao: NoteDao?= database.noteDao()
-    private var allNotes: LiveData<List<Note>>?= noteDao?.getAllNotes()
-
-    init {
-        noteDao = database.noteDao()
-        allNotes = noteDao?.getAllNotes()
-    }
+    private val noteDao: NoteDao? = database.noteDao()
 
     override fun insert(note: Note) {
 //        Single.just(noteDao.insert(note))
@@ -44,6 +39,6 @@ class NoteRepositoryImpl(context: Context): INoteRepository {
     }
 
     override fun getAllNotes(): LiveData<List<Note>>? {
-        return allNotes
+        return noteDao?.getAllNotes()
     }
 }

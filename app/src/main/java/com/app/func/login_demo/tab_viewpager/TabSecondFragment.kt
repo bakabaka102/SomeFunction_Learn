@@ -4,9 +4,7 @@ import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentTabViewpagerBinding
 
 class TabSecondFragment : BaseFragment<FragmentTabViewpagerBinding>() {
-    override fun getViewBinding(): FragmentTabViewpagerBinding {
-        return FragmentTabViewpagerBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentTabViewpagerBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
 

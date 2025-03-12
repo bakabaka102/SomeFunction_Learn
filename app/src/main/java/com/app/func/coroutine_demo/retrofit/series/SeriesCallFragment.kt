@@ -17,9 +17,7 @@ import retrofit2.Response
 class SeriesCallFragment : BaseFragment<FragmentSingleCallNetworkBinding>() {
 
     private var quoteAdapter: QuotesAdapter = QuotesAdapter()
-    override fun getViewBinding(): FragmentSingleCallNetworkBinding {
-        return FragmentSingleCallNetworkBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentSingleCallNetworkBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
 

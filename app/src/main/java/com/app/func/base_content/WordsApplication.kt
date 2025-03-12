@@ -1,13 +1,10 @@
 package com.app.func.base_content
 
-import android.R.attr
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
 import com.app.func.R
-import com.app.func.features.room_coroutines.WordRepository
-import com.app.func.features.room_coroutines.WordRoomDatabase
 import com.app.func.utils.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -20,12 +17,12 @@ class WordsApplication : Application() {
 
     // Using by lazy so the database and the repository are only created when they're needed
     // rather than when the application starts
-    val database by lazy { WordRoomDatabase.getDatabase(this, applicationScope) }
-    val repository by lazy { WordRepository(database.wordDao()) }
+    //val database by lazy { WordRoomDatabase.getDatabase(this, applicationScope) }
+    //val repository by lazy { WordRepository(database.wordDao()) }
 
     override fun onCreate() {
         super.onCreate()
-        createNotificationChannel()
+        //createNotificationChannel()
     }
 
     private fun createNotificationChannel() {

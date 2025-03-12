@@ -17,7 +17,7 @@ class RoomFragment : BaseFragment<RoomFragmentBinding>() {
     private val mViewModel: ProfileViewModel by viewModels()
     var user: User? = null
 
-    override fun getViewBinding(): RoomFragmentBinding = RoomFragmentBinding.inflate(layoutInflater)
+    override fun getViewBinding() = RoomFragmentBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
         binding?.btnAdd?.setOnClickListener {

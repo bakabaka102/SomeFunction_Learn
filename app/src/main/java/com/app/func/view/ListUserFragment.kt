@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.RectF
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -173,9 +174,7 @@ class ListUserFragment : BaseFragment<FragmentListUserBinding>() {
         MyToast.showToast(requireContext(), "Swipe to right.! --- ${viewHolder.adapterPosition}")
     }
 
-    override fun getViewBinding(): FragmentListUserBinding {
-        return FragmentListUserBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentListUserBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
         mUsers = getListUser()
@@ -198,7 +197,7 @@ class ListUserFragment : BaseFragment<FragmentListUserBinding>() {
         val layoutManager = LinearLayoutManager(requireContext())
         val itemDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         mUsers2 = getListUser()
-        userAdapter2.initData(mUsers2)
+        userAdapter2.submitData(mUsers2)
         binding?.recyclerViewUser2?.adapter = userAdapter2
         binding?.recyclerViewUser2?.layoutManager = layoutManager
         //binding?.recyclerViewUser2?.addItemDecoration(itemDecoration)
@@ -221,6 +220,7 @@ class ListUserFragment : BaseFragment<FragmentListUserBinding>() {
 //                                checkNoInternetWrapper {
 //                                    viewModel?.onDeleteSchedule(adapter.getData()[pos])
 //                                }
+                                MyToast.showToast(activity, "Delete clicked", Toast.LENGTH_SHORT)
                             }
                         }
                     )

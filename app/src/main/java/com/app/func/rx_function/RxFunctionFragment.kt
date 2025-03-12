@@ -46,9 +46,7 @@ class RxFunctionFragment : BaseFragment<FragmentRxFunctionBinding>(), View.OnCli
         })
     }
 
-    override fun getViewBinding(): FragmentRxFunctionBinding {
-        return FragmentRxFunctionBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentRxFunctionBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
 

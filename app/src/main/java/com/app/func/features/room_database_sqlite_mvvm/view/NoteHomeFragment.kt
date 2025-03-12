@@ -11,22 +11,18 @@ import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.NoteHomeLayoutBinding
 import com.app.func.features.room_database_sqlite_mvvm.adapters.NoteAdapter
 import com.app.func.features.room_database_sqlite_mvvm.utils.ConstantsNote
-import com.app.func.utils.DebugLog
 
 class NoteHomeFragment : BaseFragment<NoteHomeLayoutBinding>() {
 
     private val noteViewModel: NoteViewModel by viewModels()
     private lateinit var noteAdapter: NoteAdapter
 
-    override fun getViewBinding(): NoteHomeLayoutBinding {
-        return NoteHomeLayoutBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = NoteHomeLayoutBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
         setUpRecyclerView()
         setUpListeners()
-        noteViewModel.getAllNotes()?.observe(viewLifecycleOwner) {
-            DebugLog.i("Notes observed ----- $it")
+        noteViewModel.allNotes?.observe(viewLifecycleOwner) {
             noteAdapter.submitList(it)
         }
     }
@@ -45,8 +41,6 @@ class NoteHomeFragment : BaseFragment<NoteHomeLayoutBinding>() {
 
     private fun setUpListeners() {
         binding?.buttonAddNote?.setOnClickListener {
-//            val intent = Intent(this, AddEditNoteActivity::class.java)
-//            startActivityForResult(intent, ADD_NOTE_REQUEST)
             findNavController().navigate(R.id.noteDeleteAddFragment)
         }
 
@@ -75,12 +69,6 @@ class NoteHomeFragment : BaseFragment<NoteHomeLayoutBinding>() {
         binding?.recyclerView?.layoutManager = LinearLayoutManager(requireContext())
         binding?.recyclerView?.setHasFixedSize(true)
         noteAdapter = NoteAdapter { clickedNote ->
-//            val intent = Intent(this, AddEditNoteActivity::class.java)
-//            intent.putExtra(ConstantsNote.EXTRA_ID, clickedNote.id)
-//            intent.putExtra(ConstantsNote.EXTRA_TITLE, clickedNote.title)
-//            intent.putExtra(ConstantsNote.EXTRA_DESCRIPTION, clickedNote.description)
-//            intent.putExtra(ConstantsNote.EXTRA_PRIORITY, clickedNote.priority)
-//            startActivityForResult(intent, EDIT_NOTE_REQUEST)
             val bundle = bundleOf(
                 ConstantsNote.EXTRA_ID to clickedNote.id,
                 ConstantsNote.EXTRA_TITLE to clickedNote.title,

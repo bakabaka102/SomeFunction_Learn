@@ -7,20 +7,20 @@ import androidx.room.*
 interface NoteDao {
 
     @Insert
-    fun insert(note: Note)
+    fun insert(note: Note): Long
 
     @Update
-    fun update(note: Note)
+    fun update(note: Note): Int
 
     @Delete
-    fun delete(note: Note)
+    fun delete(note: Note): Int
 
-    @Query("delete from note_table")
-    fun deleteAllNotes()
+    @Query("DELETE FROM note_table")
+    fun deleteAllNotes(): Int
 
-    @Query("select * from note_table order by priority desc")
+    @Query("SELECT * FROM note_table ORDER BY priority DESC")
     fun getAllNotesByDesc(): LiveData<List<Note>>
 
-    @Query("select * from note_table order by priority desc")
+    @Query("SELECT * FROM note_table ORDER BY priority DESC")
     fun getAllNotes(): LiveData<List<Note>>
 }

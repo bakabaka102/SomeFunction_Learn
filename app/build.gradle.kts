@@ -85,5 +85,5 @@ plugins {
         implementation(AppDependencies.LOGGING_INTERCEPTOR)
         compileOnly(AppDependencies.JAVAX_ANNOTATION)
 
-        implementation(AppDependencies.AIDL_LIB)
+        implementation(project(AppDependencies.AIDL_LIB))
     }

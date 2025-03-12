@@ -10,10 +10,7 @@
         android:protectionLevel="normal" />
 
     <permission
-        android:name="hn.single.server.IServiceAidl.Access"
-        android:protectionLevel="normal" />
-    <permission
-        android:name="com.hn.libs.ICalculatorAidl.Access"
+        android:name="hn.single.server.ServiceAidlAccess"
         android:protectionLevel="normal" />
 
     <application
@@ -28,7 +25,7 @@
             android:name=".aidlservice.MyService"
             android:enabled="true"
             android:exported="true"
-            android:permission="hn.single.server.IServiceAidl.Access">
+            android:permission="hn.single.server.ServiceAidlAccess">
             <intent-filter>
                 <action android:name="hn.single.server.IServiceAidl" />
             </intent-filter>
@@ -37,7 +34,7 @@
             android:name=".aidlservice.CalculatorAidl"
             android:enabled="true"
             android:exported="true"
-            android:permission="com.hn.libs.ICalculatorAidl.Access">
+            android:permission="hn.single.server.ServiceAidlAccess">
             <intent-filter>
                 <action android:name="com.hn.libs.ICalculatorAidl" />
             </intent-filter>

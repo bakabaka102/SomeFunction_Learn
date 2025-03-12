@@ -26,9 +26,7 @@ class MainContainFragment : BaseFragment<MainContainFragmentBinding>() {
     private val longText2 =
         "Much longer text that cannot fit one line of channel 2. I think it need more, at least is two lines. Much longer text that cannot fit one line of channel 2. I think it need more, at least is two lines."
 
-    override fun getViewBinding(): MainContainFragmentBinding {
-        return MainContainFragmentBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = MainContainFragmentBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
 

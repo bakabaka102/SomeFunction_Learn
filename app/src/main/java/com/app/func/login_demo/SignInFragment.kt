@@ -7,9 +7,7 @@ import com.app.func.view.animation_view.WaveHelper
 class SignInFragment : BaseFragment<FragmentSignInBinding>() {
 
     private var mWaveHelper: WaveHelper? = null
-    override fun getViewBinding(): FragmentSignInBinding {
-        return FragmentSignInBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentSignInBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
         mWaveHelper = WaveHelper(binding?.contentWater)

@@ -33,9 +33,7 @@ class RandomFragment : BaseFragment<FragmentRandomBinding>() {
         }
     }
 
-    override fun getViewBinding(): FragmentRandomBinding {
-        return FragmentRandomBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentRandomBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
 

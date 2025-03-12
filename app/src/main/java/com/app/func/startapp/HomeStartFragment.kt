@@ -39,9 +39,7 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
     private var model = ModelType.FREEZER
     private val viewModel: MainActivityViewModel by viewModels()
 
-    override fun getViewBinding(): FragmentHomeStartBinding {
-        return FragmentHomeStartBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentHomeStartBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
         showImage()

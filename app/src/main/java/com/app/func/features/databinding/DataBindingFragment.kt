@@ -6,9 +6,7 @@ import com.app.func.databinding.FragmentDataBindingBinding
 
 class DataBindingFragment : BaseFragment<FragmentDataBindingBinding>() {
 
-    override fun getViewBinding(): FragmentDataBindingBinding {
-        return FragmentDataBindingBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentDataBindingBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
 

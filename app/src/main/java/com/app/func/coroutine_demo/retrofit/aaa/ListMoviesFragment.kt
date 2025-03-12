@@ -14,9 +14,7 @@ class ListMoviesFragment : BaseFragment<FragmentSingleCallNetworkBinding>() {
 
     //    private var mViewModel : ListMovieViewModel by viewModels()
     private lateinit var mViewModel: ListMovieViewModel
-    override fun getViewBinding(): FragmentSingleCallNetworkBinding {
-        return FragmentSingleCallNetworkBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentSingleCallNetworkBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
         val layoutManager = LinearLayoutManager(requireActivity())
@@ -26,10 +24,10 @@ class ListMoviesFragment : BaseFragment<FragmentSingleCallNetworkBinding>() {
         initViewModel()
 
         mViewModel.movieList.observe(viewLifecycleOwner) {
-            movieAdapter.setMovies(it)
+            movieAdapter.setMovies(it.body() ?: emptyList())
         }
 
-        mViewModel.errorMessage.observe(viewLifecycleOwner) {
+        mViewModel.errorMovie.observe(viewLifecycleOwner) {
             Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
         }
 

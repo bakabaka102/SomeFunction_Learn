@@ -8,9 +8,7 @@ import com.app.func.navigation.NavGraph
 import com.app.func.navigation.Screen
 
 class MainAnimationFragment : BaseFragment<MainAnimationFragmentBinding>() {
-    override fun getViewBinding(): MainAnimationFragmentBinding {
-        return MainAnimationFragmentBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = MainAnimationFragmentBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
 

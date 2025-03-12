@@ -1,28 +1,26 @@
 package com.app.func.features.room_coroutines
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-class WordViewModel(private val repository: WordRepository) : ViewModel() {
+class WordViewModel(app: Application) : AndroidViewModel(app) {
 
-    val allWords: LiveData<List<Word>> = repository.allWords.asLiveData()
+    private val db = WordRoomDatabase.getDatabase(app.applicationContext)
+    val wordDao = db.wordDao()
+    private val repository = WordRepository(wordDao)
+    val allWords: LiveData<List<Word>> get() = repository.allWords
+    fun getAllWordsInDB() {
+        viewModelScope.launch {
+            repository.allWords()
+        }
+    }
 
     fun insert(word: Word?) = viewModelScope.launch {
-        word?.let { repository.insert(it) }
-    }
-}
-
-//@Suppress("UNCHECKED_CAST")
-class WordViewModelFactory(private val repository: WordRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(WordViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return WordViewModel(repository) as T
+        word?.let {
+            repository.insert(it)
         }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

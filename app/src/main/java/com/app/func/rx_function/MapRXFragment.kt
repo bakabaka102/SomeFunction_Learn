@@ -19,9 +19,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MapRXFragment : BaseFragment<FragmentSimpleRxBinding>(), View.OnClickListener {
 
-    override fun getViewBinding(): FragmentSimpleRxBinding {
-        return FragmentSimpleRxBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentSimpleRxBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
 

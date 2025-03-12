@@ -18,16 +18,31 @@ class JsonFuncFragment : BaseFragment<FragmentJsonFuncBinding>() {
         DataJsonAdapter(this)
     }
 
-    private fun createListFragmentData(data: DataJson): List<Pair<String,Fragment>> {
-        val list = mutableListOf<Pair<String,Fragment>>()
+    private fun createListFragmentData(data: DataJson): List<Pair<String, Fragment>> {
+        val list = mutableListOf<Pair<String, Fragment>>()
         if (data.home.isNotEmpty()) {
-            list.add(Pair(getString(R.string.json_home), ContainParseFragment.newInstance(DataTabJson.HOME, data.home.toString())))
+            list.add(
+                Pair(
+                    getString(R.string.json_home),
+                    ContainParseFragment.newInstance(DataTabJson.HOME, data.home.toString())
+                )
+            )
         }
         if (data.content.isNotEmpty()) {
-            list.add(Pair(getString(R.string.json_content), ContainParseFragment.newInstance(DataTabJson.CONTENT, data.content.toString())))
+            list.add(
+                Pair(
+                    getString(R.string.json_content),
+                    ContainParseFragment.newInstance(DataTabJson.CONTENT, data.content.toString())
+                )
+            )
         }
         if (data.about.isNotEmpty()) {
-            list.add(Pair(getString(R.string.json_about), ContainParseFragment.newInstance(DataTabJson.ABOUT, data.about.toString())))
+            list.add(
+                Pair(
+                    getString(R.string.json_about),
+                    ContainParseFragment.newInstance(DataTabJson.ABOUT, data.about.toString())
+                )
+            )
         }
         return list
     }
@@ -45,9 +60,7 @@ class JsonFuncFragment : BaseFragment<FragmentJsonFuncBinding>() {
         return fragment
     }
 
-    override fun getViewBinding(): FragmentJsonFuncBinding {
-        return FragmentJsonFuncBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentJsonFuncBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
         val jsonString = Utils.loadJsonFromAssets(requireActivity(), jsonFile)

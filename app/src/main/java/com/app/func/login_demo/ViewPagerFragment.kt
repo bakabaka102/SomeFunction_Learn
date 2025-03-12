@@ -1,8 +1,6 @@
 package com.app.func.login_demo
 
-import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.widget.TooltipCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.app.func.base_content.BaseFragment
@@ -28,9 +26,7 @@ class ViewPagerFragment : BaseFragment<ViewPagerFragmentBinding>() {
         super.setTitleActionBar()
     }
 
-    override fun getViewBinding(): ViewPagerFragmentBinding {
-        return ViewPagerFragmentBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = ViewPagerFragmentBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
         viewPagerAdapter = ViewPagerAdapter(this)

@@ -52,9 +52,7 @@ class CoroutinesFragment : BaseFragment<FragmentCoroutinesBinding>(), View.OnCli
         }
     }
 
-    override fun getViewBinding(): FragmentCoroutinesBinding {
-        return FragmentCoroutinesBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentCoroutinesBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
 

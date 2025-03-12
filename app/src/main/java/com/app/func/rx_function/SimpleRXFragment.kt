@@ -14,9 +14,7 @@ import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class SimpleRXFragment : BaseFragment<FragmentSimpleRxBinding>(), View.OnClickListener {
-    override fun getViewBinding(): FragmentSimpleRxBinding {
-        return FragmentSimpleRxBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = FragmentSimpleRxBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
 

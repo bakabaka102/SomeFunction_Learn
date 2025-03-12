@@ -2,7 +2,9 @@ package com.app.func.coroutine_demo.retrofit.aaa
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.app.func.base_content.DiffCallBack
 import com.app.func.databinding.ItemMovieBinding
 import com.bumptech.glide.Glide
 
@@ -11,9 +13,24 @@ class MovieAdapter : RecyclerView.Adapter<MainViewHolder>() {
     private var movieList = mutableListOf<Movie>()
 
     fun setMovies(movies: List<Movie>) {
-        this.movieList = movies.toMutableList()
-        notifyDataSetChanged()
+        val diffResult = calculateDiff(movies)
+        movieList.clear()
+        movieList.addAll(movies)
+        diffResult.dispatchUpdatesTo(this)
     }
+
+    private fun calculateDiff(newList: List<Movie>): DiffUtil.DiffResult = DiffUtil.calculateDiff(
+        DiffCallBack(
+            oldList = movieList,
+            newList = newList,
+            areItemsTheSame = { oldItem, newItem ->
+                oldItem.name == newItem.name
+            },
+            areContentsTheSame = { oldItem, newItem ->
+                oldItem == newItem
+            }
+        )
+    )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
 

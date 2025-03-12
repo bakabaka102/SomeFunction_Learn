@@ -1,61 +1,27 @@
 package com.app.func.login_demo
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.app.func.coroutine_demo.retrofit.aaa.DataRepository
 import com.app.func.view.recycler_view_custom.ravi_recyclerview.ItemCart
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
+import retrofit2.Response
 
 class SignUpViewModel(private val repository: DataRepository) : ViewModel() {
 
-    val errorMessage = MutableLiveData<String>()
-    val menuFoodList = MutableLiveData<List<ItemCart>>()
-    var job: Job? = null
-    val loading = MutableLiveData<Boolean>()
-
-    private val exceptionHandler =
-        CoroutineExceptionHandler { _, throwable ->
-            onError("Exception handled: ${throwable.localizedMessage}")
-        }
-    /*
-    fun getAllMovies() {
-        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            loading.postValue(true)
-            val response = repository.getAllMovies()
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-                    movieList.postValue(response.body())
-                    loading.value = false
-                } else {
-                    onError("Error : ${response.message()} ")
-                }
-            }
-        }
-    }
-     */
+    val errorMessage: LiveData<String> get() = repository.errorFood
+    val menuFoodList: LiveData<Response<List<ItemCart>>> get() = repository.menuFood
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> get() = _loading
 
     fun getListMenuFood() {
-        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            loading.postValue(true)
-            val response = repository.getMenuFood()
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-                    menuFoodList.postValue(response.body())
-                    loading.value = false
-                } else {
-                    onError("Error -------- ${response.message()}")
-                }
+        viewModelScope.launch {
+            _loading.postValue(true)
+            repository.getMenuFood().apply {
+                _loading.postValue(false)
             }
         }
-    }
-
-    private fun onError(message: String) {
-        errorMessage.value = message
-        loading.value = false
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        job?.cancel()
     }
 }
