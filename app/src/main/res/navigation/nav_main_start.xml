@@ -19,9 +19,6 @@
         <action
             android:id="@+id/action_homeStartFragment_to_mainContainFragment"
             app:destination="@id/mainContainFragment" />
-        <action
-            android:id="@+id/action_homeStartFragment_to_jsonFuncFragment"
-            app:destination="@id/jsonFuncFragment" />
     </fragment>
 
     <fragment
@@ -198,9 +195,9 @@
     </fragment>
     <fragment
         android:id="@+id/snowyMainFragment"
-        android:name="com.app.func.thread_demo.snowy.SnowyMainFragment"
+        android:name="com.app.func.thread_demo.snowy.ViewPagerFragment"
         android:label="fragment_snowy_main"
-        tools:layout="@layout/fragment_snowy_main" />
+        tools:layout="@layout/fragment_view_pager" />
     <fragment
         android:id="@+id/listUserFragment"
         android:name="com.app.func.view.ListUserFragment"
@@ -244,11 +241,6 @@
         android:name="com.app.func.view.animations_custom.ImageGalleryFragment"
         android:label="ImageGalleryFragment"
         tools:layout="@layout/image_gallery_fragment" />
-    <fragment
-        android:id="@+id/jsonFuncFragment"
-        android:name="com.app.func.features.jsonfunction.JsonFuncFragment"
-        android:label="fragment_json_func"
-        tools:layout="@layout/fragment_json_func" />
 
 
 </navigation>

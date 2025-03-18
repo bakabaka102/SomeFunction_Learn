@@ -9,8 +9,8 @@
 
     <com.app.func.view.all_demo.SmileyView
         android:id="@+id/smileyView"
-        android:layout_width="@dimen/dimen_200dp"
-        android:layout_height="@dimen/dimen_200dp"
+        android:layout_width="@dimen/dimen_160dp"
+        android:layout_height="@dimen/dimen_160dp"
         android:layout_marginTop="@dimen/dimen_8dp"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -148,7 +148,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_8dp"
-            android:text="Co func"
+            android:text="ViewPagers"
             android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

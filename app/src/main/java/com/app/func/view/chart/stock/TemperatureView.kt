@@ -16,6 +16,8 @@ import com.app.func.R
 import com.app.func.utils.Utils.formatTemperature
 import kotlin.math.cos
 import kotlin.math.sin
+import androidx.core.graphics.toColorInt
+import androidx.core.view.isGone
 
 class TemperatureView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -31,13 +33,13 @@ class TemperatureView @JvmOverloads constructor(
     private val paintCircle = Paint()
     private val paintCircleOutline = Paint()
     private val paintPointCurrent = Paint()
-    private var colorFrom = Color.parseColor("#FF7373")
-    private var colorMid = Color.parseColor("#FF7373")
-    private var colorTo = Color.parseColor("#D62020")
-    private val colorCircleOutline = Color.parseColor("#33FFFFFF")
-    private val colorCircleProgress = Color.parseColor("#CAE2CA")
+    private var colorFrom = "#FF7373".toColorInt()
+    private var colorMid = "#FF7373".toColorInt()
+    private var colorTo = "#D62020".toColorInt()
+    private val colorCircleOutline = "#33FFFFFF".toColorInt()
+    private val colorCircleProgress = "#CAE2CA".toColorInt()
     private val colortext = Color.BLACK
-    private var colorBackgroundBorder = Color.parseColor("#CAE2CA")
+    private var colorBackgroundBorder = "#CAE2CA".toColorInt()
     private var gradientColors = intArrayOf(colorFrom, colorTo)
     private var gradientPositions = floatArrayOf(0 / 360f, 360f / 360f)
     private var start = 0f
@@ -57,12 +59,12 @@ class TemperatureView @JvmOverloads constructor(
     private var minValue = 0
     private var maxValue = 0
 
-    private var _state: STATE = STATE.STABLE
+    private var _state: State = State.STABLE
     private var _currentTemp: Int? = null
     private var _targetTemp: Int? = _currentTemp
     private var _inProgressSetting = false
     private var _animator: ValueAnimator? = null
-    private var _runningState: RUNNING_MODE = RUNNING_MODE.IDLE
+    private var _runningState: RunningMode = RunningMode.IDLE
     private var strokeWidthBorder = 0f
     private var _padding32dp = 0f
     private var _paddingBottom40dp = 0f
@@ -70,8 +72,8 @@ class TemperatureView @JvmOverloads constructor(
     private var _radiusShaderDotWhite = 0f
     private var widthScreen = 0
     private var _progressGradientColors = intArrayOf(
-        Color.parseColor("#84CCF5"),
-        Color.parseColor("#6AB8C6"), Color.parseColor("#64B22A")
+        "#84CCF5".toColorInt(),
+        "#6AB8C6".toColorInt(), "#64B22A".toColorInt()
     )
     private var _progressGradientPositions = floatArrayOf(0f / 360f, 180f / 360f, 360f / 360f)
 
@@ -110,7 +112,7 @@ class TemperatureView @JvmOverloads constructor(
         oval.set(centerX - radius, centerY - radius, centerX + radius, centerY + radius)
 
         val heightOfTextViews = textViewTemperature.height + textViewHint.height
-        if (textViewHint.visibility == View.GONE) {
+        if (textViewHint.isGone) {
             textViewTemperature.y = (centerY - radius * RATIO_CIRCLE_IN) +
                 (radius * RATIO_CIRCLE_IN * 2 - textViewTemperature.height) / 2
         } else {
@@ -124,12 +126,12 @@ class TemperatureView @JvmOverloads constructor(
             drawCircleCenterIn(it)
             drawBorderBackground(it)
             drawNumeral(it)
-            if (_runningState == RUNNING_MODE.REDUCE) {
+            if (_runningState == RunningMode.REDUCE) {
                 drawBorder(it)
                 drawTextSettingTemp(it)
                 drawDotCircle(formatStringTemp(_targetTemp!!), canvas)
             }
-            if (_runningState == RUNNING_MODE.INCREASE) {
+            if (_runningState == RunningMode.INCREASE) {
                 drawTextSettingTemp(it)
                 drawDotCircle(formatStringTemp(_targetTemp!!), canvas)
             }
@@ -142,7 +144,7 @@ class TemperatureView @JvmOverloads constructor(
         initValues()
     }
 
-    fun getRunningState(): RUNNING_MODE {
+    fun getRunningState(): RunningMode {
         return _runningState
     }
 
@@ -191,7 +193,7 @@ class TemperatureView @JvmOverloads constructor(
         paintPointCurrent.style = Paint.Style.FILL_AND_STROKE
         paintPointCurrent.strokeCap = Paint.Cap.ROUND
         paintPointCurrent.isAntiAlias = true
-        val _shadowColor = Color.parseColor("#664F5979")
+        val _shadowColor = "#664F5979".toColorInt()
         paintPointCurrent.setShadowLayer(_radiusShaderDotWhite, 0f, 0f, _shadowColor)
         setLayerType(LAYER_TYPE_NONE, paintPointCurrent)
 
@@ -199,34 +201,34 @@ class TemperatureView @JvmOverloads constructor(
 
     private fun initColorByState() {
         when (_state) {
-            STATE.STABLE, STATE.UNSTABLE -> {
-                colorFrom = Color.parseColor("#84CCF5")
-                colorMid = Color.parseColor("#6AB8C6")
-                colorTo = Color.parseColor("#64B22A")
-                colorBackgroundBorder = Color.parseColor("#CAE2CA")
+            State.STABLE, State.UNSTABLE -> {
+                colorFrom = "#84CCF5".toColorInt()
+                colorMid = "#6AB8C6".toColorInt()
+                colorTo = "#64B22A".toColorInt()
+                colorBackgroundBorder = "#CAE2CA".toColorInt()
                 gradientColors = intArrayOf(colorFrom, colorMid, colorTo)
                 gradientPositions = floatArrayOf(0f / 360f, 180f / 360f, 360f / 360f)
             }
-            STATE.WARNING_RED, STATE.STOP_WORKING -> {
-                colorFrom = Color.parseColor("#FF7373")
-                colorMid = Color.parseColor("#F24648")
-                colorTo = Color.parseColor("#D62020")
-                colorBackgroundBorder = Color.parseColor("#F9D7D7")
+            State.WARNING_RED, State.STOP_WORKING -> {
+                colorFrom = "#FF7373".toColorInt()
+                colorMid = "#F24648".toColorInt()
+                colorTo = "#D62020".toColorInt()
+                colorBackgroundBorder = "#F9D7D7".toColorInt()
                 gradientColors = intArrayOf(colorFrom, colorMid, colorTo)
                 gradientPositions = floatArrayOf(0f / 360f, 180f / 360f, 360f / 360f)
             }
-            STATE.NO_SIGNAL -> {
-                colorFrom = Color.parseColor("#E6EBED")
-                colorTo = Color.parseColor("#ACBAC2")
-                colorBackgroundBorder = Color.parseColor("#DEE5EA")
+            State.NO_SIGNAL -> {
+                colorFrom = "#E6EBED".toColorInt()
+                colorTo = "#ACBAC2".toColorInt()
+                colorBackgroundBorder = "#DEE5EA".toColorInt()
                 gradientColors = intArrayOf(colorFrom, colorTo)
                 gradientPositions = floatArrayOf(0f / 360f, 360f / 360f)
             }
-            STATE.WARNING_YELLOW -> {
-                colorFrom = Color.parseColor("#FFD585")
-                colorMid = Color.parseColor("#FFBA34")
-                colorTo = Color.parseColor("#FCA600")
-                colorBackgroundBorder = Color.parseColor("#F8E8C9")
+            State.WARNING_YELLOW -> {
+                colorFrom = "#FFD585".toColorInt()
+                colorMid = "#FFBA34".toColorInt()
+                colorTo = "#FCA600".toColorInt()
+                colorBackgroundBorder = "#F8E8C9".toColorInt()
                 gradientColors = intArrayOf(colorFrom, colorMid, colorTo)
                 gradientPositions = floatArrayOf(0f / 360f, 180f / 360f, 360f / 360f)
             }
@@ -261,7 +263,7 @@ class TemperatureView @JvmOverloads constructor(
 
     private fun drawTextSettingTemp(canvas: Canvas) {
         drawTextTempSelected(
-            temp = _targetTemp!!,
+            temp = _targetTemp ?: 0,
             canvas = canvas,
         )
     }
@@ -388,12 +390,12 @@ class TemperatureView @JvmOverloads constructor(
         addView(textViewHint)
     }
 
-    fun updateState(state: STATE) {
+    fun updateState(state: State) {
         if (_state == state) return
         invalidate()
         _state = state
-        if (_state == STATE.NO_SIGNAL || _state == STATE.STOP_WORKING) {
-            if (_state == STATE.NO_SIGNAL) {
+        if (_state == State.NO_SIGNAL || _state == State.STOP_WORKING) {
+            if (_state == State.NO_SIGNAL) {
                 textViewHint.visibility = View.GONE
             }
             textViewTemperature.text = "--°C"
@@ -411,10 +413,10 @@ class TemperatureView @JvmOverloads constructor(
         _targetTemp = temp
         _inProgressSetting = true
         _runningState = when {
-            _targetTemp == _currentTemp -> RUNNING_MODE.IDLE
-            _targetTemp!! > _currentTemp!! -> RUNNING_MODE.INCREASE
-            _targetTemp!! < _currentTemp!! -> RUNNING_MODE.REDUCE
-            else -> RUNNING_MODE.IDLE
+            _targetTemp == _currentTemp -> RunningMode.IDLE
+            _targetTemp!! > _currentTemp!! -> RunningMode.INCREASE
+            _targetTemp!! < _currentTemp!! -> RunningMode.REDUCE
+            else -> RunningMode.IDLE
         }
         _currentAngle = if (_currentTemp!! > maxValue) {
             calculateAngle(maxValue)
@@ -423,11 +425,11 @@ class TemperatureView @JvmOverloads constructor(
         }
         _targetSettingAngle = calculateAngle(_targetTemp!!)
         _newSweepAngle = -Math.abs(_targetSettingAngle - _currentAngle)
-        if (_runningState == RUNNING_MODE.INCREASE) {
+        if (_runningState == RunningMode.INCREASE) {
             invalidate()
             return
         }
-        if (_runningState == RUNNING_MODE.REDUCE) {
+        if (_runningState == RunningMode.REDUCE) {
             val updateListener: (Float) -> Unit = { animatedValue ->
                 _newSweepAngle = animatedValue
                 invalidate()
@@ -477,7 +479,7 @@ class TemperatureView @JvmOverloads constructor(
     }
 
     fun cancelSettingTemp() {
-        _runningState = RUNNING_MODE.IDLE
+        _runningState = RunningMode.IDLE
         _inProgressSetting = false
         _animator?.cancel()
         _animator = null
@@ -499,13 +501,13 @@ class TemperatureView @JvmOverloads constructor(
         )
     }
 
-    enum class RUNNING_MODE {
+    enum class RunningMode {
         REDUCE,
         INCREASE,
         IDLE
     }
 
-    enum class STATE {
+    enum class State {
         STABLE,
         UNSTABLE,
         WARNING_RED,

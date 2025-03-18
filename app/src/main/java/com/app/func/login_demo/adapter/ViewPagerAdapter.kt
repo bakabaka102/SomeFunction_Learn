@@ -7,7 +7,7 @@ import com.app.func.login_demo.TabInfo
 
 class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
-    var listFragment = mutableListOf<TabInfo>()
+    private var listFragment = mutableListOf<TabInfo>()
 
     fun submitFragments(fragments: List<TabInfo>) {
         val diffResult = DiffUtil.calculateDiff(FragmentDiffCallback(listFragment, fragments))

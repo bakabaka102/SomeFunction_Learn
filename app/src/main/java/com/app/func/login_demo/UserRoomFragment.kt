@@ -25,8 +25,10 @@ class UserRoomFragment : BaseFragment<FragmentUserRoomBinding>() {
 
     private val mCountChangeListener: OnSeekBarChangeListener = object : OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-            binding?.pulsator?.count = progress + 1
-            binding?.textCount?.text = String.format(Locale.US, "%d", progress + 1)
+            binding?.let {
+                it.pulsator.count = progress + 1
+                it.textCount.text = String.format(Locale.US, "%d", progress + 1)
+            }
         }
 
         override fun onStartTrackingTouch(seekBar: SeekBar) {}
@@ -36,10 +38,10 @@ class UserRoomFragment : BaseFragment<FragmentUserRoomBinding>() {
     private val mDurationChangeListener: OnSeekBarChangeListener =
         object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                binding?.pulsator?.duration = progress * 100
-                binding?.textDuration?.text = String.format(
-                    Locale.US, "%.1f", progress * 0.1f
-                )
+                binding?.let {
+                    it.pulsator.duration = progress * 100
+                    it.textDuration.text = String.format(Locale.US, "%.1f", progress * 0.1f)
+                }
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
@@ -47,11 +49,12 @@ class UserRoomFragment : BaseFragment<FragmentUserRoomBinding>() {
         }
 
     override fun initActions() {
-        binding?.seekCount?.setOnSeekBarChangeListener(mCountChangeListener)
-        binding?.seekCount?.progress = binding?.pulsator?.count?.minus(1)!!
-
-        binding?.seekDuration?.setOnSeekBarChangeListener(mDurationChangeListener)
-        binding?.seekDuration?.progress = binding?.pulsator?.duration?.div(100)!!
-        binding?.pulsator?.start()
+        binding?.let {
+            it.seekCount.setOnSeekBarChangeListener(mCountChangeListener)
+            it.seekCount.progress = it.pulsator.count - 1
+            it.seekDuration.setOnSeekBarChangeListener(mDurationChangeListener)
+            it.seekDuration.progress = it.pulsator.duration / 100
+            it.pulsator.start()
+        }
     }
 }

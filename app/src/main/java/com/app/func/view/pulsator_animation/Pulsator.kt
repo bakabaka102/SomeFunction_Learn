@@ -50,7 +50,7 @@ class Pulsator @JvmOverloads constructor(
         }
         mAnimatorSet?.start()
         if (!mStartFromScratch) {
-            val animators = mAnimatorSet!!.childAnimations
+            val animators = mAnimatorSet?.childAnimations ?: emptyList<Animator>()
             for (animator in animators) {
                 val objectAnimator = animator as ObjectAnimator
                 val delay = objectAnimator.startDelay

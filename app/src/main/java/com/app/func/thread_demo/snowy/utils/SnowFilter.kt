@@ -3,6 +3,7 @@ package com.app.func.thread_demo.snowy.utils
 import android.graphics.Bitmap
 import android.graphics.Color
 import java.util.*
+import androidx.core.graphics.createBitmap
 
 object SnowFilter {
     private var COLOR_MAX = 0xff
@@ -34,7 +35,7 @@ object SnowFilter {
             }
         }
         // output bitmap
-        val bitmapOut = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)
+        val bitmapOut = createBitmap(width, height, Bitmap.Config.RGB_565)
         bitmapOut.setPixels(pixels, 0, width, 0, 0, width, height)
         return bitmapOut
     }

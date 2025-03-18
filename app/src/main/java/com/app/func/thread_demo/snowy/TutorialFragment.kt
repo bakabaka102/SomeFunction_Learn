@@ -35,7 +35,6 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
             }
 
             coroutineScope.launch { println("Caught $throwable") }
-//            GlobalScope.launch { println("Caught $throwable") }
         }
 
     private val coroutineScope =

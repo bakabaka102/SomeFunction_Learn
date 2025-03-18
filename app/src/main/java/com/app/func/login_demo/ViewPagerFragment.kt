@@ -19,8 +19,8 @@ data class TabInfo(
 class ViewPagerFragment : BaseFragment<ViewPagerFragmentBinding>() {
 
     private var viewPagerAdapter: ViewPagerAdapter? = null
-    var listTab = mutableListOf<TabInfo>()
-    val maxTab = 5
+    private var listTab = mutableListOf<TabInfo>()
+    private val maxTab = 5
 
     override fun setTitleActionBar() {
         super.setTitleActionBar()

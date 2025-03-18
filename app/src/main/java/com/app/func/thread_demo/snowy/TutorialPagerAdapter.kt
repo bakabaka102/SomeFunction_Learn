@@ -14,4 +14,8 @@ class TutorialPagerAdapter(
     override fun getItem(position: Int): Fragment {
         return TutorialFragment.newInstance(tutorialList[position])
     }
+
+    override fun getPageTitle(position: Int): CharSequence? {
+        return tutorialList[position].name
+    }
 }

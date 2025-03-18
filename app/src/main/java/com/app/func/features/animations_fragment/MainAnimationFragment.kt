@@ -1,10 +1,8 @@
 package com.app.func.features.animations_fragment
 
 import androidx.navigation.fragment.findNavController
-import com.app.func.R
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.MainAnimationFragmentBinding
-import com.app.func.navigation.NavGraph
 import com.app.func.navigation.Screen
 
 class MainAnimationFragment : BaseFragment<MainAnimationFragmentBinding>() {
@@ -28,7 +26,7 @@ class MainAnimationFragment : BaseFragment<MainAnimationFragmentBinding>() {
             findNavController().navigate(Screen.BUBBLE_ANIMATION.name)
         }
         binding?.btnBall2?.setOnClickListener {
-            //findNavController().navigate(R.id.bubbleEmitterFragment)
+            findNavController().navigate(Screen.BUBBLE_EMITTER_ANIMATION.name)
         }
     }
 

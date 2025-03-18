@@ -2,6 +2,7 @@ package com.app.func.login_demo
 
 import android.graphics.Color
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -18,7 +19,8 @@ import com.app.func.view.recycler_view_custom.ravi_recyclerview.ItemCart
 import com.app.func.view.recycler_view_custom.ravi_recyclerview.RecyclerItemTouchHelper
 import com.google.android.material.snackbar.Snackbar
 
-class WaveDropFragment : BaseFragment<FragmentWaveDropBinding>(), RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
+class WaveDropFragment : BaseFragment<FragmentWaveDropBinding>(),
+    RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
     override fun getViewBinding() = FragmentWaveDropBinding.inflate(layoutInflater)
 
@@ -40,11 +42,7 @@ class WaveDropFragment : BaseFragment<FragmentWaveDropBinding>(), RecyclerItemTo
 
         initObservers()
         mViewModel?.loading?.observe(viewLifecycleOwner) {
-            if (it) {
-                //mBinding?.progressBar?.visibility = View.VISIBLE
-            } else {
-                // mBinding?.progressBar?.visibility = View.GONE
-            }
+            binding?.progressBar?.isVisible = it
         }
 
 

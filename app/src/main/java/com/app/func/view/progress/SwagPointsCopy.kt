@@ -2,6 +2,7 @@ package com.app.func.view.progress
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.TypedArray
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
@@ -13,6 +14,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.app.func.R
 import kotlin.math.*
+import androidx.core.content.withStyledAttributes
 
 
 class SwagPointsCopy @JvmOverloads constructor(
@@ -117,36 +119,36 @@ class SwagPointsCopy @JvmOverloads constructor(
         mIndicatorIcon = ContextCompat.getDrawable(context, R.drawable.mouse)
         if (attrs != null) {
             // Attribute initialization
-            val a = context.obtainStyledAttributes(
+            context.withStyledAttributes(
                 attrs,
                 R.styleable.SwagPointsCopy, 0, 0
-            )
-            val indicatorIcon = a.getDrawable(R.styleable.SwagPointsCopy_indicatorIcon)
-            if (indicatorIcon != null) mIndicatorIcon = indicatorIcon
-            val indicatorIconHalfWidth = mIndicatorIcon!!.intrinsicWidth / 2
-            val indicatorIconHalfHeight = mIndicatorIcon!!.intrinsicHeight / 2
-            mIndicatorIcon!!.setBounds(
-                -indicatorIconHalfWidth, -indicatorIconHalfHeight, indicatorIconHalfWidth,
-                indicatorIconHalfHeight
-            )
-            mPoints = a.getInteger(R.styleable.SwagPointsCopy_points, mPoints)
-            mMin = a.getInteger(R.styleable.SwagPointsCopy_min, mMin)
-            mMax = a.getInteger(R.styleable.SwagPointsCopy_max, mMax)
-            mStep = a.getInteger(R.styleable.SwagPointsCopy_step, mStep)
-            mProgressWidth =
-                a.getDimension(R.styleable.SwagPointsCopy_progressWidth, mProgressWidth)
+            ) {
+                val indicatorIcon = getDrawable(R.styleable.SwagPointsCopy_indicatorIcon)
+                if (indicatorIcon != null) mIndicatorIcon = indicatorIcon
+                val indicatorIconHalfWidth = mIndicatorIcon!!.intrinsicWidth / 2
+                val indicatorIconHalfHeight = mIndicatorIcon!!.intrinsicHeight / 2
+                mIndicatorIcon!!.setBounds(
+                    -indicatorIconHalfWidth, -indicatorIconHalfHeight, indicatorIconHalfWidth,
+                    indicatorIconHalfHeight
+                )
+                mPoints = getInteger(R.styleable.SwagPointsCopy_points, mPoints)
+                mMin = getInteger(R.styleable.SwagPointsCopy_min, mMin)
+                mMax = getInteger(R.styleable.SwagPointsCopy_max, mMax)
+                mStep = getInteger(R.styleable.SwagPointsCopy_step, mStep)
+                mProgressWidth =
+                    getDimension(R.styleable.SwagPointsCopy_progressWidth, mProgressWidth)
 
-            progressColor = a.getColor(R.styleable.SwagPointsCopy_progressColor, progressColor)
-            mArcWidth = a.getDimension(R.styleable.SwagPointsCopy_arcWidth, mArcWidth)
-            arcColor = a.getColor(R.styleable.SwagPointsCopy_arcColor, arcColor)
-            mTextSize = a.getDimension(R.styleable.SwagPointsCopy_textSize, mTextSize)
-            textColor = a.getColor(R.styleable.SwagPointsCopy_textColor, textColor)
-            mClockwise = a.getBoolean(
-                R.styleable.SwagPointsCopy_clockwise,
-                mClockwise
-            )
-            mEnabled = a.getBoolean(R.styleable.SwagPointsCopy_enabled, mEnabled)
-            a.recycle()
+                progressColor = getColor(R.styleable.SwagPointsCopy_progressColor, progressColor)
+                mArcWidth = getDimension(R.styleable.SwagPointsCopy_arcWidth, mArcWidth)
+                arcColor = getColor(R.styleable.SwagPointsCopy_arcColor, arcColor)
+                mTextSize = getDimension(R.styleable.SwagPointsCopy_textSize, mTextSize)
+                textColor = getColor(R.styleable.SwagPointsCopy_textColor, textColor)
+                mClockwise = getBoolean(
+                    R.styleable.SwagPointsCopy_clockwise,
+                    mClockwise
+                )
+                mEnabled = getBoolean(R.styleable.SwagPointsCopy_enabled, mEnabled)
+            }
         }
 
         // range check

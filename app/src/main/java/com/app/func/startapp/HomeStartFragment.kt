@@ -33,6 +33,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.withContext
+import androidx.core.net.toUri
 
 class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
 
@@ -85,7 +86,7 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
         mandatory: Boolean = false
     ): String? {
         return try {
-            val assetUri = Uri.parse("$customProviderUri/$file").also {
+            val assetUri = "$customProviderUri/$file".toUri().also {
                 Log.d(Constants.TAG_PROVIDER, "Asset Uri = $it")
             }
             val inputStream = openInputStream(assetUri)
@@ -146,7 +147,7 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
             startActivity(Intent(requireActivity(), ViewCustomActivity::class.java))
         }
         binding?.btnParseJson?.setOnClickListener {
-            findNavController().navigate(R.id.jsonFuncFragment)
+
         }
         binding?.btnAnimation?.setOnClickListener {
             startActivity(Intent(requireContext(), ViewAnimationsActivity2::class.java))

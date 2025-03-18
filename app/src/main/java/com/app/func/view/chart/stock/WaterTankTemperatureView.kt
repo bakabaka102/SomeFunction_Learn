@@ -29,6 +29,8 @@ import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
+import androidx.core.graphics.toColorInt
+import androidx.core.view.isGone
 
 class WaterTankTemperatureView @JvmOverloads constructor(
     context: Context,
@@ -45,12 +47,12 @@ class WaterTankTemperatureView @JvmOverloads constructor(
     private val paintCircle = Paint()
     private val paintCircleOutline = Paint()
     private val paintPointCurrent = Paint()
-    private var colorFrom = Color.parseColor("#FEFEFE")
+    private var colorFrom = "#FEFEFE".toColorInt()
 
     //    private var colorMid = Color.parseColor("#FF7373")
 //    private var colorTo = Color.parseColor("#D62020")
-    private val colorCircleOutline = Color.parseColor("#33FFFFFF")
-    private val colorCircleProgress = Color.parseColor("#F26522")
+    private val colorCircleOutline = "#33FFFFFF".toColorInt()
+    private val colorCircleProgress = "#F26522".toColorInt()
     private var colortext = Color.BLACK
 
     //    private var colorBackgroundBorder = Color.parseColor("#F26522")
@@ -88,9 +90,9 @@ class WaterTankTemperatureView @JvmOverloads constructor(
     private var _radiusShaderDotWhite = 0f
     private var widthScreen = 0
     private var _progressGradientColors = intArrayOf(
-        Color.parseColor("#C7C7C7"),
-        Color.parseColor("#B7B7B7"),
-        Color.parseColor("#C7C7C7")
+        "#C7C7C7".toColorInt(),
+        "#B7B7B7".toColorInt(),
+        "#C7C7C7".toColorInt()
     )
     private var _progressGradientPositions = floatArrayOf(0f / 360f, 180f / 360f, 360f / 360f)
 
@@ -144,7 +146,7 @@ class WaterTankTemperatureView @JvmOverloads constructor(
         oval.set(centerX - radius, centerY - radius, centerX + radius, centerY + radius)
 
         val heightOfTextViews = textViewTemperature.height + textViewHint.height
-        if (textViewHint.visibility == View.GONE) {
+        if (textViewHint.isGone) {
             textViewTemperature.y = (centerY - radius * RATIO_CIRCLE_IN) +
                     (radius * RATIO_CIRCLE_IN * 2 - textViewTemperature.height) / 2
         } else {
@@ -243,7 +245,7 @@ class WaterTankTemperatureView @JvmOverloads constructor(
         paintPointCurrent.style = Paint.Style.FILL_AND_STROKE
         paintPointCurrent.strokeCap = Paint.Cap.ROUND
         paintPointCurrent.isAntiAlias = true
-        val _shadowColor = Color.parseColor("#664F5979")
+        val _shadowColor = "#664F5979".toColorInt()
         paintPointCurrent.setShadowLayer(_radiusShaderDotWhite, 0f, 0f, _shadowColor)
         setLayerType(LAYER_TYPE_NONE, paintPointCurrent)
     }
@@ -273,8 +275,8 @@ class WaterTankTemperatureView @JvmOverloads constructor(
             0f,
             width / 2f,
             height.toFloat(),
-            Color.parseColor("#20B7B7B7"),
-            Color.parseColor("#C7C7C7"),
+            "#20B7B7B7".toColorInt(),
+            "#C7C7C7".toColorInt(),
             Shader.TileMode.MIRROR
         )
         paintBorderBackground.shader = gradient
