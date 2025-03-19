@@ -11,7 +11,6 @@
     <!--AIDL-->
     <uses-permission android:name="hn.single.server.ServiceAidlAccess" />
 
-    <uses-permission android:name="hn.single.server.ServiceAidlAccess"/>
     <uses-permission android:name="hn.single.server.permission.ACCESS_ASSETS" />
     <queries>
         <package android:name="hn.single.server.IServiceAidl" />

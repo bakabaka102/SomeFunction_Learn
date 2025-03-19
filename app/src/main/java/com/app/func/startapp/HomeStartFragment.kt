@@ -3,11 +3,10 @@ package com.app.func.startapp
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ApplicationInfo
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.util.Log
+import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.app.func.MainActivityViewModel
@@ -21,19 +20,18 @@ import com.app.func.view.all_demo.EmotionalFaceView
 import com.app.func.view.chart.ChartType
 import com.app.func.view.chart.StatisticsView
 import com.app.func.view.chart.models.ReportResponse
-import com.app.func.view.chart.models.ConsumeData
+import com.app.func.view.chart.models.reportResponse
 import com.app.func.view.chart.utils.ModelType
-import java.io.BufferedReader
-import java.io.IOException
-import java.net.MalformedURLException
-import java.net.URL
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.withContext
-import androidx.core.net.toUri
+import java.io.BufferedReader
+import java.io.IOException
+import java.net.MalformedURLException
+import java.net.URL
 
 class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
 
@@ -159,32 +157,9 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
     }
 
     private fun loadChart() {
-        val listData = ReportResponse(
-            listOf(
-                ConsumeData(10L, "123"),
-                ConsumeData(13L, "98"),
-                ConsumeData(20L, "116"),
-                ConsumeData(16L, "87"),
-                ConsumeData(2L, "78"),
-                ConsumeData(8L, "80"),
-                ConsumeData(1L, "100")
-            ),
-            listOf(
-                ConsumeData(10L, "140"),
-                ConsumeData(8L, "99"),
-                ConsumeData(21L, "66"),
-                ConsumeData(14L, "56"),
-                ConsumeData(11L, "98"),
-                ConsumeData(6L, "52"),
-                ConsumeData(2L, "78"),
-                ConsumeData(4L, "123"),
-                ConsumeData(16L, "25")
-            ),
-        )
+        val listData: ReportResponse = reportResponse()
         binding?.customStaticView?.resetIndicatorView()
         loadStaticView(statisticsView = binding?.customStaticView, list = listData)
-
-
     }
 
     @OptIn(DelicateCoroutinesApi::class)

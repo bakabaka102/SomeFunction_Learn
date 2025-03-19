@@ -1,35 +1,30 @@
 package com.app.func.login_demo
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.app.Notification
-import android.content.pm.PackageManager
 import android.os.Build
+import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.fragment.findNavController
 import com.app.func.R
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.MainContainFragmentBinding
-import com.app.func.utils.Constants
+import com.app.func.notification.NotificationBuilder
 import com.app.func.utils.Logger
+import com.app.func.utils.MyToast
 import java.util.Date
 
 class MainContainFragment : BaseFragment<MainContainFragmentBinding>() {
 
     private val longTitle1 = "My notification"
-    private val longTitle2 = "My notification channel 2"
     private val longText1 =
         "Much longer text that cannot fit one line. I think it need more, at least is two lines."
-    private val longText2 =
-        "Much longer text that cannot fit one line of channel 2. I think it need more, at least is two lines. Much longer text that cannot fit one line of channel 2. I think it need more, at least is two lines."
+    private var notificationBuilder: NotificationBuilder? = null
 
     override fun getViewBinding() = MainContainFragmentBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
-
+        notificationBuilder = context?.let { NotificationBuilder(it) }
     }
 
     override fun observeView() {
@@ -74,56 +69,29 @@ class MainContainFragment : BaseFragment<MainContainFragmentBinding>() {
             showNotification()
         }
         binding?.btnNotify2?.setOnClickListener {
-            showNotification2()
+
         }
         binding?.btnCoroutinesFunc?.setOnClickListener {
             findNavController().navigate(R.id.snowyMainFragment)
         }
     }
 
-    @SuppressLint("MissingPermission")
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun showNotification() {
-        val notification: Notification =
-            NotificationCompat.Builder(requireContext(), Constants.CHANNEL_NOTIFY_ID)
-                .setSmallIcon(R.drawable.her)
-                .setContentTitle(longTitle1)
-                .setContentText(longText1)
-                .setStyle(NotificationCompat.BigTextStyle().bigText(longText1))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT).build()
-
-        if (isPermitPostNotification()) {
-            NotificationManagerCompat.from(requireContext())
-                .notify(getNotificationId(), notification)
-        } else {
-            Logger.d("POST_NOTIFICATIONS is denied.")
-        }
-    }
-
-    @SuppressLint("MissingPermission")
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private fun showNotification2() {
-        val notification: Notification =
-            NotificationCompat.Builder(requireContext(), Constants.CHANNEL_NOTIFY_ID_2)
-                .setSmallIcon(R.drawable.her)
-                .setContentTitle(longTitle2)
-                .setContentText(longText2)
-                .setStyle(NotificationCompat.BigTextStyle().bigText(longText2))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT).build()
-        if (isPermitPostNotification()) {
-            NotificationManagerCompat.from(requireContext())
-                .notify(getNotificationId(), notification)
-        } else {
-            Logger.d("POST_NOTIFICATIONS is denied.")
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private fun isPermitPostNotification(): Boolean {
-        return ActivityCompat.checkSelfPermission(
-            requireActivity(),
-            Manifest.permission.POST_NOTIFICATIONS
-        ) == PackageManager.PERMISSION_GRANTED
+        MyToast.showToast(context, "Notify", Toast.LENGTH_SHORT)
+        notificationBuilder?.createNotificationChannel(
+            chanelId = "Notify_1",
+            channelName = "Notify_1",
+            channelDescription = "Notify_${getNotificationId()}",
+            importance = NotificationManagerCompat.IMPORTANCE_DEFAULT,
+        )
+        notificationBuilder?.showNotification(
+            chanelId = "Notify_1",
+            smallIcon = R.drawable.her,
+            contentTitle = longTitle1,
+            contentText = longText1,
+            style = NotificationCompat.BigTextStyle().bigText(longText1),
+            notifyId = getNotificationId(),
+        )
     }
 
     private fun getNotificationId(): Int {

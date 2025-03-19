@@ -5,6 +5,31 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
+fun reportResponse(): ReportResponse {
+    return ReportResponse(
+        listOf(
+            ConsumeData(10L, "123"),
+            ConsumeData(13L, "98"),
+            ConsumeData(20L, "116"),
+            ConsumeData(16L, "87"),
+            ConsumeData(2L, "78"),
+            ConsumeData(8L, "80"),
+            ConsumeData(1L, "100")
+        ),
+        listOf(
+            ConsumeData(10L, "140"),
+            ConsumeData(8L, "99"),
+            ConsumeData(21L, "66"),
+            ConsumeData(14L, "56"),
+            ConsumeData(11L, "98"),
+            ConsumeData(6L, "52"),
+            ConsumeData(2L, "78"),
+            ConsumeData(4L, "123"),
+            ConsumeData(16L, "25")
+        ),
+    )
+}
+
 @Parcelize
 data class ReportResponse(
     @SerializedName("power")
