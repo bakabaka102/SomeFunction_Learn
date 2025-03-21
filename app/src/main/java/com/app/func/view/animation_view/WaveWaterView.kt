@@ -2,20 +2,31 @@ package com.app.func.view.animation_view
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BitmapShader
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Matrix
+import android.graphics.Paint
+import android.graphics.Rect
+import android.graphics.RectF
+import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.os.Build
-import android.text.*
+import android.text.Layout
+import android.text.StaticLayout
+import android.text.TextDirectionHeuristic
+import android.text.TextDirectionHeuristics
+import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.collection.lruCache
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.withTranslation
 import com.app.func.R
+import kotlin.math.sin
 
 class WaveWaterView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -27,13 +38,7 @@ class WaveWaterView @JvmOverloads constructor(
     private var mWaveShader: BitmapShader? = null
     private var mShaderMatrix: Matrix? = null
     private var mViewPaint: Paint? = null
-//    private var rectF: RectF = RectF().apply {
-//        left = 0f
-//        top = 0f
-//        right = width.toFloat()
-//        bottom = height.toFloat()
-//    }
-
+    private var rectF: RectF = RectF()
     private var mDefaultAmplitude = 0f
     private var mDefaultWaterLevel = 0f
     private var mDefaultWaveLength = 0f
@@ -162,7 +167,7 @@ class WaveWaterView @JvmOverloads constructor(
         wavePaint.color = _behindWaveColor
         for (beginX in 0 until endX) {
             val wx = beginX * mDefaultAngularFrequency
-            val beginY = (mDefaultWaterLevel + mDefaultAmplitude * Math.sin(wx)).toFloat()
+            val beginY = (mDefaultWaterLevel + mDefaultAmplitude * sin(wx)).toFloat()
             canvas.drawLine(beginX.toFloat(), beginY, beginX.toFloat(), endY.toFloat(), wavePaint)
             waveY[beginX] = beginY
         }
@@ -180,7 +185,7 @@ class WaveWaterView @JvmOverloads constructor(
     }
 
     override fun onDraw(canvas: Canvas) {
-        val rectF = RectF(0f, 0f, width.toFloat(), height.toFloat())
+        rectF.set(0f, 0f, width.toFloat(), height.toFloat())
         if (isShowWave && mWaveShader != null) {
             if (mViewPaint?.shader == null) {
                 mViewPaint?.shader = mWaveShader
@@ -234,11 +239,13 @@ class WaveWaterView @JvmOverloads constructor(
                 _behindWaveColor = WaterColor.backBlueColor
                 currentWaterDrawableBackground2 = R.drawable.water_blue
             }
+
             StateColor.YELLOW -> {
                 _frontWaveColor = WaterColor.frontYellowColor
                 _behindWaveColor = WaterColor.backYellowColor
                 currentWaterDrawableBackground2 = R.drawable.water_yellow
             }
+
             StateColor.RED -> {
                 _frontWaveColor = WaterColor.frontRedColor
                 _behindWaveColor = WaterColor.backRedColor
@@ -273,7 +280,7 @@ class WaveWaterView @JvmOverloads constructor(
         }
         titlePaint.getTextBounds(title, 0, title.length, rectTitle)
 
-        if (rectTitle.width() >= width * MAX_TEXT_WIDTH_RATIO && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (rectTitle.width() >= width * MAX_TEXT_WIDTH_RATIO) {
             // on small screen
             canvas.drawText(
                 content,
@@ -313,7 +320,6 @@ class WaveWaterView @JvmOverloads constructor(
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     private fun Canvas.drawMultilineText(
         text: CharSequence,
         textPaint: TextPaint,
@@ -367,6 +373,7 @@ class WaveWaterView @JvmOverloads constructor(
             MotionEvent.ACTION_DOWN -> {
                 initialY = event.y
             }
+
             MotionEvent.ACTION_MOVE, MotionEvent.ACTION_CANCEL -> {
                 val finalY = event.y
                 if (initialY + AT_LEAST_DISTANCE_MOVE < finalY) {
@@ -376,8 +383,10 @@ class WaveWaterView @JvmOverloads constructor(
                     onAnimationUp.invoke()
                 }
             }
+
             MotionEvent.ACTION_UP -> {
             }
+
             MotionEvent.ACTION_OUTSIDE -> {
             }
         }

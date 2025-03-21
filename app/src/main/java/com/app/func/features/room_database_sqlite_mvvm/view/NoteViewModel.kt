@@ -3,11 +3,8 @@ package com.app.func.features.room_database_sqlite_mvvm.view
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.app.func.features.room_database_sqlite_mvvm.Note
 import com.app.func.features.room_database_sqlite_mvvm.NoteRepositoryImpl
-import kotlinx.coroutines.launch
 
 class NoteViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = NoteRepositoryImpl(application)

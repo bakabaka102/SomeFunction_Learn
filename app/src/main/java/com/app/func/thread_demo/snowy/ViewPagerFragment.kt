@@ -1,11 +1,8 @@
 package com.app.func.thread_demo.snowy
 
-import com.app.func.R
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentViewPagerBinding
-import com.app.func.thread_demo.snowy.model.Tutorial
 import com.app.func.thread_demo.snowy.model.getTutorialData
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class ViewPagerFragment : BaseFragment<FragmentViewPagerBinding>() {
@@ -58,10 +55,4 @@ class ViewPagerFragment : BaseFragment<FragmentViewPagerBinding>() {
     override fun initActions() {
 
     }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = ViewPagerFragment()
-    }
-
 }

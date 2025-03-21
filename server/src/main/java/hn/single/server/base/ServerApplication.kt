@@ -9,6 +9,4 @@ import dagger.hilt.android.HiltAndroidApp
  * Hilt
  */
 @HiltAndroidApp
-class ServerApplication : Application() {
-
-}
+class ServerApplication : Application()

@@ -11,6 +11,7 @@ import com.app.func.R
 import com.app.func.view.seekbarcustom.crollerTest.utilities.Utils.convertDpToPixel
 import com.app.func.view.seekbarcustom.crollerTest.utilities.Utils.getDistance
 import kotlin.math.*
+import androidx.core.graphics.toColorInt
 
 class Croller @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -23,16 +24,16 @@ class Croller @JvmOverloads constructor(
     private var deg = 3f
     private var downdeg = 0f
     private var isContinuous = false
-    private var backCircleColor = Color.parseColor("#222222")
-    private var mainCircleColor = Color.parseColor("#000000")
-    private var indicatorColor = Color.parseColor("#FFA036")
-    private var progressPrimaryColor = Color.parseColor("#FFA036")
-    private var progressSecondaryColor = Color.parseColor("#111111")
-    private var backCircleDisabledColor = Color.parseColor("#82222222")
-    private var mainCircleDisabledColor = Color.parseColor("#82000000")
-    private var indicatorDisabledColor = Color.parseColor("#82FFA036")
-    private var progressPrimaryDisabledColor = Color.parseColor("#82FFA036")
-    private var progressSecondaryDisabledColor = Color.parseColor("#82111111")
+    private var backCircleColor = "#222222".toColorInt()
+    private var mainCircleColor = "#000000".toColorInt()
+    private var indicatorColor = "#FFA036".toColorInt()
+    private var progressPrimaryColor = "#FFA036".toColorInt()
+    private var progressSecondaryColor = "#111111".toColorInt()
+    private var backCircleDisabledColor = "#82222222".toColorInt()
+    private var mainCircleDisabledColor = "#82000000".toColorInt()
+    private var indicatorDisabledColor = "#82FFA036".toColorInt()
+    private var progressPrimaryDisabledColor = "#82FFA036".toColorInt()
+    private var progressSecondaryDisabledColor = "#82111111".toColorInt()
     private var progressPrimaryCircleSize = -1f
     private var progressSecondaryCircleSize = -1f
     private var progressPrimaryStrokeWidth = 25f

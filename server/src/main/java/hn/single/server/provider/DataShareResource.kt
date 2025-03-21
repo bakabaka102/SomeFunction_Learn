@@ -4,6 +4,7 @@ import android.content.ContentProvider
 import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
+import androidx.core.net.toUri
 
 class DataShareResource : ContentProvider() {
     override fun onCreate(): Boolean {
@@ -18,7 +19,7 @@ class DataShareResource : ContentProvider() {
         sortOrder: String?
     ): Cursor? {
         // Lấy hình ảnh từ bộ nhớ thiết bị hoặc cơ sở dữ liệu
-        val imageUri = Uri.parse("content://hn.single.server/images")
+        val imageUri = "content://hn.single.server/images".toUri()
         return context?.contentResolver?.query(imageUri, null, null, null, null)
     }
 

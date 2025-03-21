@@ -17,6 +17,8 @@ import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
+
 import com.app.func.R;
 
 import java.util.ArrayList;
@@ -24,7 +26,6 @@ import java.util.List;
 
 /**
  * Created by booncol on 04.07.2016.
- *
  */
 public class PulsatorLayout extends RelativeLayout {
 
@@ -72,7 +73,7 @@ public class PulsatorLayout extends RelativeLayout {
      *
      * @param context The Context the view is running in, through which it can access the current
      *                theme, resources, etc.
-     * @param attrs The attributes of the XML tag that is inflating the view.
+     * @param attrs   The attributes of the XML tag that is inflating the view.
      */
     public PulsatorLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -81,9 +82,9 @@ public class PulsatorLayout extends RelativeLayout {
     /**
      * Perform inflation from XML and apply a class-specific base style from a theme attribute.
      *
-     * @param context The Context the view is running in, through which it can access the current
-     *                theme, resources, etc.
-     * @param attrs The attributes of the XML tag that is inflating the view.
+     * @param context      The Context the view is running in, through which it can access the current
+     *                     theme, resources, etc.
+     * @param attrs        The attributes of the XML tag that is inflating the view.
      * @param defStyleAttr An attribute in the current theme that contains a reference to a style
      *                     resource that supplies default values for the view. Can be 0 to not look
      *                     for defaults.
@@ -218,6 +219,7 @@ public class PulsatorLayout extends RelativeLayout {
     /**
      * Gets the current color of the pulse effect in integer
      * Defaults to Color.rgb(0, 116, 193);
+     *
      * @return an integer representation of color
      */
     public int getColor() {
@@ -228,6 +230,7 @@ public class PulsatorLayout extends RelativeLayout {
      * Sets the current color of the pulse effect in integer
      * Takes effect immediately
      * Usage: Color.parseColor("<hex-value>") or getResources().getColor(R.color.colorAccent)
+     *
      * @param color : an integer representation of color
      */
     public void setColor(int color) {
@@ -398,22 +401,22 @@ public class PulsatorLayout extends RelativeLayout {
     private final Animator.AnimatorListener mAnimatorListener = new Animator.AnimatorListener() {
 
         @Override
-        public void onAnimationStart(Animator animator) {
+        public void onAnimationStart(@NonNull Animator animator) {
             mIsStarted = true;
         }
 
         @Override
-        public void onAnimationEnd(Animator animator) {
+        public void onAnimationEnd(@NonNull Animator animator) {
             mIsStarted = false;
         }
 
         @Override
-        public void onAnimationCancel(Animator animator) {
+        public void onAnimationCancel(@NonNull Animator animator) {
             mIsStarted = false;
         }
 
         @Override
-        public void onAnimationRepeat(Animator animator) {
+        public void onAnimationRepeat(@NonNull Animator animator) {
         }
 
     };

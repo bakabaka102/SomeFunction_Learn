@@ -26,7 +26,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.withContext
 import java.io.BufferedReader
 import java.io.IOException
@@ -164,7 +163,6 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
 
     @OptIn(DelicateCoroutinesApi::class)
     private fun loadStaticView(statisticsView: StatisticsView?, list: ReportResponse?) {
-        val counterContext = newSingleThreadContext("CounterContext")
         if (list != null) {
             statisticsView?.loadData(
                 list,
@@ -174,7 +172,7 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
     }
 
     private fun showImage() {
-        val imageJob = CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.IO).launch {
             try {
                 val imagePath =
                     "https://img.freepik.com/free-vector/3d-cartoon-character-woman-working-with-laptop-search-bar-illustration-vector-design_40876-3096.jpg"
@@ -188,7 +186,6 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
                 Log.d("aaa - eio", eio.message.toString())
             }
         }
-        //imageJob.cancel()
     }
 
     @Throws(MalformedURLException::class, IOException::class)

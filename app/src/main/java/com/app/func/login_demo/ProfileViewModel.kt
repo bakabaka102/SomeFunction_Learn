@@ -7,7 +7,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.app.func.features.room_database.AppDatabase
 import com.app.func.features.room_database.User
-import com.app.func.features.room_database.UserDao
 import com.app.func.features.room_database.UserRepository
 
 class ProfileViewModel(application: Application) : AndroidViewModel(application) {

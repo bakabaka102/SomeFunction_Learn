@@ -1,19 +1,19 @@
 package com.app.func.view.animation_view
 
-import android.graphics.Color
+import androidx.core.graphics.toColorInt
 
 object WaterColor {
 
-    val frontLostConnectionColors = Color.parseColor("#26868686")
-    val backLostConnectionColors2 = Color.parseColor("#4D868686")
+    val frontLostConnectionColors = "#26868686".toColorInt()
+    val backLostConnectionColors2 = "#4D868686".toColorInt()
 
-    val frontBlueColor = Color.parseColor("#2641B2FF")
-    val backBlueColor = Color.parseColor("#4D41B2FF")
+    val frontBlueColor = "#2641B2FF".toColorInt()
+    val backBlueColor = "#4D41B2FF".toColorInt()
 
-    val frontRedColor = Color.parseColor("#26FF0000")
-    val backRedColor = Color.parseColor("#4DFF0000")
+    val frontRedColor = "#26FF0000".toColorInt()
+    val backRedColor = "#4DFF0000".toColorInt()
 
-    val frontYellowColor = Color.parseColor("#33FDCB6E")
-    val backYellowColor = Color.parseColor("#66FDCB6E")
+    val frontYellowColor = "#33FDCB6E".toColorInt()
+    val backYellowColor = "#66FDCB6E".toColorInt()
 
 }
