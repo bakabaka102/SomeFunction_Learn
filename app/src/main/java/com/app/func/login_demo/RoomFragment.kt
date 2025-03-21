@@ -64,8 +64,10 @@ class RoomFragment : BaseFragment<RoomFragmentBinding>() {
                 .setIcon(R.drawable.ic_white_delete)
                 .show()
         }
-        binding?.recyclerviewUsers?.layoutManager = LinearLayoutManager(requireContext())
-        binding?.recyclerviewUsers?.adapter = userAdapter
+        binding?.recyclerviewUsers?.let {
+            it.layoutManager = LinearLayoutManager(requireContext())
+            it.adapter = userAdapter
+        }
     }
 
     override fun observeView() {

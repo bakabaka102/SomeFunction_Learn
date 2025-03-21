@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
 
-class MainActivityRepository(val apiService: IApiService) {
+class MainActivityRepository(private val apiService: IApiService) {
 
     private val _note = MutableLiveData<String>()
     val note: LiveData<String> get() = _note

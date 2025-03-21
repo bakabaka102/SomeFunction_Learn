@@ -1,20 +1,25 @@
 package com.app.func.coroutine_demo.retrofit.single
 
-import android.view.View
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.func.base_content.BaseFragment
-import com.app.func.coroutine_demo.data.model.Result
+import com.app.func.base_content.UiState
+import com.app.func.coroutine_demo.data.model.QuoteListResponse
+import com.app.func.networks.RetrofitService
 import com.app.func.databinding.FragmentSingleCallNetworkBinding
+import com.app.func.networks.ApiConstants
+import com.app.func.networks.RetrofitObjectGson
 import com.app.func.utils.Logger
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
+//https://github.com/amitshekhariitbhu/Learn-Kotlin-Coroutines
 class SingleCallNetworkFragment : BaseFragment<FragmentSingleCallNetworkBinding>() {
 
     private var quoteAdapter: QuotesAdapter = QuotesAdapter()
-    private var data: List<Result>? = null
     private val mViewModel: SingleCallNetworkViewModel by viewModels()
     override fun getViewBinding() = FragmentSingleCallNetworkBinding.inflate(layoutInflater)
 
@@ -28,7 +33,22 @@ class SingleCallNetworkFragment : BaseFragment<FragmentSingleCallNetworkBinding>
     }
 
     override fun observeData() {
+        RetrofitObjectGson.getRetrofit(ApiConstants.BASE_URL_QUOTE).create(RetrofitService::class.java)
+            .getQuoteNormal().enqueue(object : Callback<QuoteListResponse> {
+                override fun onResponse(
+                    call: Call<QuoteListResponse>,
+                    response: Response<QuoteListResponse>
+                ) {
+                    response.body()?.results?.let {
+                        Logger.d("Success, data = $it")
+                        //quoteAdapter.setData(it)
+                    }
+                }
 
+                override fun onFailure(call: Call<QuoteListResponse>, t: Throwable) {
+                    Logger.d("An occur --- ${t.message}")
+                }
+            })
     }
 
     override fun initActions() {
@@ -36,42 +56,50 @@ class SingleCallNetworkFragment : BaseFragment<FragmentSingleCallNetworkBinding>
     }
 
     private fun initObserver() {
-        mViewModel.quoteList.observe(viewLifecycleOwner) {
-            Logger.d("quoteList ${it.body()}")
-            data = it.body()?.results
-            data?.let { it1 ->
-                quoteAdapter.setData(it1)
+        mViewModel.uiState.observe(viewLifecycleOwner) { uiState ->
+            Logger.d("state receive --- $uiState")
+            when (uiState) {
+                is UiState.Success -> {
+                    uiState.data.body()?.results?.let {
+                        Logger.d("Success, data = $it")
+                        quoteAdapter.setData(it)
+                    }
+                    binding?.let {
+                        it.progressBar.isVisible = false
+                        it.recyclerView.isVisible = true
+                    }
+                }
+
+                is UiState.Loading -> {
+                    binding?.let {
+                        it.progressBar.isVisible = uiState.isLoading
+                        it.recyclerView.isVisible = uiState.isLoading
+                    }
+                }
+
+                is UiState.Error -> {
+                    binding?.let { binding ->
+                        binding.textStatus.text = uiState.message
+                        binding.textStatus.isVisible = true
+                        binding.progressBar.isVisible = false
+                        binding.recyclerView.isVisible = false
+                    }
+                }
             }
         }
-
-        mViewModel.errorMessage.observe(viewLifecycleOwner) {
-            Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
-            binding?.textStatus?.text = it
-            binding?.textStatus?.isVisible = true
-        }
-
-        mViewModel.loading.observe(viewLifecycleOwner) {
-            if (it) {
-                binding?.progressBar?.visibility = View.VISIBLE
-            } else {
-                binding?.progressBar?.visibility = View.GONE
-            }
-        }
-
         mViewModel.getQuotes()
     }
 
     private fun initRecyclerView() {
-        binding?.recyclerView?.layoutManager = LinearLayoutManager(activity)
-//        binding?.recyclerView?.addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
-        binding?.recyclerView?.addItemDecoration(
-            DividerItemDecoration(
-                activity,
-                (binding?.recyclerView?.layoutManager as LinearLayoutManager).orientation
+        binding?.let {
+            it.recyclerView.layoutManager = LinearLayoutManager(activity)
+            it.recyclerView.addItemDecoration(
+                DividerItemDecoration(
+                    activity,
+                    (it.recyclerView.layoutManager as LinearLayoutManager).orientation
+                )
             )
-        )
-        binding?.recyclerView?.adapter = quoteAdapter
-        //mViewModel.getQuotes()
-
+            it.recyclerView.adapter = quoteAdapter
+        }
     }
 }

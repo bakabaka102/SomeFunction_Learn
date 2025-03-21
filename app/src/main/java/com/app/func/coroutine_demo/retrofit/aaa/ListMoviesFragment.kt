@@ -5,8 +5,8 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.func.base_content.BaseFragment
-import com.app.func.coroutine_demo.retrofit.base.ApiConstants
 import com.app.func.databinding.FragmentSingleCallNetworkBinding
+import com.app.func.networks.ApiConstants
 
 class ListMoviesFragment : BaseFragment<FragmentSingleCallNetworkBinding>() {
 

@@ -1,22 +1,18 @@
 package com.app.func.coroutine_demo.retrofit.series
 
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.func.base_content.BaseFragment
-import com.app.func.coroutine_demo.data.model.QuoteListResponse
-import com.app.func.coroutine_demo.retrofit.base.ApiConstants
-import com.app.func.coroutine_demo.retrofit.base.RetrofitObject
-import com.app.func.coroutine_demo.retrofit.base.RetrofitService
-import com.app.func.coroutine_demo.retrofit.single.QuotesAdapter
+import com.app.func.base_content.UiState
 import com.app.func.databinding.FragmentSingleCallNetworkBinding
 import com.app.func.utils.Logger
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class SeriesCallFragment : BaseFragment<FragmentSingleCallNetworkBinding>() {
 
-    private var quoteAdapter: QuotesAdapter = QuotesAdapter()
+    private var userAdapter = UserAdapter()
+    private val viewModel: SeriesCallViewModel by viewModels()
     override fun getViewBinding() = FragmentSingleCallNetworkBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
@@ -37,32 +33,53 @@ class SeriesCallFragment : BaseFragment<FragmentSingleCallNetworkBinding>() {
     }
 
     private fun initObserver() {
-        RetrofitObject.getRetrofit(ApiConstants.BASE_URL_QUOTE).create(RetrofitService::class.java)
-            .getQuoteNormal().enqueue(object : Callback<QuoteListResponse> {
-                override fun onResponse(
-                    call: Call<QuoteListResponse>,
-                    response: Response<QuoteListResponse>
-                ) {
-                    val valueGet: QuoteListResponse? = response.body()
-                    Logger.d("Okie, thanh cong   --- ${valueGet?.results}")
-                    valueGet?.results?.let { quoteAdapter.setData(it) }
+        viewModel.fetchUsers()
+        viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
+            Logger.d("state receive --- $uiState")
+            when (uiState) {
+                is UiState.Loading -> {
+                    Logger.d("Loading")
+                    binding?.let {
+                        it.progressBar.isVisible = uiState.isLoading
+                        it.recyclerView.isVisible = uiState.isLoading
+                    }
                 }
 
-                override fun onFailure(call: Call<QuoteListResponse>, t: Throwable) {
-                    Logger.d("Co loi xay ra   --- ")
+                is UiState.Success -> {
+                    Logger.d("Success")
+                    uiState.data.let {
+                        userAdapter.setData(it)
+                    }
+                    binding?.let {
+                        it.progressBar.isVisible = false
+                        it.recyclerView.isVisible = true
+                    }
                 }
-            })
+
+                is UiState.Error -> {
+                    Logger.d("Error - ${uiState.message}")
+                    binding?.let { binding ->
+                        binding.textStatus.text = uiState.message
+                        binding.textStatus.isVisible = true
+                        binding.progressBar.isVisible = false
+                        binding.recyclerView.isVisible = false
+                    }
+                }
+            }
+        }
     }
 
     private fun initRecyclerView() {
-        binding?.recyclerView?.layoutManager = LinearLayoutManager(activity)
-//        binding?.recyclerView?.addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
-        binding?.recyclerView?.addItemDecoration(
-            DividerItemDecoration(
-                activity,
-                (binding?.recyclerView?.layoutManager as LinearLayoutManager).orientation
+        binding?.let {
+            it.recyclerView.layoutManager = LinearLayoutManager(activity)
+            it.recyclerView.addItemDecoration(
+                DividerItemDecoration(
+                    activity,
+                    LinearLayoutManager.VERTICAL
+                )
             )
-        )
-        binding?.recyclerView?.adapter = quoteAdapter
+            //(binding?.recyclerView?.layoutManager as LinearLayoutManager).orientation
+            it.recyclerView.adapter = userAdapter
+        }
     }
 }

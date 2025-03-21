@@ -1,4 +1,4 @@
-package com.app.func.coroutine_demo.retrofit.base
+package com.app.func.networks
 
 import com.app.func.coroutine_demo.data.model.QuoteListResponse
 import com.app.func.coroutine_demo.retrofit.aaa.Movie

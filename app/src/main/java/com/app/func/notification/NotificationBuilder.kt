@@ -11,10 +11,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.Style
 import androidx.core.app.NotificationManagerCompat
-import com.app.func.utils.Constants
 import com.app.func.utils.Logger
 
 class NotificationBuilder(val context: Context) : INotificationBuilder {
+
+    companion object {
+        const val NOTIFICATION_CHANEL_ID = "notification_chanel"
+    }
 
     override fun createNotificationChannel(
         chanelId: String,
@@ -28,28 +31,6 @@ class NotificationBuilder(val context: Context) : INotificationBuilder {
             }
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
-        }
-    }
-
-    private fun createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "channel_name"
-            val descriptionText = "channel_description"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(Constants.CHANNEL_NOTIFY_ID, name, importance)
-            //channel.apply { description = descriptionText }
-            channel.description = descriptionText
-
-            val channel2 =
-                NotificationChannel(Constants.CHANNEL_NOTIFY_ID_2, "Channel2_name", importance)
-            channel2.apply { description = "descriptionText" }
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            val notificationManager = context.getSystemService(NotificationManager::class.java)
-            notificationManager.createNotificationChannel(channel)
-            notificationManager.createNotificationChannel(channel2)
         }
     }
 

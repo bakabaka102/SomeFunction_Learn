@@ -48,12 +48,16 @@ object AppDependencies {
     const val ROOM_COMPILER = "androidx.room:room-compiler:${Version.ROOM}"
     const val ROOM_RXJAVA3 = "androidx.room:room-rxjava3:${Version.ROOM}"
 
-    const val KOTLINX_SERIALIZATION_JSON = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Version.KOTLINX_SERIALIZATION_JSON}"
     const val OKHTTP_BOM = "com.squareup.okhttp3:okhttp-bom:${Version.OKHTTP}"
     const val OKHTTP = "com.squareup.okhttp3:okhttp"
     const val LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor"
     const val JAVAX_ANNOTATION = "org.glassfish:javax.annotation:${Version.JAVAX_ANNOTATION}"
     const val COMPOSE_RUNTIME = "androidx.compose.runtime:runtime:${Version.COMPOSE}"
+
+    const val CONVERTER_MOSHI = "com.squareup.retrofit2:converter-moshi:${Version.CONVERTER_MOSHI}"
+    const val MOSHI = "com.squareup.moshi:moshi:${Version.MOSHI}"
+    const val MOSHI_KOTLIN = "com.squareup.moshi:moshi-kotlin:${Version.MOSHI}"
+
 
     object Version {
         const val CORE_KTX = "1.15.0"
@@ -87,8 +91,9 @@ object AppDependencies {
         const val COROUTINES = "1.9.0"
         const val RETROFIT_COROUTINES_ADAPTER = "0.9.2"
         const val CONVERTER_SCALARS = "2.9.0"
+        const val CONVERTER_MOSHI = "2.9.0"
+        const val MOSHI = "1.12.0"
         const val ROOM = "2.6.1"
-        const val KOTLINX_SERIALIZATION_JSON = "1.6.3"
         const val OKHTTP = "4.12.0"
         const val JAVAX_ANNOTATION = "10.0-b28"
         const val COMPOSE = "1.7.8"

@@ -132,16 +132,6 @@
             app:layout_constraintStart_toEndOf="@id/btnEditTexts"
             app:layout_constraintTop_toBottomOf="@id/btnRoomCoroutines" />
 
-        <Button
-            android:id="@+id/btnNotify2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_16dp"
-            android:layout_marginTop="@dimen/dimen_8dp"
-            android:text="Notify2"
-            android:textAllCaps="false"
-            app:layout_constraintStart_toEndOf="@id/btnNotify"
-            app:layout_constraintTop_toBottomOf="@id/btnRoomCoroutines" />
 
         <Button
             android:id="@+id/btnCoroutinesFunc"

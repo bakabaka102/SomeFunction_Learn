@@ -1,52 +1,27 @@
 package com.app.func.coroutine_demo.retrofit.single
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.app.func.base_content.UiState
 import com.app.func.coroutine_demo.data.model.QuoteListResponse
-import com.app.func.coroutine_demo.retrofit.base.ApiConstants
-import com.app.func.coroutine_demo.retrofit.base.RetrofitObject
-import com.app.func.coroutine_demo.retrofit.base.RetrofitService
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import com.app.func.coroutine_demo.data.repository.SingleCallRepository
+import com.app.func.networks.ApiConstants
+import com.app.func.networks.RetrofitService
+import com.app.func.networks.RetrofitObjectGson
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 class SingleCallNetworkViewModel : ViewModel() {
 
-    private val api =
-        RetrofitObject.getRetrofit(ApiConstants.BASE_URL_QUOTE).create(RetrofitService::class.java)
-    private val quotes = MutableLiveData<Response<QuoteListResponse>>()
-    val errorMessage = MutableLiveData<String>()
-    private var job: Job? = null
-    val loading = MutableLiveData<Boolean>()
-
-    val quoteList: MutableLiveData<Response<QuoteListResponse>> = quotes
+    private val retrofitService =
+        RetrofitObjectGson.getRetrofit(ApiConstants.BASE_URL_QUOTE).create(RetrofitService::class.java)
+    private val repository = SingleCallRepository(retrofitService)
+    val uiState : LiveData<UiState<Response<QuoteListResponse>>> get() = repository.uiState
 
     fun getQuotes() {
-        job = CoroutineScope(Dispatchers.IO).launch {
-            loading.postValue(true)
-            val response: Response<QuoteListResponse>? = api.getQuotes()
-            withContext(Dispatchers.Main) {
-                if (response?.isSuccessful == true) {
-//                    movieList.postValue(response.body())
-//                    quotes.postValue(response)
-                    quotes.value = api.getQuotes()
-                    loading.value = false
-                } else {
-                    errorMessage.postValue(response?.message())
-                    loading.postValue(false)
-                }
-            }
+        viewModelScope.launch {
+            repository.getAllQuotes()
         }
-//        viewModelScope.launch {
-//            quotes.value = api.getQuotes()
-//        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        job?.cancel()
     }
 }

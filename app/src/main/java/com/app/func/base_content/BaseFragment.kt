@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.app.func.coroutine_demo.retrofit.aaa.DataRepository
-import com.app.func.coroutine_demo.retrofit.base.RetrofitObject
-import com.app.func.coroutine_demo.retrofit.base.RetrofitService
+import com.app.func.networks.RetrofitService
+import com.app.func.networks.RetrofitObjectGson
 import com.app.func.utils.Logger
 
 abstract class BaseFragment<VB : ViewBinding> : Fragment() {
@@ -31,7 +31,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     }
 
     fun getRepositoryRetrofit(url: String): DataRepository {
-        val retrofitService = RetrofitObject.getRetrofit(url).create(RetrofitService::class.java)
+        val retrofitService = RetrofitObjectGson.getRetrofit(url).create(RetrofitService::class.java)
         return DataRepository(retrofitService)
     }
 

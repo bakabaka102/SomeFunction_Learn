@@ -68,9 +68,6 @@ class MainContainFragment : BaseFragment<MainContainFragmentBinding>() {
         binding?.btnNotify?.setOnClickListener {
             showNotification()
         }
-        binding?.btnNotify2?.setOnClickListener {
-
-        }
         binding?.btnCoroutinesFunc?.setOnClickListener {
             findNavController().navigate(R.id.snowyMainFragment)
         }
@@ -79,14 +76,14 @@ class MainContainFragment : BaseFragment<MainContainFragmentBinding>() {
     private fun showNotification() {
         MyToast.showToast(context, "Notify", Toast.LENGTH_SHORT)
         notificationBuilder?.createNotificationChannel(
-            chanelId = "Notify_1",
+            chanelId = NotificationBuilder.NOTIFICATION_CHANEL_ID,
             channelName = "Notify_1",
             channelDescription = "Notify_${getNotificationId()}",
             importance = NotificationManagerCompat.IMPORTANCE_DEFAULT,
         )
         notificationBuilder?.showNotification(
-            chanelId = "Notify_1",
-            smallIcon = R.drawable.her,
+            chanelId = NotificationBuilder.NOTIFICATION_CHANEL_ID,
+            smallIcon = R.mipmap.ic_launcher_round,
             contentTitle = longTitle1,
             contentText = longText1,
             style = NotificationCompat.BigTextStyle().bigText(longText1),
