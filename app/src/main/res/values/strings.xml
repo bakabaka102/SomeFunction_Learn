@@ -113,4 +113,11 @@
         <item>@string/json_content</item>
         <item>@string/json_about</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="scalars">Scalars</string>
+    <string name="serialization">Serialization</string>
+    <string name="moshi">Moshi</string>
+    <string name="gson">Gson</string>
+    <string name="coroutine">Coroutine</string>
 </resources>

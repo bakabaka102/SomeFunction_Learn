@@ -11,33 +11,8 @@ import java.util.concurrent.TimeUnit
 
 class SearchByRXFragment : BaseFragment<FragmentSearchByRxBinding>() {
 
-
     private fun initObservers() {
-        /* binding!!.searchView.getQueryTextChangeObservable()
-             .debounce(300, TimeUnit.MILLISECONDS)
-             .filter { text ->
-                 if (text.isEmpty()) {
-                     binding!!.textViewResult.text = ""
-                     return@filter false
-                 } else {
-                     return@filter true
-                 }
-             }
-             .distinctUntilChanged()
-             .switchMap { query ->
-                 dataFromNetwork(query)
-                     .doOnError {
-                         // handle error
-                     }
-                     .onErrorReturn { "" }
-             }
-             .subscribeOn(Schedulers.io())
-             .observeOn(AndroidSchedulers.mainThread())
-             .subscribe { result ->
-                 binding!!.textViewResult.text = result
-             }*/
-
-        binding?.searchView?.getQueryTextChangeObservable()
+        val disposable = binding?.searchView?.getQueryTextChangeObservable()
             ?.debounce(300, TimeUnit.MILLISECONDS)
             ?.filter {
                 if (it.isEmpty()) {
@@ -56,6 +31,9 @@ class SearchByRXFragment : BaseFragment<FragmentSearchByRxBinding>() {
             ?.subscribe {
                 binding?.textViewResult?.text = it
             }
+        disposable?.let {
+            compositeDisposable.add(it)
+        }
     }
 
     /**

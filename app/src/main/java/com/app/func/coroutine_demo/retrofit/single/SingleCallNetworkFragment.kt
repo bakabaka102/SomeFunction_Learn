@@ -5,9 +5,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.func.base_content.BaseFragment
-import com.app.func.base_content.UiState
+import com.app.func.base_content.ResultState
 import com.app.func.coroutine_demo.data.model.QuoteListResponse
-import com.app.func.networks.RetrofitService
+import com.app.func.networks.IQuotableService
 import com.app.func.databinding.FragmentSingleCallNetworkBinding
 import com.app.func.networks.ApiConstants
 import com.app.func.networks.RetrofitObjectGson
@@ -33,7 +33,7 @@ class SingleCallNetworkFragment : BaseFragment<FragmentSingleCallNetworkBinding>
     }
 
     override fun observeData() {
-        RetrofitObjectGson.getRetrofit(ApiConstants.BASE_URL_QUOTE).create(RetrofitService::class.java)
+        RetrofitObjectGson.getRetrofit(ApiConstants.BASE_URL_QUOTE).create(IQuotableService::class.java)
             .getQuoteNormal().enqueue(object : Callback<QuoteListResponse> {
                 override fun onResponse(
                     call: Call<QuoteListResponse>,
@@ -56,11 +56,11 @@ class SingleCallNetworkFragment : BaseFragment<FragmentSingleCallNetworkBinding>
     }
 
     private fun initObserver() {
-        mViewModel.uiState.observe(viewLifecycleOwner) { uiState ->
-            Logger.d("state receive --- $uiState")
-            when (uiState) {
-                is UiState.Success -> {
-                    uiState.data.body()?.results?.let {
+        mViewModel.resultState.observe(viewLifecycleOwner) { resultState ->
+            Logger.d("state receive --- $resultState")
+            when (resultState) {
+                is ResultState.Success -> {
+                    resultState.data.body()?.results?.let {
                         Logger.d("Success, data = $it")
                         quoteAdapter.setData(it)
                     }
@@ -70,16 +70,16 @@ class SingleCallNetworkFragment : BaseFragment<FragmentSingleCallNetworkBinding>
                     }
                 }
 
-                is UiState.Loading -> {
+                is ResultState.Loading -> {
                     binding?.let {
-                        it.progressBar.isVisible = uiState.isLoading
-                        it.recyclerView.isVisible = uiState.isLoading
+                        it.progressBar.isVisible = resultState.isLoading
+                        it.recyclerView.isVisible = resultState.isLoading
                     }
                 }
 
-                is UiState.Error -> {
+                is ResultState.Error -> {
                     binding?.let { binding ->
-                        binding.textStatus.text = uiState.message
+                        binding.textStatus.text = resultState.message
                         binding.textStatus.isVisible = true
                         binding.progressBar.isVisible = false
                         binding.recyclerView.isVisible = false

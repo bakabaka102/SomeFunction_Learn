@@ -4,12 +4,12 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.app.func.networks.IApiService
+import com.app.func.networks.IJsonPlaceHolderService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
 
-class MainActivityRepository(private val apiService: IApiService) {
+class MainActivityRepository(private val apiService: IJsonPlaceHolderService) {
 
     private val _note = MutableLiveData<String>()
     val note: LiveData<String> get() = _note
@@ -38,7 +38,9 @@ class MainActivityRepository(private val apiService: IApiService) {
         withContext(Dispatchers.IO) {
             _isLoading.postValue(true)
             try {
-                val response = apiService.downloadNote()
+                val response = apiService.downloadNote().also {
+                    Log.d("fileTag", "File downloaded ${it.contentLength()}")
+                }
                 _body.postValue(response)
             } catch (e: Exception) {
                 e.printStackTrace()

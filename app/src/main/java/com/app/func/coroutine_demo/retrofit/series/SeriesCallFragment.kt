@@ -5,7 +5,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.func.base_content.BaseFragment
-import com.app.func.base_content.UiState
+import com.app.func.base_content.ResultState
 import com.app.func.databinding.FragmentSingleCallNetworkBinding
 import com.app.func.utils.Logger
 
@@ -34,20 +34,20 @@ class SeriesCallFragment : BaseFragment<FragmentSingleCallNetworkBinding>() {
 
     private fun initObserver() {
         viewModel.fetchUsers()
-        viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
-            Logger.d("state receive --- $uiState")
-            when (uiState) {
-                is UiState.Loading -> {
+        viewModel.resultState.observe(viewLifecycleOwner) { resultState ->
+            Logger.d("state receive --- $resultState")
+            when (resultState) {
+                is ResultState.Loading -> {
                     Logger.d("Loading")
                     binding?.let {
-                        it.progressBar.isVisible = uiState.isLoading
-                        it.recyclerView.isVisible = uiState.isLoading
+                        it.progressBar.isVisible = resultState.isLoading
+                        it.recyclerView.isVisible = resultState.isLoading
                     }
                 }
 
-                is UiState.Success -> {
+                is ResultState.Success -> {
                     Logger.d("Success")
-                    uiState.data.let {
+                    resultState.data.let {
                         userAdapter.setData(it)
                     }
                     binding?.let {
@@ -56,10 +56,10 @@ class SeriesCallFragment : BaseFragment<FragmentSingleCallNetworkBinding>() {
                     }
                 }
 
-                is UiState.Error -> {
-                    Logger.d("Error - ${uiState.message}")
+                is ResultState.Error -> {
+                    Logger.d("Error - ${resultState.message}")
                     binding?.let { binding ->
-                        binding.textStatus.text = uiState.message
+                        binding.textStatus.text = resultState.message
                         binding.textStatus.isVisible = true
                         binding.progressBar.isVisible = false
                         binding.recyclerView.isVisible = false

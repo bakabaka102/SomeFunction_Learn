@@ -44,8 +44,6 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     inner class UserViewHolder(val binding: ItemUserBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val consItem = binding.consItem
-//        val consDeleteButton = binding.consDeleteButton
 
         fun bindDataToView(user: User) {
             binding.textNameUser.text = user.name

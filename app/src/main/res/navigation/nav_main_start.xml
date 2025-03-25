@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_homeStartFragment_to_mainContainFragment"
             app:destination="@id/mainContainFragment" />
+        <action
+            android:id="@+id/action_homeStartFragment_to_retrofitFragment"
+            app:destination="@id/retrofitFragment" />
     </fragment>
 
     <fragment
@@ -241,6 +244,11 @@
         android:name="com.app.func.view.animations_custom.ImageGalleryFragment"
         android:label="ImageGalleryFragment"
         tools:layout="@layout/image_gallery_fragment" />
+    <fragment
+        android:id="@+id/retrofitFragment"
+        android:name="com.app.func.view.retrofit.RetrofitFragment"
+        android:label="fragment_retrofit"
+        tools:layout="@layout/fragment_retrofit" />
 
 
 </navigation>

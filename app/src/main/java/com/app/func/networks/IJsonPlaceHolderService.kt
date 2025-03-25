@@ -5,7 +5,7 @@ import okhttp3.ResponseBody
 import retrofit2.http.GET
 import retrofit2.http.Streaming
 
-interface IApiService {
+interface IJsonPlaceHolderService {
 
     @GET(ApiConstants.NOTE)
     suspend fun getNote(): String

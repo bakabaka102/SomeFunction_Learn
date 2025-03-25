@@ -2,13 +2,13 @@ package com.app.func.coroutine_demo.retrofit.aaa
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.app.func.networks.RetrofitService
+import com.app.func.networks.IQuotableService
 import com.app.func.view.recycler_view_custom.ravi_recyclerview.ItemCart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 
-class DataRepository(private val retrofitService: RetrofitService) : IDataRepository{
+class DataRepository(private val service: IQuotableService) : IDataRepository{
 
     private val _errorMovie = MutableLiveData<String>()
     val errorMovie : LiveData<String> get() = _errorMovie
@@ -26,7 +26,7 @@ class DataRepository(private val retrofitService: RetrofitService) : IDataReposi
     override suspend fun getAllMovies() {
         withContext(Dispatchers.IO){
             try {
-                val response = retrofitService.getAllMovies()
+                val response = service.getAllMovies()
                 if (response.isSuccessful) {
                     _allMovies.postValue(response)
                 }
@@ -39,7 +39,7 @@ class DataRepository(private val retrofitService: RetrofitService) : IDataReposi
     override suspend fun getMenuFood() {
         withContext(Dispatchers.IO) {
             try {
-                val response = retrofitService.getMenuFood()
+                val response = service.getMenuFood()
                 if (response.isSuccessful) {
                     _menuFood.postValue(response)
                 }

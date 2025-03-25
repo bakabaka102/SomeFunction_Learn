@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:context=".view.retrofit.RetrofitFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_32dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnScalars"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/scalars"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btnSerialization"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/serialization"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btnMoshi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/moshi"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btnGson"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gson"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btnRX"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rx"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btnCoroutine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/coroutine"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -115,6 +115,10 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
             Log.d("fileTag", it)
         }
 
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            Log.d("fileTag", "isLoading --- $it")
+        }
+
     }
 
     override fun observeView() {
@@ -150,8 +154,8 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
             startActivity(Intent(requireContext(), ViewAnimationsActivity2::class.java))
         }
 
-        binding?.btnDataBinding?.setOnClickListener {
-
+        binding?.btnRetrofit?.setOnClickListener {
+            findNavController().navigate(R.id.retrofitFragment)
         }
     }
 

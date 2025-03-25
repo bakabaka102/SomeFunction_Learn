@@ -5,13 +5,14 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.app.func.networks.IJsonPlaceHolderService
 import com.app.func.networks.RetrofitObjectScalar
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 
 class MainActivityViewModel(val app: Application) : AndroidViewModel(app) {
 
-    private val apiService = RetrofitObjectScalar.apiService
+    private val apiService = RetrofitObjectScalar.getRetrofit().create(IJsonPlaceHolderService::class.java)
     private val repository = MainActivityRepository(apiService)
     val note: LiveData<String> get() = repository.note
     val error: LiveData<String> get() = repository.error

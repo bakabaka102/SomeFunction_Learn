@@ -116,7 +116,7 @@
                 android:id="@+id/btnAnimation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Anim2"
+                android:text="Anim"
                 android:textAllCaps="false"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="@+id/btnThread"
@@ -146,10 +146,10 @@
                 app:layout_constraintTop_toTopOf="@id/btnRX" />
 
             <Button
-                android:id="@+id/btnDataBinding"
+                android:id="@+id/btnRetrofit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Binding"
+                android:text="Retrofit"
                 android:textAllCaps="false"
                 app:layout_constraintEnd_toEndOf="@+id/btnAnimation"
                 app:layout_constraintStart_toStartOf="@+id/btnAnimation"

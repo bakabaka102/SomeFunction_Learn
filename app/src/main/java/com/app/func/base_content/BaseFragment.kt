@@ -9,11 +9,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.app.func.coroutine_demo.retrofit.aaa.DataRepository
-import com.app.func.networks.RetrofitService
+import com.app.func.networks.IQuotableService
 import com.app.func.networks.RetrofitObjectGson
 import com.app.func.utils.Logger
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 abstract class BaseFragment<VB : ViewBinding> : Fragment() {
+
+    val compositeDisposable = CompositeDisposable()
 
     protected var binding: VB? = null
     abstract fun getViewBinding(): VB
@@ -31,8 +34,8 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     }
 
     fun getRepositoryRetrofit(url: String): DataRepository {
-        val retrofitService = RetrofitObjectGson.getRetrofit(url).create(RetrofitService::class.java)
-        return DataRepository(retrofitService)
+        val apiService = RetrofitObjectGson.getRetrofit(url).create(IQuotableService::class.java)
+        return DataRepository(apiService)
     }
 
     override fun onCreateView(
@@ -87,6 +90,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+        compositeDisposable.clear()
         Logger.d("${this::class.java.simpleName} onDestroyView is called...")
     }
 
