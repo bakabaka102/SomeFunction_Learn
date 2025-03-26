@@ -1,4 +1,4 @@
-import ProjectInfo.versionName
+import ProjectInfo.VERSION_NAME
 
 plugins {
     id("com.android.library")
@@ -11,7 +11,7 @@ android {
 
     // existing configurations...
     val archivesBaseName = project.name
-    setProperty("archivesBaseName", "${archivesBaseName}-$versionName")
+    setProperty("archivesBaseName", "${archivesBaseName}-$VERSION_NAME")
     defaultConfig {
         minSdk = 23
 

@@ -28,9 +28,11 @@ class WaveHelper(private val waveView: WaveWaterView?) {
         val waveShiftAnim = ObjectAnimator.ofFloat(
             waveView, "waveShiftRatio", 0f, 1f
         )
-        waveShiftAnim.repeatCount = ValueAnimator.INFINITE
-        waveShiftAnim.duration = DURATION_ANIMATION_WAVE
-        waveShiftAnim.interpolator = LinearInterpolator()
+        waveShiftAnim.apply {
+            repeatCount = ValueAnimator.INFINITE
+            duration = DURATION_ANIMATION_WAVE
+            interpolator = LinearInterpolator()
+        }
         animators.add(waveShiftAnim)
 
         // amplitude animation.
@@ -38,13 +40,16 @@ class WaveHelper(private val waveView: WaveWaterView?) {
         val amplitudeAnim = ObjectAnimator.ofFloat(
             waveView, "amplitudeRatio", 0.02f, 0.02f
         )
-        amplitudeAnim.repeatCount = ValueAnimator.INFINITE
-        amplitudeAnim.repeatMode = ValueAnimator.REVERSE
-        amplitudeAnim.duration = DURATION_AMPLITUDE
-        amplitudeAnim.interpolator = LinearInterpolator()
+        amplitudeAnim.apply {
+            repeatCount = ValueAnimator.INFINITE
+            repeatMode = ValueAnimator.REVERSE
+            duration = DURATION_AMPLITUDE
+            interpolator = LinearInterpolator()
+        }
         animators.add(amplitudeAnim)
-        mAnimatorSet = AnimatorSet()
-        mAnimatorSet?.playTogether(animators)
+        mAnimatorSet = AnimatorSet().apply {
+            playTogether(animators)
+        }
     }
 
     init {

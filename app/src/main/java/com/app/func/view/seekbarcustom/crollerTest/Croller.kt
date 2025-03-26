@@ -12,6 +12,7 @@ import com.app.func.view.seekbarcustom.crollerTest.utilities.Utils.convertDpToPi
 import com.app.func.view.seekbarcustom.crollerTest.utilities.Utils.getDistance
 import kotlin.math.*
 import androidx.core.graphics.toColorInt
+import androidx.core.content.withStyledAttributes
 
 class Croller @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -132,76 +133,77 @@ class Croller @JvmOverloads constructor(
     }
 
     private fun initXMLAttrs(context: Context, attrs: AttributeSet?) {
-        val a = context.obtainStyledAttributes(attrs, R.styleable.Croller)
-        setEnabled(a.getBoolean(R.styleable.Croller_enabled_c, true))
-        progress = a.getInt(R.styleable.Croller_start_progress, 1)
-        setLabel(a.getString(R.styleable.Croller_label))
-        setBackCircleColor(a.getColor(R.styleable.Croller_back_circle_color, backCircleColor))
-        setMainCircleColor(a.getColor(R.styleable.Croller_main_circle_color, mainCircleColor))
-        setIndicatorColor(a.getColor(R.styleable.Croller_indicator_color, indicatorColor))
-        setProgressPrimaryColor(
-            a.getColor(R.styleable.Croller_progress_primary_color, progressPrimaryColor)
-        )
-        setProgressSecondaryColor(
-            a.getColor(R.styleable.Croller_progress_secondary_color, progressSecondaryColor)
-        )
-        setBackCircleDisabledColor(
-            a.getColor(R.styleable.Croller_back_circle_disable_color, backCircleDisabledColor)
-        )
-        setMainCircleDisabledColor(
-            a.getColor(R.styleable.Croller_main_circle_disable_color, mainCircleDisabledColor)
-        )
-        setIndicatorDisabledColor(
-            a.getColor(R.styleable.Croller_indicator_disable_color, indicatorDisabledColor)
-        )
-        setProgressPrimaryDisabledColor(
-            a.getColor(
-                R.styleable.Croller_progress_primary_disable_color,
-                progressPrimaryDisabledColor
+        context.withStyledAttributes(attrs, R.styleable.Croller) {
+            setEnabled(getBoolean(R.styleable.Croller_enabled_c, true))
+            progress = getInt(R.styleable.Croller_start_progress, 1)
+            setLabel(getString(R.styleable.Croller_label))
+            setBackCircleColor(getColor(R.styleable.Croller_back_circle_color, backCircleColor))
+            setMainCircleColor(getColor(R.styleable.Croller_main_circle_color, mainCircleColor))
+            setIndicatorColor(getColor(R.styleable.Croller_indicator_color, indicatorColor))
+            setProgressPrimaryColor(
+                getColor(R.styleable.Croller_progress_primary_color, progressPrimaryColor)
             )
-        )
-        setProgressSecondaryDisabledColor(
-            a.getColor(
-                R.styleable.Croller_progress_secondary_disable_color, progressSecondaryDisabledColor
+            setProgressSecondaryColor(
+                getColor(R.styleable.Croller_progress_secondary_color, progressSecondaryColor)
             )
-        )
-        setLabelSize(
-            a.getDimension(
-                R.styleable.Croller_label_size, TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP,
-                    labelSize, resources.displayMetrics
+            setBackCircleDisabledColor(
+                getColor(R.styleable.Croller_back_circle_disable_color, backCircleDisabledColor)
+            )
+            setMainCircleDisabledColor(
+                getColor(R.styleable.Croller_main_circle_disable_color, mainCircleDisabledColor)
+            )
+            setIndicatorDisabledColor(
+                getColor(R.styleable.Croller_indicator_disable_color, indicatorDisabledColor)
+            )
+            setProgressPrimaryDisabledColor(
+                getColor(
+                    R.styleable.Croller_progress_primary_disable_color,
+                    progressPrimaryDisabledColor
                 )
             )
-        )
-        setLabelColor(a.getColor(R.styleable.Croller_label_color, labelColor))
-        setlabelDisabledColor(
-            a.getColor(R.styleable.Croller_label_disabled_color, labelDisabledColor)
-        )
-        labelFont = a.getString(R.styleable.Croller_label_font)
-        labelStyle = a.getInt(R.styleable.Croller_label_style, 0)
-        setIndicatorWidth(a.getFloat(R.styleable.Croller_indicator_width, 7f))
-        setIsContinuous(a.getBoolean(R.styleable.Croller_is_continuous, false))
-        setProgressPrimaryCircleSize(
-            a.getFloat(R.styleable.Croller_progress_primary_circle_size, -1f)
-        )
-        setProgressSecondaryCircleSize(
-            a.getFloat(R.styleable.Croller_progress_secondary_circle_size, -1f)
-        )
-        setProgressPrimaryStrokeWidth(
-            a.getFloat(R.styleable.Croller_progress_primary_stroke_width, 25f)
-        )
-        setProgressSecondaryStrokeWidth(
-            a.getFloat(R.styleable.Croller_progress_secondary_stroke_width, 10f)
-        )
-        setSweepAngle(a.getInt(R.styleable.Croller_sweep_angle, -1))
-        setStartOffset(a.getInt(R.styleable.Croller_start_offset, 30))
-        setMax(a.getInt(R.styleable.Croller_max_c, 25))
-        setMin(a.getInt(R.styleable.Croller_min_c, 1))
-        deg = (min + 2).toFloat()
-        setBackCircleRadius(a.getFloat(R.styleable.Croller_back_circle_radius, -1f))
-        setProgressRadius(a.getFloat(R.styleable.Croller_progress_radius, -1f))
-        setAntiClockwise(a.getBoolean(R.styleable.Croller_anticlockwise, false))
-        a.recycle()
+            setProgressSecondaryDisabledColor(
+                getColor(
+                    R.styleable.Croller_progress_secondary_disable_color,
+                    progressSecondaryDisabledColor
+                )
+            )
+            setLabelSize(
+                getDimension(
+                    R.styleable.Croller_label_size, TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP,
+                        labelSize, resources.displayMetrics
+                    )
+                )
+            )
+            setLabelColor(getColor(R.styleable.Croller_label_color, labelColor))
+            setlabelDisabledColor(
+                getColor(R.styleable.Croller_label_disabled_color, labelDisabledColor)
+            )
+            labelFont = getString(R.styleable.Croller_label_font)
+            labelStyle = getInt(R.styleable.Croller_label_style, 0)
+            setIndicatorWidth(getFloat(R.styleable.Croller_indicator_width, 7f))
+            setIsContinuous(getBoolean(R.styleable.Croller_is_continuous, false))
+            setProgressPrimaryCircleSize(
+                getFloat(R.styleable.Croller_progress_primary_circle_size, -1f)
+            )
+            setProgressSecondaryCircleSize(
+                getFloat(R.styleable.Croller_progress_secondary_circle_size, -1f)
+            )
+            setProgressPrimaryStrokeWidth(
+                getFloat(R.styleable.Croller_progress_primary_stroke_width, 25f)
+            )
+            setProgressSecondaryStrokeWidth(
+                getFloat(R.styleable.Croller_progress_secondary_stroke_width, 10f)
+            )
+            setSweepAngle(getInt(R.styleable.Croller_sweep_angle, -1))
+            setStartOffset(getInt(R.styleable.Croller_start_offset, 30))
+            setMax(getInt(R.styleable.Croller_max_c, 25))
+            setMin(getInt(R.styleable.Croller_min_c, 1))
+            deg = (min + 2).toFloat()
+            setBackCircleRadius(getFloat(R.styleable.Croller_back_circle_radius, -1f))
+            setProgressRadius(getFloat(R.styleable.Croller_progress_radius, -1f))
+            setAntiClockwise(getBoolean(R.styleable.Croller_anticlockwise, false))
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

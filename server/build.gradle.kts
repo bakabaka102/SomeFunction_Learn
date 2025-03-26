@@ -13,7 +13,7 @@ plugins {
 
 val gitInfo = GitInfo(rootProject.projectDir)
 val applicationVersion = StringBuilder().apply {
-    append(ProjectInfo.versionName)
+    append(ProjectInfo.VERSION_NAME)
     val suffix = when {
         gitInfo.isRelease -> ""
         gitInfo.isReleaseCandidate -> "-${gitInfo.releaseCandidateSuffix}"
@@ -21,7 +21,7 @@ val applicationVersion = StringBuilder().apply {
         else -> "-${gitInfo.branch}-${gitInfo.hash}"
     }
     append(suffix)
-    append("-${ProjectInfo.buildNumber}")
+    append("-${ProjectInfo.BUILD_NUMBER}")
 }
 
 android {

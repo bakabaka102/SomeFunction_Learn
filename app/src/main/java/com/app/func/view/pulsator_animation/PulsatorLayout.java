@@ -96,13 +96,6 @@ public class PulsatorLayout extends RelativeLayout {
         TypedArray attr = context.getTheme().obtainStyledAttributes(
                 attrs, R.styleable.Pulsator, 0, 0);
 
-        mCount = DEFAULT_COUNT;
-        mDuration = DEFAULT_DURATION;
-        mRepeat = DEFAULT_REPEAT;
-        mStartFromScratch = DEFAULT_START_FROM_SCRATCH;
-        mColor = DEFAULT_COLOR;
-        mInterpolator = DEFAULT_INTERPOLATOR;
-
         try {
             mCount = attr.getInteger(R.styleable.Pulsator_pulse_count, DEFAULT_COUNT);
             mDuration = attr.getInteger(R.styleable.Pulsator_pulse_duration,
@@ -363,16 +356,12 @@ public class PulsatorLayout extends RelativeLayout {
      * @return Interpolator object of type
      */
     private static Interpolator createInterpolator(int type) {
-        switch (type) {
-            case INTERP_ACCELERATE:
-                return new AccelerateInterpolator();
-            case INTERP_DECELERATE:
-                return new DecelerateInterpolator();
-            case INTERP_ACCELERATE_DECELERATE:
-                return new AccelerateDecelerateInterpolator();
-            default:
-                return new LinearInterpolator();
-        }
+        return switch (type) {
+            case INTERP_ACCELERATE -> new AccelerateInterpolator();
+            case INTERP_DECELERATE -> new DecelerateInterpolator();
+            case INTERP_ACCELERATE_DECELERATE -> new AccelerateDecelerateInterpolator();
+            default -> new LinearInterpolator();
+        };
     }
 
     @Override

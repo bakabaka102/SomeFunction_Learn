@@ -99,25 +99,15 @@
     <string name="channel_description_1" translatable="false">Much longer text that cannot fit one line…</string>
 
     <!--Text in Json File-->
-    <string name="json_home" translatable="false">Home</string>
-    <string name="json_content" translatable="false">Content</string>
-    <string name="json_about" translatable="false">About</string>
     <string name="nav_open" translatable="false">Open</string>
     <string name="nav_close" translatable="false">Close\n</string>
     <string name="main_animation_screen" translatable="false">Main animation screen</string>
     <string name="bubble_animation_screen" translatable="false">Bubble animation screen</string>
     <string name="bubble_emitter_animation_screen" translatable="false">Bubble emitter animation screen</string>
 
-    <string-array name="title_fragment_json">
-        <item>@string/json_home</item>
-        <item>@string/json_content</item>
-        <item>@string/json_about</item>
-    </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="scalars">Scalars</string>
-    <string name="serialization">Serialization</string>
-    <string name="moshi">Moshi</string>
-    <string name="gson">Gson</string>
-    <string name="coroutine">Coroutine</string>
+    <string name="scalars" translatable="false">Scalars</string>
+    <string name="serialization" translatable="false">Serialization</string>
+    <string name="moshi" translatable="false">Moshi</string>
+    <string name="gson" translatable="false">Gson</string>
+    <string name="coroutine" translatable="false">Coroutine</string>
 </resources>

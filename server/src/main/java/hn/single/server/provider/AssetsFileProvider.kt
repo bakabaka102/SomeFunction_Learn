@@ -6,11 +6,8 @@ import android.content.res.AssetFileDescriptor
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
-import android.os.ParcelFileDescriptor
 import hn.single.server.Constants
-import java.io.File
 import java.io.FileNotFoundException
-import java.io.FileOutputStream
 import java.io.IOException
 
 

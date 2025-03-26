@@ -46,7 +46,7 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
         val tutorial = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arguments?.getParcelable(TUTORIAL_KEY, Tutorial::class.java)
         } else {
-            arguments?.getParcelable(TUTORIAL_KEY) as? Tutorial
+            arguments?.getParcelable(TUTORIAL_KEY)
         }
         coroutineScope.launch(Dispatchers.Main) {
             val originalBitmap: Bitmap? = tutorial?.let { getOriginalBitmapAsync(it) }

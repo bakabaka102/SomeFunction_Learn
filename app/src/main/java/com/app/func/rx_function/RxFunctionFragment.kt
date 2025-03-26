@@ -61,7 +61,6 @@ class RxFunctionFragment : BaseFragment<FragmentRxFunctionBinding>(), View.OnCli
     }
 
     override fun initActions() {
-        binding?.btnForecast?.setOnClickListener(this)
         binding?.btnSimpleRx?.setOnClickListener(this)
         binding?.btnMapRx?.setOnClickListener(this)
         binding?.btnZipRx?.setOnClickListener(this)
@@ -83,7 +82,8 @@ class RxFunctionFragment : BaseFragment<FragmentRxFunctionBinding>(), View.OnCli
         val thumbPos = (sb.paddingLeft + (width * sb.progress / sb.max) +
                 //take into consideration the margin added (in this case it is 10dp)
                 convertDpToPixel(10f).roundToInt())
-        mBinding.marker.tvProgress.text = " $message "
+        val progress = " $message "
+        mBinding.marker.tvProgress.text = progress
         mBinding.marker.tvProgress.post {
 //            val display: Display =
 //                (this.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
@@ -116,16 +116,12 @@ class RxFunctionFragment : BaseFragment<FragmentRxFunctionBinding>(), View.OnCli
 
 
     private fun convertDpToPixel(dp: Float): Float {
-        val resources: Resources = resources
         val metrics: DisplayMetrics = resources.displayMetrics
         return dp * (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
     }
 
     override fun onClick(view: View?) {
         when (view) {
-            binding?.btnForecast -> {
-
-            }
 
             binding?.btnSimpleRx -> {
                 findNavController().navigate(R.id.simpleRXFragment)

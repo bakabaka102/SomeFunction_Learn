@@ -14,8 +14,8 @@ import com.app.func.features.room_database.UserListAdapter
 class RoomFragment : BaseFragment<RoomFragmentBinding>() {
 
     private var userAdapter = UserListAdapter()
-    private val mViewModel: ProfileViewModel by viewModels()
-    var user: User? = null
+    private val mViewModel: RoomViewModel by viewModels()
+    private var user: User? = null
 
     override fun getViewBinding() = RoomFragmentBinding.inflate(layoutInflater)
 

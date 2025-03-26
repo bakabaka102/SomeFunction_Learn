@@ -139,9 +139,9 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.app.func.login_demo.UserRoomFragment"
+        android:name="com.app.func.login_demo.PulsatorFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/fragment_user_room">
+        tools:layout="@layout/fragment_pulsator">
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
@@ -156,20 +156,12 @@
         android:id="@+id/signInFragment"
         android:name="com.app.func.login_demo.SignInFragment"
         android:label="SignInFragment"
-        tools:layout="@layout/fragment_sign_in">
-        <action
-            android:id="@+id/action_signInFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_sign_in"/>
     <fragment
-        android:id="@+id/signUpFragment"
+        android:id="@+id/waveDropFragment"
         android:name="com.app.func.login_demo.WaveDropFragment"
-        android:label="SignUpFragment"
-        tools:layout="@layout/fragment_wave_drop">
-        <action
-            android:id="@+id/action_signUpFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </fragment>
+        android:label="WaveDropFragment"
+        tools:layout="@layout/fragment_wave_drop"/>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.app.func.login_demo.RoomFragment"
@@ -215,30 +207,12 @@
         android:id="@+id/noteHomeFragment"
         android:name="com.app.func.features.room_database_sqlite_mvvm.view.NoteHomeFragment"
         android:label="NoteHomeFragment"
-        tools:layout="@layout/note_home_layout">
-        <action
-            android:id="@+id/action_noteHomeFragment_to_noteDeleteAddFragment"
-            app:destination="@id/noteDeleteAddFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/noteDeleteAddFragment"
-        android:name="com.app.func.features.room_database_sqlite_mvvm.view.NoteDeleteAddFragment"
-        android:label="NoteDeleteAddFragment"
-        tools:layout="@layout/note_add_edit_layout" />
+        tools:layout="@layout/note_home_layout"/>
     <fragment
         android:id="@+id/mainRoomCoroutinesFragment"
         android:name="com.app.func.features.room_coroutines.views.MainRoomCoroutinesFragment"
         android:label="MainRoomCoroutinesFragment"
-        tools:layout="@layout/note_home_layout">
-        <action
-            android:id="@+id/action_mainRoomCoroutinesFragment_to_addNewWordFragment"
-            app:destination="@id/addNewWordFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/addNewWordFragment"
-        android:name="com.app.func.features.room_coroutines.views.AddNewWordFragment"
-        android:label="add_new_word_fragment"
-        tools:layout="@layout/add_new_word_fragment" />
+        tools:layout="@layout/note_home_layout"/>
     <fragment
         android:id="@+id/imageGalleryFragment"
         android:name="com.app.func.view.animations_custom.ImageGalleryFragment"

@@ -8,7 +8,6 @@ import android.content.res.Resources
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.Gravity
-import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
@@ -18,6 +17,8 @@ import kotlin.math.cos
 import kotlin.math.sin
 import androidx.core.graphics.toColorInt
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
+import kotlin.math.abs
 
 class TemperatureView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -38,7 +39,6 @@ class TemperatureView @JvmOverloads constructor(
     private var colorTo = "#D62020".toColorInt()
     private val colorCircleOutline = "#33FFFFFF".toColorInt()
     private val colorCircleProgress = "#CAE2CA".toColorInt()
-    private val colortext = Color.BLACK
     private var colorBackgroundBorder = "#CAE2CA".toColorInt()
     private var gradientColors = intArrayOf(colorFrom, colorTo)
     private var gradientPositions = floatArrayOf(0 / 360f, 360f / 360f)
@@ -49,7 +49,6 @@ class TemperatureView @JvmOverloads constructor(
     private var centerY: Float = 0f
     private var radius: Float = 0f
     private val progress = 66f
-    private var textSizeTempOnProgressCurve = 0
     private var mListValue = arrayListOf<String>()
 
     private var _currentAngle = 0f
@@ -73,7 +72,8 @@ class TemperatureView @JvmOverloads constructor(
     private var widthScreen = 0
     private var _progressGradientColors = intArrayOf(
         "#84CCF5".toColorInt(),
-        "#6AB8C6".toColorInt(), "#64B22A".toColorInt()
+        "#6AB8C6".toColorInt(),
+        "#64B22A".toColorInt(),
     )
     private var _progressGradientPositions = floatArrayOf(0f / 360f, 180f / 360f, 360f / 360f)
 
@@ -114,10 +114,10 @@ class TemperatureView @JvmOverloads constructor(
         val heightOfTextViews = textViewTemperature.height + textViewHint.height
         if (textViewHint.isGone) {
             textViewTemperature.y = (centerY - radius * RATIO_CIRCLE_IN) +
-                (radius * RATIO_CIRCLE_IN * 2 - textViewTemperature.height) / 2
+                    (radius * RATIO_CIRCLE_IN * 2 - textViewTemperature.height) / 2
         } else {
             textViewTemperature.y = (centerY - radius * RATIO_CIRCLE_IN) +
-                (radius * RATIO_CIRCLE_IN * 2 - heightOfTextViews) / 2
+                    (radius * RATIO_CIRCLE_IN * 2 - heightOfTextViews) / 2
 
             textViewHint.y = textViewTemperature.y + textViewTemperature.height
         }
@@ -149,54 +149,63 @@ class TemperatureView @JvmOverloads constructor(
     }
 
     private fun initPaint() {
-        paintCircleOutline.strokeWidth = strokeWidthBorder
-        paintCircleOutline.style = Paint.Style.FILL_AND_STROKE
-        paintCircleOutline.strokeCap = Paint.Cap.ROUND
-        paintCircleOutline.color = colorCircleOutline
-        paintCircleOutline.isAntiAlias = true
+        paintCircleOutline.apply {
+            strokeWidth = strokeWidthBorder
+            style = Paint.Style.FILL_AND_STROKE
+            strokeCap = Paint.Cap.ROUND
+            color = colorCircleOutline
+            isAntiAlias = true
+        }
 
-        paintCircle.strokeWidth = strokeWidthBorder
-        paintCircle.style = Paint.Style.FILL_AND_STROKE
-        paintCircle.strokeCap = Paint.Cap.ROUND
-        paintCircle.color = colorFrom
-        paintCircle.isAntiAlias = true
+        paintCircle.apply {
+            strokeWidth = strokeWidthBorder
+            style = Paint.Style.FILL_AND_STROKE
+            strokeCap = Paint.Cap.ROUND
+            color = colorFrom
+            isAntiAlias = true
+        }
 
-        paintBorder.strokeWidth = strokeWidthBorder
-        paintBorder.style = Paint.Style.STROKE
-        paintBorder.strokeCap = Paint.Cap.ROUND
-        paintBorder.color = colorCircleProgress
-        paintBorder.isAntiAlias = true
+        paintBorder.apply {
+            strokeWidth = strokeWidthBorder
+            style = Paint.Style.STROKE
+            strokeCap = Paint.Cap.ROUND
+            color = colorCircleProgress
+            isAntiAlias = true
+        }
 
-        paintBorderBackground.strokeWidth = strokeWidthBorder
-        paintBorderBackground.color = colorBackgroundBorder// Color.GRAY // default
-        paintBorderBackground.style = Paint.Style.STROKE
-        paintBorderBackground.strokeCap = Paint.Cap.ROUND
-        paintBorderBackground.isAntiAlias = true
+        paintBorderBackground.apply {
+            strokeWidth = strokeWidthBorder
+            color = colorBackgroundBorder// Color.GRAY // default
+            style = Paint.Style.STROKE
+            strokeCap = Paint.Cap.ROUND
+            isAntiAlias = true
+        }
 
+        paintLine.apply {
+            strokeWidth = 5f
+            color = colorFrom // default
+            style = Paint.Style.STROKE
+            strokeCap = Paint.Cap.ROUND
+            isAntiAlias = true
+        }
 
-        paintLine.strokeWidth = strokeWidthLine
-        paintLine.color = colorFrom // default
-        paintLine.style = Paint.Style.STROKE
-        paintLine.strokeCap = Paint.Cap.ROUND
-        paintLine.isAntiAlias = true
+        paintText.apply {
+            typeface = ResourcesCompat.getFont(context, R.font.roboto_medium)
+            strokeWidth = 3f
+            color = Color.BLACK// default
+            style = Paint.Style.FILL
+            isAntiAlias = true
+            textSize = resources.getDimensionPixelSize(R.dimen.dimen_14sp).toFloat()
+        }
 
-        textSizeTempOnProgressCurve = resources.getDimensionPixelSize(R.dimen.dimen_14sp)
-        val paintTypeFace = ResourcesCompat.getFont(context, R.font.roboto_medium)
-        paintText.typeface = paintTypeFace
-        paintText.strokeWidth = strokeWidthText
-        paintText.color = colortext// default
-        paintText.style = Paint.Style.FILL
-        paintText.isAntiAlias = true
-        paintText.textSize = textSizeTempOnProgressCurve.toFloat()
-
-        paintPointCurrent.color = Color.WHITE
-        paintPointCurrent.style = Paint.Style.FILL_AND_STROKE
-        paintPointCurrent.strokeCap = Paint.Cap.ROUND
-        paintPointCurrent.isAntiAlias = true
-        val _shadowColor = "#664F5979".toColorInt()
-        paintPointCurrent.setShadowLayer(_radiusShaderDotWhite, 0f, 0f, _shadowColor)
-        setLayerType(LAYER_TYPE_NONE, paintPointCurrent)
-
+        paintPointCurrent.apply {
+            color = Color.WHITE
+            style = Paint.Style.FILL_AND_STROKE
+            strokeCap = Paint.Cap.ROUND
+            isAntiAlias = true
+            setShadowLayer(_radiusShaderDotWhite, 0f, 0f, "#664F5979".toColorInt())
+            setLayerType(LAYER_TYPE_NONE, this)
+        }
     }
 
     private fun initColorByState() {
@@ -209,6 +218,7 @@ class TemperatureView @JvmOverloads constructor(
                 gradientColors = intArrayOf(colorFrom, colorMid, colorTo)
                 gradientPositions = floatArrayOf(0f / 360f, 180f / 360f, 360f / 360f)
             }
+
             State.WARNING_RED, State.STOP_WORKING -> {
                 colorFrom = "#FF7373".toColorInt()
                 colorMid = "#F24648".toColorInt()
@@ -217,6 +227,7 @@ class TemperatureView @JvmOverloads constructor(
                 gradientColors = intArrayOf(colorFrom, colorMid, colorTo)
                 gradientPositions = floatArrayOf(0f / 360f, 180f / 360f, 360f / 360f)
             }
+
             State.NO_SIGNAL -> {
                 colorFrom = "#E6EBED".toColorInt()
                 colorTo = "#ACBAC2".toColorInt()
@@ -224,6 +235,7 @@ class TemperatureView @JvmOverloads constructor(
                 gradientColors = intArrayOf(colorFrom, colorTo)
                 gradientPositions = floatArrayOf(0f / 360f, 360f / 360f)
             }
+
             State.WARNING_YELLOW -> {
                 colorFrom = "#FFD585".toColorInt()
                 colorMid = "#FFBA34".toColorInt()
@@ -395,12 +407,10 @@ class TemperatureView @JvmOverloads constructor(
         invalidate()
         _state = state
         if (_state == State.NO_SIGNAL || _state == State.STOP_WORKING) {
-            if (_state == State.NO_SIGNAL) {
-                textViewHint.visibility = View.GONE
-            }
+            textViewHint.isVisible = _state != State.NO_SIGNAL
             textViewTemperature.text = "--°C"
         } else {
-            textViewHint.visibility = View.VISIBLE
+            textViewHint.isVisible = true
         }
         initColorByState()
         initPaint()
@@ -424,7 +434,7 @@ class TemperatureView @JvmOverloads constructor(
             calculateAngle(_currentTemp!!)
         }
         _targetSettingAngle = calculateAngle(_targetTemp!!)
-        _newSweepAngle = -Math.abs(_targetSettingAngle - _currentAngle)
+        _newSweepAngle = -abs(_targetSettingAngle - _currentAngle)
         if (_runningState == RunningMode.INCREASE) {
             invalidate()
             return
@@ -517,8 +527,6 @@ class TemperatureView @JvmOverloads constructor(
     }
 
     companion object {
-        private const val strokeWidthLine = 5f
-        private const val strokeWidthText = 3f
         private const val RATIO_CIRCLE_IN = 180f / 237f
         private const val RATIO_CIRCLE_PROGRESS = 237f / 375f
         private const val RATIO_PADDING_TOP = 32f / 375f

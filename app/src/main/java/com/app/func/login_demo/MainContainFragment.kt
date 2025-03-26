@@ -43,8 +43,8 @@ class MainContainFragment : BaseFragment<MainContainFragmentBinding>() {
         binding?.btnSignIn?.setOnClickListener {
             findNavController().navigate(R.id.signInFragment)
         }
-        binding?.btnSignUp?.setOnClickListener {
-            findNavController().navigate(R.id.signUpFragment)
+        binding?.btnWaveDrop?.setOnClickListener {
+            findNavController().navigate(R.id.waveDropFragment)
         }
         binding?.btnGotoRecyclerView?.setOnClickListener {
             findNavController().navigate(R.id.listUserFragment)

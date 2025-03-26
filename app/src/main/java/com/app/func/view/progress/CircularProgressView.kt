@@ -10,14 +10,15 @@ import android.view.View
 import com.app.func.R
 import kotlin.math.cos
 import kotlin.math.sin
+import androidx.core.graphics.toColorInt
 
 class CircularProgressView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
     private val ovalSpace = RectF()
-    private val parentArcColor = Color.parseColor("#DFE6F3")
-    private val fillArcColor = Color.parseColor("#0097A7")
+    private val parentArcColor = "#DFE6F3".toColorInt()
+    private val fillArcColor = "#0097A7".toColorInt()
     private val startAngle = 150f
     private val sweepAngle = 250f
     private val minValue = 40f
@@ -45,7 +46,7 @@ class CircularProgressView @JvmOverloads constructor(
     private val paintDots = Paint().apply {
         style = Paint.Style.FILL_AND_STROKE
         isAntiAlias = true
-        color = Color.parseColor("#90ee02")
+        color = "#90ee02".toColorInt()
         strokeWidth = 40f
         strokeCap = Paint.Cap.ROUND
     }

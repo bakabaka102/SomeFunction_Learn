@@ -8,6 +8,8 @@ import android.content.res.Resources
 import android.os.Build
 import android.provider.Settings
 import android.text.TextUtils
+import android.view.WindowInsets
+import android.view.WindowManager
 import java.io.IOException
 import java.text.DecimalFormat
 import java.text.Normalizer
@@ -36,13 +38,24 @@ object Utils {
      * Get status bar height in pixel
      */
     @SuppressLint("InternalInsetResource")
-    fun getStatusBarHeight(context: Context): Int {
-        var sttBarHeight = 0
+    fun getStatusBarHeight(context: Context, windowManager: WindowManager): Int {
+        /*var sttBarHeight = 0
         val resId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
         if (resId > 0) {
             sttBarHeight = context.resources.getDimensionPixelSize(resId)
         }
-        return sttBarHeight
+        return sttBarHeight*/
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val windowMetrics = windowManager.currentWindowMetrics
+            val insets = windowMetrics.windowInsets.getInsets(WindowInsets.Type.statusBars())
+            insets.top
+        } else {
+            // Fallback for older Android versions
+            val resourceId = Resources.getSystem().getIdentifier("status_bar_height", "dimen", "android")
+            if (resourceId > 0) Resources.getSystem().getDimensionPixelSize(resourceId) else 0
+        }
+
+
     }
 
     fun dipToPx(context: Context, dip: Float): Int {

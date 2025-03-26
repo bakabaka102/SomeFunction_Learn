@@ -30,7 +30,7 @@ class BallView @JvmOverloads constructor(
     private var mHeight = 200
 
     init {
-        initViews(attrs)
+        initViews()
     }
 
     private fun randomColor(): Int {
@@ -42,7 +42,7 @@ class BallView @JvmOverloads constructor(
         )
     }
 
-    private fun initViews(attrs: AttributeSet?) {
+    private fun initViews() {
         //Initialize all balls (set colors and brushes, initialize the angle of movement)
         val randomColor = randomColor()
         //mBalls = arrayOf(mCount)

@@ -17,6 +17,7 @@ import kotlin.math.min
 /**
  * Created by booncol on 04.07.2016.
  *
+ * https://github.com/booncol/Pulsator4Droid
  */
 class Pulsator @JvmOverloads constructor(
     context: Context,
@@ -256,12 +257,6 @@ class Pulsator @JvmOverloads constructor(
         val attr = context.theme.obtainStyledAttributes(
             attrs, R.styleable.Pulsator, 0, 0
         )
-        mCount = DEFAULT_COUNT
-        mDuration = DEFAULT_DURATION
-        mRepeat = DEFAULT_REPEAT
-        mStartFromScratch = DEFAULT_START_FROM_SCRATCH
-        mColor = DEFAULT_COLOR
-        mInterpolator = DEFAULT_INTERPOLATOR
         try {
             mCount = attr.getInteger(R.styleable.Pulsator_pulse_count, DEFAULT_COUNT)
             mDuration = attr.getInteger(R.styleable.Pulsator_pulse_duration, DEFAULT_DURATION)

@@ -9,7 +9,7 @@ import com.app.func.features.room_database.AppDatabase
 import com.app.func.features.room_database.User
 import com.app.func.features.room_database.UserRepository
 
-class ProfileViewModel(application: Application) : AndroidViewModel(application) {
+class RoomViewModel(application: Application) : AndroidViewModel(application) {
 
     private val database = AppDatabase.initInstanceDatabase(application)
     private val repository: UserRepository by lazy {

@@ -3,13 +3,13 @@ package com.app.func.login_demo
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import com.app.func.base_content.BaseFragment
-import com.app.func.databinding.FragmentUserRoomBinding
+import com.app.func.databinding.FragmentPulsatorBinding
 import java.util.Locale
 
 
-class UserRoomFragment : BaseFragment<FragmentUserRoomBinding>() {
+class PulsatorFragment : BaseFragment<FragmentPulsatorBinding>() {
 
-    override fun getViewBinding() = FragmentUserRoomBinding.inflate(layoutInflater)
+    override fun getViewBinding() = FragmentPulsatorBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
 
