@@ -1,9 +1,9 @@
-package com.app.func.thread_demo.snowy.utils
+package com.app.func.features.viewpagers
 
 import android.graphics.Bitmap
 import android.graphics.Color
-import java.util.*
 import androidx.core.graphics.createBitmap
+import java.util.Random
 
 object SnowFilter {
     private var COLOR_MAX = 0xff

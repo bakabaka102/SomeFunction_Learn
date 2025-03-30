@@ -2,11 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:padding="@dimen/dimen_16dp"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tutorialName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="12dp"
@@ -17,11 +18,10 @@
 
     <TextView
         android:id="@+id/tutorialDesc"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tutorialName"
         android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="15dp"
         android:textColor="@android:color/black"
@@ -30,14 +30,11 @@
 
     <TextView
         android:id="@+id/errorMessage"
-        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tutorialDesc"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
         android:elevation="@dimen/dimen_16dp"
         android:textColor="@android:color/holo_red_light"
         android:textSize="15sp"
@@ -54,11 +51,12 @@
 
     <ImageView
         android:id="@+id/snowFilterImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dimen_160dp"
+        android:layout_height="@dimen/dimen_160dp"
         android:layout_below="@+id/tutorialDesc"
         android:layout_centerInParent="true"
         android:layout_marginTop="10dp"
+        android:contentDescription="@string/description"
         tools:src="@mipmap/ic_launcher" />
 
 </RelativeLayout>

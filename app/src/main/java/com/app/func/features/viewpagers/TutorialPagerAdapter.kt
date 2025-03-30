@@ -1,9 +1,9 @@
-package com.app.func.thread_demo.snowy
+package com.app.func.features.viewpagers
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.app.func.thread_demo.snowy.model.Tutorial
+import com.app.func.features.viewpagers.model.Tutorial
 
 class TutorialPagerAdapter(
     private val tutorialList: List<Tutorial>, fm: FragmentManager

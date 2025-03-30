@@ -1,9 +1,9 @@
-package com.app.func.login_demo.adapter
+package com.app.func.features.viewpagers
 
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.app.func.login_demo.TabInfo
+import com.app.func.features.viewpagers.model.TabInfo
 
 class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 

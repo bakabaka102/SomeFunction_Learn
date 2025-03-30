@@ -15,7 +15,7 @@ interface WordDao {
     fun getAlphabetizedWords(): List<Word>
 
     @Query("SELECT * FROM word_table ORDER BY word ASC")
-    fun loadAllWords(): Flow<List<Word>>
+    fun loadAllWords(): Flow<List<Word>> //Flow giúp cập nhật dữ liệu theo thời gian thực
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(word: Word): Long

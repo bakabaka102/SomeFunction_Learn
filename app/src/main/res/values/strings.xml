@@ -88,8 +88,8 @@
     <string name="title" translatable="false">Title</string>
     <string name="description" translatable="false">Description</string>
     <string name="priority" translatable="false">Priority</string>
-    <string name="room_rx_mvvm" translatable="false">RoomRxMVVM</string>
-    <string name="room_coroutines" translatable="false">Room Coroutines</string>
+    <string name="room_rx_mvvm" translatable="false">RoomRX</string>
+    <string name="room_coroutines" translatable="false">RoomFlow</string>
     <string name="save" translatable="false">Save</string>
     <string name="hint_word" translatable="false">Word</string>
     <string name="ball_1" translatable="false">Bóng_1</string>

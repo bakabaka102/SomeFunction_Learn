@@ -1,7 +1,8 @@
-package com.app.func.thread_demo.snowy.model
+package com.app.func.features.viewpagers.model
 
 import android.content.Context
 import android.os.Parcelable
+import androidx.fragment.app.Fragment
 import com.app.func.R
 //import kotlinx.android.parcel.Parcelize
 import kotlinx.parcelize.Parcelize
@@ -45,3 +46,8 @@ fun getTutorialData(context: Context?): List<Tutorial> {
     )
     return tutorialList
 }
+
+data class TabInfo(
+    val title: String,
+    val fragment: Fragment,
+)

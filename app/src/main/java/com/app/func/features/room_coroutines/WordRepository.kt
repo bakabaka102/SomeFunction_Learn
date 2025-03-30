@@ -3,24 +3,31 @@ package com.app.func.features.room_coroutines
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.app.func.base_content.DataResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
 
 class WordRepository(private val wordDao: WordDao) : IWordRepository {
 
-    private val _allWords: MutableLiveData<List<Word>> = MutableLiveData<List<Word>>()
-    val allWords: LiveData<List<Word>> get() = _allWords
+    private val _allWords = MutableLiveData<List<Word>>()
+    val allWords get() = wordDao.loadAllWords()
+    //val allWords get() = wordDao.loadAllWords()
+    private val _wordState = MutableLiveData<DataResult<List<Word>>>(DataResult.Loading)
+    //val allWords: LiveData<List<Word>> get() = _allWords
+    val wordState: LiveData<DataResult<List<Word>>> get() = _wordState
 
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
     override suspend fun allWords() {
         withContext(Dispatchers.IO) {
             try {
-                _allWords.postValue(wordDao.getAlphabetizedWords())
+                val words = wordDao.getAlphabetizedWords()
+                _wordState.postValue(DataResult.Success(words))
             } catch (ex: Exception) {
-                ex.printStackTrace()
+                _wordState.value = DataResult.Error(ex)
                 null
             }
         }

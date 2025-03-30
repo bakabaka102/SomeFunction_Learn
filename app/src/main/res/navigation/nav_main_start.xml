@@ -190,7 +190,7 @@
     </fragment>
     <fragment
         android:id="@+id/snowyMainFragment"
-        android:name="com.app.func.thread_demo.snowy.ViewPagerFragment"
+        android:name="com.app.func.features.viewpagers.ViewPagerFragment"
         android:label="fragment_snowy_main"
         tools:layout="@layout/fragment_view_pager" />
     <fragment
@@ -207,12 +207,12 @@
         android:id="@+id/noteHomeFragment"
         android:name="com.app.func.features.room_database_sqlite_mvvm.view.NoteHomeFragment"
         android:label="NoteHomeFragment"
-        tools:layout="@layout/note_home_layout"/>
+        tools:layout="@layout/fragment_main_room_coroutine"/>
     <fragment
         android:id="@+id/mainRoomCoroutinesFragment"
         android:name="com.app.func.features.room_coroutines.views.MainRoomCoroutinesFragment"
         android:label="MainRoomCoroutinesFragment"
-        tools:layout="@layout/note_home_layout"/>
+        tools:layout="@layout/fragment_main_room_coroutine"/>
     <fragment
         android:id="@+id/imageGalleryFragment"
         android:name="com.app.func.view.animations_custom.ImageGalleryFragment"

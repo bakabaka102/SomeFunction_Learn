@@ -14,5 +14,5 @@ data class Word(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @ColumnInfo(name = "word")
-    val word: String
+    var word: String,
 )

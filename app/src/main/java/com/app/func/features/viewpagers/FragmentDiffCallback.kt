@@ -1,7 +1,7 @@
-package com.app.func.login_demo.adapter
+package com.app.func.features.viewpagers
 
 import androidx.recyclerview.widget.DiffUtil
-import com.app.func.login_demo.TabInfo
+import com.app.func.features.viewpagers.model.TabInfo
 
 class FragmentDiffCallback(
     private val oldList: List<TabInfo>,

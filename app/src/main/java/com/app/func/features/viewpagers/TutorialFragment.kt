@@ -1,4 +1,4 @@
-package com.app.func.thread_demo.snowy
+package com.app.func.features.viewpagers
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -8,8 +8,7 @@ import android.view.View
 import com.app.func.R
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentTutorialBinding
-import com.app.func.thread_demo.snowy.model.Tutorial
-import com.app.func.thread_demo.snowy.utils.SnowFilter
+import com.app.func.features.viewpagers.model.Tutorial
 import java.io.InputStream
 import java.net.URL
 import kotlinx.coroutines.CoroutineExceptionHandler

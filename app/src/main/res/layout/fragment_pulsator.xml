@@ -7,111 +7,98 @@
     tools:context=".login_demo.PulsatorFragment"
     tools:ignore="HardcodedText">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/consButtons"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.app.func.view.pulsator_animation.Pulsator
+            android:id="@+id/pulsator"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_0dp"
+            android:layout_alignParentTop="true"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:pulse_color="@color/color_00BCD4"
+            app:pulse_count="4"
+            app:pulse_duration="7000"
+            app:pulse_interpolator="Decelerate"
+            app:pulse_repeat="0"
+            app:pulse_startFromScratch="false">
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_centerInParent="true"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_red_delete" />
+
+        </com.app.func.view.pulsator_animation.Pulsator>
+
+        <RelativeLayout
+            android:id="@+id/layoutCount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:paddingVertical="@dimen/dimen_8dp"
+            app:layout_constraintTop_toBottomOf="@id/pulsator">
 
-            <LinearLayout
-                android:id="@+id/controls_layout"
-                android:layout_width="match_parent"
+            <SeekBar
+                android:id="@+id/seek_count"
+                android:layout_width="@dimen/dimen_200dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_16dp"
-                android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@id/pulsator">
+                android:layout_centerInParent="true"
+                android:max="9" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="@dimen/dimen_8dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/seek_count"
+                android:text="@string/label_count"
+                tools:ignore="RelativeOverlap" />
 
-                    <SeekBar
-                        android:id="@+id/seek_count"
-                        android:layout_width="@dimen/dimen_200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:max="9" />
+            <TextView
+                android:id="@+id/text_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/seek_count" />
+        </RelativeLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@id/seek_count"
-                        android:text="@string/label_count"
-                        tools:ignore="RelativeOverlap" />
+        <RelativeLayout
+            android:id="@+id/layoutDuration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/dimen_8dp"
+            app:layout_constraintTop_toBottomOf="@id/layoutCount">
 
-                    <TextView
-                        android:id="@+id/text_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@id/seek_count" />
-                </RelativeLayout>
+            <SeekBar
+                android:id="@+id/seek_duration"
+                android:layout_width="@dimen/dimen_200dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:max="100" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="@dimen/dimen_8dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/seek_duration"
+                android:text="@string/label_duration"
+                tools:ignore="RelativeOverlap" />
 
-                    <SeekBar
-                        android:id="@+id/seek_duration"
-                        android:layout_width="@dimen/dimen_200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:max="100" />
+            <TextView
+                android:id="@+id/text_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/seek_duration" />
+        </RelativeLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@id/seek_duration"
-                        android:text="@string/label_duration"
-                        tools:ignore="RelativeOverlap" />
 
-                    <TextView
-                        android:id="@+id/text_duration"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@id/seek_duration" />
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <com.app.func.view.pulsator_animation.Pulsator
-                android:id="@+id/pulsator"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_0dp"
-                android:layout_above="@id/controls_layout"
-                android:layout_alignParentTop="true"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:pulse_color="@color/color_00BCD4"
-                app:pulse_count="4"
-                app:pulse_duration="7000"
-                app:pulse_interpolator="Decelerate"
-                app:pulse_repeat="0"
-                app:pulse_startFromScratch="false">
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:layout_centerInParent="true"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_red_delete" />
-
-            </com.app.func.view.pulsator_animation.Pulsator>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
