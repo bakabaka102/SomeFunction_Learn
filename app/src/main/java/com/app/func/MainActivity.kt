@@ -15,9 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.app.func.base_content.BaseActivity
 import com.app.func.databinding.ActivityMainBinding
 import com.hn.libs.ICalculatorAidl
-import com.hn.libs.RemoteConstants
 import hn.single.server.IServiceAidl
-
 
 class MainActivity : BaseActivity<ActivityMainBinding>()
 /*,

@@ -1,8 +1,8 @@
 package com.app.func
 
-import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import com.app.func.base_content.BaseActivity
 import com.app.func.databinding.ActivityViewCustomBinding
 import com.app.func.utils.Logger
 import com.app.func.view.chart.stock.WaterTankTemperatureView
@@ -10,63 +10,62 @@ import com.app.func.view.seekbarcustom.crollerTest.Croller
 import com.app.func.view.seekbarcustom.crollerTest.OnCrollerChangeListener
 import com.app.func.view.seekbarcustom.crollerTest.OnProgressChangedListener
 
-class ViewCustomActivity : AppCompatActivity() {
+class ViewCustomActivity : BaseActivity<ActivityViewCustomBinding>() {
 
-    private lateinit var binding: ActivityViewCustomBinding
+    override fun instanceViewBinding() = ActivityViewCustomBinding.inflate(layoutInflater)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityViewCustomBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        binding.customSeekBar.setValueRange(1f, 18f)
-        binding.customSeekBar.setValueCurrent(12f)
-
-        binding.customSeekBar.onValueProgress = {
-            binding.toolTipSeekBar.visibility = View.VISIBLE
-            binding.toolTipSeekBar.x = it
-        }
-
-        binding.customSeekBar.onValueSelected = {
-            binding.toolTipSeekBar.setContentString(it.toInt().toString())
-        }
-
-        binding.customSeekBar.actionShowHideTooltip = {
-            if (it) {
-                binding.consToolTip.visibility = View.VISIBLE
-            } else {
-                binding.consToolTip.visibility = View.GONE
+    override fun initViews() {
+        mBinding.customSeekBar.apply {
+            setValueRange(1f, 18f)
+            setValueCurrent(12f)
+            onValueProgress = {
+                mBinding.toolTipSeekBar.visibility = View.VISIBLE
+                mBinding.toolTipSeekBar.x = it
+            }
+            onValueSelected = {
+                mBinding.toolTipSeekBar.setContentString(it.toInt().toString())
+            }
+            actionShowHideTooltip = {
+                mBinding.consToolTip.isVisible = it
             }
         }
 
-        binding.viewTempProgress.setMinMaxProgress(40, 75)
-        binding.viewTempProgress.setTemp(20)
-        binding.viewTempProgress.setTemperatureTitle(20.toString())
-        binding.viewTempProgress.settingTemp(50)
+        mBinding.viewTempProgress.apply {
+            setMinMaxProgress(40, 75)
+            setTemp(20)
+            setTemperatureTitle(20.toString())
+            settingTemp(50)
+        }
 
-        binding.waterViewTempProgress.setMinMaxProgress(40, 75)
-        binding.waterViewTempProgress.setTemp(20)
-        binding.waterViewTempProgress.setTemperatureTitle(20.toString())
-        binding.waterViewTempProgress.settingTemp(50)
-        binding.waterViewTempProgress.updateState(WaterTankTemperatureView.State.WORKING)
-
+        mBinding.waterViewTempProgress.apply {
+            setMinMaxProgress(40, 75)
+            setTemp(20)
+            setTemperatureTitle(20.toString())
+            settingTemp(50)
+            updateState(WaterTankTemperatureView.State.WORKING)
+        }
         initScrollSeekbar()
+    }
+
+    override fun initActions() {
 
     }
 
     private fun initScrollSeekbar() {
-//        binding.crollerSeekbar.setIndicatorWidth(10f)
-//        binding.crollerSeekbar.setBackCircleColor(Color.parseColor("#EDEDED"))
-//        binding.crollerSeekbar.setMainCircleColor(Color.WHITE)
-//        binding.crollerSeekbar.setMax(50)
-//        binding.crollerSeekbar.setStartOffset(45)
-//        binding.crollerSeekbar.setIsContinuous(false)
-//        binding.crollerSeekbar.setLabelColor(Color.BLACK)
-//        binding.crollerSeekbar.setProgressPrimaryColor(Color.parseColor("#0B3C49"))
-//        binding.crollerSeekbar.setIndicatorColor(Color.parseColor("#0B3C49"))
-//        binding.crollerSeekbar.setProgressSecondaryColor(Color.parseColor("#EEEEEE"))
+        /*mBinding.crollerSeekbar.apply {
+            setIndicatorWidth(10f)
+            setBackCircleColor(Color.parseColor("#EDEDED"))
+            setMainCircleColor(Color.WHITE)
+            setMax(50)
+            setStartOffset(45)
+            setIsContinuous(false)
+            setLabelColor(Color.BLACK)
+            setProgressPrimaryColor(Color.parseColor("#0B3C49"))
+            setIndicatorColor(Color.parseColor("#0B3C49"))
+            setProgressSecondaryColor(Color.parseColor("#EEEEEE"))
+        }*/
 
-        binding.crollerSeekbar.setOnCrollerChangeListener(object : OnCrollerChangeListener {
+        mBinding.crollerSeekbar.setOnCrollerChangeListener(object : OnCrollerChangeListener {
             override fun onProgressChanged(croller: Croller?, progress: Int) {
                 Logger.d("setOnCrollerChangeListener ----  $progress")
             }
@@ -80,7 +79,7 @@ class ViewCustomActivity : AppCompatActivity() {
             }
         })
 
-        binding.crollerSeekbar.setOnProgressChangedListener(object : OnProgressChangedListener {
+        mBinding.crollerSeekbar.setOnProgressChangedListener(object : OnProgressChangedListener {
             override fun onProgressChanged(progress: Int) {
                 // use the progress
                 Logger.d("setOnProgressChangedListener ------ $progress")
