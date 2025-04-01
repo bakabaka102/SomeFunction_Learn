@@ -9,9 +9,10 @@
 
     <com.app.func.view.all_demo.SmileyView
         android:id="@+id/smileyView"
-        android:layout_width="@dimen/dimen_160dp"
+        android:layout_width="@dimen/dimen_0dp"
         android:layout_height="@dimen/dimen_160dp"
         android:layout_marginTop="@dimen/dimen_8dp"
+        android:visibility="gone"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -134,14 +135,13 @@
 
 
         <Button
-            android:id="@+id/btnCoroutinesFunc"
+            android:id="@+id/viewPagers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_8dp"
             android:text="ViewPagers"
             android:textAllCaps="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/btnEditTexts"
             app:layout_constraintTop_toBottomOf="@+id/btnEditTexts" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

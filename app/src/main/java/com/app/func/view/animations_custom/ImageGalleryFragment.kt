@@ -10,8 +10,7 @@ class ImageGalleryFragment : BaseFragment<ImageGalleryFragmentBinding>() {
 
     private fun emitBubbles() {
         Handler(Looper.getMainLooper()).postDelayed({
-            val size = Random.nextInt(6, 16)
-            //binding?.bubbleEmitterView?.emitBubble(size)
+            Random.nextInt(6, 16)
             emitBubbles()
         }, Random.nextLong(100, 500))
     }

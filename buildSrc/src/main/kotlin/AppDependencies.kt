@@ -57,6 +57,7 @@ object AppDependencies {
     const val CONVERTER_MOSHI = "com.squareup.retrofit2:converter-moshi:${Version.CONVERTER_MOSHI}"
     const val MOSHI = "com.squareup.moshi:moshi:${Version.MOSHI}"
     const val MOSHI_KOTLIN = "com.squareup.moshi:moshi-kotlin:${Version.MOSHI}"
+    const val WORK_RUNTIME_KTX = "androidx.work:work-runtime-ktx:${Version.WORK_RUNTIME_KTX}"
 
 
     object Version {
@@ -97,5 +98,6 @@ object AppDependencies {
         const val OKHTTP = "4.12.0"
         const val JAVAX_ANNOTATION = "10.0-b28"
         const val COMPOSE = "1.7.8"
+        const val WORK_RUNTIME_KTX = "2.10.0"
     }
 }

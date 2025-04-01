@@ -98,4 +98,7 @@ dependencies {
     compileOnly(AppDependencies.JAVAX_ANNOTATION)
 
     implementation(project(AppDependencies.AIDL_LIB))
+
+    implementation(AppDependencies.WORK_RUNTIME_KTX)
+
 }

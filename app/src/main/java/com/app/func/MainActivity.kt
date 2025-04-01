@@ -12,10 +12,18 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.OneTimeWorkRequest
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.app.func.base_content.BaseActivity
 import com.app.func.databinding.ActivityMainBinding
+import com.app.func.features.scheduler.OneTimeNotificationWorker
+import com.app.func.features.scheduler.SchedulerNotificationWorker
 import com.hn.libs.ICalculatorAidl
 import hn.single.server.IServiceAidl
+import java.util.Calendar
+import java.util.concurrent.TimeUnit
 
 class MainActivity : BaseActivity<ActivityMainBinding>()
 /*,
@@ -73,6 +81,31 @@ NavigationView.OnNavigationItemSelectedListener*/ {
     override fun initViews() {
         initDrawerLayout()
         service?.sayHi()
+        // One time when app starting: do the work
+        /*val workRequest = OneTimeWorkRequest.Builder(OneTimeNotificationWorker::class.java).build()
+        WorkManager.getInstance(this).enqueue(workRequest)*/
+        // Calculate the initial delay to 9:00 AM
+        val currentTime = Calendar.getInstance()
+        val targetTime = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 9)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            if (before(currentTime)) {
+                add(Calendar.DAY_OF_MONTH, 1)
+            }
+        }
+        val initialDelay = targetTime.timeInMillis - currentTime.timeInMillis
+
+        // Create a periodic work request
+        val workRequest = PeriodicWorkRequestBuilder<SchedulerNotificationWorker>(24, TimeUnit.HOURS)
+            .setInitialDelay(initialDelay, TimeUnit.MILLISECONDS)
+            .build()
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            "dailyNotificationWork",
+            ExistingPeriodicWorkPolicy.REPLACE,
+            workRequest
+        )
     }
 
     private fun bindAidl() {

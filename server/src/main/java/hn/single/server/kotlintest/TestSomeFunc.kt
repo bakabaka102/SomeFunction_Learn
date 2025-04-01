@@ -3,16 +3,18 @@ package hn.single.server.kotlintest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 fun main() = runBlocking {
-    println("Hello World!")
+    println("--------------------- Hello, start --------------------")
 
-    testFlatMap()
+    3 /0
+    //testFlatMap()
     //testTakeIfTakeLess(input)
-    //testException()
-    println("End test!")
+    testException()
+    println("---------------------End test!---------------------")
 }
 
 private fun testFlatMap() {
@@ -74,13 +76,15 @@ private fun testTakeIfTakeLess(input: String) {
 private suspend fun testException() {
     CoroutineScope(Dispatchers.Default).launch {
         kotlin.runCatching {
-            println("launch divide 3 by 0")
+            println("runCatching: launch divide 3 by 0")
             3 / 0
         }.onFailure {
             println("Exception: ${it.message}")
         }
-        println("launch divide 3 by 0")
+        //println("launch divide 3 by 0")
+        throw RuntimeException("Lỗi trong coroutine! launch divide 3 by 0")
         3 / 0
+        delay(5000)
     }
     val async = CoroutineScope(Dispatchers.Default).async {
         3 / 0

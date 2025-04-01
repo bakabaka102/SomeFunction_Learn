@@ -5,7 +5,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
 class SwipeToDeleteCallback(
-    private val adapter: WordListAdapter
+    private val adapter: WordListAdapter,
+    private val restoreRemoveListener: RestoreRemoveListener,
 ) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 
     override fun onMove(
@@ -18,13 +19,14 @@ class SwipeToDeleteCallback(
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val position = viewHolder.adapterPosition
-        val item = adapter.wordList[position]
+        val item = adapter.words[position]
         AlertDialog.Builder(viewHolder.itemView.context)
             .setTitle("Delete it?")
-            .setMessage("Are you sure you want to delete ${item.word}?")
+            .setMessage("Are you sure you want to delete ${item.id} - ${item.word}?")
             .setPositiveButton("Yes") { dialog, _ ->
                 adapter.removeWord(item)
                 dialog.dismiss()
+                restoreRemoveListener.onRestoreClick(item)
             }.setNegativeButton("No") { dialog, _ ->
                 adapter.notifyItemChanged(position)
                 dialog.dismiss()

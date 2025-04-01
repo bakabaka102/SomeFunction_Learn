@@ -58,7 +58,10 @@ class WordListAdapter(
 ) : RecyclerView.Adapter<WordListAdapter.WordHolder>() {
 
     var onItemRemove: ((Word) -> Unit)? = null
-    var wordList = mutableListOf<Word>()
+
+    var words: MutableList<Word> = mutableListOf()
+    private var recentlyDeletedItem: Word? = null
+    private var recentlyDeletedItemPosition: Int = -1
 
     inner class WordHolder(private val binding: ItemNoteBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -68,7 +71,7 @@ class WordListAdapter(
             binding.textContent.text = word.word
             itemView.setOnClickListener {
                 if (adapterPosition != NO_POSITION) {
-                    onItemClickListener(wordList[adapterPosition])
+                    onItemClickListener(words[adapterPosition])
                 }
             }
         }
@@ -81,10 +84,10 @@ class WordListAdapter(
     }
 
     override fun onBindViewHolder(holder: WordHolder, position: Int) {
-        holder.bindDataToViews(wordList[position])
+        holder.bindDataToViews(words[position])
     }
 
-    override fun getItemCount(): Int = wordList.size
+    override fun getItemCount(): Int = words.size
 
     fun submitList(newList: List<Word>) {
         /*val diffResult = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
@@ -101,9 +104,23 @@ class WordListAdapter(
         })*/
         /* wordList.clear()
          wordList.addAll(newList)*/
-        wordList = newList.toMutableList()
+        words = newList.toMutableList()
         notifyDataSetChanged()
         //diffResult.dispatchUpdatesTo(this)
+    }
+
+    fun removeItem(position: Int) {
+        recentlyDeletedItem = words[position]
+        recentlyDeletedItemPosition = position
+        words.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    fun restoreItem() {
+        recentlyDeletedItem?.let {
+            words.add(recentlyDeletedItemPosition, it)
+            notifyItemInserted(recentlyDeletedItemPosition)
+        }
     }
 
     fun removeWord(word: Word) {

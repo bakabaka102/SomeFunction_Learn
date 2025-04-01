@@ -1,32 +1,69 @@
 package com.app.func.features.viewpagers
 
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentViewPagerBinding
-import com.app.func.login_demo.tab_viewpager.TabFirstFragment
 import com.app.func.features.viewpagers.model.TabInfo
 import com.app.func.features.viewpagers.model.getTutorialData
 import com.app.func.utils.Logger
 import com.app.func.utils.MyToast
 import com.google.android.material.tabs.TabLayoutMediator
+import com.app.func.features.viewpagers.model.RowData
 
-class ViewPagerFragment : BaseFragment<FragmentViewPagerBinding>() {
+class ViewPagersFragment : BaseFragment<FragmentViewPagerBinding>() {
 
     private var tutorialPagerAdapter: TutorialPagerAdapter? = null
     private var pagerAdapter: TutorialPager2Adapter2? = null
     private var viewPagerAdapter: ViewPagerAdapter? = null
-    private var listTab = mutableListOf(
-        TabInfo("Tab 1", TabFirstFragment.newFragment()),
-        TabInfo("Tab 2", TabFirstFragment.newFragment()),
-        TabInfo("Tab 3", TabFirstFragment.newFragment()),
+    val data = listOf(
+        Pair(
+            "Tab 1",
+            listOf(
+                RowData("Title 1", content = "String content"),
+                RowData("Title 2", content = true),
+                RowData("Title 3", content = listOf("Option 1", "Option 2", "Option 3"))
+            ),
+        ),
+        Pair(
+            "Tab 1",
+            listOf(
+                RowData("Title 1", content = "String content"),
+                RowData("Title 2", content = true),
+                RowData(
+                    "Title 3",
+                    selectedPosition = 1,
+                    content = listOf("Option 1", "Option 2", "Option 3")
+                )
+            )
+        ), Pair(
+            "Tab 3", listOf(
+                RowData("Title 1", content = "String content"),
+                RowData("Title 2", content = true),
+                RowData(
+                    "Title 3",
+                    selectedPosition = 2,
+                    content = listOf("Option 1", "Option 2", "Option 3")
+                )
+            )
+        )
     )
+
+    private var listTab = mutableListOf<TabInfo>()
+
     private val maxTab = 5
 
     override fun getViewBinding() = FragmentViewPagerBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
+        data.forEach {
+            listTab.add(TabInfo(it.first, DetailPagerFragment.newFragment(it.second)))
+        }
+
         val tutorialList = getTutorialData(activity)
         tutorialPagerAdapter = activity?.supportFragmentManager?.let {
             TutorialPagerAdapter(tutorialList, it)
@@ -50,22 +87,35 @@ class ViewPagerFragment : BaseFragment<FragmentViewPagerBinding>() {
             }
         })*/
 
-        pagerAdapter = TutorialPager2Adapter2(this)
-        pagerAdapter?.submitList(tutorialList)
+        pagerAdapter = TutorialPager2Adapter2(this).apply {
+            submitList(tutorialList)
+        }
         binding?.apply {
             viewPager2.adapter = pagerAdapter
             TabLayoutMediator(tabLayout2, viewPager2) { tab, position ->
                 tab.text = tutorialList[position].name
             }.attach()
         }
-        viewPagerAdapter = ViewPagerAdapter(this)
-        viewPagerAdapter?.submitFragments(listTab)
+        viewPagerAdapter = ViewPagerAdapter(this).apply {
+            submitFragments(listTab)
+        }
         binding?.apply {
             viewPager2DynamicTab.adapter = viewPagerAdapter
             TabLayoutMediator(tabViewPager, viewPager2DynamicTab) { tab, position ->
                 tab.text = listTab[position].title
             }.attach()
+            hideKeyboardWhenChangePage()
         }
+    }
+
+    private fun FragmentViewPagerBinding.hideKeyboardWhenChangePage() {
+        viewPager2DynamicTab.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+                hideKeyboard()
+            }
+        })
     }
 
     override fun observeView() {
@@ -80,7 +130,7 @@ class ViewPagerFragment : BaseFragment<FragmentViewPagerBinding>() {
 
         binding?.apply {
             btnAddTab.setOnClickListener {
-                val fragment = TabFirstFragment.newFragment()
+                val fragment = DetailPagerFragment.newFragment(data[0].second)
                 addNewTab(fragment)
             }
             btnRemoveTab.setOnClickListener {
@@ -88,6 +138,11 @@ class ViewPagerFragment : BaseFragment<FragmentViewPagerBinding>() {
             }
         }
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, mOnBackPress)
+    }
+
+    private fun hideKeyboard() {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        imm?.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
     private val mOnBackPress = object : OnBackPressedCallback(true) {

@@ -10,6 +10,7 @@
     tools:ignore="HardcodedText">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintParent"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

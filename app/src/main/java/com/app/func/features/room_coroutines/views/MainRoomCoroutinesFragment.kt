@@ -1,5 +1,6 @@
 package com.app.func.features.room_coroutines.views
 
+import android.graphics.Color
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -10,15 +11,21 @@ import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentMainRoomCoroutineBinding
 import com.app.func.features.room_coroutines.Word
 import com.app.func.features.room_coroutines.WordViewModel
+import com.app.func.features.room_coroutines.adapters.RestoreRemoveListener
 import com.app.func.features.room_coroutines.adapters.SwipeToDeleteCallback
 import com.app.func.features.room_coroutines.adapters.WordListAdapter
 import com.app.func.utils.MyToast
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
-class MainRoomCoroutinesFragment : BaseFragment<FragmentMainRoomCoroutineBinding>() {
+class MainRoomCoroutinesFragment :
+    BaseFragment<FragmentMainRoomCoroutineBinding>(), RestoreRemoveListener {
+
     private val viewModel: WordViewModel by viewModels()
     private var word: Word? = null
+    private var listData: MutableList<Word> = mutableListOf()
     lateinit var wordListAdapter: WordListAdapter
+
     override fun getViewBinding() = FragmentMainRoomCoroutineBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
@@ -32,7 +39,7 @@ class MainRoomCoroutinesFragment : BaseFragment<FragmentMainRoomCoroutineBinding
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(wordListAdapter))
+        val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(wordListAdapter, this))
         itemTouchHelper.attachToRecyclerView(binding?.recyclerviewUsers)
         wordListAdapter.onItemRemove = {
             viewModel.delete(it)
@@ -64,6 +71,7 @@ class MainRoomCoroutinesFragment : BaseFragment<FragmentMainRoomCoroutineBinding
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.allWords.collect {
                     wordListAdapter.submitList(it)
+                    listData = it.toMutableList()
                 }
             }
         }
@@ -105,6 +113,21 @@ class MainRoomCoroutinesFragment : BaseFragment<FragmentMainRoomCoroutineBinding
 
     private fun clearText() {
         binding?.editTextWord?.text?.clear()
+    }
+
+    override fun onRestoreClick(word: Word) {
+        val notify = "You remove: $word}"
+        val snackBar = binding?.constraintParent?.let {
+            Snackbar.make(it, notify, Snackbar.LENGTH_LONG)
+        }
+        snackBar?.apply {
+            setAction("Undo") {
+                wordListAdapter.restoreItem()
+                viewModel.insert(word)
+            }
+            setActionTextColor(Color.RED)
+            show()
+        }
     }
 }
 

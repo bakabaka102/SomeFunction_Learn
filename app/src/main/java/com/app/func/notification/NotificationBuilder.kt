@@ -12,11 +12,18 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.Style
 import androidx.core.app.NotificationManagerCompat
 import com.app.func.utils.Logger
+import java.util.Date
 
 class NotificationBuilder(val context: Context) : INotificationBuilder {
 
     companion object {
         const val NOTIFICATION_CHANEL_ID = "notification_chanel"
+    }
+
+    override fun getNotificationId(): Int {
+        return Date().time.toInt().also {
+            Logger.d("$it")
+        }
     }
 
     override fun createNotificationChannel(
@@ -35,12 +42,12 @@ class NotificationBuilder(val context: Context) : INotificationBuilder {
     }
 
     @SuppressLint("MissingPermission")
-    override fun showNotification(
+    override fun sendNotification(
         chanelId: String,
         smallIcon: Int,
         contentTitle: String,
         contentText: String,
-        style: Style,
+        style: Style?,
         notifyId: Int,
         priority: Int,
     ) {

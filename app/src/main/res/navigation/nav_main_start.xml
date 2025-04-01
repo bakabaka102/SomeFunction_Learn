@@ -145,9 +145,7 @@
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_snowyMainFragment"
-            app:destination="@id/snowyMainFragment" />
+
         <action
             android:id="@+id/action_homeFragment_to_listUserFragment"
             app:destination="@id/listUserFragment" />
@@ -176,9 +174,6 @@
             android:id="@+id/action_mainContainFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
         <action
-            android:id="@+id/action_mainContainFragment_to_viewPagerFragment"
-            app:destination="@id/viewPagerFragment" />
-        <action
             android:id="@+id/action_mainContainFragment_to_noteHomeFragment"
             app:destination="@id/noteHomeFragment" />
         <action
@@ -187,22 +182,21 @@
         <action
             android:id="@+id/action_mainContainFragment_to_imageGalleryFragment2"
             app:destination="@id/imageGalleryFragment" />
+        <action
+            android:id="@+id/action_mainContainFragment_to_viewPagersFragment"
+            app:destination="@id/viewPagersFragment" />
     </fragment>
     <fragment
-        android:id="@+id/snowyMainFragment"
-        android:name="com.app.func.features.viewpagers.ViewPagerFragment"
-        android:label="fragment_snowy_main"
+        android:id="@+id/viewPagersFragment"
+        android:name="com.app.func.features.viewpagers.ViewPagersFragment"
+        android:label="fragment_view_pagers"
         tools:layout="@layout/fragment_view_pager" />
     <fragment
         android:id="@+id/listUserFragment"
         android:name="com.app.func.view.ListUserFragment"
         android:label="fragment_list_user"
         tools:layout="@layout/fragment_list_user" />
-    <fragment
-        android:id="@+id/viewPagerFragment"
-        android:name="com.app.func.login_demo.ViewPagerFragment"
-        android:label="view_pager_fragment"
-        tools:layout="@layout/view_pager_fragment" />
+
     <fragment
         android:id="@+id/noteHomeFragment"
         android:name="com.app.func.features.room_database_sqlite_mvvm.view.NoteHomeFragment"
