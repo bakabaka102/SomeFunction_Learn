@@ -394,19 +394,19 @@ class WaterTankTemperatureView @JvmOverloads constructor(
         val layoutParamsDescription =
             LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         layoutParamsTitle.addRule(CENTER_HORIZONTAL)
-        textViewTemperature.layoutParams = layoutParamsTitle
-        val typeface = ResourcesCompat.getFont(context, R.font.roboto_bold)
-        textViewTemperature.typeface = typeface
-        textViewTemperature.id = 1
-        textViewTemperature.textSize = height * RATIO_TEXT_SIZE_TEMP_CENTER_HEIGHT
-        textViewTemperature.includeFontPadding = false
-        textViewTemperature.setTextColor(ContextCompat.getColor(context, R.color.color_7A868D))
-        textViewTemperature.gravity = Gravity.CENTER
         val tempString = if (_currentTemp == null) {
             "--°C"
         } else formatStringTemp(_currentTemp!!)
-        textViewTemperature.text = tempString
-
+        textViewTemperature.apply {
+            layoutParams = layoutParamsTitle
+            typeface = ResourcesCompat.getFont(context, R.font.roboto_bold)
+            id = 1
+            textSize = height * RATIO_TEXT_SIZE_TEMP_CENTER_HEIGHT
+            includeFontPadding = false
+            this.setTextColor(ContextCompat.getColor(context, R.color.color_7A868D))
+            gravity = Gravity.CENTER
+            text = tempString
+        }
         textViewHint = TextView(context)
         layoutParamsDescription.addRule(CENTER_HORIZONTAL)
         layoutParamsDescription.addRule(BELOW, textViewTemperature.id)
@@ -521,7 +521,7 @@ class WaterTankTemperatureView @JvmOverloads constructor(
         _newSweepAngle = 0f
     }
 
-    fun setTemperatureTitle(title: String) {
+    private fun setTemperatureTitle(title: String) {
         textViewTemperature.text = title
     }
 

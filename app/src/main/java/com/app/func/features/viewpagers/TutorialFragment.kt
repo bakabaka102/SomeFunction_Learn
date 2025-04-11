@@ -4,13 +4,11 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
-import android.view.View
+import androidx.core.view.isVisible
 import com.app.func.R
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentTutorialBinding
 import com.app.func.features.viewpagers.model.Tutorial
-import java.io.InputStream
-import java.net.URL
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +16,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.InputStream
+import java.net.URL
 
 class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
 
@@ -29,7 +29,7 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
             //2
             coroutineScope.launch(Dispatchers.Main) {
                 //3
-                binding?.errorMessage?.visibility = View.VISIBLE
+                binding?.errorMessage?.isVisible = true
                 binding?.errorMessage?.text = getString(R.string.error_message)
             }
 
@@ -94,7 +94,7 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
         }
 
     private fun loadImage(snowFilterBitmap: Bitmap) {
-        binding?.progressBar?.visibility = View.GONE
+        binding?.progressBar?.isVisible = false
         binding?.snowFilterImage?.setImageBitmap(snowFilterBitmap)
     }
 
@@ -108,12 +108,13 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
         const val TUTORIAL_KEY = "TUTORIAL"
 
         fun newInstance(tutorial: Tutorial): TutorialFragment {
-            val fragmentHome = TutorialFragment()
             val args = Bundle().apply {
                 putParcelable(TUTORIAL_KEY, tutorial)
             }
-            fragmentHome.arguments = args
-            return fragmentHome
+            val fragment = TutorialFragment().apply {
+                arguments = args
+            }
+            return fragment
         }
     }
 }

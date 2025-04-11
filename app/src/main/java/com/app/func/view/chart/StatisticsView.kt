@@ -20,6 +20,7 @@ import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.Keep
+import androidx.core.view.isVisible
 import com.app.func.R
 import com.app.func.view.chart.models.ReportResponse
 import com.app.func.view.chart.models.ConsumeData
@@ -28,6 +29,7 @@ import java.util.Date
 import java.util.Locale
 import kotlin.math.abs
 import kotlin.math.roundToInt
+import androidx.core.graphics.toColorInt
 
 class StatisticsView @JvmOverloads constructor(
     context: Context,
@@ -148,8 +150,8 @@ class StatisticsView @JvmOverloads constructor(
     }
 
     private fun initShader() {
-        val colorFrom = Color.parseColor("#63B128")
-        val colorTo = Color.parseColor("#1A63B128")
+        val colorFrom = "#63B128".toColorInt()
+        val colorTo = "#1A63B128".toColorInt()
         val linearGradient = LinearGradient(
             0f, height.toFloat(), 0f, 0f,
             colorTo, colorFrom, Shader.TileMode.CLAMP
@@ -542,7 +544,7 @@ class StatisticsView @JvmOverloads constructor(
                 textSize = 15f
                 gravity = CENTER
                 setTextColor(Color.WHITE)
-                visibility = GONE
+                isVisible = false
             }
             removeAllViews()
             addView(_textView)
@@ -553,11 +555,11 @@ class StatisticsView @JvmOverloads constructor(
         if (_textView == null) return
         if (visible) {
             if (_textView?.visibility != VISIBLE) {
-                _textView?.visibility = View.VISIBLE
+                _textView?.isVisible = true
             }
         } else {
-            if (_textView?.visibility != GONE) {
-                _textView?.visibility = View.GONE
+            if (_textView?.isVisible != false) {
+                _textView?.isVisible = false
             }
         }
     }
@@ -565,7 +567,7 @@ class StatisticsView @JvmOverloads constructor(
     private fun hideTextView() {
         if (_textView == null) return
         if (_textView?.visibility != GONE) {
-            _textView?.visibility = View.GONE
+            _textView?.isVisible = false
         }
     }
 

@@ -1,6 +1,7 @@
 package hn.single.server.ui
 
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -56,23 +57,23 @@ class MainMovieFragment : BaseFragment<FragmentMainMovieBinding>() {
                 mainViewModel.mainItem.collect {
                     when (it) {
                         is UIState.Success -> {
-                            binding?.progress?.visibility = View.GONE
-                            binding?.error?.visibility = View.GONE
-                            binding?.rv?.visibility = View.VISIBLE
+                            binding?.progress?.isVisible = false
+                            binding?.error?.isVisible = false
+                            binding?.rv?.isVisible = true
                             adapter.setItems(it.data)
                         }
 
                         is UIState.Failure -> {
-                            binding?.progress?.visibility = View.GONE
-                            binding?.error?.visibility = View.VISIBLE
-                            binding?.rv?.visibility = View.GONE
+                            binding?.progress?.isVisible = false
+                            binding?.error?.isVisible = true
+                            binding?.rv?.isVisible = false
                             binding?.error?.text = it.throwable.toString()
                         }
 
                         is UIState.Loading -> {
-                            binding?.progress?.visibility = View.VISIBLE
-                            binding?.error?.visibility = View.GONE
-                            binding?.rv?.visibility = View.GONE
+                            binding?.progress?.isVisible = true
+                            binding?.error?.isVisible = false
+                            binding?.rv?.isVisible = false
                         }
                     }
                 }

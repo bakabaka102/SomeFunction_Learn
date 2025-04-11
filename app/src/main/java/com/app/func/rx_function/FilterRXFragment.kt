@@ -3,6 +3,7 @@ package com.app.func.rx_function
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import androidx.core.view.isVisible
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentSimpleRxBinding
 import com.app.func.rx_function.utils.AppConstant
@@ -34,7 +35,7 @@ class FilterRXFragment : BaseFragment<FragmentSimpleRxBinding>(), View.OnClickLi
 
     override fun onClick(view: View?) {
         if (view == binding?.doSomeWork) {
-            binding?.loadingView?.visibility = View.VISIBLE
+            binding?.loadingView?.isVisible = true
             Handler(Looper.getMainLooper()).postDelayed({
                 doSomeWork()
             }, 1000L)
@@ -75,14 +76,14 @@ class FilterRXFragment : BaseFragment<FragmentSimpleRxBinding>(), View.OnClickLi
                 binding?.textView?.append(" onError : " + e.message)
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
                 Logger.d("onError : " + e.message)
-                binding?.loadingView?.visibility = View.GONE
+                binding?.loadingView?.isVisible = false
             }
 
             override fun onComplete() {
                 binding?.textView?.append(" onComplete")
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
                 Logger.d("onComplete")
-                binding?.loadingView?.visibility = View.GONE
+                binding?.loadingView?.isVisible = false
             }
         }
     }

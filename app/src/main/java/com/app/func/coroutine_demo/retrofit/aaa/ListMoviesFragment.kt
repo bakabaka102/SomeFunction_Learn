@@ -1,7 +1,7 @@
 package com.app.func.coroutine_demo.retrofit.aaa
 
-import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.func.base_content.BaseFragment
@@ -32,11 +32,7 @@ class ListMoviesFragment : BaseFragment<FragmentSingleCallNetworkBinding>() {
         }
 
         mViewModel.loading.observe(viewLifecycleOwner) {
-            if (it) {
-                binding?.progressBar?.visibility = View.VISIBLE
-            } else {
-                binding?.progressBar?.visibility = View.GONE
-            }
+            binding?.progressBar?.isVisible = it
         }
 
         mViewModel.getAllMovies()

@@ -12,5 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <!-- Tạo Shared Element Transition khi chuyển Activity với hiệu ứng mượt. -->
+        <item name="android:windowContentTransitions">true</item>
     </style>
 </resources>

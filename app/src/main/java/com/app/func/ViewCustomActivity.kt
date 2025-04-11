@@ -1,14 +1,11 @@
 package com.app.func
 
-import android.view.View
 import androidx.core.view.isVisible
 import com.app.func.base_content.BaseActivity
 import com.app.func.databinding.ActivityViewCustomBinding
 import com.app.func.utils.Logger
+import com.app.func.view.chart.stock.TemperatureView
 import com.app.func.view.chart.stock.WaterTankTemperatureView
-import com.app.func.view.seekbarcustom.crollerTest.Croller
-import com.app.func.view.seekbarcustom.crollerTest.OnCrollerChangeListener
-import com.app.func.view.seekbarcustom.crollerTest.OnProgressChangedListener
 
 class ViewCustomActivity : BaseActivity<ActivityViewCustomBinding>() {
 
@@ -19,7 +16,7 @@ class ViewCustomActivity : BaseActivity<ActivityViewCustomBinding>() {
             setValueRange(1f, 18f)
             setValueCurrent(12f)
             onValueProgress = {
-                mBinding.toolTipSeekBar.visibility = View.VISIBLE
+                mBinding.toolTipSeekBar.isVisible = true
                 mBinding.toolTipSeekBar.x = it
             }
             onValueSelected = {
@@ -32,19 +29,35 @@ class ViewCustomActivity : BaseActivity<ActivityViewCustomBinding>() {
 
         mBinding.viewTempProgress.apply {
             setMinMaxProgress(40, 75)
-            setTemp(20)
-            setTemperatureTitle(20.toString())
-            settingTemp(50)
+            setCurrentTemp(20)
+            setTargetTemp(50)
+            updateState(TemperatureView.State.STABLE)
         }
 
         mBinding.waterViewTempProgress.apply {
             setMinMaxProgress(40, 75)
-            setTemp(20)
-            setTemperatureTitle(20.toString())
+            setTemp(40)
             settingTemp(50)
             updateState(WaterTankTemperatureView.State.WORKING)
         }
         initScrollSeekbar()
+        //For demo or
+        mBinding.arcPulGaugeView.setTargetValueAnimated(60)
+        /*Or observer
+        viewModel.heartRate.observe(viewLifecycleOwner) { bpm ->
+            mBinding.arcPulGaugeView.targetValue(bpm)
+        }
+        or StateFlow
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.heartRateFlow.collect { bpm ->
+                    arcGaugeView.setTargetValueAnimated(bpm)
+                }
+            }
+        }*/
+        mBinding.arcPulGaugeView.onValueChangedListener = {
+            Logger.d("Current target: $it")
+        }
     }
 
     override fun initActions() {
@@ -52,38 +65,6 @@ class ViewCustomActivity : BaseActivity<ActivityViewCustomBinding>() {
     }
 
     private fun initScrollSeekbar() {
-        /*mBinding.crollerSeekbar.apply {
-            setIndicatorWidth(10f)
-            setBackCircleColor(Color.parseColor("#EDEDED"))
-            setMainCircleColor(Color.WHITE)
-            setMax(50)
-            setStartOffset(45)
-            setIsContinuous(false)
-            setLabelColor(Color.BLACK)
-            setProgressPrimaryColor(Color.parseColor("#0B3C49"))
-            setIndicatorColor(Color.parseColor("#0B3C49"))
-            setProgressSecondaryColor(Color.parseColor("#EEEEEE"))
-        }*/
 
-        mBinding.crollerSeekbar.setOnCrollerChangeListener(object : OnCrollerChangeListener {
-            override fun onProgressChanged(croller: Croller?, progress: Int) {
-                Logger.d("setOnCrollerChangeListener ----  $progress")
-            }
-
-            override fun onStartTrackingTouch(croller: Croller?) {
-
-            }
-
-            override fun onStopTrackingTouch(croller: Croller?) {
-
-            }
-        })
-
-        mBinding.crollerSeekbar.setOnProgressChangedListener(object : OnProgressChangedListener {
-            override fun onProgressChanged(progress: Int) {
-                // use the progress
-                Logger.d("setOnProgressChangedListener ------ $progress")
-            }
-        })
     }
 }

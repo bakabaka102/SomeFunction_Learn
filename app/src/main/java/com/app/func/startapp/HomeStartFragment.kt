@@ -1,12 +1,14 @@
 package com.app.func.startapp
 
-import android.content.ContentResolver
+import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.util.Log
-import androidx.core.net.toUri
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.app.func.MainActivityViewModel
@@ -31,11 +33,13 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.net.MalformedURLException
 import java.net.URL
+import kotlin.text.compareTo
 
 class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
 
     private var model = ModelType.FREEZER
     private val viewModel: MainActivityViewModel by viewModels()
+    private val fileJson = "data_custom.json"
 
     override fun getViewBinding() = FragmentHomeStartBinding.inflate(layoutInflater)
 
@@ -44,61 +48,18 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
         loadChart()
         viewModel.downloadNote()
         viewModel.getNote()
-        loadJson<String>(this@HomeStartFragment.context, fileJson)
-        /*val uri = Uri.parse("${CUSTOM_PROVIDER_URI}/${fileJson}")
-        val resolver = context?.contentResolver
-        val inputStream = resolver?.openInputStream(uri)
-        val reader = BufferedReader(InputStreamReader(inputStream))
-        var line: String
-        while ((reader.readLine().also { line = it }) != null) {
-            Log.d(Constants.TAG_PROVIDER, "Content - $line")
-        }
-        reader.close()*/
+        loadJsonFromAssetsOtherApp<String>(this@HomeStartFragment.context, fileJson)
     }
 
-    private val fileJson = "data_custom.json"
-    private val CUSTOM_PROVIDER_URI get() = "content://hn.single.server.provider.AssetsFileProvider"
-
-
-    private inline fun <reified T> loadJson(context: Context?, fileName: String): T? {
-        context?.packageManager?.getResourcesForApplication("hn.single.server")?.let {
+    private inline fun <reified T> loadJsonFromAssetsOtherApp(context: Context?, fileName: String): T? {
+        val packageNameResourceApp = "hn.single.server"
+        context?.packageManager?.getResourcesForApplication(packageNameResourceApp)?.let {
             val inputStream = it.assets.open(fileName)
             val content = inputStream.bufferedReader().use(BufferedReader::readText)
             Log.d(Constants.TAG_PROVIDER, "Content of file = $content")
             return content as T
         }
         return null
-        /*val contentResolver = context?.contentResolver
-        contentResolver?.readCustomFile(CUSTOM_PROVIDER_URI, fileName)?.let {
-            Log.d(Constants.TAG_PROVIDER, "Content of file = $it")
-            return it as T
-        }
-        return null*/
-        //throw InvalidParameterException("Fail to Load $fileName File")
-    }
-
-    private fun ContentResolver.readCustomFile(
-        customProviderUri: String,
-        file: String,
-        mandatory: Boolean = false
-    ): String? {
-        return try {
-            val assetUri = "$customProviderUri/$file".toUri().also {
-                Log.d(Constants.TAG_PROVIDER, "Asset Uri = $it")
-            }
-            val inputStream = openInputStream(assetUri)
-            inputStream?.let {
-                val content = it.bufferedReader().use(BufferedReader::readText)
-                // Process the content
-                it.close()
-                content
-            }
-        } catch (ex: IOException) {
-            if (mandatory) {
-                Log.d(Constants.TAG_PROVIDER, "File Not Found = $file", ex)
-            }
-            null
-        }
     }
 
     override fun observeData() {
@@ -145,7 +106,13 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
             findNavController().navigate(R.id.mainContainFragment)
         }
         binding?.btnViewCustom?.setOnClickListener {
-            startActivity(Intent(requireActivity(), ViewCustomActivity::class.java))
+            val intent = Intent(requireActivity(), ViewCustomActivity::class.java)
+            val options = ActivityOptions.makeCustomAnimation(
+                activity,
+                R.anim.slide_in_right,
+                R.anim.slide_out_left,
+            )
+            startActivity(intent, options.toBundle())
         }
         binding?.btnParseJson?.setOnClickListener {
 
@@ -184,10 +151,16 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
                 withContext(Dispatchers.Main) {
                     binding?.imageView?.setImageBitmap(imageBitmap)
                 }
-            } catch (e: MalformedURLException) {
-                Log.d("aaa - e", e.message.toString())
-            } catch (eio: IOException) {
-                Log.d("aaa - eio", eio.message.toString())
+            } catch (e: Exception) {
+                when (e) {
+                    is MalformedURLException -> Log.d(
+                        "Exception",
+                        "MalformedURLException xảy ra: ${e.message}"
+                    )
+
+                    is IOException -> Log.d("Exception", "IOException - ${e.message}")
+                    else -> Log.d("Exception", "Other exception - ${e.message}")
+                }
             }
         }
     }

@@ -28,7 +28,10 @@ class TemperatureView @JvmOverloads constructor(
     private lateinit var textViewHint: TextView
     private val rect: Rect = Rect()
     private val paintBorderBackground = Paint()
-    private val paintBorder = Paint()
+    private val paintBorder = Paint().apply {
+        style = Paint.Style.STROKE
+        isAntiAlias = true
+    }
     private val paintLine = Paint()
     private val paintText = Paint()
     private val paintCircle = Paint()
@@ -60,7 +63,7 @@ class TemperatureView @JvmOverloads constructor(
 
     private var _state: State = State.STABLE
     private var _currentTemp: Int? = null
-    private var _targetTemp: Int? = _currentTemp
+    private var _targetTemp: Int? = null
     private var _inProgressSetting = false
     private var _animator: ValueAnimator? = null
     private var _runningState: RunningMode = RunningMode.IDLE
@@ -102,12 +105,8 @@ class TemperatureView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         radius = (RATIO_CIRCLE_PROGRESS * widthScreen) / 2
-        val width = width.toFloat()
-        val height = height.toFloat()
-        paintBorder.style = Paint.Style.STROKE
-        paintBorder.isAntiAlias = true
-        centerX = width / 2
-        centerY = (height - _paddingBottom40dp) / 2 + _padding32dp
+        centerX = width.toFloat()/ 2
+        centerY = (height.toFloat() - _paddingBottom40dp) / 2 + _padding32dp
 
         oval.set(centerX - radius, centerY - radius, centerX + radius, centerY + radius)
 
@@ -129,11 +128,11 @@ class TemperatureView @JvmOverloads constructor(
             if (_runningState == RunningMode.REDUCE) {
                 drawBorder(it)
                 drawTextSettingTemp(it)
-                drawDotCircle(formatStringTemp(_targetTemp!!), canvas)
+                drawDotCircle(formatStringTemp(_targetTemp ?: 0), canvas)
             }
             if (_runningState == RunningMode.INCREASE) {
                 drawTextSettingTemp(it)
-                drawDotCircle(formatStringTemp(_targetTemp!!), canvas)
+                drawDotCircle(formatStringTemp(_targetTemp ?: 0), canvas)
             }
         }
     }
@@ -322,7 +321,7 @@ class TemperatureView @JvmOverloads constructor(
         val values = formatStringTemp(temp)
         val position = mListValue.indexOf(values) //getPosition item
         val total = progress * 360 / 100 // 66f == 2/3 circle
-        val edge = ((total / (mListValue.size)) * 1.05) * position //edge pos
+        val edge = ((total / (mListValue.size))) * position //edge pos
         val angle = edge + 150f //angle now
         return angle.toFloat()
     }
@@ -368,36 +367,35 @@ class TemperatureView @JvmOverloads constructor(
 
     @SuppressLint("ResourceType")
     private fun initText() {
-        textViewTemperature = TextView(context)
         val layoutParamsTitle = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         val layoutParamsDescription =
             LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         layoutParamsTitle.addRule(CENTER_HORIZONTAL)
-        textViewTemperature.layoutParams = layoutParamsTitle
-        val typeface = ResourcesCompat.getFont(context, R.font.roboto_bold)
-        textViewTemperature.typeface = typeface
-        textViewTemperature.id = 1
-        textViewTemperature.textSize = 52f
-        textViewTemperature.includeFontPadding = false
-        textViewTemperature.setTextColor(Color.WHITE)
-        textViewTemperature.gravity = Gravity.CENTER
         val tempString = if (_currentTemp == null) {
             "--°C"
-        } else formatStringTemp(_currentTemp!!)
-        textViewTemperature.text = tempString
-
-        textViewHint = TextView(context)
+        } else formatStringTemp(_currentTemp ?: 0)
+        textViewTemperature = TextView(context).apply {
+            layoutParams = layoutParamsTitle
+            typeface = ResourcesCompat.getFont(context, R.font.roboto_bold)
+            id = 1
+            textSize = 52f
+            includeFontPadding = false
+            setTextColor(Color.WHITE)
+            gravity = Gravity.CENTER
+            text = tempString
+        }
         layoutParamsDescription.addRule(CENTER_HORIZONTAL)
         layoutParamsDescription.addRule(BELOW, textViewTemperature.id)
-        textViewHint.layoutParams = layoutParamsDescription
-        val typefaceTextViewHint = ResourcesCompat.getFont(context, R.font.roboto_medium)
-        textViewHint.typeface = typefaceTextViewHint
-        textViewHint.includeFontPadding = false
+        textViewHint = TextView(context).apply {
+            layoutParams = layoutParamsDescription
+            typeface = ResourcesCompat.getFont(context, R.font.roboto_medium)
+            includeFontPadding = false
+            textSize = 14f
+            setTextColor(Color.WHITE)
+            gravity = Gravity.CENTER
+            text = context.resources.getString(R.string.current_temperature)
+        }
         removeAllViews()
-        textViewHint.textSize = 14f
-        textViewHint.setTextColor(Color.WHITE)
-        textViewHint.gravity = Gravity.CENTER
-        textViewHint.text = context.resources.getString(R.string.current_temperature)
         addView(textViewTemperature)
         addView(textViewHint)
     }
@@ -418,7 +416,7 @@ class TemperatureView @JvmOverloads constructor(
         initValues()
     }
 
-    fun settingTemp(temp: Int) {
+    fun setTargetTemp(temp: Int) {
         if (_currentTemp == null) return
         _targetTemp = temp
         _inProgressSetting = true
@@ -428,12 +426,12 @@ class TemperatureView @JvmOverloads constructor(
             _targetTemp!! < _currentTemp!! -> RunningMode.REDUCE
             else -> RunningMode.IDLE
         }
-        _currentAngle = if (_currentTemp!! > maxValue) {
+        _currentAngle = if ((_currentTemp ?: 0 )> maxValue) {
             calculateAngle(maxValue)
         } else {
-            calculateAngle(_currentTemp!!)
+            calculateAngle(_currentTemp ?: 0)
         }
-        _targetSettingAngle = calculateAngle(_targetTemp!!)
+        _targetSettingAngle = calculateAngle(_targetTemp ?: 0)
         _newSweepAngle = -abs(_targetSettingAngle - _currentAngle)
         if (_runningState == RunningMode.INCREASE) {
             invalidate()
@@ -450,7 +448,7 @@ class TemperatureView @JvmOverloads constructor(
         }
     }
 
-    fun setTemp(value: Int) {
+    fun setCurrentTemp(value: Int) {
         if (!_inProgressSetting) {
             _currentTemp = value
             _currentAngle = calculateAngle(value)
@@ -464,28 +462,29 @@ class TemperatureView @JvmOverloads constructor(
         updateListener: (Float) -> Unit,
         endListener: () -> Unit
     ) {
-        _animator = ValueAnimator.ofFloat(start, end)
-        _animator?.cancel()
-        _animator?.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(animation: Animator) {}
+        _animator = ValueAnimator.ofFloat(start, end).apply {
+            cancel()
+            addListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animation: Animator) {}
 
-            override fun onAnimationEnd(animation: Animator) {
-                endListener.invoke()
-            }
+                override fun onAnimationEnd(animation: Animator) {
+                    endListener.invoke()
+                }
 
-            override fun onAnimationCancel(animation: Animator) {
-            }
+                override fun onAnimationCancel(animation: Animator) {
+                }
 
-            override fun onAnimationRepeat(animation: Animator) {
+                override fun onAnimationRepeat(animation: Animator) {
+                }
+            })
+            addUpdateListener {
+                updateListener.invoke(it.animatedValue as Float)
             }
-        })
-        _animator?.addUpdateListener {
-            updateListener.invoke(it.animatedValue as Float)
+            repeatMode = ValueAnimator.REVERSE
+            repeatCount = ValueAnimator.INFINITE
+            duration = 1000L
+            start()
         }
-        _animator?.repeatMode = ValueAnimator.REVERSE
-        _animator?.repeatCount = ValueAnimator.INFINITE
-        _animator?.duration = 1000L
-        _animator?.start()
     }
 
     fun cancelSettingTemp() {
@@ -501,7 +500,7 @@ class TemperatureView @JvmOverloads constructor(
         _newSweepAngle = 0f
     }
 
-    fun setTemperatureTitle(title: String) {
+    private fun setTemperatureTitle(title: String) {
         textViewTemperature.text = title
     }
 

@@ -10,22 +10,18 @@ class ImageBackgroundDraw @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    private var mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val mBorderWidth = resources.getDimensionPixelSize(R.dimen.dimen_1dp).toFloat()
+    private var mPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+        color = Color.RED
+        strokeWidth = mBorderWidth
+    }
     private val mPath = Path()
     private var mCenterCircleRectF: RectF? = null
-    private val mBorderWidth = resources.getDimensionPixelSize(R.dimen.dimen_1dp).toFloat()
     private val mTopCornerRadius = resources.getDimensionPixelSize(R.dimen.dimen_20dp).toFloat()
     private val mMiddleCornerRadius = resources.getDimensionPixelSize(R.dimen.dimen_18dp).toFloat()
     private val mBottomCornerRadius = resources.getDimensionPixelSize(R.dimen.dimen_16dp).toFloat()
     private val mCenterCircleRadius = resources.getDimensionPixelSize(R.dimen.dimen_32dp).toFloat()
-
-    init {
-        mPaint.apply {
-            style = Paint.Style.FILL
-            color = Color.RED
-            strokeWidth = mBorderWidth
-        }
-    }
 
     private fun drawPath() {
         val halfWidthWithoutCorners =
@@ -79,6 +75,14 @@ class ImageBackgroundDraw @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        /*val centerX = width / 2
+        val centerY = 0f + mMiddleCornerRadius
+        mCenterCircleRectF?.set(
+            centerX - mCenterCircleRadius,
+            centerY - mCenterCircleRadius,
+            centerX + mCenterCircleRadius,
+            centerY + mCenterCircleRadius
+        )*/
         if (mCenterCircleRectF == null) {
             mCenterCircleRectF = calculateCenterCircleRectF()
         }

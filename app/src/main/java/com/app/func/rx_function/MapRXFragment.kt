@@ -3,6 +3,7 @@ package com.app.func.rx_function
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import androidx.core.view.isVisible
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentSimpleRxBinding
 import com.app.func.rx_function.model.ApiUser
@@ -39,7 +40,7 @@ class MapRXFragment : BaseFragment<FragmentSimpleRxBinding>(), View.OnClickListe
 
     override fun onClick(view: View?) {
         if (view == binding?.doSomeWork) {
-            binding?.loadingView?.visibility = View.VISIBLE
+            binding?.loadingView?.isVisible = true
             Handler(Looper.getMainLooper()).postDelayed({
                 doSomeWork()
             }, 1000L)
@@ -95,14 +96,14 @@ class MapRXFragment : BaseFragment<FragmentSimpleRxBinding>(), View.OnClickListe
                 binding?.textView?.append(" onError : " + e.message)
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
                 Logger.d("onError : " + e.message)
-                binding?.loadingView?.visibility = View.GONE
+                binding?.loadingView?.isVisible = false
             }
 
             override fun onComplete() {
                 binding?.textView?.append(" onComplete")
                 binding?.textView?.append(AppConstant.LINE_SEPARATOR)
                 Logger.d("onComplete")
-                binding?.loadingView?.visibility = View.GONE
+                binding?.loadingView?.isVisible = false
             }
         }
         return observer

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.app.func.R
 import com.app.func.base_content.BaseFragment
@@ -37,11 +38,11 @@ class RxFunctionFragment : BaseFragment<FragmentRxFunctionBinding>(), View.OnCli
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                binding?.marker?.rlMarker?.visibility = View.VISIBLE
+                binding?.marker?.rlMarker?.isVisible = true
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                binding?.marker?.rlMarker?.visibility = View.GONE
+                binding?.marker?.rlMarker?.isVisible = false
             }
         })
     }
