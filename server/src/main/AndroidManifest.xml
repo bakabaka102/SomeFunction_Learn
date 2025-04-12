@@ -54,26 +54,11 @@
         </activity>
 
         <provider
-            android:name=".provider.AssetsFileProvider"
-            android:authorities="hn.single.server.provider.AssetsFileProvider"
-            android:enabled="true"
+            android:name=".provider.SharedDataProvider"
+            android:authorities="hn.single.server.sharedprovider"
             android:exported="true"
-            android:grantUriPermissions="true"
-            android:permission="hn.single.server.permission.ACCESS_ASSETS"
-            tools:ignore="ExportedContentProvider" />
+            android:grantUriPermissions="true" />
 
-        <provider
-            android:name=".provider.AssetFileProvider"
-            android:authorities="hn.single.server.provider.AssetFileProvider"
-            android:exported="false"
-            android:grantUriPermissions="true"
-            android:permission="hn.single.server.permission.ACCESS_ASSETS" />
-
-        <provider
-            android:name=".provider.AssetProvider"
-            android:authorities="hn.single.server.asset.provider"
-            android:exported="false"
-            android:permission="hn.single.server.permission.ACCESS_ASSETS" />
     </application>
 
 </manifest>

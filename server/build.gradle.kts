@@ -1,4 +1,6 @@
-import java.util.*
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -57,10 +59,16 @@ android {
                    output.outputFileName = outputFileName
                }
        }*/
-        setProperty("archivesBaseName", "${ProjectInfo.NAME_SERVER}-${applicationVersion.toString().replace("/", "-")}")
+        setProperty(
+            "archivesBaseName",
+            "${ProjectInfo.NAME_SERVER}-${applicationVersion.toString().replace("/", "-")}"
+        )
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -129,4 +137,65 @@ fun getApiKey(): String {
         System.getenv("apiKey") ?: ""
     }
     return apiKey
+}
+
+tasks.named("preBuild") {
+    dependsOn("taskCreateDefaultConfig")
+}
+
+
+tasks.register("convertSVGs") {
+    println("------convertSVGs------")
+    doLast {
+        // Đảm bảo python chạy đúng thư mục
+        val scriptFile = file("scripts/convert_svg.py")
+        val workingDirectory = file(".")
+        exec {
+            // Gọi Python chuẩn
+            commandLine("python", scriptFile.absolutePath)
+            workingDir = workingDirectory
+            // Cho phép log lỗi script nếu cần
+            //isIgnoreExitValue = false
+            standardOutput = System.out
+            errorOutput = System.err
+        }
+    }
+}
+
+val createDefaultConfig: Task = tasks.create("createDefaultConfig") {
+    println("------Create json data file------")
+    //val resourcesDir = File("${rootDir.path}/app/src/main/assets").apply { mkdirs() }
+    val resourcesDir = File("${projectDir}/src/main/assets").apply {
+        if (this.exists().not()) mkdirs()
+    }
+    val resource = File(resourcesDir, "data_custom.json")
+    val dateTime = SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())
+    resource.writeText(
+        "{\n" +
+                "  \"version\": \"$dateTime\",\n" +
+                "  \"name\": \"data\",\n" +
+                "  \"isCustom\": \"true\"\n" +
+                "}"
+    )
+}
+
+val taskCreateDefaultConfig by tasks.registering {
+    group = "build"
+    description = "Build file data_custom.json in assets"
+    doLast {
+        println("------Create json data file------")
+        val resourcesDir = File("${projectDir}/src/main/assets").apply { mkdirs() }
+        val resource = File(resourcesDir, "data_data_custom.json")
+        val dateTime = SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().time)
+        resource.writeText(
+            """
+            {
+              "version": "$dateTime",
+              "name": "data",
+              "isCustom": true
+            }
+            """.trimIndent()
+        )
+        println("------[Success] File created: ${resource.absolutePath}------")
+    }
 }

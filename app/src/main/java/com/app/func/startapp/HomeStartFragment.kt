@@ -1,14 +1,12 @@
 package com.app.func.startapp
 
-import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
+import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.app.func.MainActivityViewModel
@@ -33,13 +31,15 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.net.MalformedURLException
 import java.net.URL
-import kotlin.text.compareTo
 
 class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
 
     private var model = ModelType.FREEZER
     private val viewModel: MainActivityViewModel by viewModels()
     private val fileJson = "data_custom.json"
+    private val providerURI = "hn.single.server.sharedprovider"
+
+    private val imageList = mutableListOf<Bitmap>()
 
     override fun getViewBinding() = FragmentHomeStartBinding.inflate(layoutInflater)
 
@@ -49,6 +49,58 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
         viewModel.downloadNote()
         viewModel.getNote()
         loadJsonFromAssetsOtherApp<String>(this@HomeStartFragment.context, fileJson)
+
+        fetchSharedStrings()
+        fetchImageList()
+    }
+
+    private fun fetchSharedStrings() {
+        val uri = "content://$providerURI/strings".toUri()
+        val cursor = context?.contentResolver?.query(uri, null, null, null, null)
+
+        cursor?.use {
+            val keyIndex = it.getColumnIndex("key")
+            val valueIndex = it.getColumnIndex("value")
+
+            while (it.moveToNext()) {
+                val key = it.getString(keyIndex)
+                val value = it.getString(valueIndex)
+                Log.d("AppB", "KEY: $key | VALUE: $value")
+            }
+        }
+    }
+
+    private fun fetchImageList() {
+        val uri = "content://$providerURI/image_list".toUri()
+        val cursor = context?.contentResolver?.query(uri, null, null, null, null)
+
+        cursor?.use {
+            val nameIndex = it.getColumnIndex("name")
+            val uriIndex = it.getColumnIndex("uri")
+
+            while (it.moveToNext()) {
+                val name = it.getString(nameIndex)
+                val imageUri = it.getString(uriIndex).toUri().also {
+                    Log.d("AppB", "Image: $name - $it")
+                }
+                try {
+                    context?.contentResolver?.openFileDescriptor(imageUri, "r")?.use { pfd ->
+                        val bitmap = BitmapFactory.decodeFileDescriptor(pfd.fileDescriptor)
+                        if (bitmap != null) {
+                            bitmap.apply {
+                                imageList.add(this)
+                                binding?.imageView?.setImageBitmap(this)
+                            }
+                            Log.d("AppB", "✅ Decode OK for: $imageUri")
+                        } else {
+                            Log.w("AppB", "❌ Decode failed (bitmap=null) for: $imageUri")
+                        }
+                    }
+                } catch (e: Exception) {
+                    Log.e("AppB", "❌ Exception decoding image: ${e.message}")
+                }
+            }
+        }
     }
 
     private inline fun <reified T> loadJsonFromAssetsOtherApp(context: Context?, fileName: String): T? {
@@ -145,11 +197,9 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
     private fun showImage() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val imagePath =
-                    "https://img.freepik.com/free-vector/3d-cartoon-character-woman-working-with-laptop-search-bar-illustration-vector-design_40876-3096.jpg"
-                val imageBitmap = loadImage(imagePath)
+                val imageBitmap = loadImage()
                 withContext(Dispatchers.Main) {
-                    binding?.imageView?.setImageBitmap(imageBitmap)
+                    //binding?.imageView?.setImageBitmap(imageBitmap)
                 }
             } catch (e: Exception) {
                 when (e) {
@@ -166,9 +216,14 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
     }
 
     @Throws(MalformedURLException::class, IOException::class)
-    private fun loadImage(imagePath: String): Bitmap {
+    private fun loadImage(imagePath: String = IMAGE_PATH): Bitmap {
         val url = URL(imagePath)
         val inputStream = url.openConnection().getInputStream()
         return BitmapFactory.decodeStream(inputStream)
+    }
+
+    companion object {
+        private const val IMAGE_PATH =
+            "https://img.freepik.com/free-vector/3d-cartoon-character-woman-working-with-laptop-search-bar-illustration-vector-design_40876-3096.jpg"
     }
 }

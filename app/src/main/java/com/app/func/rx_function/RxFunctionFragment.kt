@@ -1,6 +1,5 @@
 package com.app.func.rx_function
 
-import android.content.res.Resources
 import android.graphics.Point
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -62,15 +61,17 @@ class RxFunctionFragment : BaseFragment<FragmentRxFunctionBinding>(), View.OnCli
     }
 
     override fun initActions() {
-        binding?.btnSimpleRx?.setOnClickListener(this)
-        binding?.btnMapRx?.setOnClickListener(this)
-        binding?.btnZipRx?.setOnClickListener(this)
-        binding?.btnTimeRx?.setOnClickListener(this)
-        binding?.btnFilterRx?.setOnClickListener(this)
-        binding?.btnConcatRx?.setOnClickListener(this)
-        binding?.btnMergeRx?.setOnClickListener(this)
-        binding?.btnDelayRx?.setOnClickListener(this)
-        binding?.btnSearchRx?.setOnClickListener(this)
+        binding?.apply {
+            btnSimpleRx.setOnClickListener(this@RxFunctionFragment)
+            btnMapRx.setOnClickListener(this@RxFunctionFragment)
+            btnZipRx.setOnClickListener(this@RxFunctionFragment)
+            btnTimeRx.setOnClickListener(this@RxFunctionFragment)
+            btnFilterRx.setOnClickListener(this@RxFunctionFragment)
+            btnConcatRx.setOnClickListener(this@RxFunctionFragment)
+            btnMergeRx.setOnClickListener(this@RxFunctionFragment)
+            btnDelayRx.setOnClickListener(this@RxFunctionFragment)
+            btnSearchRx.setOnClickListener(this@RxFunctionFragment)
+        }
     }
 
     private fun updateMarker(sb: SeekBar, message: String) {
