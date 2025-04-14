@@ -5,7 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.util.Log
+import android.graphics.drawable.Drawable
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -15,7 +16,10 @@ import com.app.func.ViewAnimationsActivity2
 import com.app.func.ViewCustomActivity
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentHomeStartBinding
+import com.app.func.provider.SharedImageManager
 import com.app.func.utils.Constants
+import com.app.func.utils.Constants.PKG_RESOURCE_APP
+import com.app.func.utils.Logger
 import com.app.func.view.all_demo.EmotionalFaceView
 import com.app.func.view.chart.ChartType
 import com.app.func.view.chart.StatisticsView
@@ -50,8 +54,40 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
         viewModel.getNote()
         loadJsonFromAssetsOtherApp<String>(this@HomeStartFragment.context, fileJson)
 
-        fetchSharedStrings()
-        fetchImageList()
+        val bitmap = SharedImageManager.getImage(requireContext(), "water_blue")
+        binding?.imageView?.setImageBitmap(bitmap)
+
+        //fetchSharedStrings()
+        //fetchImageList()
+        //loadImageByGetIdentifier()
+    }
+
+    private fun loadImageByGetIdentifier() {
+        val resourceAppContext =
+            context?.createPackageContext(PKG_RESOURCE_APP, Context.CONTEXT_IGNORE_SECURITY)
+        val resId = resourceAppContext?.resources?.getIdentifier(
+            "water_gray",
+            "drawable",
+            PKG_RESOURCE_APP
+        ) as Int
+        if (resId != 0) {
+            //val drawable = resourceAppContext?.resources?.getDrawable(resId, null)
+            val drawable = ResourcesCompat.getDrawable(resourceAppContext.resources, resId, null)
+            showImageDemo(drawable = drawable)
+        } else {
+            Logger.e("Resource not found.")
+        }
+    }
+
+    private fun showImageDemo(bitmap: Bitmap? = null, drawable: Drawable? = null) {
+        binding?.imageView?.apply {
+            bitmap?.let {
+                setImageBitmap(it)
+            }
+            drawable?.let {
+                setImageDrawable(it)
+            }
+        }
     }
 
     private fun fetchSharedStrings() {
@@ -65,7 +101,7 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
             while (it.moveToNext()) {
                 val key = it.getString(keyIndex)
                 val value = it.getString(valueIndex)
-                Log.d("AppB", "KEY: $key | VALUE: $value")
+                Logger.d("Client --- KEY: $key | VALUE: $value")
             }
         }
     }
@@ -81,7 +117,7 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
             while (it.moveToNext()) {
                 val name = it.getString(nameIndex)
                 val imageUri = it.getString(uriIndex).toUri().also {
-                    Log.d("AppB", "Image: $name - $it")
+                    Logger.d("Client - Image: $name - $it")
                 }
                 try {
                     context?.contentResolver?.openFileDescriptor(imageUri, "r")?.use { pfd ->
@@ -89,26 +125,28 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
                         if (bitmap != null) {
                             bitmap.apply {
                                 imageList.add(this)
-                                binding?.imageView?.setImageBitmap(this)
+                                //showImageDemo(bitmap = this)
                             }
-                            Log.d("AppB", "✅ Decode OK for: $imageUri")
+                            Logger.d("✅ Client - Decode OK for: $imageUri")
                         } else {
-                            Log.w("AppB", "❌ Decode failed (bitmap=null) for: $imageUri")
+                            Logger.w("❌ Client - Decode failed (bitmap=null) for: $imageUri")
                         }
                     }
                 } catch (e: Exception) {
-                    Log.e("AppB", "❌ Exception decoding image: ${e.message}")
+                    Logger.e("❌ Client - Exception decoding image: ${e.message}")
                 }
             }
         }
     }
 
-    private inline fun <reified T> loadJsonFromAssetsOtherApp(context: Context?, fileName: String): T? {
-        val packageNameResourceApp = "hn.single.server"
-        context?.packageManager?.getResourcesForApplication(packageNameResourceApp)?.let {
+    private inline fun <reified T> loadJsonFromAssetsOtherApp(
+        context: Context?,
+        fileName: String
+    ): T? {
+        context?.packageManager?.getResourcesForApplication(PKG_RESOURCE_APP)?.let {
             val inputStream = it.assets.open(fileName)
             val content = inputStream.bufferedReader().use(BufferedReader::readText)
-            Log.d(Constants.TAG_PROVIDER, "Content of file = $content")
+            Logger.d("Content of file = $content")
             return content as T
         }
         return null
@@ -116,20 +154,20 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
 
     override fun observeData() {
         viewModel.note.observe(viewLifecycleOwner) {
-            Log.d("fileTag", it.toString())
+            Logger.d("fileTag - $it")
         }
 
         viewModel.response.observe(viewLifecycleOwner) {
-            Log.d("fileTag", "Response $it")
+            Logger.d("Response $it")
             viewModel.saveFileToDisk(requireContext(), responseBody = it, fileName = "test.json")
         }
 
         viewModel.error.observe(viewLifecycleOwner) {
-            Log.d("fileTag", it)
+            Logger.d("Error - $it")
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
-            Log.d("fileTag", "isLoading --- $it")
+            Logger.d("isLoading --- $it")
         }
 
     }
@@ -203,13 +241,10 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
                 }
             } catch (e: Exception) {
                 when (e) {
-                    is MalformedURLException -> Log.d(
-                        "Exception",
-                        "MalformedURLException xảy ra: ${e.message}"
-                    )
+                    is MalformedURLException -> Logger.d("MalformedURLException xảy ra: ${e.message}")
 
-                    is IOException -> Log.d("Exception", "IOException - ${e.message}")
-                    else -> Log.d("Exception", "Other exception - ${e.message}")
+                    is IOException -> Logger.d("IOException - ${e.message}")
+                    else -> Logger.d("Other exception - ${e.message}")
                 }
             }
         }

@@ -114,6 +114,7 @@ dependencies {
     implementation(AppDependencies.KOTLINX_SERIALIZATION)
     implementation(AppDependencies.SERIALIZATION_CONVERTER)
     implementation(AppDependencies.OK_HTTP)
+    implementation(AppDependencies.OK_HTTP_LOGGING)
 
     //ViewModel scope
     implementation(AppDependencies.VIEWMODEL_KTX)

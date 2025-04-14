@@ -1,5 +1,6 @@
 package hn.single.server.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,6 +28,7 @@ class MainViewModel @Inject constructor(val mainRepository: MainRepository) : Vi
         viewModelScope.launch {
             _mainItem.emit(UIState.Loading)
             mainRepository.getMainData().flowOn(Dispatchers.IO).catch {
+                Log.d("TAG","Error - $it")
                 _mainItem.emit(UIState.Failure(it))
             }.collect {
                 _mainItem.emit(UIState.Success(it))

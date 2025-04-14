@@ -12,4 +12,6 @@ The API is a simple CRUD API for managing a list of users.
   - Template Method, Chain of Responsibility, Interpreter, Iterator, Mediator, 
   - Memento, Visitor, Null Object, Object Pool, Prototype, and Singleton. (Not yet... >+<)
 - MVI demo
+- Content Provider: getIdentifier, contentResolver.
+- getResourcesForApplication.
 - 

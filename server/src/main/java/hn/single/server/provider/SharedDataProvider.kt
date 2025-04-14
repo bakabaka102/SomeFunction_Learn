@@ -47,6 +47,8 @@ class SharedDataProvider : ContentProvider() {
                     addRow(arrayOf("Discord", "$URI_IMAGE?id=ic_discord"))
                     addRow(arrayOf("Facebook", "$URI_IMAGE?id=ic_facebook"))*/
                     addRow(arrayOf("Mouse", "$URI_IMAGE?id=mouse"))
+                    addRow(arrayOf("Drop water is blue", "$URI_IMAGE?id=water_blue"))
+                    addRow(arrayOf("Drop water is gray", "$URI_IMAGE?id=water_gray"))
                 }
                 cursor
             }
@@ -80,6 +82,8 @@ class SharedDataProvider : ContentProvider() {
 
         val resId = when (id) {
             "mouse" -> R.raw.mouse
+            "water_blue" -> R.raw.water_blue
+            "water_gray" -> R.raw.water_gray
             else -> return null
         }
 

@@ -86,15 +86,14 @@ dependencies {
     //Kotlin serialization
     implementation(AppDependencies.KOTLINX_SERIALIZATION)
     implementation(AppDependencies.SERIALIZATION_CONVERTER)
-    implementation(AppDependencies.OK_HTTP)
 
     implementation(AppDependencies.CONVERTER_MOSHI)
     implementation(AppDependencies.MOSHI)
     implementation(AppDependencies.MOSHI_KOTLIN)
 
     implementation(platform(AppDependencies.OKHTTP_BOM))
-    implementation(AppDependencies.OKHTTP)
-    implementation(AppDependencies.LOGGING_INTERCEPTOR)
+    implementation(AppDependencies.OK_HTTP)
+    implementation(AppDependencies.OK_HTTP_LOGGING)
     compileOnly(AppDependencies.JAVAX_ANNOTATION)
 
     implementation(project(AppDependencies.AIDL_LIB))
