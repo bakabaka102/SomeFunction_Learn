@@ -200,3 +200,12 @@ val taskCreateDefaultConfig by tasks.registering {
         println("------[Success] File created: ${resource.absolutePath}------")
     }
 }
+
+kapt {
+    arguments {
+        arg("dagger.fastInit", "enabled")
+        arg("dagger.hilt.android.internal.disableAndroidSuperclassValidation", "true")
+        arg("dagger.hilt.android.internal.projectType", "APPLICATION")
+        arg("dagger.hilt.internal.useAggregatingRootProcessor", "false")
+    }
+}

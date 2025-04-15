@@ -1,0 +1,8 @@
+<resources>
+    <declare-styleable name="RotatingDotsView">
+        <attr name="dotCount" format="integer" />
+        <attr name="dotRadius" format="dimension" />
+        <attr name="rotateSpeed" format="integer" />
+        <attr name="pulseEnabled" format="boolean" />
+    </declare-styleable>
+</resources>

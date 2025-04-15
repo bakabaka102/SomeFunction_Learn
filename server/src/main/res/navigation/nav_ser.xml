@@ -5,7 +5,7 @@
     app:startDestination="@id/randomFragment">
     <fragment
         android:id="@+id/randomFragment"
-        android:name="hn.single.server.features.randomvalue.RandomFragment"
+        android:name="hn.single.server.ui.randomvalue.RandomFragment"
         android:label="fragment_random"
         tools:layout="@layout/fragment_random" >
         <action
@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainMovieFragment"
-        android:name="hn.single.server.ui.MainMovieFragment"
+        android:name="hn.single.server.ui.loadmovies.MainMovieFragment"
         android:label="fragment_main_movie"
         tools:layout="@layout/fragment_main_movie" />
 </navigation>
