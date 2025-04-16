@@ -7,14 +7,42 @@
         android:id="@+id/randomFragment"
         android:name="hn.single.server.ui.randomvalue.RandomFragment"
         android:label="fragment_random"
-        tools:layout="@layout/fragment_random" >
+        tools:layout="@layout/fragment_random">
         <action
             android:id="@+id/action_randomFragment_to_mainMovieFragment"
             app:destination="@id/mainMovieFragment" />
+        <action
+            android:id="@+id/action_randomFragment_to_waveLineFragment"
+            app:destination="@id/waveLineFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainMovieFragment"
         android:name="hn.single.server.ui.loadmovies.MainMovieFragment"
         android:label="fragment_main_movie"
         tools:layout="@layout/fragment_main_movie" />
+    <fragment
+        android:id="@+id/bombExplosionFragment"
+        android:name="hn.single.server.ui.screens.BombExplosionFragment"
+        android:label="fragment_bomb_explosion"
+        tools:layout="@layout/fragment_bomb_explosion" />
+    <fragment
+        android:id="@+id/waveLineFragment"
+        android:name="hn.single.server.ui.waveline.WaveLineFragment"
+        android:label="fragment_wave_line"
+        tools:layout="@layout/fragment_wave_line">
+        <argument
+            android:name="nameTitle"
+            app:argType="string" />
+        <argument
+            android:name="movie"
+            app:argType="hn.single.server.ui.randomvalue.Movie" />
+        <argument
+            android:name="movieList"
+            app:argType="hn.single.server.ui.randomvalue.Movie[]" />
+    <argument
+            android:name="settingBundle"
+            app:argType="hn.single.server.ui.randomvalue.SettingsBundle" />
+    </fragment>
+
+
 </navigation>

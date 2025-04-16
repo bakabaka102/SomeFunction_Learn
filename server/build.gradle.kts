@@ -4,13 +4,16 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt") //<-- this one //for Hilt
+    //id("org.jetbrains.kotlin.android")
+    kotlin("android")
+    //id("kotlin-kapt") //<-- this one //for Hilt
+    kotlin("kapt") //<-- this one //for Hilt
     id("com.google.dagger.hilt.android") // <-- this one //for Hilt
 
     //
     id("kotlinx-serialization")
-
+    id("androidx.navigation.safeargs.kotlin") // Đảm bảo có plugin này
+    id("kotlin-parcelize")
 }
 
 val gitInfo = GitInfo(rootProject.projectDir)
@@ -118,6 +121,10 @@ dependencies {
 
     //ViewModel scope
     implementation(AppDependencies.VIEWMODEL_KTX)
+
+    //
+    // Nếu sử dụng Safe Args
+    //implementation("androidx.navigation:navigation-safe-args-ktx:2.4.1")
 
     testImplementation(AppDependencies.JUNIT)
     androidTestImplementation(AppDependencies.EXT_JUNIT)

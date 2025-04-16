@@ -228,7 +228,6 @@ class ArcStartPulseGaugeView @JvmOverloads constructor(
             MotionEvent.ACTION_UP -> {
                 // Notify accessibility framework
                 performClick()
-                return true
             }
 
         }

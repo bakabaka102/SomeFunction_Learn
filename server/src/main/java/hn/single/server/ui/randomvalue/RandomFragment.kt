@@ -1,5 +1,6 @@
 package hn.single.server.ui.randomvalue
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.core.view.isVisible
@@ -87,9 +88,51 @@ class RandomFragment : BaseFragment<FragmentRandomBinding>() {
         }
         binding?.showToast?.setOnClickListener {
             viewModel.setEvent(RandomContract.Event.OnShowToastClicked)
+            findNavController().navigate(R.id.bombExplosionFragment)
         }
         binding?.secondActivity?.setOnClickListener {
             findNavController().navigate(R.id.action_randomFragment_to_mainMovieFragment)
+        }
+        binding?.waveLine?.setOnClickListener {
+            val configMap = mapOf(
+                "theme" to "dark",
+                "username" to "admin",
+                "language" to "vi"
+            )
+            val settings = SettingsBundle(configMap)
+            val action = RandomFragmentDirections
+                .actionRandomFragmentToWaveLineFragment(
+                    nameTitle = "This is Safe Args Title",
+                    movie = Movie(
+                        id = 1,
+                        title = "This is Safe Args Movie",
+                        isFavorite = true
+                    ),
+                    movieList = arrayOf(
+                        Movie(
+                            id = 1,
+                            title = "This is Safe Args Movie",
+                            isFavorite = true
+                        ), Movie(
+                            id = 2,
+                            title = "This is Safe Args Movie 2",
+                            isFavorite = false
+                        )
+                    ),
+                    settingBundle = settings,
+                )
+
+            val bundle = Bundle().apply {
+                putBoolean("isTemp", true)
+                putInt("bgColor", Color.RED)
+            }
+
+            //Simple
+            //findNavController().navigate(action)
+            // Gộp SafeArgs + Bundle
+            findNavController().navigate(action.actionId, action.arguments.apply {
+                putAll(bundle) // gộp bundle phụ vào bundle chính của SafeArgs
+            })
         }
     }
 

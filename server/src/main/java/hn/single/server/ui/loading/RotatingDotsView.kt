@@ -42,7 +42,7 @@ class RotatingDotsView @JvmOverloads constructor(
 
     private fun startRotation() {
         ValueAnimator.ofFloat(0f, 360f).apply {
-            duration = 4000
+            duration = 6000
             repeatCount = ValueAnimator.INFINITE
             interpolator = LinearInterpolator()
             addUpdateListener {

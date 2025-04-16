@@ -5,4 +5,12 @@
         <attr name="rotateSpeed" format="integer" />
         <attr name="pulseEnabled" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="TouchRippleView">
+        <attr name="rippleColor" format="color" />
+        <attr name="rippleSpeed" format="float" />
+        <attr name="rippleStrokeWidth" format="dimension" />
+        <attr name="autoStart" format="boolean" />
+        <attr name="rippleInterval" format="integer" />
+    </declare-styleable>
 </resources>
