@@ -6,15 +6,14 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import hn.single.server.BuildConfig
-import hn.single.server.common.Const
-import hn.single.server.data.network.ApiInterface
+import hn.single.server.common.Constants
+import hn.single.server.data.network.NewsApiService
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
@@ -77,7 +76,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApiInterface(okHttpClient: OkHttpClient): ApiInterface {
+    fun provideApiInterface(okHttpClient: OkHttpClient): NewsApiService {
         val contentType = "application/json; charset=UTF8".toMediaType()
         val json = Json {
             ignoreUnknownKeys = true
@@ -85,11 +84,11 @@ object NetworkModule {
         val factory = json.asConverterFactory(contentType)
 
         return Retrofit.Builder()
-            .baseUrl(Const.BASE_URL)
+            .baseUrl(Constants.BASE_URL_URL)
             /*.addConverterFactory(GsonConverterFactory.create())*/
             .addConverterFactory(factory)
             .client(okHttpClient)
             .build()
-            .create(ApiInterface::class.java)
+            .create(NewsApiService::class.java)
     }
 }

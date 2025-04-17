@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/randomFragment">
+    app:startDestination="@id/forYouFragment">
     <fragment
         android:id="@+id/randomFragment"
         android:name="hn.single.server.ui.randomvalue.RandomFragment"
@@ -39,10 +39,35 @@
         <argument
             android:name="movieList"
             app:argType="hn.single.server.ui.randomvalue.Movie[]" />
-    <argument
+        <argument
             android:name="settingBundle"
             app:argType="hn.single.server.ui.randomvalue.SettingsBundle" />
     </fragment>
+    <fragment
+        android:id="@+id/forYouFragment"
+        android:name="hn.single.server.ui.foryou.ForYouFragment"
+        android:label="fragment_for_you"
+        tools:layout="@layout/fragment_for_you" />
+    <fragment
+        android:id="@+id/financeFragment"
+        android:name="hn.single.server.ui.finance.FinanceFragment"
+        android:label="fragment_finance"
+        tools:layout="@layout/fragment_finance" />
+    <fragment
+        android:id="@+id/followingFragment"
+        android:name="hn.single.server.ui.following.FollowingFragment"
+        android:label="fragment_following"
+        tools:layout="@layout/fragment_following" />
+    <fragment
+        android:id="@+id/kioskFragment"
+        android:name="hn.single.server.ui.kiosk.KioskFragment"
+        android:label="fragment_kiosk"
+        tools:layout="@layout/fragment_kiosk" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="hn.single.server.ui.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
 
 
 </navigation>

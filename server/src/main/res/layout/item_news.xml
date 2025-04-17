@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:elevation="2dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <!-- Nguồn bài viết -->
+        <TextView
+            android:id="@+id/tvSource"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BBC News"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="13sp" />
+
+        <!-- Ảnh bài viết góc phải -->
+        <ImageView
+            android:id="@+id/ivThumbnail"
+            android:layout_width="90dp"
+            android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="Thumbnail"
+            android:scaleType="centerCrop" />
+
+        <!-- Tiêu đề -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvSource"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@id/ivThumbnail"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="Tiêu đề bài viết rất hay và thú vị"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- Thời gian đăng -->
+        <TextView
+            android:id="@+id/tvPublishedAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTitle"
+            android:text="2 giờ trước"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
