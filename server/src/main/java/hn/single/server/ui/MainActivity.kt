@@ -1,6 +1,14 @@
 package hn.single.server.ui
 
+import android.app.Activity
+import android.os.Bundle
+import android.util.Log
+import android.view.WindowManager
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import hn.single.server.R
 import hn.single.server.base.BaseActivity
@@ -9,40 +17,42 @@ import hn.single.server.databinding.ActivityMainBinding
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
-    private lateinit var navHostFragments: Map<Int, NavHostFragment>
-
     override fun initViewBinding() = ActivityMainBinding.inflate(layoutInflater)
 
     override fun setupViews() {
-        //findNavController(R.id.mainSerContainerView)
-        navHostFragments = mapOf(
-            R.id.nav_for_you to createNavHost(R.id.nav_for_you, R.navigation.nav_for_you),
-            R.id.nav_finance to createNavHost(R.id.nav_finance, R.navigation.nav_finance),
-            R.id.nav_following to createNavHost(R.id.nav_following, R.navigation.nav_following),
-            R.id.nav_kiosk to createNavHost(R.id.nav_kiosk, R.navigation.nav_kiosk),
-        )
-        showFragment(R.id.nav_for_you)
-        binding.mainBottomNavigation.setOnItemSelectedListener { item ->
-            showFragment(item.itemId)
-            true
+        /* val navController = findNavController(R.id.mainSerContainerView)
+         binding.mainBottomNavigation.setupWithNavController(navController)*/
+        // Làm status bar trong suốt
+        //makeStatusBarTransparent()
+        setSupportActionBar(binding.toolbar)
+        val fragment = supportFragmentManager.findFragmentById(R.id.mainSerContainerView)
+        if (fragment is NavHostFragment) {
+            val navController = fragment.navController
+            binding.mainBottomNavigation.setupWithNavController(navController)
+        } else {
+            Log.e("MainActivity", "NavHostFragment not found!")
         }
+        /*val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.mainSerContainerView) as NavHostFragment
+        val navController = navHostFragment.navController
+        // Liên kết BottomNav với NavController
+        binding.mainBottomNavigation.setupWithNavController(navController)*/
     }
 
-    private fun createNavHost(tag: Int, navGraphId: Int): NavHostFragment {
-        val tagName = tag.toString()
-        val fragment = supportFragmentManager.findFragmentByTag(tagName) as? NavHostFragment
-            ?: NavHostFragment.create(navGraphId).also {
-                supportFragmentManager.beginTransaction()
-                    .add(R.id.mainSerContainerView, it, tagName).hide(it).commitNow()
-            }
-        return fragment
+    fun Activity.makeStatusBarTransparent(isLightText: Boolean = false) {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = !isLightText // true = chữ đen, false = chữ trắng
+        }
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
     }
 
-    private fun showFragment(itemId: Int) {
-        navHostFragments.forEach { (id, fragment) ->
-            supportFragmentManager.beginTransaction().apply {
-                if (id == itemId) show(fragment) else hide(fragment)
-            }.commit()
+    fun NavController.navigateSafe(resId: Int, args: Bundle? = null) {
+        currentDestination?.getAction(resId)?.let {
+            navigate(resId, args)
         }
     }
 

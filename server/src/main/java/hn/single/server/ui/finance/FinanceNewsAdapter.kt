@@ -1,4 +1,4 @@
-package hn.single.server.ui.foryou
+package hn.single.server.ui.finance
 
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -17,23 +17,18 @@ import hn.single.server.ui.search.model.Article
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class NewsAdapter : ListAdapter<Article, NewsAdapter.NewsViewHolder>(DiffCallback()) {
+class FinanceNewsAdapter: ListAdapter<Article, FinanceNewsAdapter.FinanceNewsViewHolder>(DiffCallback()) {
 
-    var onItemClick: ((Article) -> Unit)? = null  // Sự kiện click
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FinanceNewsViewHolder {
         val binding = ItemNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return NewsViewHolder(binding)
+        return FinanceNewsViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FinanceNewsViewHolder, position: Int) {
         holder.bind(getItem(position))
-        holder.itemView.setOnClickListener {
-            onItemClick?.invoke(getItem(position))
-        }
     }
 
-    inner class NewsViewHolder(
+    inner class FinanceNewsViewHolder(
         private val binding: ItemNewsBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -84,7 +79,6 @@ class NewsAdapter : ListAdapter<Article, NewsAdapter.NewsViewHolder>(DiffCallbac
                         binding.imageLoading.isGone = true
                     }
                 })
-
         }
 
         private fun formatDate(dateString: String): String {
@@ -98,7 +92,6 @@ class NewsAdapter : ListAdapter<Article, NewsAdapter.NewsViewHolder>(DiffCallbac
                 ""
             }
         }
-
     }
 
     class DiffCallback : DiffUtil.ItemCallback<Article>() {

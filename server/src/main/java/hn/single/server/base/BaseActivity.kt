@@ -10,6 +10,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     protected var toast: Toast? = null
 
     protected lateinit var binding: VB
+
     abstract fun initViewBinding(): VB
 
     abstract fun setupViews()
@@ -22,9 +23,15 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = initViewBinding()
         setContentView(binding.root)
-        setupViews()
+        //setupViews()
         setupActions()
         observeData()
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+        // ✅ Gọi setupViews() ở đây khi mọi view đã sẵn sàng
+        setupViews()
     }
 
     fun showToast(message: String) {

@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import hn.single.server.BuildConfig
 import hn.single.server.common.UIState
-import hn.single.server.ui.search.model.TopHeadlinesResponse
+import hn.single.server.ui.search.model.NewsResponse
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -14,7 +15,7 @@ class NewsViewModel @Inject constructor(
     private val repository: NewsRepository
 ) : ViewModel() {
 
-    val topHeadlines: LiveData<UIState<TopHeadlinesResponse>> get() = repository.response
+    val topHeadlines: LiveData<UIState<NewsResponse>> get() = repository.response
 
     /*init {
         loadTopHeadLines()
@@ -22,7 +23,7 @@ class NewsViewModel @Inject constructor(
 
     fun loadTopHeadLines(
         country: String = "vi",
-        apiKey: String = "86b39afce9f54f57befb44ea9ecfc357",
+        apiKey: String = BuildConfig.API_KEY,
     ) {
         viewModelScope.launch {
             repository.getTopHeadlines(country, apiKey)

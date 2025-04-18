@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -15,18 +17,36 @@
             android:id="@+id/tvSource"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BBC News"
             android:textColor="@android:color/darker_gray"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            tools:text="BBC News" />
 
         <!-- Ảnh bài viết góc phải -->
-        <ImageView
-            android:id="@+id/ivThumbnail"
+        <FrameLayout
+            android:id="@+id/frameImage"
             android:layout_width="90dp"
             android:layout_height="60dp"
-            android:layout_alignParentEnd="true"
-            android:contentDescription="Thumbnail"
-            android:scaleType="centerCrop" />
+            android:layout_alignParentEnd="true">
+
+            <!-- Lottie Loading -->
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/imageLoading"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/lottie_walking" />
+
+            <!-- Thumbnail Image -->
+            <ImageView
+                android:id="@+id/ivThumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/thumbnail"
+                android:scaleType="centerCrop"
+                android:visibility="invisible" />
+        </FrameLayout>
 
         <!-- Tiêu đề -->
         <TextView
@@ -36,12 +56,12 @@
             android:layout_below="@id/tvSource"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
-            android:layout_toStartOf="@id/ivThumbnail"
+            android:layout_toStartOf="@id/frameImage"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="Tiêu đề bài viết rất hay và thú vị"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="Tiêu đề bài viết rất hay và thú vị" />
 
         <!-- Thời gian đăng -->
         <TextView
@@ -49,8 +69,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvTitle"
-            android:text="2 giờ trước"
             android:textColor="@android:color/darker_gray"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="2 giờ trước" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

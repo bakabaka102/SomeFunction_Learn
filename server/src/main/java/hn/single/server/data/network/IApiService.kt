@@ -3,7 +3,6 @@ package hn.single.server.data.network
 import hn.single.server.common.Constants
 import hn.single.server.data.model.ApiResponse
 import hn.single.server.ui.search.model.NewsResponse
-import hn.single.server.ui.search.model.TopHeadlinesResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -15,7 +14,7 @@ interface NewsApiService {
     ): ApiResponse
 
     @GET(Constants.QUERY_EVERYTHING_URL)
-    suspend fun searchNews(
+    suspend fun queryNews(
         @Query("q") query: String,
         @Query("apiKey") apiKey: String,
     ): NewsResponse
@@ -24,5 +23,5 @@ interface NewsApiService {
     suspend fun getTopHeadlines(
         @Query("country") country: String = "vi",
         @Query("apiKey") apiKey: String,
-    ): TopHeadlinesResponse
+    ): NewsResponse
 }

@@ -12,4 +12,9 @@
     <string name="logo">Logo</string>
     <string name="search">Search</string>
     <string name="empty_data">Empty data</string>
+    <string name="thumbnail">Thumbnail</string>
+    <string name="time_publish">Thời gian đăng</string>
+    <string name="content_of_post">Nội dung bài viết</string>
+    <string name="source_of_post">Nguồn bài viết</string>
+    <string name="title_of_post">Tiêu đề bài viết</string>
 </resources>

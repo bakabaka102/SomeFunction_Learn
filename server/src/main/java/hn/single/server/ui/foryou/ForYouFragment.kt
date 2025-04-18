@@ -3,6 +3,7 @@ package hn.single.server.ui.foryou
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import hn.single.server.BuildConfig
@@ -21,6 +22,10 @@ class ForYouFragment : BaseFragment<FragmentForYouBinding>() {
 
     override fun setUpViews() {
         viewModel.loadTopHeadLines(country = "us", apiKey = BuildConfig.API_KEY)
+        binding?.swipeRefreshLayout?.setOnRefreshListener {
+            // Gọi lại dữ liệu
+            viewModel.loadTopHeadLines(country = "us", apiKey = BuildConfig.API_KEY)
+        }
         binding?.recyclerTopHeadlines?.apply {
             this.adapter = newsAdapter
             layoutManager = LinearLayoutManager(requireContext())
@@ -36,6 +41,7 @@ class ForYouFragment : BaseFragment<FragmentForYouBinding>() {
                 }
 
                 is UIState.Success -> {
+                    binding?.swipeRefreshLayout?.isRefreshing = false
                     binding?.loadingView?.isGone = true
                     val articles = state.data.articles
                     if (articles.isEmpty()) {
@@ -48,6 +54,7 @@ class ForYouFragment : BaseFragment<FragmentForYouBinding>() {
                 }
 
                 is UIState.Failure -> {
+                    binding?.swipeRefreshLayout?.isRefreshing = false
                     binding?.loadingView?.isGone = true
                     binding?.textStatus?.isVisible = true
                     binding?.textStatus?.text = state.throwable.message
@@ -62,7 +69,14 @@ class ForYouFragment : BaseFragment<FragmentForYouBinding>() {
     }
 
     override fun initActions() {
-
+        newsAdapter.onItemClick = { article ->
+            //val action = ForYouFragmentDirections.actionForYouFragmentToNavDetail(article)
+            /*val bundle = bundleOf("article" to article)
+            findNavController().navigate(R.id.detailNewsFragment, bundle)*/
+            ForYouFragmentDirections.actionForYouFragmentToDetailNewsFragment(article).apply {
+                findNavController().navigate(this)
+            }
+        }
     }
 
 }

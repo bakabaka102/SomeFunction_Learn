@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_for_you"
+        android:id="@+id/forYouFragment"
         android:icon="@drawable/ic_newspaper_selector"
         android:title="@string/for_you" />
     <item
-        android:id="@+id/nav_finance"
+        android:id="@+id/financeNewsFragment"
         android:icon="@drawable/ic_finance_selector"
         android:title="@string/finance" />
     <item
-        android:id="@+id/nav_following"
+        android:id="@+id/followingFragment"
         android:icon="@drawable/ic_follow_selector"
         android:title="@string/following" />
     <item
-        android:id="@+id/nav_kiosk"
+        android:id="@+id/kioskFragment"
         android:icon="@drawable/ic_kiosk_selector"
         android:title="@string/kiosk" />
 </menu>

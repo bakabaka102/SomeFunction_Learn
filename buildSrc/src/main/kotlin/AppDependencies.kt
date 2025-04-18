@@ -58,6 +58,7 @@ object AppDependencies {
     const val MOSHI_KOTLIN = "com.squareup.moshi:moshi-kotlin:${Version.MOSHI}"
     const val WORK_RUNTIME_KTX = "androidx.work:work-runtime-ktx:${Version.WORK_RUNTIME_KTX}"
 
+    const val LOTTIE = "com.airbnb.android:lottie:${Version.LOTTIE_VERSION}"
 
     object Version {
         const val CORE_KTX = "1.15.0"
@@ -97,5 +98,7 @@ object AppDependencies {
         const val JAVAX_ANNOTATION = "10.0-b28"
         const val COMPOSE = "1.7.8"
         const val WORK_RUNTIME_KTX = "2.10.0"
+
+        const val LOTTIE_VERSION = "6.1.0"
     }
 }

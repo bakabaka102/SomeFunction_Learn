@@ -104,6 +104,7 @@ dependencies {
 
     //Dagger for dependency injection
     implementation(AppDependencies.DAGGER_HILT_ANDROID)
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     kapt(AppDependencies.DAGGER_HILT_COMPILER)
 
     //Glide for image loading
@@ -122,9 +123,8 @@ dependencies {
     //ViewModel scope
     implementation(AppDependencies.VIEWMODEL_KTX)
 
-    //
-    // Nếu sử dụng Safe Args
-    //implementation("androidx.navigation:navigation-safe-args-ktx:2.4.1")
+    //Lottie
+    implementation(AppDependencies.LOTTIE)
 
     testImplementation(AppDependencies.JUNIT)
     androidTestImplementation(AppDependencies.EXT_JUNIT)

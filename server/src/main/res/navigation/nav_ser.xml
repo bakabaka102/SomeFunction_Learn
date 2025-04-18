@@ -50,7 +50,7 @@
         tools:layout="@layout/fragment_for_you" />
     <fragment
         android:id="@+id/financeFragment"
-        android:name="hn.single.server.ui.finance.FinanceFragment"
+        android:name="hn.single.server.ui.finance.FinanceNewsFragment"
         android:label="fragment_finance"
         tools:layout="@layout/fragment_finance" />
     <fragment

@@ -1,6 +1,8 @@
 package hn.single.server.ui.search.model
 
+import android.os.Parcelable
 import androidx.annotation.Keep
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -13,6 +15,7 @@ data class NewsResponse(
 
 @Serializable
 @Keep
+@Parcelize
 data class Article(
     val source: Source,
     val author: String? = null,
@@ -22,18 +25,12 @@ data class Article(
     val urlToImage: String? = null,
     val publishedAt: String,
     val content: String? = null,
-)
+): Parcelable
 
 @Serializable
 @Keep
+@Parcelize
 data class Source(
     val id: String? = null,
     val name: String,
-)
-
-@Serializable
-data class TopHeadlinesResponse(
-    val status: String,
-    val totalResults: Int,
-    val articles: List<Article>
-)
+): Parcelable
