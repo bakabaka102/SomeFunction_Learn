@@ -27,6 +27,12 @@
         <action
             android:id="@+id/action_financeNewsFragment_to_detailNewsFragment"
             app:destination="@id/detailNewsFragment" />
+        <action
+            android:id="@+id/action_financeNewsFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
+        <action
+            android:id="@+id/action_financeNewsFragment_to_secureWebViewFragment"
+            app:destination="@id/secureWebViewFragment" />
     </fragment>
 
     <fragment
@@ -51,5 +57,24 @@
             app:argType="hn.single.server.ui.search.model.Article"
             app:nullable="false" />
     </fragment>
-
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="hn.single.server.ui.webview.WebViewFragment"
+        android:label="fragment_web_view"
+        tools:layout="@layout/fragment_web_view">
+        <argument
+            android:name="url"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/secureWebViewFragment"
+        android:name="hn.single.server.ui.webview.SecureWebViewFragment"
+        android:label="SecureWebViewFragment"
+        tools:layout="@layout/fragment_secure_web_view">
+        <argument
+            android:name="url"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
 </navigation>

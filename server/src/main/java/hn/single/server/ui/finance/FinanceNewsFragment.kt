@@ -3,6 +3,7 @@ package hn.single.server.ui.finance
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import hn.single.server.R
@@ -22,6 +23,13 @@ class FinanceNewsFragment : BaseFragment<FragmentFinanceBinding>() {
         binding?.recyclerFinanceNews?.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = financeAdapter
+        }
+        financeAdapter.onItemClick = {
+            /*val action = FinanceNewsFragmentDirections.actionFinanceNewsFragmentToWebViewFragment(it.url)
+            findNavController().navigate(action)*/
+            val action =
+                FinanceNewsFragmentDirections.actionFinanceNewsFragmentToSecureWebViewFragment(it.url)
+            findNavController().navigate(action)
         }
     }
 

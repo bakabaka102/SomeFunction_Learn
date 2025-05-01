@@ -19,13 +19,18 @@ import java.util.Locale
 
 class FinanceNewsAdapter: ListAdapter<Article, FinanceNewsAdapter.FinanceNewsViewHolder>(DiffCallback()) {
 
+    var onItemClick: ((Article) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FinanceNewsViewHolder {
         val binding = ItemNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FinanceNewsViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: FinanceNewsViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val article = getItem(position)
+        holder.bind(article)
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(article)
+        }
     }
 
     inner class FinanceNewsViewHolder(

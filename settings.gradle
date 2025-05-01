@@ -10,3 +10,4 @@ rootProject.name = "SomeFunction_Learn"
 include ':app'
 include ':server'
 include ':aidl-library'
+include ':mvp_app'
