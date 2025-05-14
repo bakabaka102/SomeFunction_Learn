@@ -9,28 +9,16 @@ class WaveDropFragment : BaseFragment<FragmentWaveDropBinding>() {
     override fun getViewBinding() = FragmentWaveDropBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
-        mWaveHelper = WaveHelper(binding?.contentWater)
-        binding?.contentWater?.setContent("120")
+        mWaveHelper = WaveHelper(binding.contentWater)
+        binding.contentWater.setContent("120")
 
-        binding?.contentWater?.onAnimationUp = {
+        binding.contentWater.onAnimationUp = {
             //startAnimationUp()
         }
-        binding?.contentWater?.onAnimationDown = {
+        binding.contentWater.onAnimationDown = {
             //startAnimationDown()
         }
         mWaveHelper?.start()
-    }
-
-    override fun observeView() {
-
-    }
-
-    override fun observeData() {
-
-    }
-
-    override fun initActions() {
-
     }
 
 }

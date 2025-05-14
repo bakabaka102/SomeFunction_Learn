@@ -36,18 +36,6 @@ class BombExplosionFragment : BaseFragment<FragmentBombExplosionBinding>() {
 
     }
 
-    override fun observeData() {
-
-    }
-
-    override fun observeView() {
-
-    }
-
-    override fun initActions() {
-
-    }
-
     companion object {
         /**
          * Use this factory method to create a new instance of

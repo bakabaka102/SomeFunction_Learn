@@ -68,9 +68,9 @@ class ViewPagersFragment : BaseFragment<FragmentViewPagerBinding>() {
         tutorialPagerAdapter = activity?.supportFragmentManager?.let {
             TutorialPagerAdapter(tutorialList, it)
         }
-        binding?.apply {
+        binding.apply {
             viewPager.adapter = tutorialPagerAdapter
-            tabLayout.setupWithViewPager(binding?.viewPager)
+            tabLayout.setupWithViewPager(binding.viewPager)
         }
 
         /*binding?.tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -90,7 +90,7 @@ class ViewPagersFragment : BaseFragment<FragmentViewPagerBinding>() {
         pagerAdapter = TutorialPager2Adapter2(this).apply {
             submitList(tutorialList)
         }
-        binding?.apply {
+        binding.apply {
             viewPager2.adapter = pagerAdapter
             TabLayoutMediator(tabLayout2, viewPager2) { tab, position ->
                 tab.text = tutorialList[position].name
@@ -99,7 +99,7 @@ class ViewPagersFragment : BaseFragment<FragmentViewPagerBinding>() {
         viewPagerAdapter = ViewPagerAdapter(this).apply {
             submitFragments(listTab)
         }
-        binding?.apply {
+        binding.apply {
             viewPager2DynamicTab.adapter = viewPagerAdapter
             TabLayoutMediator(tabViewPager, viewPager2DynamicTab) { tab, position ->
                 tab.text = listTab[position].title
@@ -118,17 +118,8 @@ class ViewPagersFragment : BaseFragment<FragmentViewPagerBinding>() {
         })
     }
 
-    override fun observeView() {
-
-    }
-
-    override fun observeData() {
-
-    }
-
     override fun initActions() {
-
-        binding?.apply {
+        binding.apply {
             btnAddTab.setOnClickListener {
                 val fragment = DetailPagerFragment.newFragment(data[0].second)
                 addNewTab(fragment)
@@ -147,15 +138,11 @@ class ViewPagersFragment : BaseFragment<FragmentViewPagerBinding>() {
 
     private val mOnBackPress = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            if (binding?.viewPager2DynamicTab == null) {
+            if (binding.viewPager2DynamicTab.currentItem == 0) {
                 findNavController().navigateUp()
             } else {
-                if (binding?.viewPager2DynamicTab?.currentItem == 0) {
-                    findNavController().navigateUp()
-                } else {
-                    binding?.viewPager2DynamicTab?.currentItem =
-                        binding?.viewPager2DynamicTab?.currentItem?.minus(1) ?: 0
-                }
+                binding.viewPager2DynamicTab.currentItem =
+                    binding.viewPager2DynamicTab.currentItem.minus(1)
             }
         }
     }
@@ -174,7 +161,7 @@ class ViewPagersFragment : BaseFragment<FragmentViewPagerBinding>() {
     }
 
     private fun addNewTab(fragment: Fragment) {
-        val name = binding?.edtNameTab?.text?.toString()?.trim()
+        val name = binding.edtNameTab.text.toString().trim()
         if (name.isValidData()) {
             if (canAddMoreTab()) {
                 listTab.add(TabInfo(name.toString(), fragment))

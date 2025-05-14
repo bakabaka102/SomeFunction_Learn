@@ -68,16 +68,4 @@ class FinanceNewsFragment : BaseFragment<FragmentFinanceBinding>() {
         }
     }
 
-    override fun observeData() {
-
-    }
-
-    override fun observeView() {
-
-    }
-
-    override fun initActions() {
-
-    }
-
 }

@@ -31,16 +31,16 @@ class MainRoomCoroutinesFragment :
     override fun setUpViews() {
         wordListAdapter = WordListAdapter {
             word = it
-            binding?.editTextWord?.setText(it.word)
-            binding?.btnUpdate?.isEnabled = true
+            binding.editTextWord.setText(it.word)
+            binding.btnUpdate.isEnabled = true
         }
-        binding?.recyclerviewUsers?.apply {
+        binding.recyclerviewUsers.apply {
             adapter = wordListAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
 
         val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(wordListAdapter, this))
-        itemTouchHelper.attachToRecyclerView(binding?.recyclerviewUsers)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerviewUsers)
         wordListAdapter.onItemRemove = {
             viewModel.delete(it)
         }
@@ -53,16 +53,16 @@ class MainRoomCoroutinesFragment :
         /*viewModel.wordState.observe(viewLifecycleOwner) {
             when(it) {
                 is DataResult.Loading -> {
-                    binding?.layoutLoading?.isVisible = true
+                    binding.layoutLoading.isVisible = true
                 }
                 is DataResult.Success -> {
-                    binding?.layoutLoading?.isVisible = false
+                    binding.layoutLoading.isVisible = false
                     MyToast.showToast(requireContext(), "Success")
                     wordListAdapter.submitList(it.data)
                 }
                 is DataResult.Error -> {
-                    binding?.layoutLoading?.isVisible = false
-                    binding?.errorText?.text = it.throwable.message.toString()
+                    binding.layoutLoading.isVisible = false
+                    binding.errorText.text = it.throwable.message.toString()
                 }
             }
         }*/
@@ -75,16 +75,11 @@ class MainRoomCoroutinesFragment :
                 }
             }
         }
-
-    }
-
-    override fun observeData() {
-
     }
 
     override fun initActions() {
-        binding?.btnAdd?.setOnClickListener {
-            val word = binding?.editTextWord?.text.toString().trim()
+        binding.btnAdd.setOnClickListener {
+            val word = binding.editTextWord.text.toString().trim()
             if (word.isNotBlank() || word.isNotEmpty()) {
                 if (viewModel.insert(Word(word = word)) > 0) {
                     MyToast.showToast(requireContext(), "Insert success")
@@ -97,12 +92,12 @@ class MainRoomCoroutinesFragment :
             clearText()
         }
 
-        binding?.btnUpdate?.setOnClickListener {
-            word?.let {
-                it.word = binding?.editTextWord?.text.toString().trim()
+        binding.btnUpdate.setOnClickListener {
+            word.let {
+                it?.word = binding.editTextWord.text.toString().trim()
                 if (viewModel.update(it) > 0) {
                     MyToast.showToast(requireContext(), "Update success")
-                    binding?.btnUpdate?.isEnabled = false
+                    binding.btnUpdate.isEnabled = false
                     clearText()
                 } else {
                     MyToast.showToast(requireContext(), "Update failed")
@@ -112,15 +107,15 @@ class MainRoomCoroutinesFragment :
     }
 
     private fun clearText() {
-        binding?.editTextWord?.text?.clear()
+        binding.editTextWord.text.clear()
     }
 
     override fun onRestoreClick(word: Word) {
         val notify = "You remove: $word}"
-        val snackBar = binding?.constraintParent?.let {
+        val snackBar = binding.constraintParent.let {
             Snackbar.make(it, notify, Snackbar.LENGTH_LONG)
         }
-        snackBar?.apply {
+        snackBar.apply {
             setAction("Undo") {
                 wordListAdapter.restoreItem()
                 viewModel.insert(word)

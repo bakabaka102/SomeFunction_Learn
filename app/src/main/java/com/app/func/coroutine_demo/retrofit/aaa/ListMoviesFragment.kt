@@ -18,8 +18,8 @@ class ListMoviesFragment : BaseFragment<FragmentSingleCallNetworkBinding>() {
 
     override fun setUpViews() {
         val layoutManager = LinearLayoutManager(requireActivity())
-        binding?.recyclerView?.layoutManager = layoutManager
-        binding?.recyclerView?.adapter = movieAdapter
+        binding.recyclerView.layoutManager = layoutManager
+        binding.recyclerView.adapter = movieAdapter
 
         initViewModel()
 
@@ -32,23 +32,10 @@ class ListMoviesFragment : BaseFragment<FragmentSingleCallNetworkBinding>() {
         }
 
         mViewModel.loading.observe(viewLifecycleOwner) {
-            binding?.progressBar?.isVisible = it
+            binding.progressBar.isVisible = it
         }
 
         mViewModel.getAllMovies()
-        initRecyclerView()
-    }
-
-    override fun observeView() {
-
-    }
-
-    override fun observeData() {
-
-    }
-
-    override fun initActions() {
-
     }
 
     private fun initViewModel() {
@@ -57,10 +44,5 @@ class ListMoviesFragment : BaseFragment<FragmentSingleCallNetworkBinding>() {
             this,
             MyViewModelFactory(mainRepository)
         )[ListMovieViewModel::class.java]
-    }
-
-    private fun initRecyclerView() {
-
-
     }
 }

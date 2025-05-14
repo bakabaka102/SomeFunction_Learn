@@ -18,28 +18,21 @@ import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class ZipRXFragment : BaseFragment<FragmentSimpleRxBinding>(), View.OnClickListener {
+
     override fun getViewBinding() = FragmentSimpleRxBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
 
     }
 
-    override fun observeView() {
-
-    }
-
-    override fun observeData() {
-
-    }
-
     override fun initActions() {
-        binding?.doSomeWork?.setOnClickListener(this)
+        binding.doSomeWork.setOnClickListener(this)
     }
 
 
     override fun onClick(view: View?) {
-        if (view == binding?.doSomeWork) {
-            binding?.loadingView?.isVisible = true
+        if (view == binding.doSomeWork) {
+            binding.loadingView.isVisible = true
             Handler(Looper.getMainLooper()).postDelayed({
                 doSomeWork()
             }, 1000L)
@@ -54,7 +47,8 @@ class ZipRXFragment : BaseFragment<FragmentSimpleRxBinding>(), View.OnClickListe
      * Then we are finding the list of users who loves both
      */
     private fun doSomeWork() {
-        Observable.zip(getCricketFansObservable(), getFootballFansObservable(),
+        Observable.zip(
+            getCricketFansObservable(), getFootballFansObservable(),
             BiFunction { cricketFans, footballFans ->
                 return@BiFunction Utils.filterUserWhoLovesBoth(cricketFans, footballFans)
             })
@@ -73,29 +67,27 @@ class ZipRXFragment : BaseFragment<FragmentSimpleRxBinding>(), View.OnClickListe
             }
 
             override fun onNext(userList: List<User>) {
-                binding?.textView?.append(" onNext")
-                binding?.textView?.append(AppConstant.LINE_SEPARATOR)
+                binding.textView.append(" onNext")
+                binding.textView.append(AppConstant.LINE_SEPARATOR)
                 for (user in userList) {
-                    binding?.textView?.append(" firstname : ${user.firstname}")
-                    binding?.textView?.append(AppConstant.LINE_SEPARATOR)
+                    binding.textView.append(" firstname : ${user.firstname}")
+                    binding.textView.append(AppConstant.LINE_SEPARATOR)
                 }
                 Logger.d("onNext : " + userList.size)
             }
 
             override fun onError(e: Throwable) {
-                binding?.textView?.append(" onError : " + e.message)
-                binding?.textView?.append(AppConstant.LINE_SEPARATOR)
+                binding.textView.append(" onError : " + e.message)
+                binding.textView.append(AppConstant.LINE_SEPARATOR)
                 Logger.d("onError : " + e.message)
-                binding?.loadingView?.isVisible = false
-
+                binding.loadingView.isVisible = false
             }
 
             override fun onComplete() {
-                binding?.textView?.append(" onComplete")
-                binding?.textView?.append(AppConstant.LINE_SEPARATOR)
+                binding.textView.append(" onComplete")
+                binding.textView.append(AppConstant.LINE_SEPARATOR)
                 Logger.d("onComplete")
-                binding?.loadingView?.isVisible = false
-
+                binding.loadingView.isVisible = false
             }
         }
     }
@@ -117,5 +109,4 @@ class ZipRXFragment : BaseFragment<FragmentSimpleRxBinding>(), View.OnClickListe
             }
         }.subscribeOn(Schedulers.io())
     }
-
 }

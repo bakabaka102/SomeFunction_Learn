@@ -3,13 +3,8 @@ package hn.single.server.ui.waveline
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import hn.single.server.R
 import hn.single.server.base.BaseFragment
 import hn.single.server.databinding.FragmentWaveLineBinding
-import hn.single.server.ui.randomvalue.RandomFragmentDirections
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -47,18 +42,6 @@ class WaveLineFragment : BaseFragment<FragmentWaveLineBinding>() {
 
         val result = "nameTitle: $nameTitle --- movie: $movie --- movieList: $movieList --- setting: $setting --- isTemp: $isTemp --- bgColor: $bgColor"
         binding?.textView?.text = result
-    }
-
-    override fun observeData() {
-
-    }
-
-    override fun observeView() {
-
-    }
-
-    override fun initActions() {
-
     }
 
     companion object {

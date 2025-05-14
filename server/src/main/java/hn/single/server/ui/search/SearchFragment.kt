@@ -11,16 +11,4 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
     }
 
-    override fun observeData() {
-
-    }
-
-    override fun observeView() {
-
-    }
-
-    override fun initActions() {
-
-    }
-
 }

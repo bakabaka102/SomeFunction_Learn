@@ -126,7 +126,7 @@ class DetailPagerFragment(
                     }
                 }
             }
-            binding?.container?.addView(itemView)
+            binding.container.addView(itemView)
         }
     }
 
@@ -178,18 +178,6 @@ class DetailPagerFragment(
                 addView(contentView)
             }
         }
-    }
-
-    override fun observeView() {
-
-    }
-
-    override fun observeData() {
-
-    }
-
-    override fun initActions() {
-
     }
 
     companion object {

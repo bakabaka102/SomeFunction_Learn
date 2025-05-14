@@ -16,7 +16,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     abstract fun setupViews()
 
-    abstract fun observeData()
+    open fun observeData() = Unit
 
     abstract fun setupActions()
 
@@ -25,15 +25,15 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         binding = initViewBinding()
         enableEdgeToEdge()
         setContentView(binding.root)
-        //setupViews()
+        setupViews()
         setupActions()
         observeData()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-        // ✅ Gọi setupViews() ở đây khi mọi view đã sẵn sàng
-        setupViews()
+        // Call setupViews here when everything is already
+        //setupViews()
     }
 
     fun showToast(message: String) {

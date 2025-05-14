@@ -9,18 +9,6 @@ class NoteHomeFragment : BaseFragment<FragmentMainRoomCoroutineBinding>() {
 
     override fun setUpViews() {
 
-
     }
 
-    override fun observeView() {
-
-    }
-
-    override fun observeData() {
-
-    }
-
-    override fun initActions() {
-
-    }
 }

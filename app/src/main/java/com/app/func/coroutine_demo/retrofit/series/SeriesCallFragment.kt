@@ -19,19 +19,11 @@ class SeriesCallFragment : BaseFragment<FragmentSingleCallNetworkBinding>() {
 
     }
 
-    override fun observeView() {
-
-    }
-
     override fun observeData() {
         initObserver()
         initRecyclerView()
     }
-
-    override fun initActions() {
-
-    }
-
+    
     private fun initObserver() {
         viewModel.fetchUsers()
         viewModel.resultState.observe(viewLifecycleOwner) { resultState ->
@@ -39,7 +31,7 @@ class SeriesCallFragment : BaseFragment<FragmentSingleCallNetworkBinding>() {
             when (resultState) {
                 is ResultState.Loading -> {
                     Logger.d("Loading")
-                    binding?.let {
+                    binding.also {
                         it.progressBar.isVisible = resultState.isLoading
                         it.recyclerView.isVisible = resultState.isLoading
                     }
@@ -50,7 +42,7 @@ class SeriesCallFragment : BaseFragment<FragmentSingleCallNetworkBinding>() {
                     resultState.data.let {
                         userAdapter.setData(it)
                     }
-                    binding?.let {
+                    binding.let {
                         it.progressBar.isVisible = false
                         it.recyclerView.isVisible = true
                     }
@@ -58,7 +50,7 @@ class SeriesCallFragment : BaseFragment<FragmentSingleCallNetworkBinding>() {
 
                 is ResultState.Error -> {
                     Logger.d("Error - ${resultState.message}")
-                    binding?.let { binding ->
+                    binding.let { binding ->
                         binding.textStatus.text = resultState.message
                         binding.textStatus.isVisible = true
                         binding.progressBar.isVisible = false
@@ -70,7 +62,7 @@ class SeriesCallFragment : BaseFragment<FragmentSingleCallNetworkBinding>() {
     }
 
     private fun initRecyclerView() {
-        binding?.let {
+        binding.also {
             it.recyclerView.layoutManager = LinearLayoutManager(activity)
             it.recyclerView.addItemDecoration(
                 DividerItemDecoration(
@@ -78,7 +70,7 @@ class SeriesCallFragment : BaseFragment<FragmentSingleCallNetworkBinding>() {
                     LinearLayoutManager.VERTICAL
                 )
             )
-            //(binding?.recyclerView?.layoutManager as LinearLayoutManager).orientation
+            //(binding.recyclerView.layoutManager as LinearLayoutManager).orientation
             it.recyclerView.adapter = userAdapter
         }
     }

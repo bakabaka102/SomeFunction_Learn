@@ -156,17 +156,17 @@ class ListUserFragment : BaseFragment<FragmentListUserBinding>() {
             userAdapter.removeUser(indexDelete)
 
             val notify = "You remove: $nameRemove at position: ${indexDelete + 1}"
-            val snackbar = binding?.consRootView?.let {
+            val snackbar = binding.consRootView.let {
                 Snackbar.make(it, notify, Snackbar.LENGTH_LONG)
             }
-            snackbar?.setAction("Undo") {
+            snackbar.setAction("Undo") {
                 userAdapter.undoRemoveUser(indexDelete, userRemove)
                 if (indexDelete == 0 || indexDelete == mUsers.size - 1) {
-                    binding?.recyclerViewUser?.scrollToPosition(indexDelete)
+                    binding.recyclerViewUser.scrollToPosition(indexDelete)
                 }
             }
-            snackbar?.setActionTextColor(Color.RED)
-            snackbar?.show()
+            snackbar.setActionTextColor(Color.RED)
+            snackbar.show()
         }
     }
 
@@ -179,30 +179,30 @@ class ListUserFragment : BaseFragment<FragmentListUserBinding>() {
     override fun setUpViews() {
         mUsers = getListUser()
         userAdapter.initData(mUsers)
-        binding?.recyclerViewUser?.adapter = userAdapter
+        binding.recyclerViewUser.adapter = userAdapter
         val liner = LinearLayoutManager(requireContext())
-        binding?.recyclerViewUser?.layoutManager = liner
+        binding.recyclerViewUser.layoutManager = liner
         val dividerItemDecoration =
             DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-        binding?.recyclerViewUser?.addItemDecoration(dividerItemDecoration)
+        binding.recyclerViewUser.addItemDecoration(dividerItemDecoration)
         val simpleCallback =
             RecyclerViewItemTouchHelper(
                 0,
                 ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
                 listenerSwipeAction
             )
-        ItemTouchHelper(simpleCallback).attachToRecyclerView(binding?.recyclerViewUser)
+        ItemTouchHelper(simpleCallback).attachToRecyclerView(binding.recyclerViewUser)
 
         //Recyclerview2
         val layoutManager = LinearLayoutManager(requireContext())
         val itemDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         mUsers2 = getListUser()
         userAdapter2.submitData(mUsers2)
-        binding?.recyclerViewUser2?.adapter = userAdapter2
-        binding?.recyclerViewUser2?.layoutManager = layoutManager
-        //binding?.recyclerViewUser2?.addItemDecoration(itemDecoration)
+        binding.recyclerViewUser2.adapter = userAdapter2
+        binding.recyclerViewUser2.layoutManager = layoutManager
+        //binding.recyclerViewUser2.addItemDecoration(itemDecoration)
         //val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
-        //itemTouchHelper.attachToRecyclerView(binding?.recyclerViewUser2)
+        //itemTouchHelper.attachToRecyclerView(binding.recyclerViewUser2)
 
         val itemTouchHelper = object : SwipeHelper(context) {
             override fun instantiateUnderlayButton(
@@ -218,7 +218,7 @@ class ListUserFragment : BaseFragment<FragmentListUserBinding>() {
                         object : UnderlayButtonClickListener {
                             override fun onClick(pos: Int) {
 //                                checkNoInternetWrapper {
-//                                    viewModel?.onDeleteSchedule(adapter.getData()[pos])
+//                                    viewModel.onDeleteSchedule(adapter.getData()[pos])
 //                                }
                                 MyToast.showToast(activity, "Delete clicked", Toast.LENGTH_SHORT)
                             }
@@ -227,18 +227,6 @@ class ListUserFragment : BaseFragment<FragmentListUserBinding>() {
                 )
             }
         }
-        itemTouchHelper.attachToRecyclerView(binding?.recyclerViewUser2)
-    }
-
-    override fun observeView() {
-
-    }
-
-    override fun observeData() {
-
-    }
-
-    override fun initActions() {
-
+        itemTouchHelper.attachToRecyclerView(binding.recyclerViewUser2)
     }
 }

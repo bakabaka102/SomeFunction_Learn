@@ -33,17 +33,4 @@ class DetailNewsFragment : BaseFragment<FragmentDetailNewsBinding>() {
             Glide.with(requireActivity()).load(article.urlToImage).into(ivThumbnail)
         }
     }
-
-    override fun observeData() {
-
-    }
-
-    override fun observeView() {
-
-    }
-
-    override fun initActions() {
-
-    }
-
 }

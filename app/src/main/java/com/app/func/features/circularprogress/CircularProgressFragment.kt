@@ -8,18 +8,6 @@ class CircularProgressFragment : BaseFragment<FragmentCircularProgressBinding>()
     override fun getViewBinding() = FragmentCircularProgressBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
-        
-    }
 
-    override fun observeData() {
-        
-    }
-
-    override fun observeView() {
-        
-    }
-
-    override fun initActions() {
-        
     }
 }

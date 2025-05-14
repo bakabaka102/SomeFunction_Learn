@@ -20,24 +20,24 @@ class RoomFragment : BaseFragment<RoomFragmentBinding>() {
     override fun getViewBinding() = RoomFragmentBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
-        binding?.btnAdd?.setOnClickListener {
+        binding.btnAdd.setOnClickListener {
             addNewUser()
         }
 
-        binding?.btnUpdate?.setOnClickListener {
+        binding.btnUpdate.setOnClickListener {
             updateUser()
         }
 
         userAdapter.setOnItemClick(object : ListClickListener<User> {
             override fun onClick(data: User, position: Int) {
-                //binding?.edUsername?.text = data.userName
-                binding?.edUsername?.setText(data.userName)
-                //binding?.edEmail?.text = data.email
-                binding?.edEmail?.setText(data.email)
-                //binding?.edLocation?.text = data.location
-                binding?.edLocation?.setText(data.location)
+                //binding.edUsername.text = data.userName
+                binding.edUsername.setText(data.userName)
+                //binding.edEmail.text = data.email
+                binding.edEmail.setText(data.email)
+                //binding.edLocation.text = data.location
+                binding.edLocation.setText(data.location)
                 user = data
-                binding?.btnUpdate?.isEnabled = true
+                binding.btnUpdate.isEnabled = true
             }
 
             /*override fun onDelete(user: User) {
@@ -64,14 +64,10 @@ class RoomFragment : BaseFragment<RoomFragmentBinding>() {
                 .setIcon(R.drawable.ic_white_delete)
                 .show()
         }
-        binding?.recyclerviewUsers?.let {
+        binding.recyclerviewUsers.let {
             it.layoutManager = LinearLayoutManager(requireContext())
             it.adapter = userAdapter
         }
-    }
-
-    override fun observeView() {
-
     }
 
     override fun observeData() {
@@ -80,31 +76,27 @@ class RoomFragment : BaseFragment<RoomFragmentBinding>() {
         }
     }
 
-    override fun initActions() {
-
-    }
-
     private fun updateUser() {
         if (isNotEmptyData()) {
             val user = User(
                 userId = user?.userId,
-                userName = binding?.edUsername?.text.toString(),
-                location = binding?.edLocation?.text.toString(),
-                email = binding?.edEmail?.text.toString()
+                userName = binding.edUsername.text.toString(),
+                location = binding.edLocation.text.toString(),
+                email = binding.edEmail.text.toString()
             )
             mViewModel.updateUser(user)
         } else {
             Toast.makeText(requireContext(), "Invalid Input", Toast.LENGTH_SHORT).show()
         }
-        binding?.btnUpdate?.isEnabled = false
+        binding.btnUpdate.isEnabled = false
     }
 
     private fun addNewUser() {
         if (isNotEmptyData()) {
             val user = User(
-                userName = binding?.edUsername?.text.toString(),
-                location = binding?.edLocation?.text.toString(),
-                email = binding?.edEmail?.text.toString()
+                userName = binding.edUsername.text.toString(),
+                location = binding.edLocation.text.toString(),
+                email = binding.edEmail.text.toString()
             )
             mViewModel.insertUser(user)
         } else {
@@ -113,9 +105,9 @@ class RoomFragment : BaseFragment<RoomFragmentBinding>() {
     }
 
     private fun isNotEmptyData(): Boolean {
-        return (binding?.edUsername?.text?.isNotEmpty() == true
-                && binding?.edEmail?.text?.isNotEmpty() == true
-                && binding?.edLocation?.text?.isNotEmpty() == true)
+        return (binding.edUsername.text.isNotEmpty() == true
+                && binding.edEmail.text.isNotEmpty() == true
+                && binding.edLocation.text.isNotEmpty() == true)
     }
 
 }

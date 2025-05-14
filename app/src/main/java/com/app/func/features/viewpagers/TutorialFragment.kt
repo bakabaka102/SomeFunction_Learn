@@ -29,8 +29,8 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
             //2
             coroutineScope.launch(Dispatchers.Main) {
                 //3
-                binding?.errorMessage?.isVisible = true
-                binding?.errorMessage?.text = getString(R.string.error_message)
+                binding.errorMessage.isVisible = true
+                binding.errorMessage.text = getString(R.string.error_message)
             }
 
             coroutineScope.launch { println("Caught $throwable") }
@@ -50,25 +50,13 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
         coroutineScope.launch(Dispatchers.Main) {
             val originalBitmap: Bitmap? = tutorial?.let { getOriginalBitmapAsync(it) }
             //1
-            //val snowFilterBitmap: Bitmap? = originalBitmap?.let { loadSnowFilterAsync(it) }
+            //val snowFilterBitmap: Bitmap? = originalBitmap.let { loadSnowFilterAsync(it) }
             //2
-            //snowFilterBitmap?.let { loadImage(it) }
+            //snowFilterBitmap.let { loadImage(it) }
             originalBitmap?.let { loadImage(it) }
         }
-        binding?.tutorialName?.text = tutorial?.name
-        binding?.tutorialDesc?.text = tutorial?.description
-    }
-
-    override fun observeView() {
-
-    }
-
-    override fun observeData() {
-
-    }
-
-    override fun initActions() {
-
+        binding.tutorialName.text = tutorial?.name
+        binding.tutorialDesc.text = tutorial?.description
     }
 
     override fun setTitleActionBar() {
@@ -94,8 +82,8 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
         }
 
     private fun loadImage(snowFilterBitmap: Bitmap) {
-        binding?.progressBar?.isVisible = false
-        binding?.snowFilterImage?.setImageBitmap(snowFilterBitmap)
+        binding.progressBar.isVisible = false
+        binding.snowFilterImage.setImageBitmap(snowFilterBitmap)
     }
 
     override fun onDestroy() {

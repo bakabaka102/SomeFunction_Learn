@@ -10,18 +10,4 @@ class RetrofitFragment : BaseFragment<FragmentRetrofitBinding>() {
     override fun setUpViews() {
 
     }
-
-    override fun observeData() {
-
-    }
-
-    override fun observeView() {
-
-    }
-
-    override fun initActions() {
-
-    }
-
-
 }

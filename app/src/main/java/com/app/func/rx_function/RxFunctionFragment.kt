@@ -18,30 +18,27 @@ class RxFunctionFragment : BaseFragment<FragmentRxFunctionBinding>(), View.OnCli
 
     private var dp16Pixel = 0
 
-    private val mBinding get() = binding!!
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentRxFunctionBinding.inflate(inflater)
         dp16Pixel = resources.getDimensionPixelOffset(R.dimen.dimen_16dp)
         eventSeekbarChange()
         initActions()
-        return binding?.root
+        return binding.root
     }
 
     private fun eventSeekbarChange() {
-        binding?.sb?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.sb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                updateMarker(mBinding.sb, progress.toString())
+                updateMarker(binding.sb, progress.toString())
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                binding?.marker?.rlMarker?.isVisible = true
+                binding.marker.rlMarker.isVisible = true
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                binding?.marker?.rlMarker?.isVisible = false
+                binding.marker.rlMarker.isVisible = false
             }
         })
     }
@@ -52,16 +49,8 @@ class RxFunctionFragment : BaseFragment<FragmentRxFunctionBinding>(), View.OnCli
 
     }
 
-    override fun observeView() {
-
-    }
-
-    override fun observeData() {
-
-    }
-
     override fun initActions() {
-        binding?.apply {
+        binding.apply {
             btnSimpleRx.setOnClickListener(this@RxFunctionFragment)
             btnMapRx.setOnClickListener(this@RxFunctionFragment)
             btnZipRx.setOnClickListener(this@RxFunctionFragment)
@@ -83,41 +72,40 @@ class RxFunctionFragment : BaseFragment<FragmentRxFunctionBinding>(), View.OnCli
         val width = (sb.width - sb.paddingLeft - sb.paddingRight)
         val thumbPos = (sb.paddingLeft + (width * sb.progress / sb.max) +
                 //take into consideration the margin added (in this case it is 10dp)
-                convertDpToPixel(10f).roundToInt())
+                convertDpToPixel().roundToInt())
         val progress = " $message "
-        mBinding.marker.tvProgress.text = progress
-        mBinding.marker.tvProgress.post {
+        binding.marker.tvProgress.text = progress
+        binding.marker.tvProgress.post {
 //            val display: Display =
 //                (this.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
             val deviceDisplay = Point()
 //            display.getSize(deviceDisplay)
 
             //vArrow always follow seekBar thumb location
-            mBinding.marker.vArrow.x = (thumbPos - sb.thumbOffset).toFloat()
+            binding.marker.vArrow.x = (thumbPos - sb.thumbOffset).toFloat()
 
             //unlike vArrow, tvProgress will not always follow seekBar thumb location
             when {
-                thumbPos - mBinding.marker.tvProgress.width / 2 - sb.paddingLeft < 0 -> {
+                thumbPos - binding.marker.tvProgress.width / 2 - sb.paddingLeft < 0 -> {
                     //part of the tvProgress is to the left of 0 bound
-                    mBinding.marker.tvProgress.x = mBinding.marker.vArrow.x - 20
+                    binding.marker.tvProgress.x = binding.marker.vArrow.x - 20
                 }
 
-                thumbPos + mBinding.marker.tvProgress.width / 2 + sb.paddingRight > deviceDisplay.x -> {
+                thumbPos + binding.marker.tvProgress.width / 2 + sb.paddingRight > deviceDisplay.x -> {
                     //part of the tvProgress is to the right of screen width bound
-                    mBinding.marker.tvProgress.x =
-                        mBinding.marker.vArrow.x - mBinding.marker.tvProgress.width + 20 + mBinding.marker.vArrow.width
+                    binding.marker.tvProgress.x =
+                        binding.marker.vArrow.x - binding.marker.tvProgress.width + 20 + binding.marker.vArrow.width
                 }
 
                 else -> {
                     //tvProgress is between 0 and screen width bounds
-                    mBinding.marker.tvProgress.x = thumbPos - mBinding.marker.tvProgress.width / 2f
+                    binding.marker.tvProgress.x = thumbPos - binding.marker.tvProgress.width / 2f
                 }
             }
         }
     }
 
-
-    private fun convertDpToPixel(dp: Float): Float {
+    private fun convertDpToPixel(dp: Float = 10f): Float {
         val metrics: DisplayMetrics = resources.displayMetrics
         return dp * (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
     }
@@ -125,39 +113,39 @@ class RxFunctionFragment : BaseFragment<FragmentRxFunctionBinding>(), View.OnCli
     override fun onClick(view: View?) {
         when (view) {
 
-            binding?.btnSimpleRx -> {
+            binding.btnSimpleRx -> {
                 findNavController().navigate(R.id.simpleRXFragment)
             }
 
-            binding?.btnMapRx -> {
+            binding.btnMapRx -> {
                 findNavController().navigate(R.id.mapRXFragment)
             }
 
-            binding?.btnZipRx -> {
+            binding.btnZipRx -> {
                 findNavController().navigate(R.id.zipRXFragment)
             }
 
-            binding?.btnTimeRx -> {
+            binding.btnTimeRx -> {
                 findNavController().navigate(R.id.timerRXFragment)
             }
 
-            binding?.btnFilterRx -> {
+            binding.btnFilterRx -> {
                 findNavController().navigate(R.id.filterRXFragment)
             }
 
-            binding?.btnConcatRx -> {
+            binding.btnConcatRx -> {
                 findNavController().navigate(R.id.concatRXFragment)
             }
 
-            binding?.btnMergeRx -> {
+            binding.btnMergeRx -> {
                 findNavController().navigate(R.id.mergeRXFragment)
             }
 
-            binding?.btnDelayRx -> {
+            binding.btnDelayRx -> {
                 findNavController().navigate(R.id.delayRXFragment)
             }
 
-            binding?.btnSearchRx -> {
+            binding.btnSearchRx -> {
                 findNavController().navigate(R.id.searchByRXFragment)
             }
         }

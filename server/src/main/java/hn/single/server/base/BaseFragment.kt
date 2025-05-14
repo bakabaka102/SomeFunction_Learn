@@ -12,16 +12,18 @@ import androidx.viewbinding.ViewBinding
 
 abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
-    protected var binding: VB? = null
+    private var _binding: VB? = null
+    protected val binding get() = _binding!!
+
     abstract fun getViewBinding(): VB
 
     abstract fun setUpViews()
 
-    abstract fun observeData()
+    open fun observeData() = Unit
 
-    abstract fun observeView()
+    open fun observeView() = Unit
 
-    abstract fun initActions()
+    open fun initActions() = Unit
 
     open fun setTitleActionBar() {
         (activity as AppCompatActivity).supportActionBar?.title = this::class.java.simpleName
@@ -39,8 +41,8 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         //Logger.d("${this::class.java.simpleName} onCreateView is called...")
-        binding = getViewBinding()
-        return binding?.root
+        _binding = getViewBinding()
+        return _binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -86,7 +88,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
         //Logger.d("${this::class.java.simpleName} onDestroyView is called...")
     }
 

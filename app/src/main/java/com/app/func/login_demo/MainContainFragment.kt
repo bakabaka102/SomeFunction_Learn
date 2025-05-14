@@ -25,48 +25,40 @@ class MainContainFragment : BaseFragment<MainContainFragmentBinding>() {
         notificationBuilder = context?.let { NotificationBuilder(it) }
     }
 
-    override fun observeView() {
-
-    }
-
-    override fun observeData() {
-
-    }
-
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun initActions() {
-        binding?.btnHome?.setOnClickListener {
+        binding.btnHome.setOnClickListener {
             findNavController().navigate(R.id.homeFragment)
         }
-        binding?.btnSignIn?.setOnClickListener {
+        binding.btnSignIn.setOnClickListener {
             findNavController().navigate(R.id.signInFragment)
         }
-        binding?.btnWaveDrop?.setOnClickListener {
+        binding.btnWaveDrop.setOnClickListener {
             findNavController().navigate(R.id.waveDropFragment)
         }
-        binding?.btnGotoRecyclerView?.setOnClickListener {
+        binding.btnGotoRecyclerView.setOnClickListener {
             findNavController().navigate(R.id.listUserFragment)
         }
 
-        binding?.btnProfile?.setOnClickListener {
+        binding.btnProfile.setOnClickListener {
             findNavController().navigate(R.id.profileFragment)
         }
-        binding?.viewPager?.setOnClickListener {
+        binding.viewPager.setOnClickListener {
 
         }
-        binding?.btnRoomWithRx?.setOnClickListener {
+        binding.btnRoomWithRx.setOnClickListener {
             findNavController().navigate(R.id.noteHomeFragment)
         }
-        binding?.btnRoomCoroutines?.setOnClickListener {
+        binding.btnRoomCoroutines.setOnClickListener {
             findNavController().navigate(R.id.mainRoomCoroutinesFragment)
         }
-        binding?.btnEditTexts?.setOnClickListener {
+        binding.btnEditTexts.setOnClickListener {
             findNavController().navigate(R.id.imageGalleryFragment)
         }
-        binding?.btnNotify?.setOnClickListener {
+        binding.btnNotify.setOnClickListener {
             showNotification()
         }
-        binding?.viewPagers?.setOnClickListener {
+        binding.viewPagers.setOnClickListener {
             findNavController().navigate(R.id.viewPagersFragment)
         }
     }

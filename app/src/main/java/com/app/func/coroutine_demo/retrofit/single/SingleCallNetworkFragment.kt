@@ -28,10 +28,6 @@ class SingleCallNetworkFragment : BaseFragment<FragmentSingleCallNetworkBinding>
         initRecyclerView()
     }
 
-    override fun observeView() {
-
-    }
-
     override fun observeData() {
         RetrofitObjectGson.getRetrofit(ApiConstants.BASE_URL_QUOTE).create(IQuotableService::class.java)
             .getQuoteNormal().enqueue(object : Callback<QuoteListResponse> {
@@ -51,10 +47,6 @@ class SingleCallNetworkFragment : BaseFragment<FragmentSingleCallNetworkBinding>
             })
     }
 
-    override fun initActions() {
-
-    }
-
     private fun initObserver() {
         mViewModel.resultState.observe(viewLifecycleOwner) { resultState ->
             Logger.d("state receive --- $resultState")
@@ -64,21 +56,21 @@ class SingleCallNetworkFragment : BaseFragment<FragmentSingleCallNetworkBinding>
                         Logger.d("Success, data = $it")
                         quoteAdapter.setData(it)
                     }
-                    binding?.let {
+                    binding.let {
                         it.progressBar.isVisible = false
                         it.recyclerView.isVisible = true
                     }
                 }
 
                 is ResultState.Loading -> {
-                    binding?.let {
+                    binding.let {
                         it.progressBar.isVisible = resultState.isLoading
                         it.recyclerView.isVisible = resultState.isLoading
                     }
                 }
 
                 is ResultState.Error -> {
-                    binding?.let { binding ->
+                    binding.let { binding ->
                         binding.textStatus.text = resultState.message
                         binding.textStatus.isVisible = true
                         binding.progressBar.isVisible = false
@@ -91,7 +83,7 @@ class SingleCallNetworkFragment : BaseFragment<FragmentSingleCallNetworkBinding>
     }
 
     private fun initRecyclerView() {
-        binding?.let {
+        binding.let {
             it.recyclerView.layoutManager = LinearLayoutManager(activity)
             it.recyclerView.addItemDecoration(
                 DividerItemDecoration(

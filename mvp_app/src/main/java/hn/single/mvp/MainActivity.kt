@@ -36,10 +36,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainView {
         }
     }
 
-    override fun observeData() {
-
-    }
-
     override fun setupActions() {
         binding.buttonLoad.setOnClickListener {
             presenter.loadData()

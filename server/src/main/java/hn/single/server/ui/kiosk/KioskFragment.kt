@@ -11,16 +11,4 @@ class KioskFragment : BaseFragment<FragmentKioskBinding>() {
 
     }
 
-    override fun observeData() {
-
-    }
-
-    override fun observeView() {
-
-    }
-
-    override fun initActions() {
-
-    }
-
 }

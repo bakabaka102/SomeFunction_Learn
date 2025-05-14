@@ -6,7 +6,6 @@ import android.webkit.WebViewClient
 import androidx.navigation.fragment.navArgs
 import hn.single.server.base.BaseFragment
 import hn.single.server.databinding.FragmentWebViewBinding
-import hn.single.server.ui.detailnews.DetailNewsFragmentArgs
 
 class WebViewFragment : BaseFragment<FragmentWebViewBinding>() {
 
@@ -26,18 +25,6 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding>() {
             webViewClient = WebViewClient()
             loadUrl(url)
         }
-    }
-
-    override fun observeData() {
-        
-    }
-
-    override fun observeView() {
-        
-    }
-
-    override fun initActions() {
-        
     }
 
 }

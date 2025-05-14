@@ -41,18 +41,6 @@ class MainMovieFragment : BaseFragment<FragmentMainMovieBinding>() {
 
     }
 
-    override fun observeData() {
-
-    }
-
-    override fun observeView() {
-
-    }
-
-    override fun initActions() {
-
-    }
-
     private fun collector() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

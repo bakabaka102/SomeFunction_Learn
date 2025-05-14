@@ -15,17 +15,9 @@ class PulsatorFragment : BaseFragment<FragmentPulsatorBinding>() {
 
     }
 
-    override fun observeView() {
-
-    }
-
-    override fun observeData() {
-
-    }
-
     private val mCountChangeListener: OnSeekBarChangeListener = object : OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-            binding?.let {
+            binding.let {
                 it.pulsator.count = progress + 1
                 it.textCount.text = String.format(Locale.US, "%d", progress + 1)
             }
@@ -38,7 +30,7 @@ class PulsatorFragment : BaseFragment<FragmentPulsatorBinding>() {
     private val mDurationChangeListener: OnSeekBarChangeListener =
         object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                binding?.let {
+                binding.let {
                     it.pulsator.duration = progress * 100
                     it.textDuration.text = String.format(Locale.US, "%.1f", progress * 0.1f)
                 }
@@ -49,7 +41,7 @@ class PulsatorFragment : BaseFragment<FragmentPulsatorBinding>() {
         }
 
     override fun initActions() {
-        binding?.let {
+        binding.let {
             it.seekCount.setOnSeekBarChangeListener(mCountChangeListener)
             it.seekCount.progress = it.pulsator.count - 1
             it.seekDuration.setOnSeekBarChangeListener(mDurationChangeListener)

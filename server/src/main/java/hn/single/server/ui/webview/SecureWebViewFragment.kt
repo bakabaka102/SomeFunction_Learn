@@ -87,16 +87,4 @@ class SecureWebViewFragment : BaseFragment<FragmentSecureWebViewBinding>() {
         setupWebView()
     }
 
-    override fun observeData() {
-
-    }
-
-    override fun observeView() {
-
-    }
-
-    override fun initActions() {
-
-    }
-
 }

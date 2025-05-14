@@ -21,7 +21,6 @@
             android:layout_height="?attr/actionBarSize"
             android:fitsSystemWindows="true"
             app:collapsedTitleTextAppearance="@style/CollapsedAppBar"
-            app:contentScrim="?attr/colorPrimary"
             app:expandedTitleTextAppearance="@style/ExpandedAppBar"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleEnabled="false">

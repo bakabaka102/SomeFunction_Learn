@@ -10,16 +10,4 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>() {
     override fun setUpViews() {
 
     }
-
-    override fun observeView() {
-
-    }
-
-    override fun observeData() {
-
-    }
-
-    override fun initActions() {
-
-    }
 }

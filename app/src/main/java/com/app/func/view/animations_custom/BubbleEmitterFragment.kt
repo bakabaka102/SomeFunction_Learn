@@ -8,11 +8,10 @@ import kotlin.random.Random
 
 class BubbleEmitterFragment : BaseFragment<BubbleEmitterFragmentBinding>() {
 
-
     private fun emitBubbles() {
         Handler(Looper.getMainLooper()).postDelayed({
             val size = Random.nextInt(6, 16)
-            binding?.bubbleEmitterView?.emitBubble(size)
+            binding.bubbleEmitterView.emitBubble(size)
             emitBubbles()
         }, Random.nextLong(100, 500))
     }
@@ -21,18 +20,6 @@ class BubbleEmitterFragment : BaseFragment<BubbleEmitterFragmentBinding>() {
 
     override fun setUpViews() {
         emitBubbles()
-    }
-
-    override fun observeView() {
-
-    }
-
-    override fun observeData() {
-
-    }
-
-    override fun initActions() {
-
     }
 
 }

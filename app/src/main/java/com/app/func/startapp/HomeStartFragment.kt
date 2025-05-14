@@ -17,7 +17,6 @@ import com.app.func.ViewCustomActivity
 import com.app.func.base_content.BaseFragment
 import com.app.func.databinding.FragmentHomeStartBinding
 import com.app.func.provider.SharedImageManager
-import com.app.func.utils.Constants
 import com.app.func.utils.Constants.PKG_RESOURCE_APP
 import com.app.func.utils.Logger
 import com.app.func.view.all_demo.EmotionalFaceView
@@ -55,7 +54,7 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
         loadJsonFromAssetsOtherApp<String>(this@HomeStartFragment.context, fileJson)
 
         val bitmap = SharedImageManager.getImage(requireContext(), "water_blue")
-        binding?.imageView?.setImageBitmap(bitmap)
+        binding.imageView.setImageBitmap(bitmap)
 
         //fetchSharedStrings()
         //fetchImageList()
@@ -80,13 +79,9 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
     }
 
     private fun showImageDemo(bitmap: Bitmap? = null, drawable: Drawable? = null) {
-        binding?.imageView?.apply {
-            bitmap?.let {
-                setImageBitmap(it)
-            }
-            drawable?.let {
-                setImageDrawable(it)
-            }
+        binding.imageView.apply {
+            setImageBitmap(bitmap)
+            setImageDrawable(drawable)
         }
     }
 
@@ -127,13 +122,13 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
                                 imageList.add(this)
                                 //showImageDemo(bitmap = this)
                             }
-                            Logger.d("✅ Client - Decode OK for: $imageUri")
+                            Logger.d("Client - Decode OK for: $imageUri")
                         } else {
-                            Logger.w("❌ Client - Decode failed (bitmap=null) for: $imageUri")
+                            Logger.w("Client - Decode failed (bitmap=null) for: $imageUri")
                         }
                     }
                 } catch (e: Exception) {
-                    Logger.e("❌ Client - Exception decoding image: ${e.message}")
+                    Logger.e("Client - Exception decoding image: ${e.message}")
                 }
             }
         }
@@ -172,30 +167,26 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
 
     }
 
-    override fun observeView() {
-
-    }
-
     override fun initActions() {
-        binding?.btnRX?.setOnClickListener {
+        binding.btnRX.setOnClickListener {
             findNavController().navigate(R.id.rxFunctionFragment)
         }
 
-        binding?.btnCoroutines?.setOnClickListener {
+        binding.btnCoroutines.setOnClickListener {
             findNavController().navigate(R.id.coroutinesFragment)
         }
-        binding?.happyButton?.setOnClickListener {
-            binding?.emotionalFaceView?.happinessState = EmotionalFaceView.HAPPY
+        binding.happyButton.setOnClickListener {
+            binding.emotionalFaceView.happinessState = EmotionalFaceView.HAPPY
         }
 
-        binding?.sadButton?.setOnClickListener {
-            binding?.emotionalFaceView?.happinessState = EmotionalFaceView.SAD
+        binding.sadButton.setOnClickListener {
+            binding.emotionalFaceView.happinessState = EmotionalFaceView.SAD
         }
 
-        binding?.btnThread?.setOnClickListener {
+        binding.btnThread.setOnClickListener {
             findNavController().navigate(R.id.mainContainFragment)
         }
-        binding?.btnViewCustom?.setOnClickListener {
+        binding.btnViewCustom.setOnClickListener {
             val intent = Intent(requireActivity(), ViewCustomActivity::class.java)
             val options = ActivityOptions.makeCustomAnimation(
                 activity,
@@ -204,28 +195,28 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
             )
             startActivity(intent, options.toBundle())
         }
-        binding?.btnParseJson?.setOnClickListener {
+        binding.btnParseJson.setOnClickListener {
 
         }
-        binding?.btnAnimation?.setOnClickListener {
+        binding.btnAnimation.setOnClickListener {
             startActivity(Intent(requireContext(), ViewAnimationsActivity2::class.java))
         }
 
-        binding?.btnRetrofit?.setOnClickListener {
+        binding.btnRetrofit.setOnClickListener {
             findNavController().navigate(R.id.retrofitFragment)
         }
     }
 
     private fun loadChart() {
         val listData: ReportResponse = reportResponse()
-        binding?.customStaticView?.resetIndicatorView()
-        loadStaticView(statisticsView = binding?.customStaticView, list = listData)
+        binding.customStaticView.resetIndicatorView()
+        loadStaticView(statisticsView = binding.customStaticView, list = listData)
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    private fun loadStaticView(statisticsView: StatisticsView?, list: ReportResponse?) {
+    private fun loadStaticView(statisticsView: StatisticsView, list: ReportResponse?) {
         if (list != null) {
-            statisticsView?.loadData(
+            statisticsView.loadData(
                 list,
                 chartType = if (model == ModelType.FREEZER || model == ModelType.FRIDGE || model == ModelType.HOT_WATER_TANK) ChartType.POWER else ChartType.WATER_OUT
             )

@@ -22,11 +22,11 @@ class ForYouFragment : BaseFragment<FragmentForYouBinding>() {
 
     override fun setUpViews() {
         viewModel.loadTopHeadLines(country = "us", apiKey = BuildConfig.API_KEY)
-        binding?.swipeRefreshLayout?.setOnRefreshListener {
+        binding.swipeRefreshLayout.setOnRefreshListener {
             // Gọi lại dữ liệu
             viewModel.loadTopHeadLines(country = "us", apiKey = BuildConfig.API_KEY)
         }
-        binding?.recyclerTopHeadlines?.apply {
+        binding.recyclerTopHeadlines.apply {
             this.adapter = newsAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
@@ -36,36 +36,31 @@ class ForYouFragment : BaseFragment<FragmentForYouBinding>() {
         viewModel.topHeadlines.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UIState.Loading -> {
-                    binding?.loadingView?.isVisible = true
-                    binding?.textStatus?.isGone = true
+                    binding.loadingView.isVisible = true
+                    binding.textStatus.isGone = true
                 }
 
                 is UIState.Success -> {
-                    binding?.swipeRefreshLayout?.isRefreshing = false
-                    binding?.loadingView?.isGone = true
+                    binding.swipeRefreshLayout.isRefreshing = false
+                    binding.loadingView.isGone = true
                     val articles = state.data.articles
                     if (articles.isEmpty()) {
-                        binding?.textStatus?.isVisible = true
-                        binding?.textStatus?.text = getString(R.string.empty_data)
+                        binding.textStatus.isVisible = true
+                        binding.textStatus.text = getString(R.string.empty_data)
                     } else {
-                        binding?.textStatus?.isGone = true
+                        binding.textStatus.isGone = true
                         newsAdapter.submitList(articles)
                     }
                 }
 
                 is UIState.Failure -> {
-                    binding?.swipeRefreshLayout?.isRefreshing = false
-                    binding?.loadingView?.isGone = true
-                    binding?.textStatus?.isVisible = true
-                    binding?.textStatus?.text = state.throwable.message
+                    binding.swipeRefreshLayout.isRefreshing = false
+                    binding.loadingView.isGone = true
+                    binding.textStatus.isVisible = true
+                    binding.textStatus.text = state.throwable.message
                 }
             }
         }
-
-    }
-
-    override fun observeView() {
-
     }
 
     override fun initActions() {

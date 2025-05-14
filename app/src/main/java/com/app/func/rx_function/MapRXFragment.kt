@@ -26,21 +26,13 @@ class MapRXFragment : BaseFragment<FragmentSimpleRxBinding>(), View.OnClickListe
 
     }
 
-    override fun observeView() {
-
-    }
-
-    override fun observeData() {
-
-    }
-
     override fun initActions() {
-        binding?.doSomeWork?.setOnClickListener(this)
+        binding.doSomeWork.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
-        if (view == binding?.doSomeWork) {
-            binding?.loadingView?.isVisible = true
+        if (view == binding.doSomeWork) {
+            binding.loadingView.isVisible = true
             Handler(Looper.getMainLooper()).postDelayed({
                 doSomeWork()
             }, 1000L)
@@ -83,27 +75,27 @@ class MapRXFragment : BaseFragment<FragmentSimpleRxBinding>(), View.OnClickListe
             }
 
             override fun onNext(userList: List<User>) {
-                binding?.textView?.append(" onNext")
-                binding?.textView?.append(Constants.LINE_SEPARATOR)
+                binding.textView.append(" onNext")
+                binding.textView.append(Constants.LINE_SEPARATOR)
                 for (user in userList) {
-                    binding?.textView?.append(" firstname : ${user.firstname}")
-                    binding?.textView?.append(AppConstant.LINE_SEPARATOR)
+                    binding.textView.append(" firstname : ${user.firstname}")
+                    binding.textView.append(AppConstant.LINE_SEPARATOR)
                 }
                 Logger.d("onNext : value : ${userList.size}")
             }
 
             override fun onError(e: Throwable) {
-                binding?.textView?.append(" onError : " + e.message)
-                binding?.textView?.append(AppConstant.LINE_SEPARATOR)
+                binding.textView.append(" onError : " + e.message)
+                binding.textView.append(AppConstant.LINE_SEPARATOR)
                 Logger.d("onError : " + e.message)
-                binding?.loadingView?.isVisible = false
+                binding.loadingView.isVisible = false
             }
 
             override fun onComplete() {
-                binding?.textView?.append(" onComplete")
-                binding?.textView?.append(AppConstant.LINE_SEPARATOR)
+                binding.textView.append(" onComplete")
+                binding.textView.append(AppConstant.LINE_SEPARATOR)
                 Logger.d("onComplete")
-                binding?.loadingView?.isVisible = false
+                binding.loadingView.isVisible = false
             }
         }
         return observer

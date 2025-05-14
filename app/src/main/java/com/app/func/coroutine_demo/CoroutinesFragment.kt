@@ -10,43 +10,43 @@ class CoroutinesFragment : BaseFragment<FragmentCoroutinesBinding>(), View.OnCli
     
     override fun onClick(view: View?) {
         when (view) {
-            binding?.btnSingleCallNetwork -> {
+            binding.btnSingleCallNetwork -> {
                 findNavController().navigate(R.id.singleCallNetworkFragment)
             }
 
-            binding?.btnSeriesCallNetwork -> {
+            binding.btnSeriesCallNetwork -> {
                 findNavController().navigate(R.id.seriesCallFragment)
             }
 
-            binding?.btnParallelCallNetwork -> {
+            binding.btnParallelCallNetwork -> {
 
             }
 
-            binding?.btnRoomDatabase -> {
+            binding.btnRoomDatabase -> {
 
             }
 
-            binding?.btnTimeOut -> {
+            binding.btnTimeOut -> {
 
             }
 
-            binding?.btnTryCatchError -> {
+            binding.btnTryCatchError -> {
 
             }
 
-            binding?.btnExceptionHandler -> {
+            binding.btnExceptionHandler -> {
 
             }
 
-            binding?.btnIgnoreAndContinue -> {
+            binding.btnIgnoreAndContinue -> {
 
             }
 
-            binding?.btnLongRunTask -> {
+            binding.btnLongRunTask -> {
 
             }
 
-            binding?.btnTwoLongRunTask -> {
+            binding.btnTwoLongRunTask -> {
 
             }
         }
@@ -57,25 +57,17 @@ class CoroutinesFragment : BaseFragment<FragmentCoroutinesBinding>(), View.OnCli
     override fun setUpViews() {
 
     }
-
-    override fun observeView() {
-
-    }
-
-    override fun observeData() {
-
-    }
-
+    
     override fun initActions() {
-        binding?.btnSingleCallNetwork?.setOnClickListener(this)
-        binding?.btnSeriesCallNetwork?.setOnClickListener(this)
-        binding?.btnParallelCallNetwork?.setOnClickListener(this)
-        binding?.btnRoomDatabase?.setOnClickListener(this)
-        binding?.btnTimeOut?.setOnClickListener(this)
-        binding?.btnTryCatchError?.setOnClickListener(this)
-        binding?.btnExceptionHandler?.setOnClickListener(this)
-        binding?.btnIgnoreAndContinue?.setOnClickListener(this)
-        binding?.btnLongRunTask?.setOnClickListener(this)
-        binding?.btnTwoLongRunTask?.setOnClickListener(this)
+        binding.btnSingleCallNetwork.setOnClickListener(this)
+        binding.btnSeriesCallNetwork.setOnClickListener(this)
+        binding.btnParallelCallNetwork.setOnClickListener(this)
+        binding.btnRoomDatabase.setOnClickListener(this)
+        binding.btnTimeOut.setOnClickListener(this)
+        binding.btnTryCatchError.setOnClickListener(this)
+        binding.btnExceptionHandler.setOnClickListener(this)
+        binding.btnIgnoreAndContinue.setOnClickListener(this)
+        binding.btnLongRunTask.setOnClickListener(this)
+        binding.btnTwoLongRunTask.setOnClickListener(this)
     }
 }

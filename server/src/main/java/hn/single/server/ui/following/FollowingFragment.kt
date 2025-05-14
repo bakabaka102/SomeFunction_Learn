@@ -10,17 +10,4 @@ class FollowingFragment : BaseFragment<FragmentFollowingBinding>() {
     override fun setUpViews() {
 
     }
-
-    override fun observeData() {
-
-    }
-
-    override fun observeView() {
-
-    }
-
-    override fun initActions() {
-
-    }
-
 }

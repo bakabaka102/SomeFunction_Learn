@@ -78,10 +78,6 @@ class RandomFragment : BaseFragment<FragmentRandomBinding>() {
         }
     }
 
-    override fun observeView() {
-
-    }
-
     override fun initActions() {
         binding?.generateNumber?.setOnClickListener {
             viewModel.setEvent(RandomContract.Event.OnRandomNumberClicked)
