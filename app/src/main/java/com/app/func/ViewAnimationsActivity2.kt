@@ -57,12 +57,5 @@ class ViewAnimationsActivity2 : BaseActivity<ActivityViewAnimations2Binding>() {
                 }
             }
         }
-
-
     }
-
-    override fun initActions() {
-
-    }
-
 }

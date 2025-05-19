@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
@@ -21,6 +22,7 @@ class NotificationBuilder(val context: Context) : INotificationBuilder {
     }
 
     override fun getNotificationId(): Int {
+        //return System.currentTimeMillis().toInt()
         return Date().time.toInt().also {
             Logger.d("$it")
         }
@@ -36,7 +38,8 @@ class NotificationBuilder(val context: Context) : INotificationBuilder {
             val channel = NotificationChannel(chanelId, channelName, importance).apply {
                 description = channelDescription
             }
-            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }
@@ -48,17 +51,21 @@ class NotificationBuilder(val context: Context) : INotificationBuilder {
         contentTitle: String,
         contentText: String,
         style: Style?,
+        pendingIntent: PendingIntent?,
         notifyId: Int,
-        priority: Int,
+        priority: Int
     ) {
-        val notification = NotificationCompat.Builder(context, chanelId)
+        val builder = NotificationCompat.Builder(context, chanelId)
             .setSmallIcon(smallIcon)
             .setContentTitle(contentTitle)
             .setContentText(contentText)
             .setPriority(priority)
-            .setStyle(style)
-            .build()
-
+        val notification = builder.apply {
+            setAutoCancel(true)
+            setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
+            if (style != null) builder.setStyle(style)
+            if (pendingIntent != null) builder.setContentIntent(pendingIntent)
+        }.build()
         NotificationManagerCompat.from(context).apply {
             if (isPermitPostNotification()) {
                 notify(notifyId, notification)

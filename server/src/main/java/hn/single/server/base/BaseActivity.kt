@@ -27,7 +27,7 @@ abstract class BaseActivity<VB : ViewBinding, VM : ViewModel> : AppCompatActivit
     abstract fun setupViews()
 
     /** Set up UI actions and listeners */
-    abstract fun setupActions()
+    open fun setupActions() = Unit
 
     /** Observe LiveData or other reactive streams (optional) */
     open fun observeData() = Unit

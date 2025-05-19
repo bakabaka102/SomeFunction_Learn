@@ -1,5 +1,7 @@
 package com.app.func
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
@@ -12,18 +14,13 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.OneTimeWorkRequest
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import com.app.func.base_content.BaseActivity
 import com.app.func.databinding.ActivityMainBinding
-import com.app.func.features.scheduler.OneTimeNotificationWorker
-import com.app.func.features.scheduler.SchedulerNotificationWorker
+import com.app.func.features.scheduler.AlarmReceiver
+import com.app.func.utils.Logger
 import com.hn.libs.ICalculatorAidl
 import hn.single.server.IServiceAidl
 import java.util.Calendar
-import java.util.concurrent.TimeUnit
 
 class MainActivity : BaseActivity<ActivityMainBinding>()
 /*,
@@ -81,31 +78,41 @@ NavigationView.OnNavigationItemSelectedListener*/ {
     override fun initViews() {
         initDrawerLayout()
         service?.sayHi()
-        // One time when app starting: do the work
-        /*val workRequest = OneTimeWorkRequest.Builder(OneTimeNotificationWorker::class.java).build()
-        WorkManager.getInstance(this).enqueue(workRequest)*/
-        // Calculate the initial delay to 9:00 AM
-        val currentTime = Calendar.getInstance()
-        val targetTime = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 9)
-            set(Calendar.MINUTE, 0)
+        scheduleDailyAlarm()
+    }
+
+    private fun scheduleDailyAlarm() {
+        //val alarmManager: AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        //val alarmManager: AlarmManager? = ContextCompat.getSystemService(this, AlarmManager::class.java)
+        val alarmManager: AlarmManager? = getSystemService(AlarmManager::class.java)
+        val intent = Intent(this, AlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(
+            this,
+            1001,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val calendar = calculateTimeScheduler()
+        alarmManager?.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            pendingIntent,
+        )
+        Logger.d("AlarmScheduler - Alarm scheduled for: ${calendar.time}")
+    }
+
+    private fun calculateTimeScheduler(): Calendar {
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 8)
+            set(Calendar.MINUTE, 45)
             set(Calendar.SECOND, 0)
-            if (before(currentTime)) {
+            if (before(Calendar.getInstance())) {
                 add(Calendar.DAY_OF_MONTH, 1)
             }
         }
-        val initialDelay = targetTime.timeInMillis - currentTime.timeInMillis
-
-        // Create a periodic work request
-        val workRequest = PeriodicWorkRequestBuilder<SchedulerNotificationWorker>(24, TimeUnit.HOURS)
-            .setInitialDelay(initialDelay, TimeUnit.MILLISECONDS)
-            .build()
-
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
-            "dailyNotificationWork",
-            ExistingPeriodicWorkPolicy.REPLACE,
-            workRequest
-        )
+        return calendar
     }
 
     private fun bindAidl() {
@@ -150,21 +157,21 @@ NavigationView.OnNavigationItemSelectedListener*/ {
             Toast.makeText(this, "Help selected", Toast.LENGTH_SHORT).show()
         }*/
         onBackPressedDispatcher.addCallback(mOnBackPressedCallback)
-//mBinding.mainNavigationView.setNavigationItemSelectedListener(this)
+        //mBinding.mainNavigationView.setNavigationItemSelectedListener(this)
     }
 
     private fun initDrawerLayout() {
-// drawer layout instance to toggle the menu icon to open drawer and back button to close drawer
+        // drawer layout instance to toggle the menu icon to open drawer and back button to close drawer
         mDrawerLayout = mBinding.rootDrawerLayout
         mActionBarDrawerToggle =
             ActionBarDrawerToggle(this, mDrawerLayout, R.string.nav_open, R.string.nav_close)
-// pass the Open and Close toggle for the drawer layout listener to toggle the button
+        // pass the Open and Close toggle for the drawer layout listener to toggle the button
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle)
         mActionBarDrawerToggle.syncState()
-// to make the Navigation drawer icon always appear on the action bar
+        // to make the Navigation drawer icon always appear on the action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-// Click button home open/close
-//supportActionBar?.setHomeButtonEnabled(true)
+        // Click button home open/close
+        //supportActionBar?.setHomeButtonEnabled(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -195,28 +202,4 @@ NavigationView.OnNavigationItemSelectedListener*/ {
             }
         }
     }
-
-//If use layout by Menu default, others need not it.
-    /*override fun onNavigationItemSelected(item: MenuItem): Boolean {
-    return when (item.itemId) {
-        R.id.nav_account -> {
-            Toast.makeText(this, "Search button selected", Toast.LENGTH_SHORT).show()
-            true
-        }
-
-        R.id.nav_settings -> {
-            Toast.makeText(this, "About button selected", Toast.LENGTH_SHORT).show()
-            true
-        }
-
-        R.id.nav_logout -> {
-            Toast.makeText(this, "Help button selected", Toast.LENGTH_SHORT).show()
-            true
-        }
-
-        else -> {
-            true
-        }
-    }
-    }*/
 }

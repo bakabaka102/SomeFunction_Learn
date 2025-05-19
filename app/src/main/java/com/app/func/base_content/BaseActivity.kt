@@ -12,7 +12,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     abstract fun initViews()
 
-    abstract fun initActions()
+    open fun initActions() = Unit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

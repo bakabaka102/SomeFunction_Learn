@@ -40,7 +40,6 @@ class ViewCustomActivity : BaseActivity<ActivityViewCustomBinding>() {
             settingTemp(50)
             updateState(WaterTankTemperatureView.State.WORKING)
         }
-        initScrollSeekbar()
         //For demo or
         mBinding.arcPulGaugeView.setTargetValueAnimated(60)
         /*Or observer
@@ -58,13 +57,5 @@ class ViewCustomActivity : BaseActivity<ActivityViewCustomBinding>() {
         mBinding.arcPulGaugeView.onValueChangedListener = {
             Logger.d("Current target: $it")
         }
-    }
-
-    override fun initActions() {
-
-    }
-
-    private fun initScrollSeekbar() {
-
     }
 }
