@@ -1,5 +1,6 @@
 package hn.single.server.ui.finance
 
+import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -20,7 +21,7 @@ class FinanceNewsFragment : BaseFragment<FragmentFinanceBinding>() {
     override fun getViewBinding() = FragmentFinanceBinding.inflate(layoutInflater)
 
     private fun setupRecyclerView() {
-        binding?.recyclerFinanceNews?.apply {
+        binding.recyclerFinanceNews.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = financeAdapter
         }
@@ -29,40 +30,42 @@ class FinanceNewsFragment : BaseFragment<FragmentFinanceBinding>() {
             findNavController().navigate(action)*/
             val action =
                 FinanceNewsFragmentDirections.actionFinanceNewsFragmentToSecureWebViewFragment(it.url)
-            findNavController().navigate(action)
+            val bundle = bundleOf("url" to it.url)
+            //findNavController().navigate(action)
+            getMainNavController()?.navigate(R.id.secureWebViewFragment, bundle)
         }
     }
 
     override fun setUpViews() {
         setupRecyclerView()
-        binding?.swipeRefreshLayout?.setOnRefreshListener {
+        binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getFinanceArticles()
         }
         viewModel.getFinanceArticles()
         viewModel.response.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UIState.Loading -> {
-                    binding?.lottieLoadingView?.isVisible = true
+                    binding.lottieLoadingView.isVisible = true
                 }
 
                 is UIState.Success -> {
-                    binding?.swipeRefreshLayout?.isRefreshing = false
-                    binding?.lottieLoadingView?.isGone = true
+                    binding.swipeRefreshLayout.isRefreshing = false
+                    binding.lottieLoadingView.isGone = true
                     val articles = state.data.articles
                     if (articles.isEmpty()) {
-                        binding?.textStatus?.isVisible = true
-                        binding?.textStatus?.text = getString(R.string.empty_data)
+                        binding.textStatus.isVisible = true
+                        binding.textStatus.text = getString(R.string.empty_data)
                     } else {
-                        binding?.textStatus?.isGone = true
+                        binding.textStatus.isGone = true
                         financeAdapter.submitList(articles)
                     }
                 }
 
                 is UIState.Failure -> {
-                    binding?.swipeRefreshLayout?.isRefreshing = false
-                    binding?.lottieLoadingView?.isGone = true
-                    binding?.textStatus?.isVisible = true
-                    binding?.textStatus?.text = state.throwable.message
+                    binding.swipeRefreshLayout.isRefreshing = false
+                    binding.lottieLoadingView.isGone = true
+                    binding.textStatus.isVisible = true
+                    binding.textStatus.text = state.throwable.message
                 }
             }
         }

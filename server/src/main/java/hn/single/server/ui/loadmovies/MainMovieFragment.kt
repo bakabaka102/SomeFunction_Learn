@@ -27,7 +27,7 @@ class MainMovieFragment : BaseFragment<FragmentMainMovieBinding>() {
 
     override fun setUpViews() {
         collector()
-        binding?.apply {
+        binding.apply {
             rv.adapter = adapter
             rv.layoutManager =
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
@@ -47,23 +47,23 @@ class MainMovieFragment : BaseFragment<FragmentMainMovieBinding>() {
                 mainViewModel.mainItem.collect {
                     when (it) {
                         is UIState.Success -> {
-                            binding?.progress?.isVisible = false
-                            binding?.error?.isVisible = false
-                            binding?.rv?.isVisible = true
+                            binding.progress.isVisible = false
+                            binding.error.isVisible = false
+                            binding.rv.isVisible = true
                             adapter.setItems(it.data)
                         }
 
                         is UIState.Failure -> {
-                            binding?.progress?.isVisible = false
-                            binding?.error?.isVisible = true
-                            binding?.rv?.isVisible = false
-                            binding?.error?.text = it.throwable.toString()
+                            binding.progress.isVisible = false
+                            binding.error.isVisible = true
+                            binding.rv.isVisible = false
+                            binding.error.text = it.throwable.toString()
                         }
 
                         is UIState.Loading -> {
-                            binding?.progress?.isVisible = true
-                            binding?.error?.isVisible = false
-                            binding?.rv?.isVisible = false
+                            binding.progress.isVisible = true
+                            binding.error.isVisible = false
+                            binding.rv.isVisible = false
                         }
                     }
                 }

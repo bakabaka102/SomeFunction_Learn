@@ -1,9 +1,9 @@
 package hn.single.server.ui.foryou
 
+import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import hn.single.server.BuildConfig
@@ -66,12 +66,15 @@ class ForYouFragment : BaseFragment<FragmentForYouBinding>() {
     override fun initActions() {
         newsAdapter.onItemClick = { article ->
             //val action = ForYouFragmentDirections.actionForYouFragmentToNavDetail(article)
-            /*val bundle = bundleOf("article" to article)
-            findNavController().navigate(R.id.detailNewsFragment, bundle)*/
-            ForYouFragmentDirections.actionForYouFragmentToDetailNewsFragment(article).apply {
+            val bundle = bundleOf("article" to article)
+            //findNavController().navigate(R.id.detailNewsFragment, bundle)
+            getMainNavController()?.navigate(R.id.detailNewsFragment, bundle)
+            /*ForYouFragmentDirections.actionForYouFragmentToDetailNewsFragment(article).apply {
                 findNavController().navigate(this)
-            }
+            }*/
         }
     }
+
+    override fun isBottomNavVisible(): Boolean = true
 
 }

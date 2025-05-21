@@ -29,8 +29,8 @@ class RandomFragment : BaseFragment<FragmentRandomBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_RANDOM)
+        arguments.let {
+            param1 = it?.getString(ARG_RANDOM)
         }
     }
 
@@ -45,17 +45,17 @@ class RandomFragment : BaseFragment<FragmentRandomBinding>() {
             viewModel.uiState.collect {
                 when (it.randomNumberState) {
                     RandomContract.RandomNumberState.Idle -> {
-                        binding?.progressBar?.isVisible = false
+                        binding.progressBar.isVisible = false
                     }
 
                     RandomContract.RandomNumberState.Loading -> {
-                        binding?.progressBar?.isVisible = true
+                        binding.progressBar.isVisible = true
                     }
 
                     is RandomContract.RandomNumberState.Success -> {
                         val number = it.randomNumberState.number.toString()
-                        binding?.progressBar?.isVisible = false
-                        binding?.number?.text = getString(R.string.success_data, number)
+                        binding.progressBar.isVisible = false
+                        binding.number.text = getString(R.string.success_data, number)
                     }
                 }
             }
@@ -67,8 +67,8 @@ class RandomFragment : BaseFragment<FragmentRandomBinding>() {
                 viewModel.effect.collect {
                     when (it) {
                         is RandomContract.Effect.ShowToast -> {
-                            binding?.progressBar?.isVisible = false
-                            binding?.number?.text = "Hello World! - No data"
+                            binding.progressBar.isVisible = false
+                            binding.number.text = "Hello World! - No data"
                             Log.i("RandomFragment", "Error, number is even")
                             showToast("Error, number is even")
                         }
@@ -79,17 +79,17 @@ class RandomFragment : BaseFragment<FragmentRandomBinding>() {
     }
 
     override fun initActions() {
-        binding?.generateNumber?.setOnClickListener {
+        binding.generateNumber.setOnClickListener {
             viewModel.setEvent(RandomContract.Event.OnRandomNumberClicked)
         }
-        binding?.showToast?.setOnClickListener {
+        binding.showToast.setOnClickListener {
             viewModel.setEvent(RandomContract.Event.OnShowToastClicked)
             findNavController().navigate(R.id.bombExplosionFragment)
         }
-        binding?.secondActivity?.setOnClickListener {
+        binding.secondActivity.setOnClickListener {
             findNavController().navigate(R.id.action_randomFragment_to_mainMovieFragment)
         }
-        binding?.waveLine?.setOnClickListener {
+        binding.waveLine.setOnClickListener {
             val configMap = mapOf(
                 "theme" to "dark",
                 "username" to "admin",

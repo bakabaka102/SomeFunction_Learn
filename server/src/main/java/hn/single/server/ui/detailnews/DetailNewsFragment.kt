@@ -25,7 +25,7 @@ class DetailNewsFragment : BaseFragment<FragmentDetailNewsBinding>() {
         }*/
 
         val article = args.article
-        binding?.apply {
+        binding.apply {
             tvTitleDetail.text = article.title
             tvSourceDetail.text = article.source.name
             tvPublishedAtDetail.text = article.publishedAt

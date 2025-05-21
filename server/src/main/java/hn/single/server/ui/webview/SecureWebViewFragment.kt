@@ -22,8 +22,9 @@ class SecureWebViewFragment : BaseFragment<FragmentSecureWebViewBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //urlToLoad = arguments?.getString("url") ?: "https://example.com"
+        //urlToLoad = arguments.getString("url") ?: "https://example.com"
         urlToLoad = args.url
+        showToast("url is: $urlToLoad")
     }
 
 
@@ -34,9 +35,9 @@ class SecureWebViewFragment : BaseFragment<FragmentSecureWebViewBinding>() {
     }
 
     private fun setupToolbar() {
-        binding?.toolbar?.setNavigationOnClickListener {
-            if (binding?.webView?.canGoBack() == true) {
-                binding?.webView?.goBack()
+        binding.toolbar.setNavigationOnClickListener {
+            if (binding.webView.canGoBack() == true) {
+                binding.webView.goBack()
             } else {
                 findNavController().popBackStack()
             }
@@ -45,8 +46,8 @@ class SecureWebViewFragment : BaseFragment<FragmentSecureWebViewBinding>() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun setupWebView() {
-        with(binding?.webView) {
-            this?.settings?.apply {
+        with(binding.webView) {
+            this.settings.apply {
                 javaScriptEnabled = true
                 domStorageEnabled = true
                 javaScriptCanOpenWindowsAutomatically = false
@@ -59,13 +60,13 @@ class SecureWebViewFragment : BaseFragment<FragmentSecureWebViewBinding>() {
                 mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
             }
 
-            this?.webViewClient = object : WebViewClient() {
+            this.webViewClient = object : WebViewClient() {
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                    binding?.progressBar?.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.VISIBLE
                 }
 
                 override fun onPageFinished(view: WebView?, url: String?) {
-                    binding?.progressBar?.visibility = View.GONE
+                    binding.progressBar.visibility = View.GONE
                 }
 
                 override fun shouldOverrideUrlLoading(
@@ -76,7 +77,7 @@ class SecureWebViewFragment : BaseFragment<FragmentSecureWebViewBinding>() {
                 }
             }
 
-            this?.loadUrl(urlToLoad)
+            this.loadUrl(urlToLoad)
         }
     }
 

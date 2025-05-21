@@ -3,6 +3,7 @@ package hn.single.server.ui
 import android.util.Log
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,16 +19,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun initViewModel(): Class<MainViewModel> = MainViewModel::class.java
 
     override fun setupViews() {
-        showToast(viewModel.testValue)
+        //showToast(viewModel.testValue)
         /* val navController = findNavController(R.id.mainSerContainerView)
          binding.mainBottomNavigation.setupWithNavController(navController)*/
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root)) { v, insets ->
+        /*ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
-        }
-        setSupportActionBar(binding.toolbar)
-        val fragment = supportFragmentManager.findFragmentById(R.id.mainSerContainerView)
+        }*/
+        //setSupportActionBar(binding.toolbar)
+        val fragment = supportFragmentManager.findFragmentById(R.id.containerViewMainActivity)
         if (fragment is NavHostFragment) {
             val navController = fragment.navController
             binding.mainBottomNavigation.setupWithNavController(navController)
@@ -41,7 +42,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         binding.mainBottomNavigation.setupWithNavController(navController)*/
     }
 
-    override fun setupActions() {
-
+    fun setBottomNavigationVisible(isBottomNavVisible: Boolean) {
+        binding.mainBottomNavigation.isVisible = isBottomNavVisible
     }
 }

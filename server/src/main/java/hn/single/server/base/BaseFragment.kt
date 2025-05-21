@@ -6,9 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.viewbinding.ViewBinding
+import hn.single.server.R
+import hn.single.server.ui.MainActivity
 
 abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
@@ -25,9 +30,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     open fun initActions() = Unit
 
-    open fun setTitleActionBar() {
-        (activity as AppCompatActivity).supportActionBar?.title = this::class.java.simpleName
-    }
+    open fun isBottomNavVisible(): Boolean = false
 
     private var toast: Toast? = null
 
@@ -35,6 +38,51 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         toast?.cancel()
         toast = Toast.makeText(context, message, Toast.LENGTH_SHORT)
         toast?.show()
+    }
+
+    fun Fragment.getMainNavController(): NavController? {
+        val navHostFragment = activity?.supportFragmentManager
+            ?.findFragmentById(R.id.containerViewMainActivity) as? NavHostFragment
+        return navHostFragment?.navController
+    }
+
+    private fun setupEdgeToEdge() {
+        /*ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(0, systemBars.top, 0, systemBars.bottom)
+            insets
+        }*/
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val bottomInset = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
+            val paddingBottom = if (isBottomNavVisible()) bottomInset + getBottomNavHeight() else 0
+
+            v.setPadding(
+                v.paddingLeft,
+                v.paddingTop,
+                v.paddingRight,
+                paddingBottom
+            )
+
+            insets
+        }
+    }
+
+    private fun getBottomNavHeight(): Int {
+        return resources.getDimensionPixelSize(R.dimen.bottom_nav_height)
+    }
+
+    private fun setupEdgeToEdge(rootView: View) {
+        ViewCompat.setOnApplyWindowInsetsListener(rootView) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            // Áp dụng padding cho phần tử cuộn chính
+            view.setPadding(
+                0,
+                systemBars.top,
+                0,
+                systemBars.bottom
+            )
+            WindowInsetsCompat.CONSUMED
+        }
     }
 
     override fun onCreateView(
@@ -48,6 +96,8 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //Logger.d("${this::class.java.simpleName} onViewCreated is called...")
+        //setupEdgeToEdge(binding.root)
+        setupEdgeToEdge()
         setUpViews()
         observeData()
         observeView()
@@ -72,8 +122,8 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        (activity as? MainActivity)?.setBottomNavigationVisible(isBottomNavVisible())
         //Logger.d("${this::class.java.simpleName} onResume is called...")
-        //setTitleActionBar()
     }
 
     override fun onPause() {
