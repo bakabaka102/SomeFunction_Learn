@@ -11,7 +11,7 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding>() {
 
     private val args: WebViewFragmentArgs by navArgs()
 
-    override fun getViewBinding()= FragmentWebViewBinding.inflate(layoutInflater)
+    override fun getViewBinding() = FragmentWebViewBinding.inflate(layoutInflater)
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun setUpViews() {
@@ -20,11 +20,13 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding>() {
             Log.d("WebViewFragment", "URL: $it")
         }
 
-        binding?.webView?.apply {
+        binding.webView.apply {
             settings.javaScriptEnabled = true
             webViewClient = WebViewClient()
             loadUrl(url)
         }
     }
+
+    override fun isBottomNavVisible(): Boolean = false
 
 }

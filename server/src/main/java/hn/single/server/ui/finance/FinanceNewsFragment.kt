@@ -4,7 +4,6 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import hn.single.server.R
@@ -19,6 +18,10 @@ class FinanceNewsFragment : BaseFragment<FragmentFinanceBinding>() {
     private val viewModel: FinanceNewsViewModel by viewModels()
 
     override fun getViewBinding() = FragmentFinanceBinding.inflate(layoutInflater)
+
+    override fun getToolbarTitle(): String? = "Finance"
+
+    override fun isToolbarBackVisible(): Boolean = false
 
     private fun setupRecyclerView() {
         binding.recyclerFinanceNews.apply {
@@ -71,4 +74,5 @@ class FinanceNewsFragment : BaseFragment<FragmentFinanceBinding>() {
         }
     }
 
+    override fun isBottomNavVisible(): Boolean = true
 }

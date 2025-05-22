@@ -18,7 +18,9 @@ import hn.single.server.databinding.FragmentSecureWebViewBinding
 class SecureWebViewFragment : BaseFragment<FragmentSecureWebViewBinding>() {
 
     private lateinit var urlToLoad: String
-    private val args : SecureWebViewFragmentArgs by navArgs()
+    private val args: SecureWebViewFragmentArgs by navArgs()
+
+    override fun shouldWrapWithToolbar(): Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,14 +29,12 @@ class SecureWebViewFragment : BaseFragment<FragmentSecureWebViewBinding>() {
         showToast("url is: $urlToLoad")
     }
 
-
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setupToolbar()
         setupWebView()
     }
 
-    private fun setupToolbar() {
+    private fun setupToolbarDetail() {
         binding.toolbar.setNavigationOnClickListener {
             if (binding.webView.canGoBack() == true) {
                 binding.webView.goBack()
@@ -84,8 +84,10 @@ class SecureWebViewFragment : BaseFragment<FragmentSecureWebViewBinding>() {
     override fun getViewBinding() = FragmentSecureWebViewBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
-        setupToolbar()
+        setupToolbarDetail()
         setupWebView()
     }
+
+    override fun isBottomNavVisible(): Boolean = false
 
 }

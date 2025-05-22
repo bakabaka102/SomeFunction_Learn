@@ -7,7 +7,13 @@ class FollowingFragment : BaseFragment<FragmentFollowingBinding>() {
 
     override fun getViewBinding() = FragmentFollowingBinding.inflate(layoutInflater)
 
+    override fun getToolbarTitle(): String? = "Following"
+
+    override fun isToolbarBackVisible(): Boolean = false
+
     override fun setUpViews() {
 
     }
+
+    override fun isBottomNavVisible(): Boolean = true
 }

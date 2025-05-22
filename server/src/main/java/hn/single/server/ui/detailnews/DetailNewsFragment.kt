@@ -7,8 +7,12 @@ import hn.single.server.databinding.FragmentDetailNewsBinding
 
 class DetailNewsFragment : BaseFragment<FragmentDetailNewsBinding>() {
 
-    override fun getViewBinding() = FragmentDetailNewsBinding.inflate(layoutInflater)
     private val args: DetailNewsFragmentArgs by navArgs()
+    override fun getViewBinding() = FragmentDetailNewsBinding.inflate(layoutInflater)
+
+    override fun getToolbarTitle(): String? = "Detail"
+
+    override fun isToolbarBackVisible(): Boolean = true
 
     override fun setUpViews() {
         /* val article = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -23,7 +27,6 @@ class DetailNewsFragment : BaseFragment<FragmentDetailNewsBinding>() {
             binding?.tvTitleDetail?.text = it.title
             binding?.tvContentDetail?.text = it.description
         }*/
-
         val article = args.article
         binding.apply {
             tvTitleDetail.text = article.title
@@ -33,4 +36,6 @@ class DetailNewsFragment : BaseFragment<FragmentDetailNewsBinding>() {
             Glide.with(requireActivity()).load(article.urlToImage).into(ivThumbnail)
         }
     }
+
+    override fun isBottomNavVisible(): Boolean = false
 }

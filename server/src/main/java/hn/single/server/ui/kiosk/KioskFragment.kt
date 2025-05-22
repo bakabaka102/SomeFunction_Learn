@@ -7,8 +7,14 @@ class KioskFragment : BaseFragment<FragmentKioskBinding>() {
 
     override fun getViewBinding() = FragmentKioskBinding.inflate(layoutInflater)
 
-    override fun setUpViews() {
+    override fun getToolbarTitle() = "Kiosk"
 
+    override fun isToolbarBackVisible() = false
+
+    override fun setUpViews() {
+        //setupToolbar("Kiosk")
     }
+
+    override fun isBottomNavVisible(): Boolean = true
 
 }

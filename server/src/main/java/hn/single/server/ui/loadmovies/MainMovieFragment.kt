@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainMovieFragment : BaseFragment<FragmentMainMovieBinding>() {
 
-    private var adapter: MainAdapter = MainAdapter()
+    private var mainAdapter: MainAdapter = MainAdapter()
 
     private val mainViewModel: MainViewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
@@ -28,7 +28,7 @@ class MainMovieFragment : BaseFragment<FragmentMainMovieBinding>() {
     override fun setUpViews() {
         collector()
         binding.apply {
-            rv.adapter = adapter
+            rv.adapter = mainAdapter
             rv.layoutManager =
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
             rv.addItemDecoration(
@@ -41,6 +41,8 @@ class MainMovieFragment : BaseFragment<FragmentMainMovieBinding>() {
 
     }
 
+    override fun isBottomNavVisible(): Boolean = false
+
     private fun collector() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -50,7 +52,7 @@ class MainMovieFragment : BaseFragment<FragmentMainMovieBinding>() {
                             binding.progress.isVisible = false
                             binding.error.isVisible = false
                             binding.rv.isVisible = true
-                            adapter.setItems(it.data)
+                            mainAdapter.setItems(it.data)
                         }
 
                         is UIState.Failure -> {

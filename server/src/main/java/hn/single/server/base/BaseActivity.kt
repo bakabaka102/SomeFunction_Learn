@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
@@ -38,12 +36,11 @@ abstract class BaseActivity<VB : ViewBinding, VM : ViewModel> : AppCompatActivit
     open fun initExtras() = Unit
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Enable edge-to-edge mode if needed, Extend screen
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-
         _binding = initViewBinding()
         setContentView(_binding?.root)
-        // Enable edge-to-edge mode if needed, Extend screen
-        //enableEdgeToEdge()
         // Initialize ViewModel (supports both ViewModel and AndroidViewModel)
         viewModel = ViewModelProvider(
             this,
@@ -54,14 +51,6 @@ abstract class BaseActivity<VB : ViewBinding, VM : ViewModel> : AppCompatActivit
         setupViews()
         setupActions()
         observeData()
-    }
-
-    private fun setupEdgeToEdge() {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = true // Hoặc false nếu status bar nền tối
-            isAppearanceLightNavigationBars = true // Hoặc false nếu nav bar nền tối
-        }
     }
 
     // Optional override for logic that depends on view layout being completed

@@ -41,8 +41,10 @@ class WaveLineFragment : BaseFragment<FragmentWaveLineBinding>() {
         val bgColor = arguments?.getInt("bgColor", Color.WHITE)
 
         val result = "nameTitle: $nameTitle --- movie: $movie --- movieList: $movieList --- setting: $setting --- isTemp: $isTemp --- bgColor: $bgColor"
-        binding?.textView?.text = result
+        binding.textView.text = result
     }
+
+    override fun isBottomNavVisible(): Boolean = false
 
     companion object {
         /**

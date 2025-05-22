@@ -18,4 +18,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
             binding.mainBottomNavigation.setupWithNavController(navController)
         } ?: Log.e("MainFragment", "NavHostFragment not found!")
     }
+
+    override fun isBottomNavVisible(): Boolean = false
+
 }

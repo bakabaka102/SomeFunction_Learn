@@ -15,12 +15,17 @@ import hn.single.server.databinding.FragmentForYouBinding
 @AndroidEntryPoint
 class ForYouFragment : BaseFragment<FragmentForYouBinding>() {
 
-    override fun getViewBinding() = FragmentForYouBinding.inflate(layoutInflater)
-
     private val viewModel: NewsViewModel by viewModels()
     private val newsAdapter = NewsAdapter()
 
+    override fun getViewBinding() = FragmentForYouBinding.inflate(layoutInflater)
+
+    override fun getToolbarTitle() = "For you"
+
+    override fun isToolbarBackVisible(): Boolean = false
+
     override fun setUpViews() {
+        //setupToolbar("For you", false)
         viewModel.loadTopHeadLines(country = "us", apiKey = BuildConfig.API_KEY)
         binding.swipeRefreshLayout.setOnRefreshListener {
             // Gọi lại dữ liệu

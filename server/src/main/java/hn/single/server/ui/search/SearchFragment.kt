@@ -11,4 +11,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
     }
 
+    override fun isBottomNavVisible(): Boolean = false
+
 }

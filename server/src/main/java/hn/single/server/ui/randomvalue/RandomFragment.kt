@@ -132,6 +132,8 @@ class RandomFragment : BaseFragment<FragmentRandomBinding>() {
         }
     }
 
+    override fun isBottomNavVisible(): Boolean = false
+
     companion object {
         @JvmStatic
         fun newInstance(data: String? = null) = RandomFragment().apply {

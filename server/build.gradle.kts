@@ -147,10 +147,9 @@ fun getApiKey(): String {
     return apiKey
 }
 
-tasks.named("preBuild") {
+/*tasks.named("preBuild") {
     dependsOn("taskCreateDefaultConfig")
 }
-
 
 tasks.register("convertSVGs") {
     println("------convertSVGs------")
@@ -206,7 +205,7 @@ val taskCreateDefaultConfig by tasks.registering {
         )
         println("------[Success] File created: ${resource.absolutePath}------")
     }
-}
+}*/
 
 kapt {
     arguments {
