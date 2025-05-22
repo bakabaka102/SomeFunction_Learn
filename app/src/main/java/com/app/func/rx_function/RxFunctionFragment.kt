@@ -1,11 +1,8 @@
 package com.app.func.rx_function
 
 import android.graphics.Point
-import android.os.Bundle
 import android.util.DisplayMetrics
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
@@ -17,15 +14,6 @@ import kotlin.math.roundToInt
 class RxFunctionFragment : BaseFragment<FragmentRxFunctionBinding>(), View.OnClickListener {
 
     private var dp16Pixel = 0
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        dp16Pixel = resources.getDimensionPixelOffset(R.dimen.dimen_16dp)
-        eventSeekbarChange()
-        initActions()
-        return binding.root
-    }
 
     private fun eventSeekbarChange() {
         binding.sb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -46,7 +34,8 @@ class RxFunctionFragment : BaseFragment<FragmentRxFunctionBinding>(), View.OnCli
     override fun getViewBinding() = FragmentRxFunctionBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
-
+        dp16Pixel = resources.getDimensionPixelOffset(R.dimen.dimen_16dp)
+        eventSeekbarChange()
     }
 
     override fun initActions() {
