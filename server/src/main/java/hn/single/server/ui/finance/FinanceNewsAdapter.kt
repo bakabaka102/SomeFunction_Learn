@@ -80,7 +80,6 @@ class FinanceNewsAdapter: ListAdapter<Article, FinanceNewsAdapter.FinanceNewsVie
                     //có thể dùng nó để clear ảnh, đặt lại placeholder, hoặc reset view
                     override fun onLoadCleared(placeholder: Drawable?) {
                         // no-op: Optional: clear hoặc gán placeholder
-                        binding.imageLoading.cancelAnimation()
                         binding.imageLoading.isGone = true
                     }
                 })

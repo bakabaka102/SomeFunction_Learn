@@ -17,4 +17,5 @@
     <string name="content_of_post">Nội dung bài viết</string>
     <string name="source_of_post">Nguồn bài viết</string>
     <string name="title_of_post">Tiêu đề bài viết</string>
+    <string name="icon_of_website">Icon of website</string>
 </resources>

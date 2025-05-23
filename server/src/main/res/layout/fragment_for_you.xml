@@ -12,16 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <hn.single.server.ui.loading.RotatingDotsView
-            android:id="@+id/loadingView"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:dotRadius="2dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:id="@+id/textStatus"
             android:layout_width="match_parent"
@@ -44,6 +34,16 @@
             android:layout_height="match_parent"
             android:nestedScrollingEnabled="true"
             android:scrollbars="vertical" />
+
+        <hn.single.server.ui.loading.RotatingDotsView
+            android:id="@+id/loadingView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:dotRadius="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

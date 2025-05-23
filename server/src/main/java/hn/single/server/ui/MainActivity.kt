@@ -1,18 +1,6 @@
 package hn.single.server.ui
 
-import android.graphics.Color
-import android.os.Build
-import android.util.Log
-import android.view.View
-import android.view.WindowInsets.CONSUMED
-import androidx.activity.enableEdgeToEdge
-import androidx.annotation.RequiresApi
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
-import androidx.core.view.updatePadding
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,8 +17,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun initViewModel(): Class<MainViewModel> = MainViewModel::class.java
 
     override fun setupViews() {
-        /* val navController = findNavController(R.id.mainSerContainerView)
-         binding.mainBottomNavigation.setupWithNavController(navController)*/
         //enableEdgeToEdge()
         /*ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -38,7 +24,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             insets
         }*/
         //setSupportActionBar(binding.toolbar)
-        //enableEdgeToEdge()
         // Setup BottomNav + NavController
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.containerViewMainActivity) as NavHostFragment

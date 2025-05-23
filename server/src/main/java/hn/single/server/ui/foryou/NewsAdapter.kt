@@ -19,7 +19,7 @@ import java.util.Locale
 
 class NewsAdapter : ListAdapter<Article, NewsAdapter.NewsViewHolder>(DiffCallback()) {
 
-    var onItemClick: ((Article) -> Unit)? = null  // Sự kiện click
+    var onItemClick: ((Article) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         val binding = ItemNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -37,6 +37,7 @@ class NewsAdapter : ListAdapter<Article, NewsAdapter.NewsViewHolder>(DiffCallbac
         private val binding: ItemNewsBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        private var currentTarget: CustomTarget<Drawable>? = null
         /*fun bind(article: Article) {
             binding.tvSource.text = article.source.name
             binding.tvTitle.text = article.title
@@ -55,36 +56,39 @@ class NewsAdapter : ListAdapter<Article, NewsAdapter.NewsViewHolder>(DiffCallbac
             binding.tvTitle.text = article.title
             binding.tvPublishedAt.text = formatDate(article.publishedAt)
 
-            // Show loading animation
+            // Reset view state
             binding.imageLoading.isVisible = true
-            binding.ivThumbnail.isVisible = true
+            binding.ivThumbnail.setImageDrawable(null)
+            binding.ivThumbnail.isGone = true
+
+            // Cancel previous Glide request if needed
+            currentTarget?.let {
+                Glide.with(binding.root).clear(it)
+            }
+
+            // New Glide target
+            currentTarget = object : CustomTarget<Drawable>() {
+                override fun onResourceReady(
+                    resource: Drawable,
+                    transition: Transition<in Drawable>?
+                ) {
+                    binding.ivThumbnail.setImageDrawable(resource)
+                    binding.imageLoading.isGone = true
+                    binding.ivThumbnail.isVisible = true
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+                    binding.imageLoading.isGone = true
+                    binding.ivThumbnail.isGone = true
+                }
+            }
 
             Glide.with(binding.root)
                 .load(article.urlToImage)
-                .placeholder(R.drawable.ic_placeholder_rectangle) // optional fallback
-                .error(R.drawable.ic_placeholder_rectangle) // fallback nếu lỗi
+                .placeholder(R.drawable.ic_placeholder_rectangle)
+                .error(R.drawable.ic_placeholder_rectangle)
                 .centerCrop()
-                .into(object : CustomTarget<Drawable>() {
-                    override fun onResourceReady(
-                        resource: Drawable,
-                        transition: Transition<in Drawable>?
-                    ) {
-                        binding.ivThumbnail.setImageDrawable(resource)
-                        binding.imageLoading.isGone = true
-                        binding.ivThumbnail.isVisible = true
-                    }
-
-                    // Glide gọi hàm này khi:
-                    //View bị tách khỏi màn hình (ví dụ scroll quá xa trong RecyclerView).
-                    //Hoặc khi đang cancel tải ảnh (do view bị recycled).
-                    //có thể dùng nó để clear ảnh, đặt lại placeholder, hoặc reset view
-                    override fun onLoadCleared(placeholder: Drawable?) {
-                        // no-op: Optional: clear hoặc gán placeholder
-                        binding.imageLoading.cancelAnimation()
-                        binding.imageLoading.isGone = true
-                    }
-                })
-
+                .into(currentTarget!!)
         }
 
         private fun formatDate(dateString: String): String {
@@ -92,13 +96,12 @@ class NewsAdapter : ListAdapter<Article, NewsAdapter.NewsViewHolder>(DiffCallbac
                 val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
                 val output = SimpleDateFormat("dd MMM yyyy - HH:mm", Locale.getDefault())
                 val date = input.parse(dateString)
-                if (date != null) output.format(date) else ""
+                date?.let { output.format(it) } ?: ""
             } catch (e: Exception) {
                 e.message
                 ""
             }
         }
-
     }
 
     class DiffCallback : DiffUtil.ItemCallback<Article>() {
