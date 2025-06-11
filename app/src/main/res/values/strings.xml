@@ -110,4 +110,5 @@
     <string name="moshi" translatable="false">Moshi</string>
     <string name="gson" translatable="false">Gson</string>
     <string name="coroutine" translatable="false">Coroutine</string>
+    <string name="fab_content_description">Demo</string>
 </resources>

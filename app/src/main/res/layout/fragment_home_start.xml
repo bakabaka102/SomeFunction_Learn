@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     tools:context=".startapp.HomeStartFragment"
+    android:fitsSystemWindows="true"
     tools:ignore="HardcodedText">
 
     <androidx.constraintlayout.widget.ConstraintLayout

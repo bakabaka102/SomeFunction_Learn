@@ -44,6 +44,9 @@ class FinanceNewsFragment : BaseFragment<FragmentFinanceBinding>() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getFinanceArticles()
         }
+    }
+
+    override fun observeData() {
         viewModel.getFinanceArticles()
         viewModel.response.observe(viewLifecycleOwner) { state ->
             when (state) {

@@ -5,15 +5,20 @@ import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
+import android.content.res.Resources
 import android.os.IBinder
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import com.app.func.base_content.BaseActivity
 import com.app.func.databinding.ActivityMainBinding
 import com.app.func.features.scheduler.AlarmReceiver
@@ -26,12 +31,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>()
 /*,
 NavigationView.OnNavigationItemSelectedListener*/ {
 
-    private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var mActionBarDrawerToggle: ActionBarDrawerToggle
     private val mOnBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-                mDrawerLayout.closeDrawer(GravityCompat.START)
+            if (mBinding.root.isDrawerOpen(GravityCompat.START)) {
+                mBinding.root.closeDrawer(GravityCompat.START)
             } else {
                 finish()
             }
@@ -60,13 +64,15 @@ NavigationView.OnNavigationItemSelectedListener*/ {
             service = null
             Log.i("AIDL-Client", "Service disconnected")
         }
-
     }
 
     private val calculatorServiceConn = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
             calculatorService = ICalculatorAidl.Stub.asInterface(service)
-            Log.i("AIDL-Client", "CalculatorService connected: sum = ${calculatorService?.add(11, 22)}")
+            Log.i(
+                "AIDL-Client",
+                "CalculatorService connected: sum = ${calculatorService?.add(11, 22)}"
+            )
         }
 
         override fun onServiceDisconnected(name: ComponentName) {
@@ -76,10 +82,44 @@ NavigationView.OnNavigationItemSelectedListener*/ {
     }
 
     override fun initViews() {
+        ViewCompat.setOnApplyWindowInsetsListener(mBinding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
+        //FloatingActionButton, near right/bottom corner
+        /*ViewCompat.setOnApplyWindowInsetsListener(mBinding.fab) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            // Apply the insets as a margin to the view. This solution sets
+            // only the bottom, left, and right dimensions, but you can apply whichever
+            // insets are appropriate to your layout. You can also update the view padding
+            // if that's more appropriate.
+            v.updateLayoutParams<MarginLayoutParams> {
+                leftMargin = insets.left
+                bottomMargin = insets.bottom
+                rightMargin = insets.right
+            }
+            // Return CONSUMED if you don't want the window insets to keep passing
+            // down to descendant views.
+            WindowInsetsCompat.CONSUMED
+        }*/
+
+        ViewCompat.setOnApplyWindowInsetsListener(mBinding.fab) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val lp = view.layoutParams as ViewGroup.MarginLayoutParams
+            lp.bottomMargin = systemBars.bottom + 16.dp
+            lp.marginEnd = systemBars.right + 16.dp
+            view.layoutParams = lp
+            insets
+        }
         initDrawerLayout()
         service?.sayHi()
         scheduleDailyAlarm()
     }
+
+    val Int.dp: Int get() = (this * Resources.getSystem().displayMetrics.density).toInt()
+
 
     private fun scheduleDailyAlarm() {
         //val alarmManager: AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
@@ -148,25 +188,15 @@ NavigationView.OnNavigationItemSelectedListener*/ {
     }
 
     override fun initActions() {
-        /*mBinding.mainLeftContent.leftMainContentAbout.setOnClickListener {
-            mDrawerLayout.closeDrawer(GravityCompat.START)
-            Toast.makeText(this, "About selected", Toast.LENGTH_SHORT).show()
-        }
-        mBinding.mainLeftContent.leftMainContentHelp.setOnClickListener {
-            mDrawerLayout.closeDrawer(GravityCompat.START)
-            Toast.makeText(this, "Help selected", Toast.LENGTH_SHORT).show()
-        }*/
         onBackPressedDispatcher.addCallback(mOnBackPressedCallback)
-        //mBinding.mainNavigationView.setNavigationItemSelectedListener(this)
     }
 
     private fun initDrawerLayout() {
         // drawer layout instance to toggle the menu icon to open drawer and back button to close drawer
-        mDrawerLayout = mBinding.rootDrawerLayout
         mActionBarDrawerToggle =
-            ActionBarDrawerToggle(this, mDrawerLayout, R.string.nav_open, R.string.nav_close)
+            ActionBarDrawerToggle(this, mBinding.root, R.string.nav_open, R.string.nav_close)
         // pass the Open and Close toggle for the drawer layout listener to toggle the button
-        mDrawerLayout.addDrawerListener(mActionBarDrawerToggle)
+        mBinding.root.addDrawerListener(mActionBarDrawerToggle)
         mActionBarDrawerToggle.syncState()
         // to make the Navigation drawer icon always appear on the action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

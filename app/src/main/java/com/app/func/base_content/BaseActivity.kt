@@ -1,6 +1,7 @@
 package com.app.func.base_content
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 
@@ -15,6 +16,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     open fun initActions() = Unit
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         mBinding = instanceViewBinding()
         setContentView(mBinding.root)
