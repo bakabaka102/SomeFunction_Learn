@@ -81,37 +81,25 @@
             app:layout_constraintTop_toBottomOf="@+id/cons1">
 
             <Button
-                android:id="@+id/btnThread"
+                android:id="@+id/btnSynthetic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Synthetic"
                 android:textAllCaps="false"
                 android:visibility="visible"
-                app:layout_constraintEnd_toStartOf="@id/btnViewCustom"
+                app:layout_constraintEnd_toStartOf="@id/btnView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/btnViewCustom"
+                android:id="@+id/btnView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="View"
                 android:textAllCaps="false"
-                app:layout_constraintEnd_toStartOf="@id/btnParseJson"
-                app:layout_constraintStart_toEndOf="@+id/btnThread"
+                app:layout_constraintStart_toEndOf="@+id/btnSynthetic"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/btnParseJson"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_16dp"
-                android:text="Json"
-                android:textAllCaps="false"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/btnViewCustom"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/btnAnimation"
@@ -120,9 +108,9 @@
                 android:text="Anim"
                 android:textAllCaps="false"
                 android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="@+id/btnThread"
-                app:layout_constraintStart_toStartOf="@+id/btnThread"
-                app:layout_constraintTop_toBottomOf="@id/btnThread" />
+                app:layout_constraintBottom_toBottomOf="@id/btnView"
+                app:layout_constraintStart_toEndOf="@+id/btnView"
+                app:layout_constraintTop_toTopOf="@id/btnView" />
 
             <Button
                 android:id="@+id/btnRX"
@@ -130,10 +118,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/rx"
                 android:textAllCaps="false"
-                app:layout_constraintBottom_toBottomOf="@id/btnAnimation"
-                app:layout_constraintEnd_toEndOf="@+id/btnViewCustom"
-                app:layout_constraintStart_toStartOf="@+id/btnViewCustom"
-                app:layout_constraintTop_toTopOf="@id/btnAnimation" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnSynthetic" />
 
             <Button
                 android:id="@+id/btnCoroutines"
@@ -142,8 +128,7 @@
                 android:text="Corou"
                 android:textAllCaps="false"
                 app:layout_constraintBottom_toBottomOf="@+id/btnRX"
-                app:layout_constraintEnd_toEndOf="@+id/btnParseJson"
-                app:layout_constraintStart_toStartOf="@+id/btnParseJson"
+                app:layout_constraintStart_toEndOf="@+id/btnRX"
                 app:layout_constraintTop_toTopOf="@id/btnRX" />
 
             <Button
@@ -152,9 +137,9 @@
                 android:layout_height="wrap_content"
                 android:text="Retrofit"
                 android:textAllCaps="false"
-                app:layout_constraintEnd_toEndOf="@+id/btnAnimation"
-                app:layout_constraintStart_toStartOf="@+id/btnAnimation"
-                app:layout_constraintTop_toBottomOf="@id/btnAnimation" />
+                app:layout_constraintBottom_toBottomOf="@id/btnCoroutines"
+                app:layout_constraintStart_toEndOf="@id/btnCoroutines"
+                app:layout_constraintTop_toTopOf="@id/btnCoroutines" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -163,10 +148,10 @@
             android:layout_width="@dimen/dimen_300dp"
             android:layout_height="@dimen/dimen_300dp"
             android:layout_marginTop="@dimen/dimen_16dp"
+            android:contentDescription="@null"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/consGroupButton"
-            android:contentDescription="@null" />
+            app:layout_constraintTop_toBottomOf="@+id/consGroupButton" />
 
         <com.app.func.view.chart.StatisticsView
             android:id="@+id/customStaticView"

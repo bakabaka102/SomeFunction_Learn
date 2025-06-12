@@ -46,6 +46,10 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
 
     override fun getViewBinding() = FragmentHomeStartBinding.inflate(layoutInflater)
 
+    override fun isToolbarBackVisible(): Boolean = false
+
+    override fun getToolbarTitle(): String = "Home"
+
     override fun setUpViews() {
         showImage()
         loadChart()
@@ -183,10 +187,10 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
             binding.emotionalFaceView.happinessState = EmotionalFaceView.SAD
         }
 
-        binding.btnThread.setOnClickListener {
+        binding.btnSynthetic.setOnClickListener {
             findNavController().navigate(R.id.mainContainFragment)
         }
-        binding.btnViewCustom.setOnClickListener {
+        binding.btnView.setOnClickListener {
             val intent = Intent(requireActivity(), ViewCustomActivity::class.java)
             val options = ActivityOptions.makeCustomAnimation(
                 activity,
@@ -194,9 +198,6 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
                 R.anim.slide_out_left,
             )
             startActivity(intent, options.toBundle())
-        }
-        binding.btnParseJson.setOnClickListener {
-
         }
         binding.btnAnimation.setOnClickListener {
             startActivity(Intent(requireContext(), ViewAnimationsActivity2::class.java))

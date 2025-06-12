@@ -15,14 +15,20 @@ import android.view.ViewGroup.MarginLayoutParams
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.navigation.NavHostController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import com.app.func.base_content.BaseActivity
 import com.app.func.databinding.ActivityMainBinding
 import com.app.func.features.scheduler.AlarmReceiver
 import com.app.func.utils.Logger
+import com.google.android.material.appbar.MaterialToolbar
 import com.hn.libs.ICalculatorAidl
 import hn.single.server.IServiceAidl
 import java.util.Calendar
@@ -82,6 +88,24 @@ NavigationView.OnNavigationItemSelectedListener*/ {
     }
 
     override fun initViews() {
+
+        //val navController = findNavController(mBinding.navHostFragment.id) as NavHostController
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        // Tìm Toolbar từ fragment hiện tại
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+            ?.childFragmentManager?.fragments?.firstOrNull()
+        val toolbar = currentFragment?.view?.findViewById<MaterialToolbar>(R.id.baseToolbar)
+        toolbar?.let {
+            NavigationUI.setupWithNavController(
+                it,
+                navController,
+                mBinding.rootDrawerMain
+            )
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(mBinding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -123,8 +147,8 @@ NavigationView.OnNavigationItemSelectedListener*/ {
 
     private fun scheduleDailyAlarm() {
         //val alarmManager: AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        //val alarmManager: AlarmManager? = ContextCompat.getSystemService(this, AlarmManager::class.java)
-        val alarmManager: AlarmManager? = getSystemService(AlarmManager::class.java)
+        val alarmManager: AlarmManager? =
+            ContextCompat.getSystemService(this, AlarmManager::class.java)
         val intent = Intent(this, AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(
             this,
@@ -189,6 +213,9 @@ NavigationView.OnNavigationItemSelectedListener*/ {
 
     override fun initActions() {
         onBackPressedDispatcher.addCallback(mOnBackPressedCallback)
+        mBinding.fab.setOnClickListener {
+            Toast.makeText(this, "Floating Action Button Clicked", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun initDrawerLayout() {
@@ -204,10 +231,10 @@ NavigationView.OnNavigationItemSelectedListener*/ {
         //supportActionBar?.setHomeButtonEnabled(true)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.drawer_menu_item, menu)
         return super.onCreateOptionsMenu(menu)
-    }
+    }*/
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {

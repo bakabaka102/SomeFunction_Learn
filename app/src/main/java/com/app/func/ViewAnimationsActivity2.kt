@@ -35,11 +35,11 @@ class ViewAnimationsActivity2 : BaseActivity<ActivityViewAnimations2Binding>() {
         //val navController = findNavController(R.id.fragmentContainerAnimationView)
         var mNavController: NavController? = null
         val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.fragmentContainerAnimationView) as NavHostFragment
+            supportFragmentManager.findFragmentById(R.id.containerAnimationView) as NavHostFragment
         mNavController = navHostFragment.navController
 
         val navController =
-            (supportFragmentManager.findFragmentById(R.id.fragmentContainerAnimationView) as NavHostFragment).findNavController()
+            (supportFragmentManager.findFragmentById(mBinding.containerAnimationView.id) as NavHostFragment).findNavController()
         navController.graph = navController.createGraph(
             startDestination = Screen.MAIN_ANIMATION.name
         ) {
