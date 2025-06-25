@@ -26,7 +26,8 @@ class NewsViewModel @Inject constructor(
         apiKey: String = BuildConfig.API_KEY,
     ) {
         viewModelScope.launch {
-            repository.getTopHeadlines(country, apiKey)
+            //repository.getTopHeadlines(country, apiKey)
+            repository.getTopHeadlinesGeneric(country, apiKey)
         }
     }
 }

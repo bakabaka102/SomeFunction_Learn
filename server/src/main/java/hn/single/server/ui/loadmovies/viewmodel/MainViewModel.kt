@@ -27,7 +27,7 @@ class MainViewModel @Inject constructor(val mainRepository: MainRepository) : Vi
     private fun fetchItems() {
         viewModelScope.launch {
             _mainItem.emit(UIState.Loading)
-            mainRepository.getMainData().flowOn(Dispatchers.IO).catch {
+            mainRepository.getMainData()/*.flowOn(Dispatchers.IO)*/.catch {
                 Log.d("TAG","Error - $it")
                 _mainItem.emit(UIState.Failure(it))
             }.collect {

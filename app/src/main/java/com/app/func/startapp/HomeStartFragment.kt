@@ -55,7 +55,11 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
         loadChart()
         viewModel.downloadNote()
         viewModel.getNote()
-        loadJsonFromAssetsOtherApp<String>(this@HomeStartFragment.context, fileJson)
+        try {
+            loadJsonFromAssetsOtherApp<String>(this@HomeStartFragment.context, fileJson)
+        } catch (ex: Exception) {
+            Logger.e("Error loading JSON from assets: ${ex.message}")
+        }
 
         val bitmap = SharedImageManager.getImage(requireContext(), "water_blue")
         binding.imageView.setImageBitmap(bitmap)
@@ -115,8 +119,8 @@ class HomeStartFragment : BaseFragment<FragmentHomeStartBinding>() {
 
             while (it.moveToNext()) {
                 val name = it.getString(nameIndex)
-                val imageUri = it.getString(uriIndex).toUri().also {
-                    Logger.d("Client - Image: $name - $it")
+                val imageUri = it.getString(uriIndex).toUri().also { uri ->
+                    Logger.d("Client - Image: $name - $uri")
                 }
                 try {
                     context?.contentResolver?.openFileDescriptor(imageUri, "r")?.use { pfd ->

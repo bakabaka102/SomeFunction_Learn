@@ -1,13 +1,17 @@
 package hn.single.server.di
 
+import android.content.Context
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import hn.single.server.BuildConfig
 import hn.single.server.common.Constants
 import hn.single.server.data.network.NewsApiService
+import hn.single.server.network.InternetAvailabilityRepository
+import hn.single.server.network.NetworkStatusTracker
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
@@ -90,5 +94,17 @@ object NetworkModule {
             .client(okHttpClient)
             .build()
             .create(NewsApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNetWorkStatusTracker(@ApplicationContext context: Context): NetworkStatusTracker {
+        return NetworkStatusTracker(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideInternetAvailabilityRepository(networkStatusTracker: NetworkStatusTracker): InternetAvailabilityRepository {
+        return InternetAvailabilityRepository(networkStatusTracker)
     }
 }
